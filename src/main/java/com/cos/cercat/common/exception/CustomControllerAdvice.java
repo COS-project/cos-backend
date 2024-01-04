@@ -1,12 +1,9 @@
 package com.cos.cercat.common.exception;
 
 import com.cos.cercat.common.Response;
-import com.cos.cercat.common.exception.CustomException;
-import com.cos.cercat.common.exception.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -20,11 +17,11 @@ public class CustomControllerAdvice {
                 .body(Response.error(e.getErrorCode(), e.getMessage()));
     }
 
-    @ExceptionHandler(value = InsufficientAuthenticationException.class)
-    public ResponseEntity<?> errorHandler(Exception e) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(Response.error(ErrorCode.UNAUTHORIZED_USER, e.getMessage()));
-    }
+//    @ExceptionHandler(value = InsufficientAuthenticationException.class)
+//    public ResponseEntity<?> errorHandler(Exception e) {
+//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+//                .body(Response.error(ErrorCode.UNAUTHORIZED_USER, e.getMessage()));
+//    }
 
     @ExceptionHandler(value = RuntimeException.class)
     public ResponseEntity<?> unknownErrorHandler(Exception e) {

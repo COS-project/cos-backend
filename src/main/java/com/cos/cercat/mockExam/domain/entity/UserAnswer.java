@@ -4,6 +4,8 @@ import com.cos.cercat.Member.domain.entity.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.apache.catalina.User;
 
 @Entity
 @Getter
@@ -21,6 +23,7 @@ public class UserAnswer {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_result_id")
+    @Setter
     private SubjectResult subjectResult;
 
     @OneToOne
@@ -32,4 +35,22 @@ public class UserAnswer {
     private long takenTime;
 
     private boolean is_correct;
+
+    private UserAnswer(Member member, Question question, String selectOption, long takenTime, boolean is_correct) {
+        this.member = member;
+        this.question = question;
+        this.selectOption = selectOption;
+        this.takenTime = takenTime;
+        this.is_correct = is_correct;
+    }
+
+    public static UserAnswer of(Member member, Question question, String selectOption, long takenTime, boolean is_correct) {
+        return new UserAnswer(
+                member,
+                question,
+                selectOption,
+                takenTime,
+                is_correct
+        );
+    }
 }

@@ -27,9 +27,29 @@ public class MockExamResult extends BaseTimeEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "mockExamResult", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "mockExamResult", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<SubjectResult> subjectResults = new ArrayList<>();
 
     private int round; //유저가 모의고사를 푼 횟수
 
+    private MockExamResult(MockExam mockExam, Member member, int round) {
+        this.mockExam = mockExam;
+        this.member = member;
+        this.round = round;
+    }
+
+    public static MockExamResult of(MockExam mockExam, Member member, int round) {
+        return new MockExamResult(
+                mockExam,
+                member,
+                round
+        );
+    }
+
+    public void addAllSubjectResults(List<SubjectResult> subjectResults) {
+        for (SubjectResult subjectResult : subjectResults) {
+            subjectResult.setMockExamResult(this);
+        }
+        this.subjectResults.addAll(subjectResults);
+    }
 }

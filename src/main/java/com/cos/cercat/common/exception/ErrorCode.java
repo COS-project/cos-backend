@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
 
     MOCK_EXAM_NOT_FOUND(HttpStatus.NOT_FOUND, "mock exam not founded"),
+    SUBJECT_NOT_FOUND(HttpStatus.NOT_FOUND, "subject not founded"),
+    QUESTION_NOT_FOUND(HttpStatus.NOT_FOUND, "question not founded"),
     INCORRECT_FILE_FORMAT(HttpStatus.BAD_REQUEST, "incorrect file format"),
     INVALID_PASSWORD(HttpStatus.NOT_FOUND, "invalid password"),
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "bad request"),
