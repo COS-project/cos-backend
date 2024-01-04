@@ -1,4 +1,4 @@
-package com.cos.cercat.mockExam.domain.entity;
+package com.cos.cercat.common.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

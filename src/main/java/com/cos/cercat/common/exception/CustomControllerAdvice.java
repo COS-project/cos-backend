@@ -1,5 +1,6 @@
-package com.cos.cercat.common;
+package com.cos.cercat.common.exception;
 
+import com.cos.cercat.common.Response;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
 import lombok.extern.slf4j.Slf4j;

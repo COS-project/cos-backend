@@ -1,10 +1,9 @@
 package com.cos.cercat.mockExam.app;
 
 import com.cos.cercat.mockExam.app.dto.MockExamDto;
-import com.cos.cercat.mockExam.domain.entity.Certificate;
+import com.cos.cercat.certificate.domain.entity.Certificate;
 import com.cos.cercat.mockExam.domain.entity.MockExam;
 import com.cos.cercat.mockExam.domain.entity.Question;
-import com.cos.cercat.mockExam.domain.repository.CertificateRepository;
 import com.cos.cercat.mockExam.domain.repository.MockExamRepostiory;
 import com.cos.cercat.mockExam.domain.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
