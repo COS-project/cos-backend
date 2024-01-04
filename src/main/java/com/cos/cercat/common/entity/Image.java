@@ -17,4 +17,15 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String imageUrl;
+
+    public Image(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public static Image from(String imageUrl) {
+        return new Image(
+                imageUrl
+        );
+    }
 }
