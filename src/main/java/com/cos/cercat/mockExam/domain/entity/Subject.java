@@ -1,17 +1,19 @@
 package com.cos.cercat.mockExam.domain.entity;
 
+import com.cos.cercat.certificate.domain.entity.Certificate;
+import com.cos.cercat.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Subject {
+@NoArgsConstructor
+public class Subject extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "subject_id")
     private Long id;
 
     @ManyToOne
@@ -19,4 +21,6 @@ public class Subject {
     private Certificate certificate;
 
     private String subjectName;
+
+    private int numberOfQuestions;
 }

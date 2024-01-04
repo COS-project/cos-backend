@@ -1,5 +1,6 @@
-package com.cos.cercat.mockExam.domain.entity;
+package com.cos.cercat.certificate.domain.entity;
 
+import com.cos.cercat.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -8,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Certificate {
+public class Certificate extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

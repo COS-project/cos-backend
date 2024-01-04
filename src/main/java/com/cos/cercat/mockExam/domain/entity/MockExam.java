@@ -1,16 +1,16 @@
 package com.cos.cercat.mockExam.domain.entity;
 
+import com.cos.cercat.certificate.domain.entity.Certificate;
+import com.cos.cercat.common.entity.BaseTimeEntity;
 import com.cos.cercat.mockExam.app.dto.MockExamInfoDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
-@NoArgsConstructor
 @Getter
-@Setter
-public class MockExam {
+@NoArgsConstructor
+public class MockExam extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
