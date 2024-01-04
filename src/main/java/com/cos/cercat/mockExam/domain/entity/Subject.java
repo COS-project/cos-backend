@@ -23,4 +23,6 @@ public class Subject extends BaseTimeEntity {
     private String subjectName;
 
     private int numberOfQuestions;
+
+    private int totalScore;
 }

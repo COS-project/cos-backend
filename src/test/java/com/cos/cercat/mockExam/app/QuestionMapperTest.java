@@ -2,6 +2,7 @@ package com.cos.cercat.mockExam.app;
 
 import com.cos.cercat.certificate.domain.entity.Certificate;
 import com.cos.cercat.certificate.domain.repository.CertificateRepository;
+import com.cos.cercat.mockExam.app.service.QuestionConvertService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +13,7 @@ import java.io.File;
 class QuestionMapperTest {
 
     @Autowired
-    QuestionConverter questionMapper;
+    QuestionConvertService questionMapper;
     @Autowired
     CertificateRepository certificateRepository;
 

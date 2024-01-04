@@ -1,10 +1,11 @@
-package com.cos.cercat.mockExam.app;
+package com.cos.cercat.mockExam.app.service;
 
-import com.cos.cercat.mockExam.app.dto.MockExamDto;
+import com.cos.cercat.mockExam.app.dto.MockExamInfoDTO;
 import com.cos.cercat.certificate.domain.entity.Certificate;
+import com.cos.cercat.mockExam.app.util.ObjectMapper;
 import com.cos.cercat.mockExam.domain.entity.MockExam;
 import com.cos.cercat.mockExam.domain.entity.Question;
-import com.cos.cercat.mockExam.domain.repository.MockExamRepostiory;
+import com.cos.cercat.mockExam.domain.repository.MockExamRepository;
 import com.cos.cercat.mockExam.domain.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,20 +18,20 @@ import java.util.regex.Pattern;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class QuestionConverter {
+public class QuestionConvertService {
 
     private final ObjectMapper objectMapperService;
     private final QuestionRepository questionRepository;
-    private final MockExamRepostiory mockExamRepostiory;
+    private final MockExamRepository mockExamRepostiory;
 
     public static final String CORRECT_ANSWER = "정답";
 
     public void saveQuestionMap(Certificate certificate, File json) {
 
-        MockExamDto mockExamDto = objectMapperService.jsonToQuestionMap(json);
-        MockExam mockExam = mockExamRepostiory.save(MockExam.of(mockExamDto.infoDto(), certificate));
+        MockExamInfoDTO mockExamInfoDTO = objectMapperService.jsonToQuestionMap(certificate, json);
+        MockExam mockExam = mockExamRepostiory.save(MockExam.of(mockExamInfoDTO.mockExamDTO()));
 
-        mockExamDto.questions().forEach((title, content) -> {
+        mockExamInfoDTO.questions().forEach((title, content) -> {
 
             Question question = Question.from(mockExam);
             Matcher matcher = matchingQuestionPattern(title);
@@ -43,7 +44,7 @@ public class QuestionConverter {
                     question.setOption(option);
                 }
 
-                String answer = mockExamDto.getCorrectAnswerViaSeq(question.getQuestion_seq());
+                String answer = mockExamInfoDTO.getCorrectAnswerViaSeq(question.getQuestion_seq());
                 question.setCorrectOption(answer);
             }
 

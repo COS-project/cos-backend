@@ -2,7 +2,7 @@ package com.cos.cercat.mockExam.domain.entity;
 
 import com.cos.cercat.certificate.domain.entity.Certificate;
 import com.cos.cercat.common.entity.BaseTimeEntity;
-import com.cos.cercat.mockExam.app.dto.MockExamInfoDto;
+import com.cos.cercat.mockExam.app.dto.MockExamDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,14 +27,14 @@ public class MockExam extends BaseTimeEntity {
     @JoinColumn(name = "certificate_id")
     private Certificate certificate;
 
-    private MockExam(String name, Integer examYear, Integer round, Certificate certificate) { //TODO: 자격증(certificate_id) 참조
+    private MockExam(String name, Integer examYear, Integer round, Certificate certificate) {
         this.name = name;
         this.examYear = examYear;
         this.round = round;
         this.certificate = certificate;
     }
 
-    public static MockExam of(MockExamInfoDto infoDto, Certificate certificate) {
-        return new MockExam(infoDto.name(), infoDto.examYear(), infoDto.round(), certificate);
+    public static MockExam of(MockExamDTO dto) {
+        return new MockExam(dto.name(), dto.examYear(), dto.round(), dto.certificateDTO().toEntity());
     }
 }
