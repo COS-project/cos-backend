@@ -29,7 +29,7 @@ public class QuestionConverter {
     public void saveQuestionMap(Certificate certificate, File json) {
 
         MockExamDto mockExamDto = objectMapperService.jsonToQuestionMap(json);
-        MockExam mockExam = mockExamRepostiory.save(MockExam.of(mockExamDto.description(), certificate));
+        MockExam mockExam = mockExamRepostiory.save(MockExam.of(mockExamDto.infoDto(), certificate));
 
         mockExamDto.questions().forEach((title, content) -> {
 

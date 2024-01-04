@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 public record MockExamDto(
-        String description,
+        MockExamInfoDto infoDto,
         Map<String, List<String>> questions
 ) {
-    public static MockExamDto of(String description, Map<String, List<String>> questions) {
+    public static MockExamDto of(MockExamInfoDto infoDto, Map<String, List<String>> questions) {
         return new MockExamDto(
-                description,
+                infoDto,
                 questions
         );
     }
