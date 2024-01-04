@@ -1,4 +1,4 @@
-package com.cos.cercat.common;
+package com.cos.cercat.common.entity;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
