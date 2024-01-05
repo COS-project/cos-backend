@@ -1,6 +1,6 @@
 package com.cos.cercat.mockExam.domain.entity;
 
-import com.cos.cercat.Member.domain.entity.Member;
+import com.cos.cercat.Member.domain.entity.User;
 import com.cos.cercat.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -24,24 +24,24 @@ public class MockExamResult extends BaseTimeEntity {
     private MockExam mockExam;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @OneToMany(mappedBy = "mockExamResult", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<SubjectResult> subjectResults = new ArrayList<>();
 
     private int round; //유저가 모의고사를 푼 횟수
 
-    private MockExamResult(MockExam mockExam, Member member, int round) {
+    private MockExamResult(MockExam mockExam, User user, int round) {
         this.mockExam = mockExam;
-        this.member = member;
+        this.user = user;
         this.round = round;
     }
 
-    public static MockExamResult of(MockExam mockExam, Member member, int round) {
+    public static MockExamResult of(MockExam mockExam, User user, int round) {
         return new MockExamResult(
                 mockExam,
-                member,
+                user,
                 round
         );
     }

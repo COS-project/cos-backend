@@ -1,15 +1,16 @@
 package com.cos.cercat.mockExam.domain.entity;
 
-import com.cos.cercat.Member.domain.entity.Member;
+import com.cos.cercat.Member.domain.entity.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.catalina.User;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserAnswer {
 
     @Id
@@ -18,15 +19,15 @@ public class UserAnswer {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_result_id")
     @Setter
     private SubjectResult subjectResult;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "question_id")
     private Question question;
 
@@ -36,17 +37,26 @@ public class UserAnswer {
 
     private boolean is_correct;
 
-    private UserAnswer(Member member, Question question, String selectOption, long takenTime, boolean is_correct) {
-        this.member = member;
+    public UserAnswer(User user, SubjectResult subjectResult, Question question, String selectOption, long takenTime, boolean is_correct) {
+        this.user = user;
+        this.subjectResult = subjectResult;
         this.question = question;
         this.selectOption = selectOption;
         this.takenTime = takenTime;
         this.is_correct = is_correct;
     }
 
-    public static UserAnswer of(Member member, Question question, String selectOption, long takenTime, boolean is_correct) {
+    private UserAnswer(User user, Question question, String selectOption, long takenTime, boolean is_correct) {
+        this.user = user;
+        this.question = question;
+        this.selectOption = selectOption;
+        this.takenTime = takenTime;
+        this.is_correct = is_correct;
+    }
+
+    public static UserAnswer of(User user, Question question, String selectOption, long takenTime, boolean is_correct) {
         return new UserAnswer(
-                member,
+                user,
                 question,
                 selectOption,
                 takenTime,

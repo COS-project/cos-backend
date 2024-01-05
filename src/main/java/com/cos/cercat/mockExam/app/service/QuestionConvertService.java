@@ -10,6 +10,7 @@ import com.cos.cercat.mockExam.domain.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.util.regex.Matcher;
@@ -22,14 +23,15 @@ public class QuestionConvertService {
 
     private final ObjectMapper objectMapperService;
     private final QuestionRepository questionRepository;
-    private final MockExamRepository mockExamRepostiory;
+    private final MockExamRepository mockExamRepository;
 
     public static final String CORRECT_ANSWER = "정답";
 
+    @Transactional
     public void saveQuestionMap(Certificate certificate, File json) {
 
         MockExamInfoDTO mockExamInfoDTO = objectMapperService.jsonToQuestionMap(certificate, json);
-        MockExam mockExam = mockExamRepostiory.save(MockExam.of(mockExamInfoDTO.mockExamDTO()));
+        MockExam mockExam = mockExamRepository.save(MockExam.of(mockExamInfoDTO.mockExamDTO()));
 
         mockExamInfoDTO.questions().forEach((title, content) -> {
 
