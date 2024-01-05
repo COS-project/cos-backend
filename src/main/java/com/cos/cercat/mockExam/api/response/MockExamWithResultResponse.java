@@ -1,11 +1,12 @@
 package com.cos.cercat.mockExam.api.response;
 
-import com.cos.cercat.mockExam.app.dto.MockExamDTO;
-import com.cos.cercat.mockExam.app.dto.MockExamResultDTO;
-import com.cos.cercat.mockExam.app.dto.SubjectDTO;
-import com.cos.cercat.mockExam.app.dto.SubjectResultDTO;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.cos.cercat.mockExam.domain.entity.MockExam;
+import com.cos.cercat.mockExam.domain.entity.MockExamResult;
+import com.cos.cercat.mockExam.domain.entity.Subject;
+import com.cos.cercat.mockExam.domain.entity.SubjectResult;
 import com.fasterxml.jackson.annotation.JsonInclude;
+
+import java.util.List;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.*;
 
@@ -16,29 +17,22 @@ public record MockExamWithResultResponse(
         Integer totalScore,
         @JsonInclude(Include.NON_NULL)
         Integer score
+) {
 
-        ) {
+    public static MockExamWithResultResponse from(MockExam mockExam, List<MockExamResult> mockExamResults) {
 
-    public static MockExamWithResultResponse from(MockExamResultDTO dto) {
+        boolean isTake = !mockExamResults.isEmpty();
+
         return new MockExamWithResultResponse(
-                dto.mockExamDTO().round(),
-                true,
-                dto.subjectResultDTOList().stream()
-                        .map(SubjectResultDTO::subjectDTO)
-                        .map(SubjectDTO::totalScore)
-                        .reduce(0, Integer::sum),
-                dto.subjectResultDTOList().stream()
-                        .map(SubjectResultDTO::score)
-                        .reduce(0, Integer::sum)
-        );
-    }
-
-    public static MockExamWithResultResponse from(MockExamDTO mockExamDTO) {
-        return new MockExamWithResultResponse(
-                mockExamDTO.round(),
-                false,
-                null,
-                null
+                mockExam.getRound(),
+                isTake,
+                (isTake) ? mockExamResults.get(0).getSubjectResults().stream()
+                        .map(SubjectResult::getSubject)
+                        .map(Subject::getTotalScore)
+                        .reduce(0, Integer::sum) : null,
+                (isTake) ? mockExamResults.get(0).getSubjectResults().stream()
+                        .map(SubjectResult::getScore)
+                        .reduce(0, Integer::sum) : null
         );
     }
 }

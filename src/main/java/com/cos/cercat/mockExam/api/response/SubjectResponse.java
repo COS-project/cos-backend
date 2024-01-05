@@ -1,15 +1,15 @@
-package com.cos.cercat.mockExam.app.dto;
+package com.cos.cercat.mockExam.api.response;
 
 import com.cos.cercat.mockExam.domain.entity.Subject;
 
-public record SubjectDTO(
+public record SubjectResponse(
         Long subjectId,
         String subjectName,
         int numberOfQuestions,
         int totalScore
 ) {
-    public static SubjectDTO from(Subject entity) {
-        return new SubjectDTO(
+    public static SubjectResponse from(Subject entity) {
+        return new SubjectResponse(
                 entity.getId(),
                 entity.getSubjectName(),
                 entity.getNumberOfQuestions(),

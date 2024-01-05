@@ -49,7 +49,7 @@ public class ObjectMapper {
             String year = matcher.group(2);
             String round = matcher.group(3);
 
-            return new MockExamDTO(name, Integer.parseInt(year), Integer.parseInt(round), CertificateDTO.from(certificate));
+            return MockExamDTO.of(name, Integer.parseInt(year), Integer.parseInt(round), CertificateDTO.from(certificate));
         }
 
         throw new CustomException(ErrorCode.INCORRECT_FILE_FORMAT);// 매칭되는 부분이 없을 경우

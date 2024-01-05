@@ -9,6 +9,7 @@ import java.util.regex.Matcher;
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Question extends BaseTimeEntity {
 
     @Id
@@ -28,25 +29,25 @@ public class Question extends BaseTimeEntity {
 
     private String question_text;
 
-    private String option_a;
+    private String option_1;
 
-    private String option_b;
+    private String option_2;
 
-    private String option_c;
+    private String option_3;
 
-    private String option_d;
+    private String option_4;
 
     private int correct_option;
 
     private int score;
 
-    private Question(int question_seq, String question_text, String option_a, String option_b, String option_c, String option_d, int correct_option, int score) {
+    private Question(int question_seq, String question_text, String option_1, String option_2, String option_3, String option_4, int correct_option, int score) {
         this.question_seq = question_seq;
         this.question_text = question_text;
-        this.option_a = option_a;
-        this.option_b = option_b;
-        this.option_c = option_c;
-        this.option_d = option_d;
+        this.option_1 = option_1;
+        this.option_2 = option_2;
+        this.option_3 = option_3;
+        this.option_4 = option_4;
         this.correct_option = correct_option;
         this.score = score;
     }
@@ -55,14 +56,14 @@ public class Question extends BaseTimeEntity {
         this.mockExam = mockExam;
     }
 
-    public Question of(int question_seq, String question_text, String option_a, String option_b, String option_c, String option_d, int correct_option, int score) {
+    public Question of(int question_seq, String question_text, String option_1, String option_2, String option_3, String option_4, int correct_option, int score) {
         return new Question(
                 question_seq,
                 question_text,
-                option_a,
-                option_b,
-                option_c,
-                option_d,
+                option_1,
+                option_2,
+                option_3,
+                option_4,
                 correct_option,
                 score
         );
@@ -77,14 +78,16 @@ public class Question extends BaseTimeEntity {
     public void setOption(String option) {
         char number = option.charAt(0);
         switch ( (int) number) {
-            case 0x2460 -> option_a = option.substring(1);
-            case 0x2461 -> option_b = option.substring(1);
-            case 0x2462 -> option_c = option.substring(1);
-            case 0x2463 -> option_d = option.substring(1);
+            case 0x2460 -> option_1 = option.substring(1);
+            case 0x2461 -> option_2 = option.substring(1);
+            case 0x2462 -> option_3 = option.substring(1);
+            case 0x2463 -> option_4 = option.substring(1);
             case 0x0040 -> score = Integer.parseInt(option.substring(1));
             default -> {}
         }
     }
+
+
 
     public void setCorrectOption(String answer) {
         char answerChar = answer.charAt(0);

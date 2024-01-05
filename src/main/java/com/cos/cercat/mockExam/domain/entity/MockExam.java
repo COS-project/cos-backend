@@ -4,12 +4,14 @@ import com.cos.cercat.certificate.domain.entity.Certificate;
 import com.cos.cercat.common.entity.BaseTimeEntity;
 import com.cos.cercat.mockExam.app.dto.MockExamDTO;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class MockExam extends BaseTimeEntity {
 
     @Id

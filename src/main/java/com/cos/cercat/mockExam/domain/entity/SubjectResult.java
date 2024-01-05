@@ -1,6 +1,7 @@
 package com.cos.cercat.mockExam.domain.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class SubjectResult {
 
     @Id
@@ -32,17 +34,9 @@ public class SubjectResult {
 
     private int score;
 
-
-    private SubjectResult(Subject subject, int score) {
+    public SubjectResult(Subject subject, int score) {
         this.subject = subject;
         this.score = score;
-    }
-
-    public static SubjectResult of(Subject subject, int score) {
-        return new SubjectResult(
-                subject,
-                score
-        );
     }
 
     public void addAllUserAnswers(List<UserAnswer> userAnswers) {
