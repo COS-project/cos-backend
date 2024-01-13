@@ -4,7 +4,6 @@ import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.user.domain.User;
 import jakarta.persistence.Entity;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
