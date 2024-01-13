@@ -1,12 +1,13 @@
 package com.cos.cercat.mockExam.app.service;
 
-import com.cos.cercat.Member.domain.entity.User;
-import com.cos.cercat.mockExam.api.request.MockExamResultRequest;
-import com.cos.cercat.mockExam.api.request.SubjectResultRequest;
-import com.cos.cercat.mockExam.api.request.UserAnswerRequest;
-import com.cos.cercat.mockExam.api.response.MockExamWithResultResponse;
-import com.cos.cercat.mockExam.api.response.QuestionResponse;
-import com.cos.cercat.mockExam.domain.entity.*;
+import com.cos.cercat.certificate.app.CertificateService;
+import com.cos.cercat.mockExam.domain.*;
+import com.cos.cercat.user.domain.User;
+import com.cos.cercat.mockExam.dto.request.MockExamResultRequest;
+import com.cos.cercat.mockExam.dto.request.SubjectResultRequest;
+import com.cos.cercat.mockExam.dto.request.UserAnswerRequest;
+import com.cos.cercat.mockExam.dto.response.MockExamWithResultResponse;
+import com.cos.cercat.mockExam.dto.response.QuestionResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,11 +26,21 @@ public class MockExamServiceFacade {
     private final MockExamService mockExamService;
     private final QuestionService questionService;
     private final SubjectService subjectService;
+    private final CertificateService certificateService;
 
+    /**
+     * 자격증 ID와 시험년도, 유저정보를 통해 특정 자격증의 시험년도에 해당하는 모의고사들을 가져온다.
+     * 유저가 모의고사를 푼 이력이있다면 모의고사 점수도 같이 반환한다.
+     *
+     * @param certificateId 자격증 고유 ID
+     * @param examYear 시험년도
+     * @param user 로그인한 유저
+     * */
     @Transactional(readOnly = true)
     public List<MockExamWithResultResponse> getMockExamList(Long certificateId, Integer examYear, User user) {
         List<MockExamWithResultResponse> resultResponses = new ArrayList<>();
-        List<MockExam> mockExamList = mockExamService.getMockExamByCertificateIdAndYear(certificateId, examYear);
+
+        List<MockExam> mockExamList = mockExamService.getMockExamList(certificateService.getCertificate(certificateId), examYear);
 
         for (MockExam mockExam : mockExamList) {
             List<MockExamResult> userMockExamResults = mockExamResultService.getUserMockExamResults(mockExam, user);
@@ -40,6 +51,11 @@ public class MockExamServiceFacade {
         return resultResponses;
     }
 
+    /**
+     * 모의고사 ID를 통해 특정 모의고사의 모든 문제들을 가져온다.
+     *
+     * @param mockExamId 모의고사 고유 ID
+     * */
     @Transactional(readOnly = true)
     public List<QuestionResponse> getQuestionList(Long mockExamId) {
 
@@ -50,6 +66,13 @@ public class MockExamServiceFacade {
                 .toList();
     }
 
+    /**
+     * 모의고사 ID와 클라이언트에서 채점한 시험결과, 유저정보를 통해 시험 결과를 저장한다.
+     *
+     * @param mockExamId 모의고사 고유 ID
+     * @param request 모의고사 채점 결과
+     * @param user 유저 정보
+     * */
     @Transactional
     public void createMockExamResult(Long mockExamId, MockExamResultRequest request, User user) {
         MockExam mockExam = mockExamService.getMockExamById(mockExamId);
@@ -59,7 +82,7 @@ public class MockExamServiceFacade {
 
         mockExamResult.addAllSubjectResults(toSubjectResultEntities(request, user));
 
-        mockExamResultService.save(mockExamResult);
+        mockExamResultService.save(mockExamResult); //
     }
 
     private List<SubjectResult> toSubjectResultEntities(MockExamResultRequest request, User user) {
@@ -81,7 +104,7 @@ public class MockExamServiceFacade {
         List<UserAnswer> userAnswers = new ArrayList<>();
 
         for (UserAnswerRequest userAnswerRequest : requests) {
-            Question question = questionService.getQuestionById(userAnswerRequest.questionId());
+            Question question = questionService.getQuestion(userAnswerRequest.questionId());
             userAnswers.add(userAnswerRequest.toEntity(question, user));
         }
         return userAnswers;

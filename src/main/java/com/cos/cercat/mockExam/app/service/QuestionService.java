@@ -1,10 +1,10 @@
 package com.cos.cercat.mockExam.app.service;
 
-import com.cos.cercat.common.exception.CustomException;
-import com.cos.cercat.common.exception.ErrorCode;
-import com.cos.cercat.mockExam.domain.entity.MockExam;
-import com.cos.cercat.mockExam.domain.entity.Question;
-import com.cos.cercat.mockExam.domain.repository.QuestionRepository;
+import com.cos.cercat.global.exception.CustomException;
+import com.cos.cercat.global.exception.ErrorCode;
+import com.cos.cercat.mockExam.domain.MockExam;
+import com.cos.cercat.mockExam.domain.Question;
+import com.cos.cercat.mockExam.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,8 +22,12 @@ public class QuestionService {
         return questionRepository.findByMockExam(mockExam);
     }
 
-    public Question getQuestionById(Long questionId) {
+    public Question getQuestion(Long questionId) {
         return questionRepository.findById(questionId).orElseThrow(()
                 -> new CustomException(ErrorCode.QUESTION_NOT_FOUND));
+    }
+
+    public Question getQuestion(MockExam mockExam, Integer questionSeq) {
+        return questionRepository.findQuestionByMockExamAndQuestionSeq(mockExam, questionSeq);
     }
 }

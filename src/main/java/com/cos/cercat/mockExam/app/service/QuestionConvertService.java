@@ -1,12 +1,12 @@
 package com.cos.cercat.mockExam.app.service;
 
-import com.cos.cercat.mockExam.app.dto.MockExamInfoDTO;
-import com.cos.cercat.certificate.domain.entity.Certificate;
-import com.cos.cercat.mockExam.app.util.ObjectMapper;
-import com.cos.cercat.mockExam.domain.entity.MockExam;
-import com.cos.cercat.mockExam.domain.entity.Question;
-import com.cos.cercat.mockExam.domain.repository.MockExamRepository;
-import com.cos.cercat.mockExam.domain.repository.QuestionRepository;
+import com.cos.cercat.mockExam.dto.MockExamInfoDTO;
+import com.cos.cercat.certificate.domain.Certificate;
+import com.cos.cercat.mockExam.util.ObjectMapper;
+import com.cos.cercat.mockExam.domain.MockExam;
+import com.cos.cercat.mockExam.domain.Question;
+import com.cos.cercat.mockExam.repository.MockExamRepository;
+import com.cos.cercat.mockExam.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -46,7 +46,7 @@ public class QuestionConvertService {
                     question.setOption(option);
                 }
 
-                String answer = mockExamInfoDTO.getCorrectAnswerViaSeq(question.getQuestion_seq());
+                String answer = mockExamInfoDTO.getCorrectAnswerViaSeq(question.getQuestionSeq());
                 question.setCorrectOption(answer);
             }
 
