@@ -9,6 +9,8 @@ import com.cos.cercat.user.domain.User;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,6 +35,10 @@ public class CommentaryPostService {
         commentaryPost.addAllPostImages(images);
 
         commentaryPostRepository.save(commentaryPost);
+    }
+
+    public Slice<CommentaryPost> searchCommentaryPosts(Pageable pageable, Certificate certificate, String keyword) {
+        return commentaryPostRepository.searchCommentaryPosts(pageable, certificate, keyword);
     }
 
 }

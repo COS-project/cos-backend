@@ -6,6 +6,7 @@ import com.cos.cercat.global.entity.Image;
 import com.cos.cercat.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 @DiscriminatorColumn
 public class Post extends BaseTimeEntity {
 
@@ -34,6 +36,8 @@ public class Post extends BaseTimeEntity {
 
     @Embedded
     private PostImages postImages = new PostImages();
+
+    private Integer likeCount;
 
     public Post(String title, String content, User user, Certificate certificate) {
         this.title = title;
