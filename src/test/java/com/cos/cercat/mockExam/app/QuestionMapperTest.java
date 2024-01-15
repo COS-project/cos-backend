@@ -1,8 +1,8 @@
 package com.cos.cercat.mockExam.app;
 
+import com.cos.cercat.board.app.PostDeleteService;
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.certificate.repository.CertificateRepository;
-import com.cos.cercat.mockExam.app.service.QuestionConvertService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +16,8 @@ class QuestionMapperTest {
     QuestionConvertService questionMapper;
     @Autowired
     CertificateRepository certificateRepository;
+    @Autowired
+    PostDeleteService postDeleteService;
 
     @Test
     public void given_when_then() throws Exception {
@@ -24,8 +26,7 @@ class QuestionMapperTest {
         String path = "/Users/kangjiwon/Desktop/Projects/Core/컴퓨터활용능력1급";
         File folder = new File(path);
         String certificateName = folder.getName().trim();
-        Certificate certificate = certificateRepository.save(Certificate.from(certificateName));
-
+        Certificate certificate = certificateRepository.findById(1L).get();
         File[] listedFiles = folder.listFiles();
         //When
 
@@ -38,6 +39,6 @@ class QuestionMapperTest {
         }
 
         //Then
-
     }
+
 }

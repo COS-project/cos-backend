@@ -6,11 +6,15 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Subject extends BaseTimeEntity {
 
     @Id
@@ -20,6 +24,7 @@ public class Subject extends BaseTimeEntity {
 
     @ManyToOne
     @JoinColumn(name = "certificate_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Certificate certificate;
 
     private String subjectName;

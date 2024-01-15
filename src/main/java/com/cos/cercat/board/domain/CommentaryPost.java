@@ -3,13 +3,8 @@ package com.cos.cercat.board.domain;
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.mockExam.domain.Question;
 import com.cos.cercat.user.domain.User;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -17,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class CommentaryPost extends Post {
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
     private Question question;
 
@@ -33,5 +28,13 @@ public class CommentaryPost extends Post {
                 user,
                 certificate,
                 question);
+    }
+
+    public CommentaryPost update(String title, String content, Question question) {
+        this.title = title;
+        this.content = content;
+        this.question = question;
+
+        return this;
     }
 }

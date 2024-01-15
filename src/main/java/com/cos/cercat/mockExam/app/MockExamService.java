@@ -1,4 +1,4 @@
-package com.cos.cercat.mockExam.app.service;
+package com.cos.cercat.mockExam.app;
 
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.global.exception.CustomException;

@@ -1,6 +1,6 @@
 package com.cos.cercat.mockExam.dto;
 
-import com.cos.cercat.mockExam.app.service.QuestionConvertService;
+import com.cos.cercat.mockExam.app.QuestionConvertService;
 
 import java.util.List;
 import java.util.Map;

@@ -1,6 +1,8 @@
 package com.cos.cercat.board.app;
 
 import com.cos.cercat.board.domain.NormalPost;
+import com.cos.cercat.board.domain.Post;
+import com.cos.cercat.board.domain.PostImages;
 import com.cos.cercat.board.repository.NormalPostRepository;
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.global.entity.Image;
@@ -29,6 +31,7 @@ public class NormalPostService {
         normalPost.addAllPostImages(images);
 
         normalPostRepository.save(normalPost);
+
     }
 
 }

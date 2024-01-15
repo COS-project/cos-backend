@@ -17,12 +17,13 @@ public class Question extends BaseTimeEntity {
     @Column(name = "question_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mock_exam_id")
     private MockExam mockExam;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id")
+    @Setter
     private Subject subject;
 
     private int questionSeq;

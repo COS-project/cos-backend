@@ -1,4 +1,4 @@
-package com.cos.cercat.board.app;
+package com.cos.cercat.global.util;
 
 import com.cos.cercat.global.entity.Image;
 import com.cos.cercat.global.exception.CustomException;
@@ -20,7 +20,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class FileUploadService {
+public class FileUploader {
 
     private final Storage storage;
 

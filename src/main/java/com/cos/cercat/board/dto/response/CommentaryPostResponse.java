@@ -5,25 +5,15 @@ import com.cos.cercat.mockExam.dto.response.MockExamResponse;
 import com.cos.cercat.user.dto.response.UserResponse;
 
 public record CommentaryPostResponse(
-        Long postId,
-        String title,
-        String content,
+        PostResponse postInfo,
         Integer questionSequence,
-        UserResponse user,
-        MockExamResponse mockExam,
-        Integer likeCount,
-        Integer commentCount
+        MockExamResponse mockExam
 ) {
-        public static CommentaryPostResponse from(CommentaryPost commentaryPost, int likeCount) {
+        public static CommentaryPostResponse from(CommentaryPost commentaryPost) {
                 return new CommentaryPostResponse(
-                        commentaryPost.getId(),
-                        commentaryPost.getTitle(),
-                        commentaryPost.getContent(),
+                        PostResponse.from(commentaryPost),
                         commentaryPost.getQuestion().getQuestionSeq(),
-                        UserResponse.from(commentaryPost.getUser()),
-                        MockExamResponse.from(commentaryPost.getQuestion().getMockExam()),
-                        likeCount,
-                        0
+                        MockExamResponse.from(commentaryPost.getQuestion().getMockExam())
                 );
         }
 }

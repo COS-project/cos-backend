@@ -2,14 +2,12 @@ package com.cos.cercat.certificate.domain;
 
 import com.cos.cercat.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@ToString
 @Getter
 public class Certificate extends BaseTimeEntity {
 

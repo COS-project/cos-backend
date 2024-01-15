@@ -6,7 +6,7 @@ import com.cos.cercat.mockExam.dto.request.MockExamResultRequest;
 import com.cos.cercat.mockExam.dto.request.MockExamSearchRequest;
 import com.cos.cercat.mockExam.dto.response.MockExamWithResultResponse;
 import com.cos.cercat.mockExam.dto.response.QuestionResponse;
-import com.cos.cercat.mockExam.app.service.MockExamServiceFacade;
+import com.cos.cercat.mockExam.app.MockExamServiceFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,13 +25,10 @@ public class MockExamController {
     @GetMapping
     @Operation(summary = "년도별 모의고사 가져오기")
     public Response<List<MockExamWithResultResponse>> getMockExamList(MockExamSearchRequest request) {
-
-        User user = new User(2L, "강지원2");
-
         List<MockExamWithResultResponse> responses = mockExamServiceFacade.getMockExamList(
                 request.certificateId(),
                 request.examYear(),
-                user
+                1L
         );
 
         return Response.success(responses);
@@ -41,8 +38,7 @@ public class MockExamController {
     @Operation(summary = "모의고사 결과 생성")
     public Response<Void> createMockExamResult(@PathVariable Long mockExamId,
                                                @RequestBody MockExamResultRequest request) {
-        User user = new User(2L, "강지원2");
-        mockExamServiceFacade.createMockExamResult(mockExamId, request, user);
+        mockExamServiceFacade.createMockExamResult(mockExamId, request, 1L);
         return Response.success("모의고사 결과 생성 완료");
     }
 

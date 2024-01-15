@@ -1,6 +1,8 @@
 package com.cos.cercat.board.domain;
 
 import com.cos.cercat.certificate.domain.Certificate;
+import com.cos.cercat.comment.domain.PostComment;
+import com.cos.cercat.comment.domain.PostComments;
 import com.cos.cercat.global.entity.BaseTimeEntity;
 import com.cos.cercat.global.entity.Image;
 import com.cos.cercat.user.domain.User;
@@ -8,6 +10,8 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.List;
 
@@ -20,24 +24,28 @@ public class Post extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
 
-    private String title;
+    protected String title;
 
-    private String content;
+    protected String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    protected User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "certificate_id")
-    private Certificate certificate;
+    protected Certificate certificate;
 
     @Embedded
-    private PostImages postImages = new PostImages();
+    protected PostImages postImages = new PostImages();
 
-    private Integer likeCount;
+    @Embedded
+    protected PostComments postComments = new PostComments();
+
+    @ColumnDefault("0")
+    protected Integer likeCount = 0;
 
     public Post(String title, String content, User user, Certificate certificate) {
         this.title = title;
@@ -46,15 +54,16 @@ public class Post extends BaseTimeEntity {
         this.certificate = certificate;
     }
 
-    public void addPostImage(Image image) {
-        this.postImages.addImage(PostImage.of(this, image));
-    }
-
     public void addAllPostImages(List<Image> images) {
         List<PostImage> postImages = images.stream()
                 .map(image -> PostImage.of(this, image))
                 .toList();
 
         this.postImages.addAllImages(postImages);
+    }
+
+    public void addComment(PostComment comment) {
+        comment.setPost(this);
+        this.getPostComments().addComment(comment);
     }
 }

@@ -1,7 +1,11 @@
 package com.cos.cercat.board.repository;
 
 import com.cos.cercat.board.domain.CommentaryPost;
+import com.cos.cercat.board.domain.QPost;
 import com.cos.cercat.certificate.domain.Certificate;
+import com.cos.cercat.certificate.domain.QCertificate;
+import com.cos.cercat.mockExam.domain.QMockExam;
+import com.cos.cercat.mockExam.domain.QQuestion;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -17,6 +21,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static com.cos.cercat.board.domain.QCommentaryPost.*;
+import static com.cos.cercat.certificate.domain.QCertificate.*;
+import static com.cos.cercat.mockExam.domain.QMockExam.*;
+import static com.cos.cercat.mockExam.domain.QQuestion.*;
 import static com.cos.cercat.user.domain.QUser.*;
 
 @Repository
@@ -27,9 +34,16 @@ public class CommentaryPostRepositoryImpl implements CommentaryPostRepositoryCus
 
     @Override
     public Slice<CommentaryPost> searchCommentaryPosts(Pageable pageable, Certificate certificate, String keyword) {
-        List<CommentaryPost> contents = queryFactory.select(commentaryPost)
+        List<CommentaryPost> contents = queryFactory
+                .select(commentaryPost)
                 .from(commentaryPost)
                 .leftJoin(commentaryPost.user, user)
+                .fetchJoin()
+                .leftJoin(commentaryPost.question, question)
+                .fetchJoin()
+                .leftJoin(commentaryPost.question.mockExam, mockExam)
+                .fetchJoin()
+                .leftJoin(commentaryPost.certificate, QCertificate.certificate)
                 .where(
                         containKeyword(keyword),
                         commentaryPost.certificate.eq(certificate)

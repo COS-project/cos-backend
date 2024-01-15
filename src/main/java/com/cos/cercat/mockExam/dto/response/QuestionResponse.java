@@ -4,7 +4,7 @@ import com.cos.cercat.mockExam.domain.Question;
 
 public record QuestionResponse(
         Long questionId,
-        SubjectResponse subjectResponse,
+        SubjectResponse subject,
         int questionSeq,
         String question_text,
         String option_1,

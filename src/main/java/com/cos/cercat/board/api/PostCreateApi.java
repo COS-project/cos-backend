@@ -6,6 +6,7 @@ import com.cos.cercat.board.dto.request.NormalPostCreateRequest;
 import com.cos.cercat.board.dto.request.TipPostCreateRequest;
 import com.cos.cercat.global.Response;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
+@Tag(name = "게시글 생성 API")
 public class PostCreateApi {
 
     private final PostCreateService postCreateService;
@@ -25,7 +27,7 @@ public class PostCreateApi {
     public Response<Void> createCommentaryPost(@PathVariable Long certificateId,
                                                @RequestPart CommentaryPostCreateRequest request,
                                                @RequestPart List<MultipartFile> images) {
-        postCreateService.createCommentaryPost(certificateId, request, images, null);
+        postCreateService.createCommentaryPost(certificateId, request, images, 1L);
         return Response.success("해설 게시글 생성 완료");
     }
 
@@ -34,7 +36,7 @@ public class PostCreateApi {
     public Response<Void> createTipPost(@PathVariable Long certificateId,
                                         @RequestPart TipPostCreateRequest request,
                                         @RequestPart List<MultipartFile> images) {
-        postCreateService.createTipPost(certificateId, request, images, null);
+        postCreateService.createTipPost(certificateId, request, images, 1L);
         return Response.success("꿀팁 게시글 생성 완료");
     }
 
@@ -43,7 +45,7 @@ public class PostCreateApi {
     public Response<Void> createFreePost(@PathVariable Long certificateId,
                                          @RequestPart NormalPostCreateRequest request,
                                          @RequestPart List<MultipartFile> images) {
-        postCreateService.createNormalPost(certificateId, request, images, null);
+        postCreateService.createNormalPost(certificateId, request, images, 1L);
         return Response.success("자유 게시글 생성 완료");
     }
 }

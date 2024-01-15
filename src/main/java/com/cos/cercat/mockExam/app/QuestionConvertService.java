@@ -1,5 +1,6 @@
-package com.cos.cercat.mockExam.app.service;
+package com.cos.cercat.mockExam.app;
 
+import com.cos.cercat.mockExam.domain.Subject;
 import com.cos.cercat.mockExam.dto.MockExamInfoDTO;
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.mockExam.util.ObjectMapper;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,6 +26,7 @@ public class QuestionConvertService {
     private final ObjectMapper objectMapperService;
     private final QuestionRepository questionRepository;
     private final MockExamRepository mockExamRepository;
+    private final SubjectService subjectService;
 
     public static final String CORRECT_ANSWER = "정답";
 
@@ -32,6 +35,7 @@ public class QuestionConvertService {
 
         MockExamInfoDTO mockExamInfoDTO = objectMapperService.jsonToQuestionMap(certificate, json);
         MockExam mockExam = mockExamRepository.save(MockExam.of(mockExamInfoDTO.mockExamDTO()));
+        List<Subject> subjectList = subjectService.getSubjectList(certificate);
 
         mockExamInfoDTO.questions().forEach((title, content) -> {
 
@@ -42,15 +46,23 @@ public class QuestionConvertService {
 
                 question.setSeqAndTitle(matcher);
 
+                if (question.getQuestionSeq() <= 20) {
+                    question.setSubject(subjectList.get(0));
+                } else if (question.getQuestionSeq() <= 40) {
+                    question.setSubject(subjectList.get(1));
+                } else {
+                    question.setSubject(subjectList.get(2));
+                }
+
+
                 for (String option : content) {
                     question.setOption(option);
                 }
 
                 String answer = mockExamInfoDTO.getCorrectAnswerViaSeq(question.getQuestionSeq());
                 question.setCorrectOption(answer);
+                questionRepository.save(question);
             }
-
-            questionRepository.save(question);
         });
     }
 

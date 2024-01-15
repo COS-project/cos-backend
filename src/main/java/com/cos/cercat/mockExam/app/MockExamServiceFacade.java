@@ -1,7 +1,8 @@
-package com.cos.cercat.mockExam.app.service;
+package com.cos.cercat.mockExam.app;
 
 import com.cos.cercat.certificate.app.CertificateService;
 import com.cos.cercat.mockExam.domain.*;
+import com.cos.cercat.user.app.UserService;
 import com.cos.cercat.user.domain.User;
 import com.cos.cercat.mockExam.dto.request.MockExamResultRequest;
 import com.cos.cercat.mockExam.dto.request.SubjectResultRequest;
@@ -26,6 +27,7 @@ public class MockExamServiceFacade {
     private final MockExamService mockExamService;
     private final QuestionService questionService;
     private final SubjectService subjectService;
+    private final UserService userService;
     private final CertificateService certificateService;
 
     /**
@@ -34,13 +36,14 @@ public class MockExamServiceFacade {
      *
      * @param certificateId 자격증 고유 ID
      * @param examYear 시험년도
-     * @param user 로그인한 유저
+     * @param userId 로그인한 유저
      * */
     @Transactional(readOnly = true)
-    public List<MockExamWithResultResponse> getMockExamList(Long certificateId, Integer examYear, User user) {
+    public List<MockExamWithResultResponse> getMockExamList(Long certificateId, Integer examYear, Long userId) {
         List<MockExamWithResultResponse> resultResponses = new ArrayList<>();
 
         List<MockExam> mockExamList = mockExamService.getMockExamList(certificateService.getCertificate(certificateId), examYear);
+        User user = userService.getUser(userId);
 
         for (MockExam mockExam : mockExamList) {
             List<MockExamResult> userMockExamResults = mockExamResultService.getUserMockExamResults(mockExam, user);
@@ -71,10 +74,11 @@ public class MockExamServiceFacade {
      *
      * @param mockExamId 모의고사 고유 ID
      * @param request 모의고사 채점 결과
-     * @param user 유저 정보
+     * @param userId 유저 정보
      * */
     @Transactional
-    public void createMockExamResult(Long mockExamId, MockExamResultRequest request, User user) {
+    public void createMockExamResult(Long mockExamId, MockExamResultRequest request, Long userId) {
+        User user = userService.getUser(userId);
         MockExam mockExam = mockExamService.getMockExamById(mockExamId);
         int beforeRound = mockExamResultService.getMockExamResultsCount(mockExam, user);
 
@@ -89,7 +93,7 @@ public class MockExamServiceFacade {
         List<SubjectResult> subjectResultList = new ArrayList<>();
 
         for (SubjectResultRequest subjectResultRequest : request.subjectResultRequests()) {
-            Subject subject = subjectService.getSubjectById(subjectResultRequest.subjectId());
+            Subject subject = subjectService.getSubject(subjectResultRequest.subjectId());
 
             SubjectResult subjectResult = subjectResultRequest.toEntity(subject);
             subjectResult.addAllUserAnswers(toUserAnswerEntities(user, subjectResultRequest.userAnswerRequests()));

@@ -1,4 +1,4 @@
-package com.cos.cercat.mockExam.app.service;
+package com.cos.cercat.mockExam.app;
 
 import com.cos.cercat.mockExam.domain.MockExam;
 import com.cos.cercat.mockExam.domain.MockExamResult;
