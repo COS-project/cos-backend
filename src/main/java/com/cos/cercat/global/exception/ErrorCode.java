@@ -11,6 +11,8 @@ public enum ErrorCode {
     MOCK_EXAM_NOT_FOUND(HttpStatus.NOT_FOUND, "mock exam not founded"),
     POST_NOT_FOUND(HttpStatus.NOT_FOUND, "post not founded"),
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "user not founded"),
+    COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "comment not founded"),
+    UNKNOWN_POST_TYPE(HttpStatus.BAD_REQUEST, "post type unknown"),
     SUBJECT_NOT_FOUND(HttpStatus.NOT_FOUND, "subject not founded"),
     CERTIFICATE_NOT_FOUND(HttpStatus.NOT_FOUND, "certificate not founded"),
     QUESTION_NOT_FOUND(HttpStatus.NOT_FOUND, "question not founded"),

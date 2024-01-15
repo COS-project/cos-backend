@@ -14,7 +14,7 @@ import java.util.List;
 public class ChildPostComments {
 
     @OrderBy("createdAt ASC")
-    @OneToMany(mappedBy = "parentCommentId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "parentCommentId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PostComment> childPostComments = new ArrayList<>();
 
     public void addChildComment(PostComment child) {

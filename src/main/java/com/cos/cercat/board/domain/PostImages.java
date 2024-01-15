@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 public class PostImages {
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PostImage> postImages = new ArrayList<>();
 
     public void addImage(PostImage postImage) {
@@ -24,6 +24,14 @@ public class PostImages {
 
     public void addAllImages(List<PostImage> postImages) {
         this.postImages.addAll(postImages);
+    }
+
+    public List<String> getImageUrls() {
+        return this.postImages.stream().map(postImage -> postImage.getImage().getImageUrl()).toList();
+    }
+
+    public String getThumbnailImageUrl() {
+        return getImageUrls().stream().findFirst().orElse("");
     }
 
 }

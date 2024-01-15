@@ -23,4 +23,5 @@ public class NormalPost extends Post {
                 certificate
         );
     }
+
 }

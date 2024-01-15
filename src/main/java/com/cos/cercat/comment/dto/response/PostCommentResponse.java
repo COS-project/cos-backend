@@ -2,12 +2,16 @@ package com.cos.cercat.comment.dto.response;
 
 import com.cos.cercat.comment.domain.PostComment;
 import com.cos.cercat.user.dto.response.UserResponse;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.*;
+
+@JsonInclude(Include.NON_NULL)
 public record PostCommentResponse(
         Long postCommentId,
         UserResponse user,

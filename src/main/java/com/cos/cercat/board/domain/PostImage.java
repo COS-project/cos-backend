@@ -21,7 +21,7 @@ public class PostImage {
     @Setter
     private Post post;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "image_id")
     private Image image;

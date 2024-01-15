@@ -42,12 +42,16 @@ public class PostComment extends BaseTimeEntity {
         this.content = content;
     }
 
-    public static PostComment of(User user, Post post, Long parentCommentId, String content) {
+    public static PostComment of(User user, Post post, String content) {
         return new PostComment(user, post, null, content);
     }
 
     public void addChildComment(PostComment child) {
         child.setParentCommentId(this.getId());
         this.getChildPostComments().addChildComment(child);
+    }
+
+    public boolean isAuthorized(User user) {
+        return this.user.equals(user);
     }
 }

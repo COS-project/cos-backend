@@ -12,7 +12,7 @@ import lombok.*;
 @Getter
 public class CommentaryPost extends Post {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "question_id")
     private Question question;
 
@@ -30,11 +30,7 @@ public class CommentaryPost extends Post {
                 question);
     }
 
-    public CommentaryPost update(String title, String content, Question question) {
-        this.title = title;
-        this.content = content;
+    public void updateQuestion(Question question) {
         this.question = question;
-
-        return this;
     }
 }

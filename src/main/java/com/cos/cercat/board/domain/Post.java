@@ -10,7 +10,6 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.util.List;
@@ -34,7 +33,7 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     protected User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REMOVE, optional = true)
     @JoinColumn(name = "certificate_id")
     protected Certificate certificate;
 
@@ -66,4 +65,15 @@ public class Post extends BaseTimeEntity {
         comment.setPost(this);
         this.getPostComments().addComment(comment);
     }
+
+    public void updatePostInfo(String title, String content, List<Image> images) {
+        this.title = title;
+        this.content = content;
+        addAllPostImages(images);
+    }
+
+    public boolean isAuthorized(User user) {
+        return this.user.equals(user);
+    }
+
 }

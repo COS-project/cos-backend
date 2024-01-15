@@ -38,4 +38,11 @@ public class User {
     public User(String username) {
         this.username = username;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User that)) return false;
+        return this.getId() != null && this.getId().equals(that.getId());
+    }
 }
