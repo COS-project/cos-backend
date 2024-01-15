@@ -53,6 +53,14 @@ public class Post extends BaseTimeEntity {
         this.certificate = certificate;
     }
 
+    public void increaseLikeCount() {
+        this.likeCount++;
+    }
+
+    public void decreaseLikeCount() {
+        this.likeCount--;
+    }
+
     public void addAllPostImages(List<Image> images) {
         List<PostImage> postImages = images.stream()
                 .map(image -> PostImage.of(this, image))

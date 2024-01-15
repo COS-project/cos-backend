@@ -1,5 +1,6 @@
 package com.cos.cercat.comment.app;
 
+import com.cos.cercat.board.domain.Post;
 import com.cos.cercat.comment.domain.PostComment;
 import com.cos.cercat.comment.repository.PostCommentRepository;
 import com.cos.cercat.global.exception.CustomException;
@@ -29,4 +30,10 @@ public class PostCommentService {
             postCommentRepository.delete(postComment);
         }
     }
+
+    public PostComment getPostCommentWithLock(Long commentId) {
+        return postCommentRepository.findByIdWithPessimisticLock(commentId).orElseThrow(() ->
+                new CustomException(ErrorCode.COMMENT_NOT_FOUND));
+    }
+
 }

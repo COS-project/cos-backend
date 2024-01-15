@@ -21,6 +21,11 @@ public class PostService {
         return postRepository.findById(postId).orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
     }
 
+    public Post getPostWithLock(Long postId) {
+        return postRepository.findByIdWithPessimisticLock(postId).orElseThrow(() ->
+                new CustomException(ErrorCode.POST_NOT_FOUND));
+    }
+
     public void deletePost(Long postId) {
         postRepository.delete(getPost(postId));
     }

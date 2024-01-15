@@ -5,6 +5,7 @@ import com.cos.cercat.global.entity.BaseTimeEntity;
 import com.cos.cercat.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 
 @Entity
@@ -29,6 +30,9 @@ public class PostComment extends BaseTimeEntity {
     @Setter
     private Long parentCommentId;
 
+    @ColumnDefault("0")
+    private Integer likeCount;
+
     @Embedded
     private ChildPostComments childPostComments = new ChildPostComments();
 
@@ -44,6 +48,14 @@ public class PostComment extends BaseTimeEntity {
 
     public static PostComment of(User user, Post post, String content) {
         return new PostComment(user, post, null, content);
+    }
+
+    public void increaseLikeCount() {
+        this.likeCount++;
+    }
+
+    public void decreaseLikeCount() {
+        this.likeCount--;
     }
 
     public void addChildComment(PostComment child) {
