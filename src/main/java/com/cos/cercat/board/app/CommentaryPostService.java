@@ -1,7 +1,6 @@
 package com.cos.cercat.board.app;
 
 import com.cos.cercat.board.domain.CommentaryPost;
-import com.cos.cercat.board.dto.request.CommentaryPostUpdateRequest;
 import com.cos.cercat.board.repository.CommentaryPostRepository;
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.global.entity.Image;
@@ -9,13 +8,11 @@ import com.cos.cercat.global.exception.CustomException;
 import com.cos.cercat.global.exception.ErrorCode;
 import com.cos.cercat.mockExam.domain.Question;
 import com.cos.cercat.user.domain.User;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
