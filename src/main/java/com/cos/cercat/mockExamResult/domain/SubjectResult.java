@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -30,21 +29,30 @@ public class SubjectResult {
     @JoinColumn(name = "subject_id")
     private Subject subject;
 
-    @OneToMany(mappedBy = "subjectResult", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<UserAnswer> userAnswers = new ArrayList<>();
+    private UserAnswers userAnswers = new UserAnswers();
 
-    private int score;
+    private Integer score;
 
-    public SubjectResult(Subject subject, int score) {
+    private Integer numberOfCorrect;
+
+    private Long totalTakenTime;
+
+    private Integer correctRate;
+
+    public SubjectResult(Subject subject, Integer score, Integer numberOfCorrect, Long totalTakenTime, Integer correctRate, UserAnswers userAnswers) {
         this.subject = subject;
         this.score = score;
+        this.numberOfCorrect = numberOfCorrect;
+        this.totalTakenTime = totalTakenTime;
+        this.correctRate = correctRate;
+        setUserAnswers(userAnswers);
     }
 
-    public SubjectResult addAllUserAnswers(List<UserAnswer> userAnswers) {
-        for (UserAnswer userAnswer : userAnswers) {
+    private void setUserAnswers(UserAnswers userAnswers) {
+        for (UserAnswer userAnswer : userAnswers.getUserAnswers()) {
             userAnswer.setSubjectResult(this);
         }
-        this.userAnswers.addAll(userAnswers);
-        return this;
+        this.userAnswers = userAnswers;
     }
+
 }

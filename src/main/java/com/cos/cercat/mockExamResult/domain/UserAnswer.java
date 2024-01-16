@@ -34,18 +34,9 @@ public class UserAnswer {
 
     private String selectOption;
 
-    private long takenTime;
+    private Long takenTime;
 
-    private boolean is_correct;
-
-    public UserAnswer(User user, SubjectResult subjectResult, Question question, String selectOption, long takenTime, boolean is_correct) {
-        this.user = user;
-        this.subjectResult = subjectResult;
-        this.question = question;
-        this.selectOption = selectOption;
-        this.takenTime = takenTime;
-        this.is_correct = is_correct;
-    }
+    private Boolean is_correct;
 
     private UserAnswer(User user, Question question, String selectOption, long takenTime, boolean is_correct) {
         this.user = user;

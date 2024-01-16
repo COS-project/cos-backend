@@ -67,7 +67,7 @@ public class Post extends BaseTimeEntity {
                 .map(image -> PostImage.of(this, image))
                 .toList();
 
-        this.postImages.addAllImages(postImages);
+        this.postImages.addAll(postImages);
     }
 
     public void addComment(PostComment comment) {

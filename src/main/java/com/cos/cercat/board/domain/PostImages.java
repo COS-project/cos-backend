@@ -4,9 +4,7 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +16,7 @@ public class PostImages {
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PostImage> postImages = new ArrayList<>();
 
-    public void addImage(PostImage postImage) {
-        this.postImages.add(postImage);
-    }
-
-    public void addAllImages(List<PostImage> postImages) {
+    public void addAll(List<PostImage> postImages) {
         this.postImages.addAll(postImages);
     }
 

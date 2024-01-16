@@ -6,9 +6,8 @@ import com.cos.cercat.mockExam.app.MockExamService;
 import com.cos.cercat.mockExam.app.QuestionService;
 import com.cos.cercat.mockExam.domain.*;
 import com.cos.cercat.mockExam.domain.Question;
-import com.cos.cercat.mockExamResult.domain.MockExamResult;
-import com.cos.cercat.mockExamResult.domain.SubjectResult;
-import com.cos.cercat.mockExamResult.domain.UserAnswer;
+import com.cos.cercat.mockExamResult.domain.*;
+import com.cos.cercat.mockExamResult.dto.response.MockExamResultResponse;
 import com.cos.cercat.user.app.UserService;
 import com.cos.cercat.user.domain.User;
 import com.cos.cercat.mockExamResult.dto.request.MockExamResultRequest;
@@ -40,36 +39,37 @@ public class MockExamResultCreateService {
      * @param userId 유저 정보
      * */
     @Transactional
-    public void createMockExamResult(Long mockExamId, MockExamResultRequest request, Long userId) {
+    public MockExamResultResponse createMockExamResult(Long mockExamId, MockExamResultRequest request, Long userId) {
         User user = userService.getUser(userId);
-        MockExam mockExam = mockExamService.getMockExamById(mockExamId);
+        MockExam mockExam = mockExamService.getMockExam(mockExamId);
         int beforeRound = mockExamResultService.getMockExamResultsCount(mockExam, user);
+        SubjectResults subjectResults = toSubjectResults(request, user);
+        MockExamResult mockExamResult = MockExamResult.of(mockExam, user, beforeRound + 1, subjectResults);
 
-        MockExamResult mockExamResult = MockExamResult.of(mockExam, user, beforeRound + 1);
+        MockExamResult saved = mockExamResultService.save(mockExamResult);
 
-        mockExamResult.addAllSubjectResults(toSubjectResults(request, user));
-
-        mockExamResultService.save(mockExamResult);
+        return MockExamResultResponse.from(saved);
     }
 
-    private List<SubjectResult> toSubjectResults(MockExamResultRequest request, User user) {
+    private SubjectResults toSubjectResults(MockExamResultRequest request, User user) {
 
-        return request.subjectResultRequests().stream()
+        return SubjectResults.from(request.subjectResultRequests().stream()
                 .map(subjectResultRequest -> toSubjectResult(user, subjectResultRequest))
-                .toList();
+                .toList());
     }
 
     private SubjectResult toSubjectResult(User user, SubjectResultRequest subjectResultRequest) {
         Subject subject = subjectService.getSubject(subjectResultRequest.subjectId());
-        SubjectResult subjectResult = subjectResultRequest.toEntity(subject);
-        return subjectResult.addAllUserAnswers(toUserAnswers(user, subjectResultRequest.userAnswerRequests()));
+        UserAnswers userAnswers = toUserAnswers(user, subjectResultRequest.userAnswerRequests());
+
+        return subjectResultRequest.toEntity(subject, userAnswers);
     }
 
-    private List<UserAnswer> toUserAnswers(User user, List<UserAnswerRequest> requests) {
+    private UserAnswers toUserAnswers(User user, List<UserAnswerRequest> requests) {
 
-        return requests.stream()
+        return UserAnswers.from(requests.stream()
                 .map(userAnswerRequest -> toUserAnswer(user, userAnswerRequest))
-                .toList();
+                .toList());
     }
 
     private UserAnswer toUserAnswer(User user, UserAnswerRequest userAnswerRequest) {

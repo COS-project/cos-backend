@@ -29,9 +29,9 @@ public class Subject extends BaseTimeEntity {
 
     private String subjectName;
 
-    private int numberOfQuestions;
+    private Integer numberOfQuestions;
 
-    private int totalScore;
+    private Integer totalScore;
 
     private Subject(Certificate certificate, String subjectName, int numberOfQuestions, int totalScore) {
         this.certificate = certificate;

@@ -18,18 +18,18 @@ public class MockExamService {
 
     private final MockExamRepository mockExamRepository;
 
-    public MockExam getMockExamById(Long mockExamId) {
+    public MockExam getMockExam(Long mockExamId) {
         return mockExamRepository.findById(mockExamId).orElseThrow(() ->
                 new CustomException(ErrorCode.MOCK_EXAM_NOT_FOUND));
+    }
+
+    public MockExam getMockExam(Certificate certificate, Integer year, Integer round) {
+        return mockExamRepository.findMockExamByCertificateAndExamYearAndRound(certificate, year, round);
     }
 
     public List<MockExam> getMockExamList(Certificate certificate, Integer year) {
         return mockExamRepository.findMockExamByCertificateAndExamYear(certificate, year);
 
-    }
-
-    public MockExam getMockExam(Certificate certificate, Integer year, Integer round) {
-        return mockExamRepository.findMockExamByCertificateAndExamYearAndRound(certificate, year, round);
     }
 
 }

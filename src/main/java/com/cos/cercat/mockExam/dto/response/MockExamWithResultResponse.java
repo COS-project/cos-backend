@@ -4,6 +4,8 @@ import com.cos.cercat.mockExam.domain.MockExam;
 import com.cos.cercat.mockExamResult.domain.MockExamResult;
 import com.cos.cercat.certificate.domain.Subject;
 import com.cos.cercat.mockExamResult.domain.SubjectResult;
+import com.cos.cercat.mockExamResult.dto.response.MockExamResultResponse;
+import com.cos.cercat.mockExamResult.dto.response.SubjectResultResponse;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
@@ -11,12 +13,11 @@ import java.util.List;
 import static com.fasterxml.jackson.annotation.JsonInclude.*;
 
 public record MockExamWithResultResponse(
+        Long mockExamId,
         Integer round,
         Boolean isTake,
         @JsonInclude(Include.NON_NULL)
-        Integer totalScore,
-        @JsonInclude(Include.NON_NULL)
-        Integer score
+        MockExamResultResponse recentMockExamResultResponse
 ) {
 
     public static MockExamWithResultResponse from(MockExam mockExam, List<MockExamResult> mockExamResults) {
@@ -24,15 +25,10 @@ public record MockExamWithResultResponse(
         boolean isTake = !mockExamResults.isEmpty();
 
         return new MockExamWithResultResponse(
+                mockExam.getId(),
                 mockExam.getRound(),
                 isTake,
-                (isTake) ? mockExamResults.get(0).getSubjectResults().stream()
-                        .map(SubjectResult::getSubject)
-                        .map(Subject::getTotalScore)
-                        .reduce(0, Integer::sum) : null,
-                (isTake) ? mockExamResults.get(0).getSubjectResults().stream()
-                        .map(SubjectResult::getScore)
-                        .reduce(0, Integer::sum) : null
+                (isTake) ? MockExamResultResponse.from(mockExamResults.get(0)) : null
         );
     }
 }

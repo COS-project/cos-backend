@@ -1,8 +1,10 @@
 package com.cos.cercat.mockExamResult.api;
 
 import com.cos.cercat.global.Response;
+import com.cos.cercat.mockExamResult.domain.MockExamResult;
 import com.cos.cercat.mockExamResult.dto.request.MockExamResultRequest;
 import com.cos.cercat.mockExamResult.app.MockExamResultCreateService;
+import com.cos.cercat.mockExamResult.dto.response.MockExamResultResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -17,13 +19,11 @@ public class MockExamResultCreateApi {
 
     private final MockExamResultCreateService mockExamResultCreateService;
 
-
-
     @PostMapping("/mock-exams/{mockExamId}/results")
-    @Operation(summary = "모의고사 결과 생성")
-    public Response<Void> createMockExamResult(@PathVariable Long mockExamId,
-                                               @RequestBody MockExamResultRequest request) {
-        mockExamResultCreateService.createMockExamResult(mockExamId, request, 1L);
-        return Response.success("모의고사 결과 생성 완료");
+    @Operation(summary = "모의고사 결과 생성 및 반환")
+    public Response<MockExamResultResponse> createMockExamResult(@PathVariable Long mockExamId,
+                                                                 @RequestBody MockExamResultRequest request) {
+
+        return Response.success(mockExamResultCreateService.createMockExamResult(mockExamId, request, 1L));
     }
 }

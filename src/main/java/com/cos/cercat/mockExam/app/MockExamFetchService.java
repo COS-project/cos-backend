@@ -44,7 +44,7 @@ public class MockExamFetchService {
         User user = userService.getUser(userId);
 
         for (MockExam mockExam : mockExamList) {
-            List<MockExamResult> userMockExamResults = mockExamResultService.getUserMockExamResults(mockExam, user);
+            List<MockExamResult> userMockExamResults = mockExamResultService.getMockExamResults(mockExam, user);
             resultResponses.add(MockExamWithResultResponse.from(mockExam, userMockExamResults));
         }
         resultResponses.sort(Comparator.comparing(MockExamWithResultResponse::round));
@@ -60,7 +60,7 @@ public class MockExamFetchService {
     @Transactional(readOnly = true)
     public List<QuestionResponse> getQuestionList(Long mockExamId) {
 
-        MockExam mockExam = mockExamService.getMockExamById(mockExamId);
+        MockExam mockExam = mockExamService.getMockExam(mockExamId);
 
         return questionService.getQuestionListByMockExam(mockExam).stream()
                 .map(QuestionResponse::from)

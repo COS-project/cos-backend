@@ -1,5 +1,7 @@
 package com.cos.cercat.mockExamResult.app;
 
+import com.cos.cercat.global.exception.CustomException;
+import com.cos.cercat.global.exception.ErrorCode;
 import com.cos.cercat.mockExam.domain.MockExam;
 import com.cos.cercat.mockExamResult.domain.MockExamResult;
 import com.cos.cercat.user.domain.User;
@@ -18,18 +20,23 @@ public class MockExamResultService {
 
     private final MockExamResultRepository mockExamResultRepository;
 
-    public List<MockExamResult> getUserMockExamResults(MockExam mockExam, User user) {
+    public List<MockExamResult> getMockExamResults(MockExam mockExam, User user) {
 
         return mockExamResultRepository.findMockExamResultByMockExamAndUser(mockExam, user).stream()
                 .sorted(Comparator.comparing(MockExamResult::getCreatedAt).reversed())
                 .toList();
     }
 
-    public void save(MockExamResult mockExamResult) {
-        mockExamResultRepository.save(mockExamResult);
+    public MockExamResult save(MockExamResult mockExamResult) {
+        return mockExamResultRepository.save(mockExamResult);
     }
 
     public int getMockExamResultsCount(MockExam mockExam, User user) {
         return mockExamResultRepository.countMockExamResultsByMockExamAndUser(mockExam, user);
+    }
+
+    public MockExamResult getMockExamResult(Long mockExamResultId) {
+        return mockExamResultRepository.findById(mockExamResultId).orElseThrow(() ->
+                new CustomException(ErrorCode.MOCK_EXAM_RESULT_NOT_FOUND));
     }
 }

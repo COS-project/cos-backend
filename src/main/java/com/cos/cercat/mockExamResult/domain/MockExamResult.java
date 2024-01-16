@@ -7,7 +7,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,29 +27,31 @@ public class MockExamResult extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "mockExamResult", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<SubjectResult> subjectResults = new ArrayList<>();
+    @Embedded
+    private SubjectResults subjectResults = new SubjectResults();
 
-    private int round; //유저가 모의고사를 푼 횟수
+    private Integer round; //유저가 모의고사를 푼 횟수
 
-    private MockExamResult(MockExam mockExam, User user, int round) {
+    private MockExamResult(MockExam mockExam, User user, Integer round, SubjectResults subjectResults) {
         this.mockExam = mockExam;
         this.user = user;
         this.round = round;
+        setSubjectResults(subjectResults);
     }
 
-    public static MockExamResult of(MockExam mockExam, User user, int round) {
+    public static MockExamResult of(MockExam mockExam, User user, Integer round, SubjectResults subjectResults) {
         return new MockExamResult(
                 mockExam,
                 user,
-                round
+                round,
+                subjectResults
         );
     }
 
-    public void addAllSubjectResults(List<SubjectResult> subjectResults) {
-        for (SubjectResult subjectResult : subjectResults) {
+    private void setSubjectResults(SubjectResults subjectResults) {
+        for (SubjectResult subjectResult : subjectResults.getSubjectResults()) {
             subjectResult.setMockExamResult(this);
         }
-        this.subjectResults.addAll(subjectResults);
+        this.subjectResults = subjectResults;
     }
 }
