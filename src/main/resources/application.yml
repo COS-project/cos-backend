@@ -11,19 +11,6 @@ spring:
           encoded-key: ${GCS_KEY}
         project-id: ${GCP_PROJECT_ID}
         bucket: ${BUCKET_NAME}
-  datasource:
-    url: jdbc:h2:tcp://localhost/~/cercat_test
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
-  jpa:
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        format_sql: true
-        default_batch_fetch_size: 100
-
 logging:
   level:
     org:
@@ -32,7 +19,4 @@ logging:
           jdbc:
             bind: trace
         SQL: debug
-
-server:
-  port: 8081
 
