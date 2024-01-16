@@ -20,7 +20,7 @@ public class PostCommentCreateApi {
     @Operation(summary = "댓글 생성")
     public Response<Void> createPostComment(@PathVariable Long postId,
                                             @RequestBody PostCommentCreateRequest request) {
-        postCommentCreateService.createPostComment(request, 1L);
+        postCommentCreateService.createPostComment(postId, request, 1L);
         return Response.success("댓글 생성 성공");
     }
 }
