@@ -5,7 +5,6 @@ import com.cos.cercat.comment.domain.PostComment;
 import com.cos.cercat.user.domain.User;
 
 public record PostCommentCreateRequest(
-        Long postId,
         Long parentCommentId,
         String content
 ) {

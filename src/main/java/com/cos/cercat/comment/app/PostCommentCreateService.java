@@ -21,8 +21,8 @@ public class PostCommentCreateService {
     private final PostService postService;
 
     @Transactional
-    public void createPostComment(PostCommentCreateRequest request, Long userId) {
-        Post post = postService.getPost(request.postId());
+    public void createPostComment(Long postId, PostCommentCreateRequest request, Long userId) {
+        Post post = postService.getPost(postId);
         User user = userService.getUser(userId);
 
         PostComment postComment = request.toEntity(post, user);
