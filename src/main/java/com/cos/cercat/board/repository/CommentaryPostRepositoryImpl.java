@@ -1,7 +1,7 @@
 package com.cos.cercat.board.repository;
 
 import com.cos.cercat.board.domain.CommentaryPost;
-import com.cos.cercat.board.util.PagingUtil;
+import com.cos.cercat.global.util.PagingUtil;
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.certificate.domain.QCertificate;
 import com.querydsl.core.types.OrderSpecifier;

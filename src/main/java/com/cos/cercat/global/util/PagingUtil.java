@@ -1,4 +1,4 @@
-package com.cos.cercat.board.util;
+package com.cos.cercat.global.util;
 
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;

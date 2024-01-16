@@ -24,12 +24,13 @@ public class MockExamFetchApi {
 
     private final MockExamFetchService mockExamFetchService;
 
-    @GetMapping("/mock-exams")
+    @GetMapping("/{certificateId}/mock-exams")
     @Operation(summary = "년도별 모의고사 가져오기")
-    public Response<List<MockExamWithResultResponse>> getMockExamList(MockExamSearchRequest request) {
+    public Response<List<MockExamWithResultResponse>> getMockExamList(@PathVariable Long certificateId,
+                                                                      Integer examYear) {
         List<MockExamWithResultResponse> responses = mockExamFetchService.getMockExamList(
-                request.certificateId(),
-                request.examYear(),
+                certificateId,
+                examYear,
                 1L
         );
 
