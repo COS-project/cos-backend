@@ -1,0 +1,46 @@
+package com.cos.cercat.mockExam.api;
+
+
+import com.cos.cercat.global.Response;
+import com.cos.cercat.mockExam.app.MockExamFetchService;
+import com.cos.cercat.mockExam.dto.request.MockExamSearchRequest;
+import com.cos.cercat.mockExam.dto.response.MockExamWithResultResponse;
+import com.cos.cercat.mockExam.dto.response.QuestionResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+@Slf4j
+@RequiredArgsConstructor
+@RequestMapping("/api/v1")
+public class MockExamFetchApi {
+
+    private final MockExamFetchService mockExamFetchService;
+
+    @GetMapping("/mock-exams")
+    @Operation(summary = "년도별 모의고사 가져오기")
+    public Response<List<MockExamWithResultResponse>> getMockExamList(MockExamSearchRequest request) {
+        List<MockExamWithResultResponse> responses = mockExamFetchService.getMockExamList(
+                request.certificateId(),
+                request.examYear(),
+                1L
+        );
+
+        return Response.success(responses);
+    }
+
+    @GetMapping("mock-exams/{mockExamId}/questions")
+    @Operation(summary = "모의고사 문제들 가져오기")
+    public Response<List<QuestionResponse>> getQuestionList(@PathVariable Long mockExamId) {
+
+        return Response.success(mockExamFetchService.getQuestionList(mockExamId));
+    }
+
+}

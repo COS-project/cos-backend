@@ -1,8 +1,8 @@
-package com.cos.cercat.mockExam.dto.request;
+package com.cos.cercat.mockExamResult.dto.request;
 
 import com.cos.cercat.user.domain.User;
-import com.cos.cercat.question.domain.Question;
-import com.cos.cercat.mockExam.domain.UserAnswer;
+import com.cos.cercat.mockExam.domain.Question;
+import com.cos.cercat.mockExamResult.domain.UserAnswer;
 
 public record UserAnswerRequest(
         Long questionId,

@@ -1,14 +1,14 @@
-package com.cos.cercat.question.app;
+package com.cos.cercat.mockExam.app;
 
 import com.cos.cercat.certificate.app.SubjectService;
 import com.cos.cercat.certificate.domain.Subject;
 import com.cos.cercat.mockExam.dto.MockExamInfoDTO;
 import com.cos.cercat.certificate.domain.Certificate;
-import com.cos.cercat.question.util.ObjectMapper;
+import com.cos.cercat.mockExam.util.ObjectMapper;
 import com.cos.cercat.mockExam.domain.MockExam;
-import com.cos.cercat.question.domain.Question;
+import com.cos.cercat.mockExam.domain.Question;
 import com.cos.cercat.mockExam.repository.MockExamRepository;
-import com.cos.cercat.question.repository.QuestionRepository;
+import com.cos.cercat.mockExam.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

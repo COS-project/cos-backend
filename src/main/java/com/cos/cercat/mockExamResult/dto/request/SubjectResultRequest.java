@@ -1,7 +1,8 @@
-package com.cos.cercat.mockExam.dto.request;
+package com.cos.cercat.mockExamResult.dto.request;
 
 import com.cos.cercat.certificate.domain.Subject;
-import com.cos.cercat.mockExam.domain.SubjectResult;
+import com.cos.cercat.mockExamResult.domain.SubjectResult;
+import com.cos.cercat.mockExamResult.dto.request.UserAnswerRequest;
 
 import java.util.List;
 

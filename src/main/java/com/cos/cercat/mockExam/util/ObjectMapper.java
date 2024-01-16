@@ -1,4 +1,4 @@
-package com.cos.cercat.question.util;
+package com.cos.cercat.mockExam.util;
 
 
 import com.cos.cercat.certificate.domain.Certificate;

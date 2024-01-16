@@ -1,5 +1,6 @@
-package com.cos.cercat.mockExam.domain;
+package com.cos.cercat.mockExamResult.domain;
 
+import com.cos.cercat.mockExam.domain.MockExam;
 import com.cos.cercat.user.domain.User;
 import com.cos.cercat.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;

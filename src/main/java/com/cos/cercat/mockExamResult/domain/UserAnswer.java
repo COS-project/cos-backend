@@ -1,6 +1,6 @@
-package com.cos.cercat.mockExam.domain;
+package com.cos.cercat.mockExamResult.domain;
 
-import com.cos.cercat.question.domain.Question;
+import com.cos.cercat.mockExam.domain.Question;
 import com.cos.cercat.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

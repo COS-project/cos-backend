@@ -2,7 +2,7 @@
 //
 //import com.cos.cercat.certificate.domain.Certificate;
 //import com.cos.cercat.certificate.repository.CertificateRepository;
-//import com.cos.cercat.question.app.QuestionConvertService;
+//import com.cos.cercat.mockExam.app.QuestionConvertService;
 //import com.cos.cercat.certificate.domain.Subject;
 //import com.cos.cercat.certificate.repository.SubjectRepository;
 //import com.cos.cercat.user.domain.User;

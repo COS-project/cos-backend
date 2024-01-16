@@ -6,7 +6,7 @@ import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.global.entity.Image;
 import com.cos.cercat.global.exception.CustomException;
 import com.cos.cercat.global.exception.ErrorCode;
-import com.cos.cercat.question.domain.Question;
+import com.cos.cercat.mockExam.domain.Question;
 import com.cos.cercat.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -6,7 +6,7 @@ import com.cos.cercat.board.domain.TipPost;
 import com.cos.cercat.comment.domain.PostComment;
 import com.cos.cercat.comment.dto.response.PostCommentResponse;
 import com.cos.cercat.mockExam.dto.response.MockExamResponse;
-import com.cos.cercat.question.dto.response.QuestionResponse;
+import com.cos.cercat.mockExam.dto.response.QuestionResponse;
 import com.cos.cercat.user.dto.response.UserResponse;
 import com.fasterxml.jackson.annotation.JsonInclude;
 

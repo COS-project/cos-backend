@@ -1,9 +1,9 @@
 package com.cos.cercat.mockExam.dto.response;
 
 import com.cos.cercat.mockExam.domain.MockExam;
-import com.cos.cercat.mockExam.domain.MockExamResult;
+import com.cos.cercat.mockExamResult.domain.MockExamResult;
 import com.cos.cercat.certificate.domain.Subject;
-import com.cos.cercat.mockExam.domain.SubjectResult;
+import com.cos.cercat.mockExamResult.domain.SubjectResult;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;

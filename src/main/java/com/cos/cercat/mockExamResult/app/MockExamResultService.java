@@ -1,9 +1,9 @@
-package com.cos.cercat.mockExam.app;
+package com.cos.cercat.mockExamResult.app;
 
 import com.cos.cercat.mockExam.domain.MockExam;
-import com.cos.cercat.mockExam.domain.MockExamResult;
+import com.cos.cercat.mockExamResult.domain.MockExamResult;
 import com.cos.cercat.user.domain.User;
-import com.cos.cercat.mockExam.repository.MockExamResultRepository;
+import com.cos.cercat.mockExamResult.repository.MockExamResultRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

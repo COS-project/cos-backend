@@ -2,7 +2,6 @@ package com.cos.cercat.mockExam.app;
 
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.certificate.repository.CertificateRepository;
-import com.cos.cercat.question.app.QuestionConvertService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

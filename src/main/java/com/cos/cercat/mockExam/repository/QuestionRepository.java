@@ -1,7 +1,7 @@
-package com.cos.cercat.question.repository;
+package com.cos.cercat.mockExam.repository;
 
 import com.cos.cercat.mockExam.domain.MockExam;
-import com.cos.cercat.question.domain.Question;
+import com.cos.cercat.mockExam.domain.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

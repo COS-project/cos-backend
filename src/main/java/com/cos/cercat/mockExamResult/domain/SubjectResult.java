@@ -1,4 +1,4 @@
-package com.cos.cercat.mockExam.domain;
+package com.cos.cercat.mockExamResult.domain;
 
 import com.cos.cercat.certificate.domain.Subject;
 import jakarta.persistence.*;
@@ -40,10 +40,11 @@ public class SubjectResult {
         this.score = score;
     }
 
-    public void addAllUserAnswers(List<UserAnswer> userAnswers) {
+    public SubjectResult addAllUserAnswers(List<UserAnswer> userAnswers) {
         for (UserAnswer userAnswer : userAnswers) {
             userAnswer.setSubjectResult(this);
         }
         this.userAnswers.addAll(userAnswers);
+        return this;
     }
 }

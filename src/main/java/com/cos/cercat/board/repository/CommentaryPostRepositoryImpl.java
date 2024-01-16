@@ -18,7 +18,7 @@ import java.util.List;
 
 import static com.cos.cercat.board.domain.QCommentaryPost.*;
 import static com.cos.cercat.mockExam.domain.QMockExam.mockExam;
-import static com.cos.cercat.question.domain.QQuestion.question;
+import static com.cos.cercat.mockExam.domain.QQuestion.question;
 import static com.cos.cercat.user.domain.QUser.user;
 
 
