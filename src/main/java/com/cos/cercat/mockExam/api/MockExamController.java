@@ -1,11 +1,10 @@
 package com.cos.cercat.mockExam.api;
 
-import com.cos.cercat.user.domain.User;
 import com.cos.cercat.global.Response;
 import com.cos.cercat.mockExam.dto.request.MockExamResultRequest;
 import com.cos.cercat.mockExam.dto.request.MockExamSearchRequest;
 import com.cos.cercat.mockExam.dto.response.MockExamWithResultResponse;
-import com.cos.cercat.mockExam.dto.response.QuestionResponse;
+import com.cos.cercat.question.dto.response.QuestionResponse;
 import com.cos.cercat.mockExam.app.MockExamServiceFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -42,9 +41,5 @@ public class MockExamController {
         return Response.success("모의고사 결과 생성 완료");
     }
 
-    @GetMapping("/{mockExamId}/questions")
-    @Operation(summary = "모의고사 문제들 가져오기")
-    public Response<List<QuestionResponse>> getQuestionList(@PathVariable Long mockExamId) {
-        return Response.success(mockExamServiceFacade.getQuestionList(mockExamId));
-    }
+
 }

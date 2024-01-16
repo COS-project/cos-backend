@@ -1,4 +1,4 @@
-package com.cos.cercat.mockExam.dto;
+package com.cos.cercat.certificate.dto;
 
 import com.cos.cercat.certificate.domain.Certificate;
 

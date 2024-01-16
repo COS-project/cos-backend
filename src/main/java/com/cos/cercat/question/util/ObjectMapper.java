@@ -1,10 +1,10 @@
-package com.cos.cercat.mockExam.util;
+package com.cos.cercat.question.util;
 
 
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.global.exception.CustomException;
 import com.cos.cercat.global.exception.ErrorCode;
-import com.cos.cercat.mockExam.dto.CertificateDTO;
+import com.cos.cercat.certificate.dto.CertificateDTO;
 import com.cos.cercat.mockExam.dto.MockExamInfoDTO;
 import com.cos.cercat.mockExam.dto.MockExamDTO;
 import com.fasterxml.jackson.core.type.TypeReference;

@@ -17,12 +17,13 @@ public record PostCommentResponse(
         UserResponse user,
         LocalDateTime createdAt,
         Long parentCommentId,
+        Integer likeCount,
         String content,
         List<PostCommentResponse> childPostComments
 ) {
 
-    public static PostCommentResponse of(Long id, UserResponse user, LocalDateTime createdAt, Long parentCommentId, String content) {
-        return new PostCommentResponse(id, user, createdAt, parentCommentId, content, new ArrayList<>());
+    public static PostCommentResponse of(Long id, UserResponse user, LocalDateTime createdAt, Long parentCommentId, Integer likeCount, String content) {
+        return new PostCommentResponse(id, user, createdAt, parentCommentId, likeCount, content, new ArrayList<>());
     }
 
     public static PostCommentResponse from(PostComment entity) {
@@ -31,6 +32,7 @@ public record PostCommentResponse(
                 UserResponse.from(entity.getUser()),
                 entity.getCreatedAt(),
                 entity.getParentCommentId(),
+                entity.getLikeCount(),
                 entity.getContent()
         );
     }

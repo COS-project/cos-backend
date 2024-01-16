@@ -33,6 +33,10 @@ public class FileUploader {
     public List<Image> uploadFileInStorage(List<MultipartFile> files) {
         List<Image> images = new ArrayList<>();
 
+        if (files == null) {
+            return images;
+        }
+
         for (MultipartFile file : files) {
             String ext = file.getContentType();
             String uuid = UUID.randomUUID().toString();

@@ -26,7 +26,7 @@ public class PostUpdateApi {
     public Response<Void> updateCommentaryPost(@PathVariable Long certificateId,
                                                @PathVariable PostType postType,
                                                @RequestPart PostUpdateRequest request,
-                                               @RequestPart List<MultipartFile> images) {
+                                               @RequestPart(required = false) List<MultipartFile> images) {
 
         postUpdateService.updatePost(certificateId, postType, request, images, 1L);
 

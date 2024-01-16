@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -75,8 +76,8 @@ public class Post extends BaseTimeEntity {
     }
 
     public void updatePostInfo(String title, String content, List<Image> images) {
-        this.title = title;
-        this.content = content;
+        if (Objects.nonNull(title)) this.title = title;
+        if (Objects.nonNull(content)) this.content = content;
         addAllPostImages(images);
     }
 

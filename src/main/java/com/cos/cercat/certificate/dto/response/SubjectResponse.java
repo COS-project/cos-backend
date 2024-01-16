@@ -1,6 +1,6 @@
-package com.cos.cercat.mockExam.dto.response;
+package com.cos.cercat.certificate.dto.response;
 
-import com.cos.cercat.mockExam.domain.Subject;
+import com.cos.cercat.certificate.domain.Subject;
 
 public record SubjectResponse(
         Long subjectId,

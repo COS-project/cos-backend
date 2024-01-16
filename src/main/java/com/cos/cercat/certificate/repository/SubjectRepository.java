@@ -1,7 +1,7 @@
-package com.cos.cercat.mockExam.repository;
+package com.cos.cercat.certificate.repository;
 
 import com.cos.cercat.certificate.domain.Certificate;
-import com.cos.cercat.mockExam.domain.Subject;
+import com.cos.cercat.certificate.domain.Subject;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

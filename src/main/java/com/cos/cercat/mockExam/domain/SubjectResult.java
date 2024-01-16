@@ -1,5 +1,6 @@
 package com.cos.cercat.mockExam.domain;
 
+import com.cos.cercat.certificate.domain.Subject;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

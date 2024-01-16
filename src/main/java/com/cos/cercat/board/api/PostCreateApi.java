@@ -26,7 +26,7 @@ public class PostCreateApi {
     public Response<Void> createPost(@PathVariable Long certificateId,
                                      @PathVariable PostType postType,
                                      @RequestPart PostCreateRequest request,
-                                     @RequestPart List<MultipartFile> images) {
+                                     @RequestPart(required = false) List<MultipartFile> images) {
         postCreateService.createPost(certificateId, postType, request, images, 1L);
         return Response.success("게시글 생성 완료");
     }

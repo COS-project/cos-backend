@@ -1,4 +1,4 @@
-package com.cos.cercat.mockExam.domain;
+package com.cos.cercat.certificate.domain;
 
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.global.entity.BaseTimeEntity;

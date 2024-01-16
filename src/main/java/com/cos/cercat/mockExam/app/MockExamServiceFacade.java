@@ -1,14 +1,18 @@
 package com.cos.cercat.mockExam.app;
 
 import com.cos.cercat.certificate.app.CertificateService;
+import com.cos.cercat.certificate.app.SubjectService;
+import com.cos.cercat.certificate.domain.Subject;
 import com.cos.cercat.mockExam.domain.*;
+import com.cos.cercat.question.app.QuestionService;
+import com.cos.cercat.question.domain.Question;
 import com.cos.cercat.user.app.UserService;
 import com.cos.cercat.user.domain.User;
 import com.cos.cercat.mockExam.dto.request.MockExamResultRequest;
 import com.cos.cercat.mockExam.dto.request.SubjectResultRequest;
 import com.cos.cercat.mockExam.dto.request.UserAnswerRequest;
 import com.cos.cercat.mockExam.dto.response.MockExamWithResultResponse;
-import com.cos.cercat.mockExam.dto.response.QuestionResponse;
+import com.cos.cercat.question.dto.response.QuestionResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -54,20 +58,6 @@ public class MockExamServiceFacade {
         return resultResponses;
     }
 
-    /**
-     * 모의고사 ID를 통해 특정 모의고사의 모든 문제들을 가져온다.
-     *
-     * @param mockExamId 모의고사 고유 ID
-     * */
-    @Transactional(readOnly = true)
-    public List<QuestionResponse> getQuestionList(Long mockExamId) {
-
-        MockExam mockExam = mockExamService.getMockExamById(mockExamId);
-
-        return questionService.getQuestionListByMockExam(mockExam).stream()
-                .map(QuestionResponse::from)
-                .toList();
-    }
 
     /**
      * 모의고사 ID와 클라이언트에서 채점한 시험결과, 유저정보를 통해 시험 결과를 저장한다.

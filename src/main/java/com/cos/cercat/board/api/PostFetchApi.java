@@ -32,7 +32,7 @@ public class PostFetchApi {
         return Response.success(postFetchService.searchPosts(pageable, postType, certificateId, keyword));
     }
 
-    @GetMapping("/{postType}/{postId}")
+    @GetMapping("/{postType}/posts/{postId}")
     @Operation(summary = "게시글 상세 조회")
     public Response<PostWithCommentsResponse> getCommentaryPostDetail(@PathVariable PostType postType,
                                                                       @PathVariable Long postId) {

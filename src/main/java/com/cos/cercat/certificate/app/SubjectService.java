@@ -1,10 +1,10 @@
-package com.cos.cercat.mockExam.app;
+package com.cos.cercat.certificate.app;
 
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.global.exception.CustomException;
 import com.cos.cercat.global.exception.ErrorCode;
-import com.cos.cercat.mockExam.domain.Subject;
-import com.cos.cercat.mockExam.repository.SubjectRepository;
+import com.cos.cercat.certificate.domain.Subject;
+import com.cos.cercat.certificate.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

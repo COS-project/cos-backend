@@ -55,7 +55,7 @@ public class TipPostService {
         TipPost tipPost = getTipPost(postId);
 
         if (tipPost.isAuthorized(user)) {
-            tipPost.updatePostInfo(title, content,images);
+            tipPost.updatePostInfo(title, content, images);
             return;
         }
 

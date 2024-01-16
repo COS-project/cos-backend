@@ -6,7 +6,7 @@ import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.global.entity.Image;
 import com.cos.cercat.global.exception.CustomException;
 import com.cos.cercat.global.exception.ErrorCode;
-import com.cos.cercat.mockExam.domain.Question;
+import com.cos.cercat.question.domain.Question;
 import com.cos.cercat.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,15 +37,6 @@ public class CommentaryPostService {
         commentaryPostRepository.save(commentaryPost);
     }
 
-    /**
-     * 해설 게시글을 검색하고 페이징한다.
-     *
-     * @param pageable 페이징 요청 객체
-     * @param certificate 게시글이 속한 자격증 엔티티
-     * @param keyword 검색 키워드
-     *
-     * @return Slice 형태의 해설 게시글들을 반환한다.
-     * */
     public Slice<CommentaryPost> searchCommentaryPosts(Pageable pageable, Certificate certificate, String keyword) {
         return commentaryPostRepository.searchPosts(pageable, certificate, keyword);
     }

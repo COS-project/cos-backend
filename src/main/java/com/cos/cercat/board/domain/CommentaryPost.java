@@ -1,7 +1,7 @@
 package com.cos.cercat.board.domain;
 
 import com.cos.cercat.certificate.domain.Certificate;
-import com.cos.cercat.mockExam.domain.Question;
+import com.cos.cercat.question.domain.Question;
 import com.cos.cercat.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
