@@ -4,14 +4,15 @@ import com.cos.cercat.global.Response;
 import com.cos.cercat.mockExamResult.dto.request.MockExamResultRequest;
 import com.cos.cercat.mockExamResult.app.MockExamResultCreateService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
+@Tag(name = "모의고사 결과 생성 API")
 public class MockExamResultCreateApi {
 
     private final MockExamResultCreateService mockExamResultCreateService;
