@@ -5,6 +5,7 @@ import com.cos.cercat.mockExam.domain.Question;
 
 public record QuestionResponse(
         Long questionId,
+        MockExamResponse mockExam,
         SubjectResponse subject,
         int questionSeq,
         String question_text,
@@ -18,6 +19,7 @@ public record QuestionResponse(
     public static QuestionResponse from(Question entity) {
         return new QuestionResponse(
                 entity.getId(),
+                MockExamResponse.from(entity.getMockExam()),
                 SubjectResponse.from(entity.getSubject()),
                 entity.getQuestionSeq(),
                 entity.getQuestion_text(),

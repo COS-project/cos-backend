@@ -29,7 +29,14 @@ public class MockExamService {
 
     public List<MockExam> getMockExamList(Certificate certificate, Integer year) {
         return mockExamRepository.findMockExamByCertificateAndExamYear(certificate, year);
+    }
 
+    public List<Integer> getMockExamYears(Certificate certificate) {
+        return mockExamRepository.findMockExamYearsByCertificate(certificate.getId());
+    }
+
+    public List<Integer> getMockExamRounds(Certificate certificate, Integer examYear) {
+        return mockExamRepository.findMockExamRoundsByCertificateAndExamYear(certificate.getId(), examYear);
     }
 
 }

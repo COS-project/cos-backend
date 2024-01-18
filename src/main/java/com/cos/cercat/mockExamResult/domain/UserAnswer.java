@@ -1,5 +1,6 @@
 package com.cos.cercat.mockExamResult.domain;
 
+import com.cos.cercat.global.entity.BaseTimeEntity;
 import com.cos.cercat.mockExam.domain.Question;
 import com.cos.cercat.user.domain.User;
 import jakarta.persistence.*;
@@ -12,7 +13,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserAnswer {
+public class UserAnswer extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

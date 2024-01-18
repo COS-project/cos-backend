@@ -4,6 +4,7 @@ package com.cos.cercat.mockExam.api;
 import com.cos.cercat.global.Response;
 import com.cos.cercat.mockExam.app.MockExamFetchService;
 import com.cos.cercat.mockExam.dto.request.MockExamSearchRequest;
+import com.cos.cercat.mockExam.dto.response.ExamYearWithRoundsResponse;
 import com.cos.cercat.mockExam.dto.response.MockExamWithResultResponse;
 import com.cos.cercat.mockExam.dto.response.QuestionResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,6 +43,12 @@ public class MockExamFetchApi {
     public Response<List<QuestionResponse>> getQuestionList(@PathVariable Long mockExamId) {
 
         return Response.success(mockExamFetchService.getQuestionList(mockExamId));
+    }
+
+    @GetMapping("/{certificateId}/mock-infos")
+    @Operation(summary = "자격증 ID를 통해 해당 자격증 모의고사의 응시년도 및 회차정보 조회")
+    public Response<ExamYearWithRoundsResponse> getMockExamInfos(@PathVariable Long certificateId) {
+        return Response.success(mockExamFetchService.getMockExamInfoList(certificateId));
     }
 
 }

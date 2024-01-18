@@ -26,7 +26,7 @@ public record SubjectResultRequest(
                 userAnswerRequests.stream()
                         .mapToLong(UserAnswerRequest::takenTime)
                         .sum(),
-                correctCount / subject.getNumberOfQuestions(),
+                (int) ((double) correctCount / subject.getNumberOfQuestions() * 100),
                 userAnswers
         );
     }

@@ -1,7 +1,9 @@
 package com.cos.cercat.mockExam.app;
 
 import com.cos.cercat.certificate.app.CertificateService;
+import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.mockExam.domain.MockExam;
+import com.cos.cercat.mockExam.dto.response.ExamYearWithRoundsResponse;
 import com.cos.cercat.mockExamResult.app.MockExamResultService;
 import com.cos.cercat.mockExamResult.domain.MockExamResult;
 import com.cos.cercat.mockExam.dto.response.MockExamWithResultResponse;
@@ -16,6 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -65,6 +70,19 @@ public class MockExamFetchService {
         return questionService.getQuestionListByMockExam(mockExam).stream()
                 .map(QuestionResponse::from)
                 .toList();
+    }
+
+
+    public ExamYearWithRoundsResponse getMockExamInfoList(Long certificateId) {
+        Certificate certificate = certificateService.getCertificate(certificateId);
+        List<Integer> mockExamYears = mockExamService.getMockExamYears(certificate);
+
+        return ExamYearWithRoundsResponse.from(
+                mockExamYears.stream()
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        mockExamYear -> mockExamService.getMockExamRounds(certificate, mockExamYear)
+                )));
     }
 
 }

@@ -19,11 +19,11 @@ public class UserAnswerService {
     private final UserAnswerRepository userAnswerRepository;
 
     public Slice<UserAnswer> getAllUserAnswers(Pageable pageable, User user, Certificate certificate) {
-        return userAnswerRepository.getUserAnswersByUserAndCertificate(pageable, user, certificate);
+        return userAnswerRepository.getUserAnswersByUserAndCertificate(pageable, user.getId(), certificate.getId());
     }
 
     public Slice<UserAnswer> getUserAnswers(Pageable pageable, MockExamResult mockExamResult) {
-        return userAnswerRepository.getUserAnswersByMockExamResult(pageable, mockExamResult);
+        return userAnswerRepository.getUserAnswersByMockExamResult(pageable, mockExamResult.getId());
     }
 
 }
