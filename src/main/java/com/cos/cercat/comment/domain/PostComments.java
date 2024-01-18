@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Embeddable
-@Getter
 public class PostComments {
 
     @OrderBy("createdAt ASC")
@@ -15,7 +14,11 @@ public class PostComments {
     private List<PostComment> postComments = new ArrayList<>();
 
     public void addComment(PostComment comment) {
-        this.getPostComments().add(comment);
+        this.postComments.add(comment);
+    }
+
+    public List<PostComment> getAll() {
+        return this.postComments;
     }
 
     public int countComments() {

@@ -44,7 +44,7 @@ public record PostWithCommentsResponse(
                 QuestionResponse.from(commentaryPost.getQuestion()),
                 MockExamResponse.from(commentaryPost.getQuestion().getMockExam()),
                 commentaryPost.getCreatedAt(),
-                organizeChildComments(commentaryPost.getPostComments().getPostComments())
+                organizeChildComments(commentaryPost.getPostComments().getAll())
         );
     }
 
@@ -60,7 +60,7 @@ public record PostWithCommentsResponse(
                 null,
                 null,
                 tipPost.getCreatedAt(),
-                organizeChildComments(tipPost.getPostComments().getPostComments())
+                organizeChildComments(tipPost.getPostComments().getAll())
         );
     }
 
@@ -76,7 +76,7 @@ public record PostWithCommentsResponse(
                 null,
                 null,
                 normalPost.getCreatedAt(),
-                organizeChildComments(normalPost.getPostComments().getPostComments())
+                organizeChildComments(normalPost.getPostComments().getAll())
         );
     }
 

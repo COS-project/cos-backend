@@ -2,9 +2,12 @@ package com.cos.cercat.mockExam.domain;
 
 import com.cos.cercat.global.entity.BaseTimeEntity;
 import com.cos.cercat.certificate.domain.Subject;
+import com.cos.cercat.global.entity.Image;
+import com.cos.cercat.mockExam.domain.embededId.QuestionOptionPK;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.regex.Matcher;
 
 @Entity
@@ -12,6 +15,9 @@ import java.util.regex.Matcher;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Question extends BaseTimeEntity {
+
+    private static final int MAX_OPTION_SIZE = 5;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,48 +33,24 @@ public class Question extends BaseTimeEntity {
     @Setter
     private Subject subject;
 
+    @OneToOne
+    @JoinColumn(name = "image_id")
+    @Setter
+    private Image questionImage;
+
     private int questionSeq;
 
-    private String question_text;
+    private String questionText;
 
-    private String option_1;
-
-    private String option_2;
-
-    private String option_3;
-
-    private String option_4;
+    @Embedded
+    private QuestionOptions questionOptions = new QuestionOptions();
 
     private int correct_option;
 
     private int score;
 
-    private Question(int questionSeq, String question_text, String option_1, String option_2, String option_3, String option_4, int correct_option, int score) {
-        this.questionSeq = questionSeq;
-        this.question_text = question_text;
-        this.option_1 = option_1;
-        this.option_2 = option_2;
-        this.option_3 = option_3;
-        this.option_4 = option_4;
-        this.correct_option = correct_option;
-        this.score = score;
-    }
-
     private Question(MockExam mockExam) {
         this.mockExam = mockExam;
-    }
-
-    public Question of(int questionSeq, String question_text, String option_1, String option_2, String option_3, String option_4, int correct_option, int score) {
-        return new Question(
-                questionSeq,
-                question_text,
-                option_1,
-                option_2,
-                option_3,
-                option_4,
-                correct_option,
-                score
-        );
     }
 
     public static Question from(MockExam mockExam) {
@@ -77,19 +59,58 @@ public class Question extends BaseTimeEntity {
         );
     }
 
-    public void setOption(String option) {
+    public void setContent(List<String> content) {
+        if (content.size() <= MAX_OPTION_SIZE) {
+            for (String option : content) {
+                setOption(option);
+            }
+        }
+
+    }
+
+    private void setOption(String option) {
         char number = option.charAt(0);
-        switch ( (int) number) {
-            case 0x2460 -> option_1 = option.substring(1);
-            case 0x2461 -> option_2 = option.substring(1);
-            case 0x2462 -> option_3 = option.substring(1);
-            case 0x2463 -> option_4 = option.substring(1);
+
+        switch ((int) number) {
+            case 0x2460 -> {
+                QuestionOption questionOption = QuestionOption.builder()
+                        .questionOptionPK(QuestionOptionPK.of(this, 1))
+                        .optionContent(option.substring(1))
+                        .optionImage(null)
+                        .build();
+                questionOptions.add(questionOption);
+            }
+            case 0x2461 -> {
+                QuestionOption questionOption = QuestionOption.builder()
+                        .questionOptionPK(QuestionOptionPK.of(this, 2))
+                        .optionContent(option.substring(1))
+                        .optionImage(null)
+                        .build();
+                questionOptions.add(questionOption);
+            }
+            case 0x2462 -> {
+                QuestionOption questionOption = QuestionOption.builder()
+                        .questionOptionPK(QuestionOptionPK.of(this, 3))
+                        .optionContent(option.substring(1))
+                        .optionImage(null)
+                        .build();
+                questionOptions.add(questionOption);
+            }
+            case 0x2463 -> {
+                QuestionOption questionOption = QuestionOption.builder()
+                        .questionOptionPK(QuestionOptionPK.of(this, 4))
+                        .optionContent(option.substring(1))
+                        .optionImage(null)
+                        .build();
+                questionOptions.add(questionOption);
+            }
             case 0x0040 -> score = Integer.parseInt(option.substring(1));
-            default -> {}
         }
     }
 
-
+    public String getImageUrl() {
+        return (this.questionImage != null) ? questionImage.getImageUrl() : "";
+    }
 
     public void setCorrectOption(String answer) {
         char answerChar = answer.charAt(0);
@@ -98,13 +119,12 @@ public class Question extends BaseTimeEntity {
             case 0x2461 -> this.correct_option = 2;
             case 0x2462 -> this.correct_option = 3;
             case 0x2463 -> this.correct_option = 4;
-            default -> {}
         }
     }
 
     public void setSeqAndTitle(Matcher matcher) {
         this.questionSeq = Integer.parseInt(matcher.group(1));// 번호
-        this.question_text = matcher.group(2).trim(); // 내용
+        this.questionText = matcher.group(2).trim(); // 내용
     }
 }
 

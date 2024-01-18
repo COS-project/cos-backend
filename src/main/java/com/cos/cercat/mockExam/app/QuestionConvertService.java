@@ -55,10 +55,8 @@ public class QuestionConvertService {
                     question.setSubject(subjectList.get(2));
                 }
 
+                question.setContent(content);
 
-                for (String option : content) {
-                    question.setOption(option);
-                }
 
                 String answer = mockExamInfoDTO.getCorrectAnswerViaSeq(question.getQuestionSeq());
                 question.setCorrectOption(answer);

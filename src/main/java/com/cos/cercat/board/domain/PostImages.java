@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Embeddable
-@Getter
 public class PostImages {
 
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -22,6 +21,10 @@ public class PostImages {
 
     public List<String> getImageUrls() {
         return this.postImages.stream().map(postImage -> postImage.getImage().getImageUrl()).toList();
+    }
+
+    public List<PostImage> getAll() {
+        return this.postImages;
     }
 
     public String getThumbnailImageUrl() {
