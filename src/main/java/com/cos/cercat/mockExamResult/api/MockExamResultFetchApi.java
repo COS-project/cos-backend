@@ -32,7 +32,6 @@ public class MockExamResultFetchApi {
         return Response.success(mockExamResultFetchService.getMockExamResults(mockExamId, 1L));
     }
 
-    //TODO:모든 회차의 틀린 문제를 모아둔 것이며, 한 회차를 여러번 풀어서 가장 최근 결과값이 틀린문제에 올라오도록 한다.
     @GetMapping("/{certificateId}/user-answers/incorrect")
     @Operation(summary = "전체 틀린문제 조회")
     public Response<Slice<UserAnswerResponse>> getAllUserAnswers(@PageableDefault Pageable pageable,

@@ -9,6 +9,7 @@ import lombok.*;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(indexes = {@Index(columnList = "optionSequence", name = "idx_option_sequence")})
 public class QuestionOption {
 
     @EmbeddedId
@@ -28,12 +29,12 @@ public class QuestionOption {
         this.optionContent = optionContent;
     }
 
-    public Integer getQuestionSequence() {
-        return questionOptionPK.getOptionSequence();
-    }
-
     public String getImageUrl() {
         return (this.optionImage != null) ? optionImage.getImageUrl() : "";
+    }
+
+    public Integer getOptionSequence() {
+        return questionOptionPK.getOptionSequence();
     }
 
 }

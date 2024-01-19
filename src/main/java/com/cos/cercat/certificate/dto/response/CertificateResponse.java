@@ -4,12 +4,14 @@ import com.cos.cercat.certificate.domain.Certificate;
 
 public record CertificateResponse(
         Long certificateId,
-        String certificateName
+        String certificateName,
+        Long timeLimit
 ) {
     public static CertificateResponse from(Certificate entity) {
         return new CertificateResponse(
                 entity.getId(),
-                entity.getCertificateName()
+                entity.getCertificateName(),
+                entity.getTimeLimit()
         );
     }
 }

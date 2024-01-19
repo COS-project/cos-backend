@@ -18,7 +18,6 @@ public class Question extends BaseTimeEntity {
 
     private static final int MAX_OPTION_SIZE = 5;
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "question_id")

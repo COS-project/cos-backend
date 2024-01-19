@@ -9,7 +9,7 @@ public record QuestionOptionResponse(
 ) {
     public static QuestionOptionResponse from(QuestionOption entity) {
         return new QuestionOptionResponse(
-                entity.getQuestionSequence(),
+                entity.getOptionSequence(),
                 entity.getOptionContent(),
                 entity.getImageUrl()
         );

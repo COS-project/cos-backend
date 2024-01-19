@@ -18,13 +18,11 @@ public class Certificate extends BaseTimeEntity {
 
     private String certificateName;
 
-    private Certificate(String certificate_name) {
+    private Long timeLimit;
+
+    private Certificate(String certificate_name, Long timeLimit) {
         this.certificateName = certificate_name;
+        this.timeLimit = timeLimit;
     }
 
-
-
-    public static Certificate from(String certificateName) {
-        return new Certificate(certificateName);
-    }
 }

@@ -12,9 +12,11 @@ import com.cos.cercat.mockExam.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,6 +35,8 @@ public class QuestionConvertService {
 
     @Transactional
     public void saveQuestionMap(Certificate certificate, File json) {
+
+        List<Question> questions = new ArrayList<>();
 
         MockExamInfoDTO mockExamInfoDTO = objectMapperService.jsonToQuestionMap(certificate, json);
         MockExam mockExam = mockExamRepository.save(MockExam.of(mockExamInfoDTO.mockExamDTO()));
@@ -56,7 +60,6 @@ public class QuestionConvertService {
                 }
 
                 question.setContent(content);
-
 
                 String answer = mockExamInfoDTO.getCorrectAnswerViaSeq(question.getQuestionSeq());
                 question.setCorrectOption(answer);

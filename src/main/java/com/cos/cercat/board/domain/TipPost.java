@@ -13,8 +13,6 @@ import lombok.NoArgsConstructor;
 @Getter
 public class TipPost extends Post{
 
-    //TODO: 해시태그
-
 
     private TipPost(String title, String content, User user, Certificate certificate) {
         super(title, content, user, certificate);
