@@ -21,4 +21,7 @@ public class CertificateService {
                 new CustomException(ErrorCode.CERTIFICATE_NOT_FOUND));
     }
 
+    //TODO : 자격증 리스트 조회
+
+
 }
