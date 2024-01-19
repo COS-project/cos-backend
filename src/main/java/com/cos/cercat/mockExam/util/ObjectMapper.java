@@ -45,11 +45,10 @@ public class ObjectMapper {
         Matcher matcher = regex.matcher(fileName);
         if (matcher.find()) {
             // 그룹 1: 이름, 그룹 2: 년도, 그룹 3: 회차
-            String name = matcher.group(1);
             String year = matcher.group(2);
             String round = matcher.group(3);
 
-            return MockExamDTO.of(name, Integer.parseInt(year), Integer.parseInt(round), CertificateDTO.from(certificate));
+            return MockExamDTO.of(Integer.parseInt(year), Integer.parseInt(round), CertificateDTO.from(certificate));
         }
 
         throw new CustomException(ErrorCode.INCORRECT_FILE_FORMAT);// 매칭되는 부분이 없을 경우

@@ -6,7 +6,6 @@ import com.cos.cercat.mockExam.domain.MockExam;
 
 public record MockExamResponse(
         Long MockExamId,
-        String name,
         Integer examYear,
         Integer round,
         CertificateResponse certificate
@@ -14,7 +13,6 @@ public record MockExamResponse(
     public static MockExamResponse from(MockExam entity) {
         return new MockExamResponse(
                 entity.getId(),
-                entity.getName(),
                 entity.getExamYear(),
                 entity.getRound(),
                 CertificateResponse.from(entity.getCertificate())

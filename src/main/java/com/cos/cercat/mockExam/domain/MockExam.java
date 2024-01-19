@@ -21,8 +21,6 @@ public class MockExam extends BaseTimeEntity {
     @Column(name = "mock_exam_id")
     private  Long id;
 
-    private String name;
-
     private Integer examYear;
 
     private Integer round;
@@ -31,14 +29,13 @@ public class MockExam extends BaseTimeEntity {
     @JoinColumn(name = "certificate_id")
     private Certificate certificate;
 
-    private MockExam(String name, Integer examYear, Integer round, Certificate certificate) {
-        this.name = name;
+    private MockExam(Integer examYear, Integer round, Certificate certificate) {
         this.examYear = examYear;
         this.round = round;
         this.certificate = certificate;
     }
 
     public static MockExam of(MockExamDTO dto) {
-        return new MockExam(dto.name(), dto.examYear(), dto.round(), dto.certificateDTO().toEntity());
+        return new MockExam(dto.examYear(), dto.round(), dto.certificateDTO().toEntity());
     }
 }

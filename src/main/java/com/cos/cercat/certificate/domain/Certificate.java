@@ -20,6 +20,8 @@ public class Certificate extends BaseTimeEntity {
 
     private Long timeLimit;
 
+    //TODO: 전체 문제 갯수 추가? 아니면 CertificateExam 엔티티를 새로 하나만들어서 연관관계설정?
+
     private Certificate(String certificate_name, Long timeLimit) {
         this.certificateName = certificate_name;
         this.timeLimit = timeLimit;
