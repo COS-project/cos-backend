@@ -20,6 +20,7 @@ public enum ErrorCode {
     CERTIFICATE_NOT_FOUND(HttpStatus.NOT_FOUND, "certificate not founded"),
     QUESTION_NOT_FOUND(HttpStatus.NOT_FOUND, "question not founded"),
     INCORRECT_FILE_FORMAT(HttpStatus.BAD_REQUEST, "incorrect file format"),
+    GOAL_CREATE_ERROR(HttpStatus.BAD_REQUEST, "can set only one certification per goal"),
     INVALID_PASSWORD(HttpStatus.NOT_FOUND, "invalid password"),
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "bad request"),
     UNAUTHORIZED_USER(HttpStatus.UNAUTHORIZED, "unauthorized user"),

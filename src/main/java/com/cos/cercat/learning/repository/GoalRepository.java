@@ -10,4 +10,6 @@ import java.util.Optional;
 
 public interface GoalRepository extends JpaRepository<Goal, Long> {
     Optional<Goal> findGoalByUserAndCertificate(User user, Certificate certificate);
+
+    boolean existsGoalByUserAndCertificate(User user, Certificate certificate);
 }

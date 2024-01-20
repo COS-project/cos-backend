@@ -27,4 +27,8 @@ public class GoalService {
                 new CustomException(ErrorCode.GOAL_NOT_FOUND));
     }
 
+    public boolean isGoalAlreadyExists(User user, Certificate certificate) {
+        return goalRepository.existsGoalByUserAndCertificate(user, certificate);
+    }
+
 }
