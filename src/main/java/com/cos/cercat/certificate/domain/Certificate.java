@@ -3,9 +3,10 @@ package com.cos.cercat.certificate.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Getter
 public class Certificate {
 
@@ -16,11 +17,21 @@ public class Certificate {
 
     private String certificateName;
 
-    @OneToOne(mappedBy = "certificate")
-    private ExamInfo examInfo;
+    @Embedded
+    private Subjects subjects = new Subjects();
 
     public Certificate(Long id, String certificateName) {
         this.id = id;
         this.certificateName = certificateName;
+    }
+
+    public Certificate(String certificateName, List<Subject> subjects) {
+        this.certificateName = certificateName;
+        addAllSubjects(subjects);
+    }
+
+    private void addAllSubjects(List<Subject> subjects) {
+        subjects.forEach(subject -> subject.setCertificate(this));
+        this.subjects.addAll(subjects);
     }
 }

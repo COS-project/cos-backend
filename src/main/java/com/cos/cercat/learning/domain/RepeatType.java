@@ -1,4 +1,4 @@
-package com.cos.cercat.goal.domain;
+package com.cos.cercat.learning.domain;
 
 public enum RepeatType {
     MOCK_EXAM, STUDY

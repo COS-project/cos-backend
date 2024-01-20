@@ -8,6 +8,7 @@ public record MockExamResponse(
         Long MockExamId,
         Integer examYear,
         Integer round,
+        Long timeLimit,
         CertificateResponse certificate
 ) {
     public static MockExamResponse from(MockExam entity) {
@@ -15,6 +16,7 @@ public record MockExamResponse(
                 entity.getId(),
                 entity.getExamYear(),
                 entity.getRound(),
+                entity.getTimeLimit(),
                 CertificateResponse.from(entity.getCertificate())
         );
     }

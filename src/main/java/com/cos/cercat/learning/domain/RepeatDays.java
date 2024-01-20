@@ -1,4 +1,4 @@
-package com.cos.cercat.goal.domain;
+package com.cos.cercat.learning.domain;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embeddable;

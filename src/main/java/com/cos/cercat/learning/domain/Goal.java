@@ -1,4 +1,4 @@
-package com.cos.cercat.goal.domain;
+package com.cos.cercat.learning.domain;
 
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.user.domain.User;
@@ -39,26 +39,26 @@ public class Goal {
 
     private LocalDateTime prepareFinishDateTime;
 
-    private Integer totalPrepareDays;
+    private Integer goalPrepareDays;
 
     private Integer mockExamsPerDay;
 
-    private Integer totalMockExams;
+    private Integer goalMockExams;
 
     private Long studyTimePerDay;
 
-    private Long totalStudyTime;
+    private Long goalStudyTime;
 
     @Builder
     public Goal(Certificate certificate,
                 User user, Integer goalScore,
                 LocalDateTime prepareStartDateTime,
                 LocalDateTime prepareFinishDateTime,
-                Integer totalPrepareDays,
+                Integer goalPrepareDays,
                 Integer mockExamsPerDay,
-                Integer totalMockExams,
+                Integer goalMockExams,
                 Long studyTimePerDay,
-                Long totalStudyTime,
+                Long goalStudyTime,
                 List<RepeatDay> repeatDays) {
 
         this.certificate = certificate;
@@ -66,11 +66,11 @@ public class Goal {
         this.goalScore = goalScore;
         this.prepareStartDateTime = prepareStartDateTime;
         this.prepareFinishDateTime = prepareFinishDateTime;
-        this.totalPrepareDays = totalPrepareDays;
+        this.goalPrepareDays = goalPrepareDays;
         this.mockExamsPerDay = mockExamsPerDay;
-        this.totalMockExams = totalMockExams;
+        this.goalMockExams = goalMockExams;
         this.studyTimePerDay = studyTimePerDay;
-        this.totalStudyTime = totalStudyTime;
+        this.goalStudyTime = goalStudyTime;
         addAllRepeatDays(repeatDays);
     }
 

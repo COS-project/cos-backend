@@ -25,17 +25,23 @@ public class MockExam extends BaseTimeEntity {
 
     private Integer round;
 
+    private Long timeLimit;
+
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "certificate_id")
     private Certificate certificate;
 
-    private MockExam(Integer examYear, Integer round, Certificate certificate) {
+    private MockExam(Integer examYear, Integer round, Certificate certificate, Long timeLimit) {
         this.examYear = examYear;
         this.round = round;
         this.certificate = certificate;
+        this.timeLimit = timeLimit;
     }
 
-    public static MockExam of(MockExamDTO dto) {
-        return new MockExam(dto.examYear(), dto.round(), dto.certificateDTO().toEntity());
+    public static MockExam of(MockExamDTO dto, Long timeLimit) {
+        return new MockExam(dto.examYear(),
+                dto.round(),
+                dto.certificateDTO().toEntity(),
+                timeLimit);
     }
 }

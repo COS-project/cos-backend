@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface SubjectRepository extends JpaRepository<Subject, Long> {
 
-    List<Subject> findSubjectsByExamInfo_Certificate(Certificate certificate);
+    List<Subject> findSubjectsByCertificate(Certificate certificate);
 }

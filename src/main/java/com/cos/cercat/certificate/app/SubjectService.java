@@ -25,7 +25,7 @@ public class SubjectService {
     }
 
     public List<Subject> getSubjectList(Certificate certificate) {
-        return subjectRepository.findSubjectsByExamInfo_Certificate(certificate);
+        return subjectRepository.findSubjectsByCertificate(certificate);
     }
 
 }

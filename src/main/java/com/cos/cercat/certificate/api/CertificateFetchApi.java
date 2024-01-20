@@ -2,7 +2,7 @@ package com.cos.cercat.certificate.api;
 
 import com.cos.cercat.certificate.app.CertificateFetchService;
 import com.cos.cercat.certificate.dto.response.CertificateResponse;
-import com.cos.cercat.certificate.dto.response.CertificateWithInfoResponse;
+import com.cos.cercat.certificate.dto.response.ExamInfoResponse;
 import com.cos.cercat.global.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,9 +28,9 @@ public class CertificateFetchApi {
         return Response.success(certificateFetchService.getCertificates());
     }
 
-    @GetMapping("/certificates/{certificateId}")
-    @Operation(summary = "자격증 상세 정보 조회")
-    public Response<CertificateWithInfoResponse> getCertificateDetail(@PathVariable Long certificateId) {
+    @GetMapping("/certificates/{certificateId}/exam-infos")
+    @Operation(summary = "자격증 응시 정보 조회")
+    public Response<ExamInfoResponse> getCertificateDetail(@PathVariable Long certificateId) {
         return Response.success(certificateFetchService.getCertificateWithInfo(certificateId));
     }
 }

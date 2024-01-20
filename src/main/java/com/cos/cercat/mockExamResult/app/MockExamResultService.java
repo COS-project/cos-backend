@@ -1,5 +1,6 @@
 package com.cos.cercat.mockExamResult.app;
 
+import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.global.exception.CustomException;
 import com.cos.cercat.global.exception.ErrorCode;
 import com.cos.cercat.mockExam.domain.MockExam;
@@ -38,5 +39,17 @@ public class MockExamResultService {
     public MockExamResult getMockExamResult(Long mockExamResultId) {
         return mockExamResultRepository.findById(mockExamResultId).orElseThrow(() ->
                 new CustomException(ErrorCode.MOCK_EXAM_RESULT_NOT_FOUND));
+    }
+
+    public int countMockExamResults(Certificate certificate, User user) {
+        return mockExamResultRepository.countMockExamResultsByMockExam_CertificateAndUser(certificate, user);
+    }
+
+    public int getCurrentMaxScore(Certificate certificate, User user) {
+        return mockExamResultRepository.getMockExamResultMaxScore(certificate.getId(), user.getId());
+    }
+
+    public int countTodayMockExamResults(Certificate certificate, User user) {
+        return mockExamResultRepository.countTodayMockExamResults(certificate.getId(), user.getId());
     }
 }

@@ -1,8 +1,9 @@
 package com.cos.cercat.certificate.app;
 
 import com.cos.cercat.certificate.domain.Certificate;
+import com.cos.cercat.certificate.domain.ExamInfo;
 import com.cos.cercat.certificate.dto.response.CertificateResponse;
-import com.cos.cercat.certificate.dto.response.CertificateWithInfoResponse;
+import com.cos.cercat.certificate.dto.response.ExamInfoResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.util.List;
 public class CertificateFetchService {
 
     private final CertificateService certificateService;
+    private final ExamInfoService examInfoService;
 
     /**
      * 자격증 ID를 통해 자격증 상세정보를 조회한다
@@ -22,10 +24,11 @@ public class CertificateFetchService {
      * @param certificateId 자격증 ID
      * @return 자격증 상세 정보
      */
-    public CertificateWithInfoResponse getCertificateWithInfo(Long certificateId) {
+    public ExamInfoResponse getCertificateWithInfo(Long certificateId) {
         Certificate certificate = certificateService.getCertificate(certificateId);
+        ExamInfo recentExamInfo = examInfoService.getRecentExamInfo(certificate);
 
-        return CertificateWithInfoResponse.from(certificate);
+        return ExamInfoResponse.from(recentExamInfo);
     }
 
     /**

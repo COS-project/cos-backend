@@ -6,6 +6,8 @@ import com.cos.cercat.global.entity.Image;
 import com.cos.cercat.mockExam.domain.embededId.QuestionOptionPK;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -30,6 +32,7 @@ public class Question extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id")
     @Setter
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Subject subject;
 
     @OneToOne

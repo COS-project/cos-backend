@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
 
     MOCK_EXAM_NOT_FOUND(HttpStatus.NOT_FOUND, "mock exam not founded"),
+    GOAL_NOT_FOUND(HttpStatus.NOT_FOUND, "goal not founded"),
     MOCK_EXAM_RESULT_NOT_FOUND(HttpStatus.NOT_FOUND, "mock exam result not founded"),
     EXAM_INFO_NOT_FOUND(HttpStatus.NOT_FOUND, "exam info not founded"),
     POST_NOT_FOUND(HttpStatus.NOT_FOUND, "post not founded"),

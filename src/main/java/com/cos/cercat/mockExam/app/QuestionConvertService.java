@@ -39,7 +39,7 @@ public class QuestionConvertService {
         List<Question> questions = new ArrayList<>();
 
         MockExamInfoDTO mockExamInfoDTO = objectMapperService.jsonToQuestionMap(certificate, json);
-        MockExam mockExam = mockExamRepository.save(MockExam.of(mockExamInfoDTO.mockExamDTO()));
+        MockExam mockExam = mockExamRepository.save(MockExam.of(mockExamInfoDTO.mockExamDTO(), 1000000L));
         List<Subject> subjectList = subjectService.getSubjectList(certificate);
 
         mockExamInfoDTO.questions().forEach((title, content) -> {

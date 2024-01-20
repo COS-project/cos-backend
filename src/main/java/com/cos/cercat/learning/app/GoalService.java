@@ -1,8 +1,10 @@
-package com.cos.cercat.goal.app;
+package com.cos.cercat.learning.app;
 
 import com.cos.cercat.certificate.domain.Certificate;
-import com.cos.cercat.goal.domain.Goal;
-import com.cos.cercat.goal.repository.GoalRepository;
+import com.cos.cercat.global.exception.CustomException;
+import com.cos.cercat.global.exception.ErrorCode;
+import com.cos.cercat.learning.domain.Goal;
+import com.cos.cercat.learning.repository.GoalRepository;
 import com.cos.cercat.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +23,8 @@ public class GoalService {
     }
 
     public Goal getGoal(User user, Certificate certificate) {
-        return goalRepository.findGoalByUserAndCertificate(user, certificate);
+        return goalRepository.findGoalByUserAndCertificate(user, certificate).orElseThrow(() ->
+                new CustomException(ErrorCode.GOAL_NOT_FOUND));
     }
 
 }

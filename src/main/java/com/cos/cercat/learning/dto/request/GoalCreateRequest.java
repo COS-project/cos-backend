@@ -1,9 +1,9 @@
-package com.cos.cercat.goal.dto.request;
+package com.cos.cercat.learning.dto.request;
 
 import com.cos.cercat.certificate.domain.Certificate;
-import com.cos.cercat.goal.domain.Goal;
-import com.cos.cercat.goal.domain.RepeatDay;
-import com.cos.cercat.goal.domain.RepeatType;
+import com.cos.cercat.learning.domain.Goal;
+import com.cos.cercat.learning.domain.RepeatDay;
+import com.cos.cercat.learning.domain.RepeatType;
 import com.cos.cercat.user.domain.User;
 
 import java.time.LocalDateTime;

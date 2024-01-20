@@ -3,9 +3,6 @@ package com.cos.cercat.certificate.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -13,15 +10,13 @@ import java.util.List;
 public class ExamInfo {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "exam_info_id")
     private Long id;
 
-    @MapsId("id")
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "certificate_id")
     private Certificate certificate;
-
-    @Embedded
-    private Subjects subjects = new Subjects();
 
     @Embedded
     private ExamSchedule examSchedule; //시험 일정
@@ -35,30 +30,32 @@ public class ExamInfo {
     @Embedded
     private PassingCriteria passingCriteria; //시험 방식
 
+    private String subjectsInfo;
+
     private String description; //자격증 소개
 
     private String examFormat; //시험 방식
 
     private String examEligibility; //응시 자격
 
-    private Integer numberOfQuestions; //전체 문항 수
-
-    public ExamInfo(Long id,
+    public ExamInfo(
+                    Certificate certificate,
                     ExamSchedule examSchedule,
                     ExamFee examFee,
                     ExamTimeLimit examTimeLimit,
                     PassingCriteria passingCriteria,
-                    String description, String examFormat,
-                    String examEligibility,
-                    Integer numberOfQuestions) {
-        this.id = id;
+                    String subjectsInfo,
+                    String description,
+                    String examFormat,
+                    String examEligibility) {
+        this.certificate = certificate;
         this.examSchedule = examSchedule;
         this.examFee = examFee;
         this.examTimeLimit = examTimeLimit;
         this.passingCriteria = passingCriteria;
+        this.subjectsInfo = subjectsInfo;
         this.description = description;
         this.examFormat = examFormat;
         this.examEligibility = examEligibility;
-        this.numberOfQuestions = numberOfQuestions;
     }
 }

@@ -1,8 +1,8 @@
-package com.cos.cercat.goal.dto.response;
+package com.cos.cercat.learning.dto.response;
 
 import com.cos.cercat.certificate.dto.response.CertificateResponse;
-import com.cos.cercat.goal.domain.Goal;
-import com.cos.cercat.goal.domain.RepeatDay;
+import com.cos.cercat.learning.domain.Goal;
+import com.cos.cercat.learning.domain.RepeatDay;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,12 +12,12 @@ public record GoalResponse(
         Integer goalScore,
         LocalDateTime prepareStartDateTime,
         LocalDateTime prepareFinishDateTime,
-        Integer totalPrepareDays,
+        Integer goalPrepareDays,
         Integer mockExamsPerDay,
-        Integer totalMockExams,
+        Integer goalMockExams,
         List<Integer> mockExamRepeatDays,
         Long studyTimePerDay,
-        Long totalStudyTime,
+        Long goalStudyTime,
         List<Integer> studyRepeatDays
 ) {
 
@@ -27,12 +27,12 @@ public record GoalResponse(
                 entity.getGoalScore(),
                 entity.getPrepareStartDateTime(),
                 entity.getPrepareFinishDateTime(),
-                entity.getTotalPrepareDays(),
+                entity.getGoalPrepareDays(),
                 entity.getMockExamsPerDay(),
-                entity.getTotalMockExams(),
+                entity.getGoalMockExams(),
                 convertIntegerList(entity.getRepeatDays().getMockExamRepeatDays()),
                 entity.getStudyTimePerDay(),
-                entity.getTotalStudyTime(),
+                entity.getGoalStudyTime(),
                 convertIntegerList(entity.getRepeatDays().getStudyRepeatDays())
         );
     }
