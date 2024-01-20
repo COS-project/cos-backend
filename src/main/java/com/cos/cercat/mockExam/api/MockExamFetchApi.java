@@ -45,7 +45,7 @@ public class MockExamFetchApi {
         return Response.success(mockExamFetchService.getQuestionList(mockExamId));
     }
 
-    @GetMapping("/{certificateId}/mock-infos")
+    @GetMapping("/{certificateId}/mock-exam-infos")
     @Operation(summary = "자격증 ID를 통해 해당 자격증 모의고사의 응시년도 및 회차정보 조회")
     public Response<ExamYearWithRoundsResponse> getMockExamInfos(@PathVariable Long certificateId) {
         return Response.success(mockExamFetchService.getMockExamInfoList(certificateId));

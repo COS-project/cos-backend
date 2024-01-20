@@ -8,7 +8,7 @@ import java.util.List;
 public record MockExamResultResponse(
         Long mockExamResultId,
         Integer round,
-        MockExamResponse mockExam,
+        MockExamWithInfoResponse mockExamWithInfo,
         List<SubjectResultResponse> subjectResults
 ) {
 
@@ -16,7 +16,7 @@ public record MockExamResultResponse(
         return new MockExamResultResponse(
                 entity.getId(),
                 entity.getRound(),
-                MockExamResponse.from(entity.getMockExam()),
+                MockExamWithInfoResponse.from(entity.getMockExam()),
                 entity.getSubjectResults().getSubjectResults().stream()
                         .map(SubjectResultResponse::from)
                         .toList()
