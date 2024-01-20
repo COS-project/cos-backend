@@ -4,23 +4,20 @@ import com.cos.cercat.certificate.domain.Certificate;
 
 public record CertificateDTO(
         Long certificateId,
-        String certificateName,
-        Long timeLimit
+        String certificateName
 ) {
 
     public static CertificateDTO from(Certificate entity) {
         return new CertificateDTO(
                 entity.getId(),
-                entity.getCertificateName(),
-                entity.getTimeLimit()
+                entity.getCertificateName()
         );
     }
 
     public Certificate toEntity() {
         return new Certificate(
                 certificateId,
-                certificateName,
-                timeLimit
+                certificateName
         );
     }
 

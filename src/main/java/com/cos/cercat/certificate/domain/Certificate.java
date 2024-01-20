@@ -1,15 +1,13 @@
 package com.cos.cercat.certificate.domain;
 
-import com.cos.cercat.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@ToString
 @Getter
-public class Certificate extends BaseTimeEntity {
+public class Certificate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,13 +16,11 @@ public class Certificate extends BaseTimeEntity {
 
     private String certificateName;
 
-    private Long timeLimit;
+    @OneToOne(mappedBy = "certificate")
+    private ExamInfo examInfo;
 
-    //TODO: 전체 문제 갯수 추가? 아니면 CertificateExam 엔티티를 새로 하나만들어서 연관관계설정?
-
-    private Certificate(String certificate_name, Long timeLimit) {
-        this.certificateName = certificate_name;
-        this.timeLimit = timeLimit;
+    public Certificate(Long id, String certificateName) {
+        this.id = id;
+        this.certificateName = certificateName;
     }
-
 }

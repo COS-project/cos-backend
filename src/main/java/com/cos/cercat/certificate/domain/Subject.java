@@ -1,6 +1,5 @@
 package com.cos.cercat.certificate.domain;
 
-import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,9 +22,8 @@ public class Subject extends BaseTimeEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "certificate_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Certificate certificate;
+    @JoinColumn(name = "certificate_exam_info_id")
+    private ExamInfo examInfo;
 
     private String subjectName;
 
@@ -33,10 +31,4 @@ public class Subject extends BaseTimeEntity {
 
     private Integer totalScore;
 
-    private Subject(Certificate certificate, String subjectName, int numberOfQuestions, int totalScore) {
-        this.certificate = certificate;
-        this.subjectName = subjectName;
-        this.numberOfQuestions = numberOfQuestions;
-        this.totalScore = totalScore;
-    }
 }
