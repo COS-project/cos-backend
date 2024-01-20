@@ -48,40 +48,15 @@ public class PostCreateService {
         User user = userService.getUser(userId);
 
         switch (postType) {
-            case COMMENTARY -> {
-
-                Question question = getQuestion(certificate, request.examYear(), request.round(), request.questionSequence());
-
-                commentaryPostService.createCommentaryPost(
-                        request.title(),
-                        request.content(),
-                        images,
-                        certificate,
-                        user,
-                        question
-                );
-            }
-
-            case TIP -> {
-                tipPostService.createTipPost(
-                        request.title(),
-                        request.content(),
-                        images,
-                        certificate,
-                        user
-                );
-            }
-
-            case NORMAL -> {
-                normalPostService.createNormalPost(
-                        request.title(),
-                        request.content(),
-                        images,
-                        certificate,
-                        user
-                );
-            }
+            case COMMENTARY -> createCommentaryPost(request, certificate, images, user);
+            case TIP -> tipPostService.createTipPost(request.toTipPost(images, certificate, user));
+            case NORMAL -> normalPostService.createNormalPost(request.toNormalPost(images, certificate, user));
         }
+    }
+
+    private void createCommentaryPost(PostCreateRequest request, Certificate certificate, List<Image> images, User user) {
+        Question question = getQuestion(certificate, request.examYear(), request.round(), request.questionSequence());
+        commentaryPostService.createCommentaryPost(request.toCommentaryPost(images, certificate, user, question));
     }
 
 

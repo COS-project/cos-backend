@@ -26,13 +26,7 @@ public class TipPostService {
 
     private final TipPostRepository tipPostRepository;
 
-    public void createTipPost(String title,
-                              String content,
-                              List<Image> images,
-                              Certificate certificate,
-                              User user) {
-        TipPost tipPost = TipPost.of(title, content, user, certificate);
-        tipPost.addAllPostImages(images);
+    public void createTipPost(TipPost tipPost) {
 
         tipPostRepository.save(tipPost);
     }

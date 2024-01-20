@@ -24,14 +24,7 @@ import java.util.List;
 public class NormalPostService {
     private final NormalPostRepository normalPostRepository;
 
-    public void createNormalPost(String title,
-                                 String content,
-                                 List<Image> images,
-                                 Certificate certificate,
-                                 User user) {
-
-        NormalPost normalPost = NormalPost.of(title, content, user, certificate);
-        normalPost.addAllPostImages(images);
+    public void createNormalPost(NormalPost normalPost) {
 
         normalPostRepository.save(normalPost);
 

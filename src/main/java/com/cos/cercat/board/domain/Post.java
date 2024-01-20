@@ -47,11 +47,12 @@ public class Post extends BaseTimeEntity {
     @ColumnDefault("0")
     protected Integer likeCount = 0;
 
-    public Post(String title, String content, User user, Certificate certificate) {
+    public Post(String title, String content, User user, Certificate certificate, List<Image> images) {
         this.title = title;
         this.content = content;
         this.user = user;
         this.certificate = certificate;
+        addAllPostImages(images);
     }
 
     public void increaseLikeCount() {
@@ -62,7 +63,7 @@ public class Post extends BaseTimeEntity {
         this.likeCount--;
     }
 
-    public void addAllPostImages(List<Image> images) {
+    private void addAllPostImages(List<Image> images) {
         List<PostImage> postImages = images.stream()
                 .map(image -> PostImage.of(this, image))
                 .toList();

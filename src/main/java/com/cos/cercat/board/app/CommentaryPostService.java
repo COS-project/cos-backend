@@ -24,15 +24,7 @@ public class CommentaryPostService {
 
     private final CommentaryPostRepository commentaryPostRepository;
 
-    public void createCommentaryPost(String title,
-                                     String content,
-                                     List<Image> images,
-                                     Certificate certificate,
-                                     User user,
-                                     Question question) {
-
-        CommentaryPost commentaryPost = CommentaryPost.of(title, content, user, certificate, question);
-        commentaryPost.addAllPostImages(images);
+    public void createCommentaryPost(CommentaryPost commentaryPost) {
 
         commentaryPostRepository.save(commentaryPost);
     }

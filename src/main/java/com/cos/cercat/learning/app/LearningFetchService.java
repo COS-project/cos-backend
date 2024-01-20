@@ -41,7 +41,7 @@ public class LearningFetchService {
         Long totalStudyTime = studyTimeLogService.getTotalStudyTime(goal);
         int todayMockExamResults = mockExamResultService.countTodayMockExamResults(certificate, user);
         int totalMockExamResults = mockExamResultService.countMockExamResults(certificate, user);
-        
+
         return GoalAchievementResponse.of(
                 goal,
                 currentMaxScore,
