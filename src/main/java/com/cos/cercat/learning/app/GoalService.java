@@ -4,6 +4,7 @@ import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.global.exception.CustomException;
 import com.cos.cercat.global.exception.ErrorCode;
 import com.cos.cercat.learning.domain.Goal;
+import com.cos.cercat.learning.dto.request.GoalUpdateRequest;
 import com.cos.cercat.learning.repository.GoalRepository;
 import com.cos.cercat.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +28,35 @@ public class GoalService {
                 new CustomException(ErrorCode.GOAL_NOT_FOUND));
     }
 
+    public Goal getGoal(Long goalId) {
+        return goalRepository.findById(goalId).orElseThrow(() ->
+                new CustomException(ErrorCode.GOAL_NOT_FOUND));
+    }
+
     public boolean isGoalAlreadyExists(User user, Certificate certificate) {
         return goalRepository.existsGoalByUserAndCertificate(user, certificate);
+    }
+
+    public void updateGoal(GoalUpdateRequest request,
+                           Long goalId,
+                           User user) {
+        Goal goal = getGoal(goalId);
+
+        if (goal.isAuthorized(user)) {
+            goal.updateGoalInfo(
+                    request.goalScore(),
+                    request.prepareStartDateTime(),
+                    request.prepareFinishDateTime(),
+                    request.goalPrepareDays(),
+                    request.mockExamsPerDay(),
+                    request.goalMockExams(),
+                    request.studyTimePerDay(),
+                    request.goalStudyTime(),
+                    request.mockExamRepeatDays(),
+                    request.studyRepeatDays()
+            );
+        }
+
     }
 
 }

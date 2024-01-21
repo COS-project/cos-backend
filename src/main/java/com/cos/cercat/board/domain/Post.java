@@ -63,14 +63,6 @@ public class Post extends BaseTimeEntity {
         this.likeCount--;
     }
 
-    private void addAllPostImages(List<Image> images) {
-        List<PostImage> postImages = images.stream()
-                .map(image -> PostImage.of(this, image))
-                .toList();
-
-        this.postImages.addAll(postImages);
-    }
-
     public void addComment(PostComment comment) {
         comment.setPost(this);
         this.getPostComments().addComment(comment);
@@ -86,4 +78,11 @@ public class Post extends BaseTimeEntity {
         return this.user.equals(user);
     }
 
+    private void addAllPostImages(List<Image> images) {
+        List<PostImage> postImages = images.stream()
+                .map(image -> PostImage.of(this, image))
+                .toList();
+
+        this.postImages.addAll(postImages);
+    }
 }

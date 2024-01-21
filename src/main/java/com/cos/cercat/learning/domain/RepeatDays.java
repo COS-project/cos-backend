@@ -33,4 +33,9 @@ public class RepeatDays {
                 .filter(repeatDay -> repeatDay.getRepeatType() == RepeatType.MOCK_EXAM)
                 .toList();
     }
+
+    public void updateAll(List<RepeatDay> repeatDays) {
+        this.repeatDays.clear();
+        addAll(repeatDays);
+    }
 }

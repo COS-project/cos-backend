@@ -14,12 +14,12 @@ public record GoalCreateRequest(
         Integer goalScore,
         LocalDateTime prepareStartDateTime,
         LocalDateTime prepareFinishDateTime,
-        Integer totalPrepareDays,
+        Integer goalPrepareDays,
         Integer mockExamsPerDay,
-        Integer totalMockExams,
+        Integer goalMockExams,
         List<Integer> mockExamRepeatDays,
         Long studyTimePerDay,
-        Long totalStudyTime,
+        Long goalStudyTime,
         List<Integer> studyRepeatDays
 ) {
 
@@ -30,22 +30,13 @@ public record GoalCreateRequest(
                 goalScore,
                 prepareStartDateTime,
                 prepareFinishDateTime,
-                totalPrepareDays,
+                goalPrepareDays,
                 mockExamsPerDay,
-                totalMockExams,
+                goalMockExams,
                 studyTimePerDay,
-                totalStudyTime,
-                convertRepeatDay(mockExamRepeatDays, studyRepeatDays)
+                goalStudyTime,
+                mockExamRepeatDays,
+                studyRepeatDays
         );
-    }
-
-    private List<RepeatDay> convertRepeatDay(List<Integer> mockExamRepeatDays, List<Integer> studyRepeatDays) {
-        Stream<RepeatDay> mockExamDaysStream = mockExamRepeatDays.stream()
-                .map(dayOfWeekValue -> RepeatDay.from(RepeatType.MOCK_EXAM, dayOfWeekValue));
-
-        Stream<RepeatDay> studyExamDaysStream = studyRepeatDays.stream()
-                .map(dayOfWeekValue -> RepeatDay.from(RepeatType.STUDY, dayOfWeekValue));
-
-        return Stream.concat(mockExamDaysStream, studyExamDaysStream).toList();
     }
 }

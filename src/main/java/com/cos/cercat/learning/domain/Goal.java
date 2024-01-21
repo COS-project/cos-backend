@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -49,9 +51,9 @@ public class Goal {
 
     private Long goalStudyTime;
 
-    @Builder
     public Goal(Certificate certificate,
-                User user, Integer goalScore,
+                User user,
+                Integer goalScore,
                 LocalDateTime prepareStartDateTime,
                 LocalDateTime prepareFinishDateTime,
                 Integer goalPrepareDays,
@@ -59,7 +61,8 @@ public class Goal {
                 Integer goalMockExams,
                 Long studyTimePerDay,
                 Long goalStudyTime,
-                List<RepeatDay> repeatDays) {
+                List<Integer> mockExamRepeatDays,
+                List<Integer> studyRepeatDays) {
 
         this.certificate = certificate;
         this.user = user;
@@ -71,7 +74,28 @@ public class Goal {
         this.goalMockExams = goalMockExams;
         this.studyTimePerDay = studyTimePerDay;
         this.goalStudyTime = goalStudyTime;
-        addAllRepeatDays(repeatDays);
+        this.getRepeatDays().addAll(convertRepeatDay(mockExamRepeatDays, studyRepeatDays));
+    }
+
+    public void updateGoalInfo(Integer goalScore,
+                               LocalDateTime prepareStartDateTime,
+                               LocalDateTime prepareFinishDateTime,
+                               Integer goalPrepareDays,
+                               Integer mockExamsPerDay,
+                               Integer goalMockExams,
+                               Long studyTimePerDay,
+                               Long goalStudyTime,
+                               List<Integer> mockExamRepeatDays,
+                               List<Integer> studyRepeatDays) {
+        if (Objects.nonNull(goalScore)) this.goalScore = goalScore;
+        if (Objects.nonNull(prepareStartDateTime)) this.prepareStartDateTime = prepareStartDateTime;
+        if (Objects.nonNull(prepareFinishDateTime)) this.prepareFinishDateTime = prepareFinishDateTime;
+        if (Objects.nonNull(goalPrepareDays)) this.goalPrepareDays = goalPrepareDays;
+        if (Objects.nonNull(mockExamsPerDay)) this.mockExamsPerDay = mockExamsPerDay;
+        if (Objects.nonNull(goalMockExams)) this.goalMockExams = goalMockExams;
+        if (Objects.nonNull(studyTimePerDay)) this.studyTimePerDay = studyTimePerDay;
+        if (Objects.nonNull(goalStudyTime)) this.goalStudyTime = goalStudyTime;
+        this.getRepeatDays().updateAll(convertRepeatDay(mockExamRepeatDays, studyRepeatDays));
     }
 
     public Integer getGoalDDay() {
@@ -90,11 +114,18 @@ public class Goal {
         return (int) diffInDays;
     }
 
-    private void addAllRepeatDays(List<RepeatDay> repeatDays) {
-        for (RepeatDay repeatDay : repeatDays) {
-            repeatDay.setGoal(this);
-        }
-        this.repeatDays.addAll(repeatDays);
+    public boolean isAuthorized(User user) {
+        return this.user.equals(user);
+    }
+
+    private List<RepeatDay> convertRepeatDay(List<Integer> mockExamRepeatDays, List<Integer> studyRepeatDays) {
+        Stream<RepeatDay> mockExamDaysStream = mockExamRepeatDays.stream()
+                .map(dayOfWeekValue -> RepeatDay.from(this, RepeatType.MOCK_EXAM, dayOfWeekValue));
+
+        Stream<RepeatDay> studyExamDaysStream = studyRepeatDays.stream()
+                .map(dayOfWeekValue -> RepeatDay.from(this, RepeatType.STUDY, dayOfWeekValue));
+
+        return Stream.concat(mockExamDaysStream, studyExamDaysStream).toList();
     }
 
 }

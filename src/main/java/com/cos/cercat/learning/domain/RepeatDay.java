@@ -29,13 +29,15 @@ public class RepeatDay {
     @Enumerated(EnumType.STRING)
     private DayOfWeek repeatDayOfWeek;
 
-    public RepeatDay(RepeatType repeatType, DayOfWeek repeatDayOfWeek) {
+    public RepeatDay(Goal goal, RepeatType repeatType, DayOfWeek repeatDayOfWeek) {
+        this.goal = goal;
         this.repeatType = repeatType;
         this.repeatDayOfWeek = repeatDayOfWeek;
     }
 
-    public static RepeatDay from(RepeatType repeatType, Integer dayOfWeakValue) {
+    public static RepeatDay from(Goal goal, RepeatType repeatType, Integer dayOfWeakValue) {
         return new RepeatDay(
+                goal,
                 repeatType,
                 DayOfWeek.of((dayOfWeakValue > 0) ? dayOfWeakValue : SUNDAY_VALUE)
         );
