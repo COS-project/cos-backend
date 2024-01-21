@@ -4,11 +4,14 @@ package com.cos.cercat.certificate.api;
 import com.cos.cercat.certificate.app.CertificateCreateService;
 import com.cos.cercat.certificate.dto.request.CertificateCreateRequest;
 import com.cos.cercat.certificate.dto.request.ExamInfoCreateRequest;
+import com.cos.cercat.certificate.dto.request.InterestCertificateCreateRequest;
 import com.cos.cercat.global.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,5 +34,12 @@ public class CertificateCreateApi {
                                             @RequestBody ExamInfoCreateRequest request) {
         certificateCreateService.createExamInfo(certificateId, request);
         return Response.success("자격증 응시 정보 생성 성공");
+    }
+
+    @PostMapping("/interest-certificates")
+    @Operation(summary = "흥미 자격증 리스트 생성")
+    public Response<Void> createInterestCertificates(@RequestBody List<InterestCertificateCreateRequest> requests) {
+        certificateCreateService.createInterestCertificates(requests, 1L);
+        return Response.success("흥미 자격증 리스트 생성 성공");
     }
 }

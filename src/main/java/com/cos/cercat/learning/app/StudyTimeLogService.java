@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -19,10 +21,24 @@ public class StudyTimeLogService {
     }
 
     public long getTotalStudyTime(Goal goal) {
-        return studyTimeLogRepository.getStudyTimeSum(goal.getId());
+
+        Long studyTimeSum = studyTimeLogRepository.getStudyTimeSum(goal.getId());
+
+        if (studyTimeSum == null) {
+            return 0;
+        }
+
+        return studyTimeSum;
     }
 
     public long getTodayTotalStudyTime(Goal goal) {
-        return studyTimeLogRepository.getTodayStudyTime(goal.getId());
+
+        Long todayStudyTime = studyTimeLogRepository.getTodayStudyTime(goal.getId());
+
+        if (todayStudyTime == null) {
+            return 0;
+        }
+
+        return todayStudyTime;
     }
 }

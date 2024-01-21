@@ -24,14 +24,6 @@ public class LearningCreateService {
     private final UserService userService;
     private final StudyTimeLogService studyTimeLogService;
 
-
-    /**
-     * 목표를 생성한다.
-     *
-     * @param request 목표 생성 요청 DTO
-     * @param certificateId 자격증 ID
-     * @param userId 유저 ID
-     */
     public void createGoal(GoalCreateRequest request, Long certificateId, Long userId) {
         Certificate certificate = certificateService.getCertificate(certificateId);
         User user = userService.getUser(userId);
@@ -43,13 +35,6 @@ public class LearningCreateService {
         goalService.createGoal(request.toEntity(certificate, user));
     }
 
-    /**
-     * 공부시간을 생성한다.
-     *
-     * @param certificateId 자격증 ID
-     * @param studyTime 공부 시간
-     * @param userId 유저 ID
-     */
     public void createStudyTimeLog(Long certificateId, Long studyTime, Long userId) {
         User user = userService.getUser(userId);
         Certificate certificate = certificateService.getCertificate(certificateId);

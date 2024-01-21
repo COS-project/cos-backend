@@ -2,8 +2,6 @@ package com.cos.cercat.certificate.dto.response;
 
 import com.cos.cercat.certificate.domain.*;
 
-import java.util.List;
-
 public record ExamInfoResponse(
         ExamSchedule examSchedule, //시험 일정
         ExamFee examFee, //응시료

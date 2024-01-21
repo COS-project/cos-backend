@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -42,14 +43,20 @@ public class MockExamResultService {
     }
 
     public int countMockExamResults(Certificate certificate, User user) {
-        return mockExamResultRepository.countMockExamResultsByMockExam_CertificateAndUser(certificate, user);
+        Integer countMockExamResults = mockExamResultRepository.countMockExamResultsByMockExam_CertificateAndUser(certificate, user);
+
+        return Objects.requireNonNullElse(countMockExamResults, 0);
     }
 
     public int getCurrentMaxScore(Certificate certificate, User user) {
-        return mockExamResultRepository.getMockExamResultMaxScore(certificate.getId(), user.getId());
+        Integer mockExamResultMaxScore = mockExamResultRepository.getMockExamResultMaxScore(certificate.getId(), user.getId());
+
+        return Objects.requireNonNullElse(mockExamResultMaxScore, 0);
     }
 
     public int countTodayMockExamResults(Certificate certificate, User user) {
-        return mockExamResultRepository.countTodayMockExamResults(certificate.getId(), user.getId());
+        Integer countTodayMockExamResults = mockExamResultRepository.countTodayMockExamResults(certificate.getId(), user.getId());
+
+        return Objects.requireNonNullElse(countTodayMockExamResults, 0);
     }
 }

@@ -16,7 +16,7 @@ public interface MockExamResultRepository extends JpaRepository<MockExamResult, 
 
     int countMockExamResultsByMockExamAndUser(MockExam mockExam, User user);
 
-    int countMockExamResultsByMockExam_CertificateAndUser(Certificate certificate, User user);
+    Integer countMockExamResultsByMockExam_CertificateAndUser(Certificate certificate, User user);
 
     @Query("""
             SELECT MAX(totalScoreQuery.totalScore)
@@ -29,7 +29,7 @@ public interface MockExamResultRepository extends JpaRepository<MockExamResult, 
              AND c.id = :certificateId
              GROUP BY sr.mockExamResult.id) totalScoreQuery
             """)
-    int getMockExamResultMaxScore(@Param("certificateId") Long certificateId,
+    Integer getMockExamResultMaxScore(@Param("certificateId") Long certificateId,
                                   @Param("userId") Long userId);
 
     @Query("""
@@ -39,7 +39,7 @@ public interface MockExamResultRepository extends JpaRepository<MockExamResult, 
             AND mr.user.id = :userId
             AND c.id = :certificateId
             """)
-    public int countTodayMockExamResults(@Param("certificateId") Long certificateId,
+    public Integer countTodayMockExamResults(@Param("certificateId") Long certificateId,
                                          @Param("userId") Long userId);
 
 }
