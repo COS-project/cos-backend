@@ -11,6 +11,7 @@ public record SubjectResultsAVGResponse(
 
 
     public static SubjectResultsAVGResponse from(SubjectResultsAVG dto) {
+
         return new SubjectResultsAVGResponse(
                 SubjectResponse.from(dto.subject()),
                 dto.correctRate().intValue(),

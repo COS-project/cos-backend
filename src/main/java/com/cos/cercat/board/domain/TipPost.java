@@ -3,6 +3,8 @@ package com.cos.cercat.board.domain;
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.global.entity.Image;
 import com.cos.cercat.user.domain.User;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -17,7 +19,7 @@ import java.util.List;
 public class TipPost extends Post{
 
 
-    public TipPost(String title, String content, User user, Certificate certificate, List<Image> images) {
-        super(title, content, user, certificate, images);
+    public TipPost(String title, String content, User user, Certificate certificate, PostType postType, List<Image> images) {
+        super(title, content, user, certificate, postType, images);
     }
 }

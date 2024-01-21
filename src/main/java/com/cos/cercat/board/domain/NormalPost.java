@@ -3,6 +3,7 @@ package com.cos.cercat.board.domain;
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.global.entity.Image;
 import com.cos.cercat.user.domain.User;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -15,8 +16,8 @@ import java.util.List;
 @Getter
 public class NormalPost extends Post {
 
-    public NormalPost(String title, String content, User user, Certificate certificate, List<Image> images) {
-        super(title, content, user, certificate, images);
+    public NormalPost(String title, String content, User user, Certificate certificate, PostType postType, List<Image> images) {
+        super(title, content, user, certificate, postType, images);
     }
 
 }

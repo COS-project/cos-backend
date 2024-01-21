@@ -40,6 +40,10 @@ public class TipPostService {
                 new CustomException(ErrorCode.POST_NOT_FOUND));
     }
 
+    public List<TipPost> getTop3TipPosts(Certificate certificate) {
+        return tipPostRepository.findTop3ByCertificateOrderByLikeCountDesc(certificate);
+    }
+
     public void updateTipPost(Long postId,
                               String title,
                               String content,

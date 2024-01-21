@@ -19,8 +19,8 @@ public class CommentaryPost extends Post {
     @JoinColumn(name = "question_id")
     private Question question;
 
-    public CommentaryPost(String title, String content, User user, Certificate certificate, List<Image> images, Question question) {
-        super(title, content, user, certificate, images);
+    public CommentaryPost(String title, String content, User user, Certificate certificate, PostType postType, List<Image> images, Question question) {
+        super(title, content, user, certificate, postType, images);
         this.question = question;
     }
 

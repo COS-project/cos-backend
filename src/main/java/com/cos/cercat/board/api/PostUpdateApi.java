@@ -1,7 +1,7 @@
 package com.cos.cercat.board.api;
 
 import com.cos.cercat.board.app.PostUpdateService;
-import com.cos.cercat.board.dto.request.PostType;
+import com.cos.cercat.board.domain.PostType;
 import com.cos.cercat.board.dto.request.PostUpdateRequest;
 import com.cos.cercat.global.Response;
 import io.swagger.v3.oas.annotations.Operation;

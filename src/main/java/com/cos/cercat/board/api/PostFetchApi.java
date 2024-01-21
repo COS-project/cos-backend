@@ -1,7 +1,7 @@
 package com.cos.cercat.board.api;
 
 import com.cos.cercat.board.app.PostFetchService;
-import com.cos.cercat.board.dto.request.PostType;
+import com.cos.cercat.board.domain.PostType;
 import com.cos.cercat.board.dto.response.PostResponse;
 import com.cos.cercat.board.dto.response.PostWithCommentsResponse;
 import com.cos.cercat.global.Response;
@@ -13,6 +13,8 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -39,4 +41,9 @@ public class PostFetchApi {
         return Response.success(postFetchService.getPostDetail(postType, postId));
     }
 
+    @GetMapping("/{certificateId}/tip-posts/best")
+    @Operation(summary = "베스트 꿀팁 TOP3 조회")
+    public Response<List<PostResponse>> getTop3TipPosts(@PathVariable Long certificateId) {
+        return Response.success(postFetchService.getTop3TipPosts(certificateId));
+    }
 }

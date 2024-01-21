@@ -1,6 +1,6 @@
 package com.cos.cercat.board.app;
 
-import com.cos.cercat.board.dto.request.PostType;
+import com.cos.cercat.board.domain.PostType;
 import com.cos.cercat.board.dto.request.PostUpdateRequest;
 import com.cos.cercat.certificate.app.CertificateService;
 import com.cos.cercat.certificate.domain.Certificate;

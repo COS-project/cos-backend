@@ -2,6 +2,7 @@ package com.cos.cercat.board.dto.request;
 
 import com.cos.cercat.board.domain.CommentaryPost;
 import com.cos.cercat.board.domain.NormalPost;
+import com.cos.cercat.board.domain.PostType;
 import com.cos.cercat.board.domain.TipPost;
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.global.entity.Image;
@@ -26,6 +27,7 @@ public record PostCreateRequest(
                 content,
                 user,
                 certificate,
+                PostType.COMMENTARY,
                 images,
                 question
         );
@@ -39,6 +41,7 @@ public record PostCreateRequest(
                 content,
                 user,
                 certificate,
+                PostType.TIP,
                 images
         );
     }
@@ -51,6 +54,7 @@ public record PostCreateRequest(
                 content,
                 user,
                 certificate,
+                PostType.NORMAL,
                 images
         );
     }

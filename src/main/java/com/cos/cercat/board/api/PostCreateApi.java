@@ -2,7 +2,7 @@ package com.cos.cercat.board.api;
 
 import com.cos.cercat.board.app.PostCreateService;
 import com.cos.cercat.board.dto.request.PostCreateRequest;
-import com.cos.cercat.board.dto.request.PostType;
+import com.cos.cercat.board.domain.PostType;
 import com.cos.cercat.global.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

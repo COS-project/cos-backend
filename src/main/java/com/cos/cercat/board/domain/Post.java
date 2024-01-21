@@ -44,14 +44,18 @@ public class Post extends BaseTimeEntity {
     @Embedded
     protected PostComments postComments = new PostComments();
 
+    @Enumerated(EnumType.STRING)
+    protected PostType postType;
+
     @ColumnDefault("0")
     protected Integer likeCount = 0;
 
-    public Post(String title, String content, User user, Certificate certificate, List<Image> images) {
+    public Post(String title, String content, User user, Certificate certificate, PostType postType, List<Image> images) {
         this.title = title;
         this.content = content;
         this.user = user;
         this.certificate = certificate;
+        this.postType = postType;
         addAllPostImages(images);
     }
 

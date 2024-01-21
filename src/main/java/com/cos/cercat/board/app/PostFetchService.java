@@ -1,12 +1,10 @@
 package com.cos.cercat.board.app;
 
-import com.cos.cercat.board.dto.request.PostType;
+import com.cos.cercat.board.domain.PostType;
 import com.cos.cercat.board.dto.response.PostResponse;
 import com.cos.cercat.board.dto.response.PostWithCommentsResponse;
 import com.cos.cercat.certificate.app.CertificateService;
 import com.cos.cercat.certificate.domain.Certificate;
-import com.cos.cercat.global.exception.CustomException;
-import com.cos.cercat.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +12,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Currency;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -51,5 +49,13 @@ public class PostFetchService {
             case TIP -> PostWithCommentsResponse.from(tipPostService.getTipPost(postId));
             case NORMAL -> PostWithCommentsResponse.from(normalPostService.getNormalPost(postId));
         };
+    }
+
+    public List<PostResponse> getTop3TipPosts(Long certificateId) {
+        Certificate certificate = certificateService.getCertificate(certificateId);
+
+        return tipPostService.getTop3TipPosts(certificate).stream()
+                .map(PostResponse::from)
+                .toList();
     }
 }
