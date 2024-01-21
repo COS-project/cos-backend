@@ -39,7 +39,7 @@ public interface MockExamResultRepository extends JpaRepository<MockExamResult, 
             AND mr.user.id = :userId
             AND c.id = :certificateId
             """)
-    public Integer countTodayMockExamResults(@Param("certificateId") Long certificateId,
+    Integer countTodayMockExamResults(@Param("certificateId") Long certificateId,
                                          @Param("userId") Long userId);
 
 }
