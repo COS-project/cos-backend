@@ -11,7 +11,7 @@ import java.util.List;
 @Embeddable
 public class QuestionOptions {
 
-    @OneToMany(mappedBy = "questionOptionPK.question", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QuestionOption> questionOptions = new ArrayList<>();
 
     public void addAll(List<QuestionOption> options) {

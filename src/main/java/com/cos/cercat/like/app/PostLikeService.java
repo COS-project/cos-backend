@@ -21,16 +21,24 @@ public class PostLikeService {
     @Transactional
     public void flipPostLike(Post post, User user) {
 
-        PostLikePK postLikePK = PostLikePK.of(user, post);
+        PostLikePK postLikePK = PostLikePK.of(user.getId(), post.getId());
 
         if (postLikeRepository.existsById(postLikePK)) {
-            postLikeRepository.deleteById(postLikePK);
-            post.decreaseLikeCount();
+            deletePostLike(post, postLikePK);
             return;
         }
 
-        postLikeRepository.save(PostLike.from(postLikePK));
+        createPostLike(post, user);
+    }
+
+    private void createPostLike(Post post, User user) {
+        postLikeRepository.save(PostLike.of(user, post));
         post.increaseLikeCount();
+    }
+
+    private void deletePostLike(Post post, PostLikePK postLikePK) {
+        postLikeRepository.deleteById(postLikePK);
+        post.decreaseLikeCount();
     }
 
 }

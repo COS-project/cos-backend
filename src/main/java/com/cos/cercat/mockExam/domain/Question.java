@@ -76,7 +76,8 @@ public class Question extends BaseTimeEntity {
         switch ((int) number) {
             case 0x2460 -> {
                 QuestionOption questionOption = QuestionOption.builder()
-                        .questionOptionPK(QuestionOptionPK.of(this, 1))
+                        .questionOptionPK(QuestionOptionPK.from(1))
+                        .question(this)
                         .optionContent(option.substring(1))
                         .optionImage(null)
                         .build();
@@ -84,7 +85,8 @@ public class Question extends BaseTimeEntity {
             }
             case 0x2461 -> {
                 QuestionOption questionOption = QuestionOption.builder()
-                        .questionOptionPK(QuestionOptionPK.of(this, 2))
+                        .questionOptionPK(QuestionOptionPK.from(2))
+                        .question(this)
                         .optionContent(option.substring(1))
                         .optionImage(null)
                         .build();
@@ -92,7 +94,8 @@ public class Question extends BaseTimeEntity {
             }
             case 0x2462 -> {
                 QuestionOption questionOption = QuestionOption.builder()
-                        .questionOptionPK(QuestionOptionPK.of(this, 3))
+                        .questionOptionPK(QuestionOptionPK.from(3))
+                        .question(this)
                         .optionContent(option.substring(1))
                         .optionImage(null)
                         .build();
@@ -100,7 +103,8 @@ public class Question extends BaseTimeEntity {
             }
             case 0x2463 -> {
                 QuestionOption questionOption = QuestionOption.builder()
-                        .questionOptionPK(QuestionOptionPK.of(this, 4))
+                        .questionOptionPK(QuestionOptionPK.from(4))
+                        .question(this)
                         .optionContent(option.substring(1))
                         .optionImage(null)
                         .build();

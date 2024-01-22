@@ -5,15 +5,25 @@ import com.cos.cercat.global.entity.Image;
 import com.cos.cercat.mockExam.domain.embededId.QuestionOptionPK;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
+@AllArgsConstructor
+@Builder
 @NoArgsConstructor
 @Table(indexes = {@Index(columnList = "optionSequence", name = "idx_option_sequence")})
 public class QuestionOption {
 
     @EmbeddedId
-    private QuestionOptionPK questionOptionPK;
+    private QuestionOptionPK questionOptionPK = new QuestionOptionPK();
+
+    @MapsId("questionId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Question question;
 
     @OneToOne
     @JoinColumn(name = "image_id")
@@ -22,13 +32,6 @@ public class QuestionOption {
 
     private String optionContent;
 
-    @Builder
-    public QuestionOption(QuestionOptionPK questionOptionPK, Image optionImage, String optionContent) {
-        this.questionOptionPK = questionOptionPK;
-        this.optionImage = optionImage;
-        this.optionContent = optionContent;
-    }
-
     public String getImageUrl() {
         return (this.optionImage != null) ? optionImage.getImageUrl() : "";
     }
@@ -36,5 +39,6 @@ public class QuestionOption {
     public Integer getOptionSequence() {
         return questionOptionPK.getOptionSequence();
     }
+
 
 }

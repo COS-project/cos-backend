@@ -31,7 +31,7 @@ public class PostComment extends BaseTimeEntity {
     private Long parentCommentId;
 
     @ColumnDefault("0")
-    private Integer likeCount;
+    private Integer likeCount = 0;
 
     @Embedded
     private ChildPostComments childPostComments = new ChildPostComments();

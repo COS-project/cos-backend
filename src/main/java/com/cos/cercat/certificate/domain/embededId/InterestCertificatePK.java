@@ -9,6 +9,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+
 public class InterestCertificatePK implements Serializable {
 
     private Long certificateId;

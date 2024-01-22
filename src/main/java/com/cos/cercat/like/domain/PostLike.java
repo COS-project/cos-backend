@@ -1,8 +1,9 @@
 package com.cos.cercat.like.domain;
 
+import com.cos.cercat.board.domain.Post;
 import com.cos.cercat.like.domain.EmbeddedId.PostLikePK;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
+import com.cos.cercat.user.domain.User;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +16,27 @@ import lombok.NoArgsConstructor;
 public class PostLike {
 
     @EmbeddedId
-    private PostLikePK postLikePK;
+    private PostLikePK postLikePK = new PostLikePK();
 
+    @MapsId("userId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @MapsId("postId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
+
+    private PostLike(User user, Post post) {
+        this.user = user;
+        this.post = post;
+    }
+
+    public static PostLike of(User user, Post post) {
+        return new PostLike(
+                user,
+                post
+        );
+    }
 }
