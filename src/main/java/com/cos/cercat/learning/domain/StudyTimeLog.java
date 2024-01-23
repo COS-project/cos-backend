@@ -7,6 +7,8 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -20,6 +22,7 @@ public class StudyTimeLog extends BaseTimeEntity {
 
     @ManyToOne
     @JoinColumn(name = "goal_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Goal goal;
 
     private Long studyTime;
