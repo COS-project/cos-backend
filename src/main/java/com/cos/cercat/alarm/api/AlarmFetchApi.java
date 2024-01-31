@@ -25,5 +25,5 @@ public class AlarmFetchApi {
     public Response<Page<AlarmResponse>> getAlarmList(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         return Response.success(alarmFetchService.getAlarms(1L, pageable));
     }
-    
+
 }

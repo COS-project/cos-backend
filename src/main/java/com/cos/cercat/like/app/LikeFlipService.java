@@ -1,6 +1,5 @@
 package com.cos.cercat.like.app;
 
-import com.cos.cercat.alarm.app.producer.AlarmProducer;
 import com.cos.cercat.board.app.PostService;
 import com.cos.cercat.board.domain.Post;
 import com.cos.cercat.comment.app.PostCommentService;
