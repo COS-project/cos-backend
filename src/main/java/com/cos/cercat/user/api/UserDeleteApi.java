@@ -23,7 +23,7 @@ public class UserDeleteApi {
     @DeleteMapping("/logout")
     @Operation(summary = "회원 로그아웃")
     public Response<Void> logout(HttpServletRequest request, @AuthenticationPrincipal UserDTO user) {
-        userService.logout(request, user.getEmail());
+        userService.logout(request.getHeader("Access-Token"), user.getEmail());
         return Response.success("로그아웃 성공");
     }
 

@@ -10,6 +10,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 
 @Entity
@@ -115,7 +116,10 @@ public class Question extends BaseTimeEntity {
     }
 
     public String getImageUrl() {
-        return (this.questionImage != null) ? questionImage.getImageUrl() : "";
+        if (Objects.nonNull(questionImage)) {
+            return questionImage.getImageUrl();
+        }
+        return "";
     }
 
     public void setCorrectOption(String answer) {

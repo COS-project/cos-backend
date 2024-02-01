@@ -5,17 +5,12 @@ import com.cos.cercat.user.dto.UserDTO;
 
 public record UserResponse(
         Long userId,
-        String username,
+        String nickname,
         String email,
         String profileImage
     ) {
     public static UserResponse fromEntity(User entity) {
-        return new UserResponse(
-                entity.getId(),
-                entity.getUsername(),
-                entity.getEmail(),
-                entity.getProfileImage()
-        );
+        return fromDTO(UserDTO.fromEntity(entity));
     }
 
     public static UserResponse fromDTO(UserDTO dto) {

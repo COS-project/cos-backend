@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -28,7 +29,7 @@ public class UserDTO implements UserDetails {
 
     private Long id;
 
-    private String username;
+    private String nickname;
 
     private String profileImage;
 
@@ -46,10 +47,14 @@ public class UserDTO implements UserDetails {
 
 
     public static UserDTO fromEntity(User entity) {
+
+        String entityNickname = entity.getNickname();
+        String mainProfileImage = entity.getMainProfileImageUrl();
+
         return new UserDTO(
                 entity.getId(),
-                entity.getUsername(),
-                entity.getProfileImage(),
+                (StringUtils.hasText(entityNickname)) ? entityNickname : entity.getUsername(),
+                (StringUtils.hasText(mainProfileImage) ? mainProfileImage : entity.getKakaoProfileImage()),
                 entity.getEmail(),
                 entity.getRole(),
                 entity.getCreatedAt(),
@@ -71,7 +76,7 @@ public class UserDTO implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.username;
+        return this.nickname;
     }
 
     @Override

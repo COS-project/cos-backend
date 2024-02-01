@@ -54,7 +54,7 @@ public class OAuthAttributes {
     public User toEntity() {
         return User.builder()
                 .username(name)
-                .profileImage(profileImageUrl)
+                .kakaoProfileImage(profileImageUrl)
                 .email(email)
                 .role(Role.ROLE_GUEST)
                 .build();

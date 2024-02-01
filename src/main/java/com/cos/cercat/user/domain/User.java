@@ -1,8 +1,11 @@
 package com.cos.cercat.user.domain;
 
 import com.cos.cercat.global.entity.BaseTimeEntity;
+import com.cos.cercat.global.entity.Image;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -17,29 +20,39 @@ public class User extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String nickname;
+
     private String username;
 
     private String email;
 
-    private String profileImage;
+    private String kakaoProfileImage;
+
+    @OneToOne
+    @JoinColumn(name = "image_id")
+    private Image mainProfileImage;
+
+    public void createUserInfo(String nickname, Image profileImage) {
+        this.nickname = nickname;
+        this.mainProfileImage = profileImage;
+    }
+
+    public String getMainProfileImageUrl() {
+        if (Objects.nonNull(mainProfileImage)) {
+            return mainProfileImage.getImageUrl();
+        }
+        return "";
+    }
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public User oauthUpdate(String email, String profileImageUrl) {
+    public User oauthUpdate(String email, String kakaoProfileImageUrl) {
         this.email = email;
-        this.profileImage = profileImageUrl;
+        this.kakaoProfileImage = kakaoProfileImageUrl;
         return this;
     }
 
-    public User(Long id, String username) {
-        this.id = id;
-        this.username = username;
-    }
-
-    public User(String username) {
-        this.username = username;
-    }
 
     @Override
     public boolean equals(Object o) {
