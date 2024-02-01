@@ -20,9 +20,6 @@ public class CustomAuthorityUtils {
 
     private final UserRepository userRepository;
 
-    @Value("${admin.address}")
-    private String adminMailAddress;
-
     private final List<GrantedAuthority> ADMIN_ROLES = AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER");
 
     private final List<GrantedAuthority> USER_ROLES = AuthorityUtils.createAuthorityList("ROLE_USER");
@@ -36,9 +33,6 @@ public class CustomAuthorityUtils {
     private final List<String> GUEST_ROLES_STRING = List.of("ROLE_GUEST");
 
     public List<GrantedAuthority> createAuthorities(String email) {
-        if (email.equals(adminMailAddress)) {
-            return ADMIN_ROLES;
-        }
 
         return userRepository.findByEmail(email)
                 .map(user -> {
@@ -50,25 +44,25 @@ public class CustomAuthorityUtils {
 
     }
 
-    public List<String> getAuthoritiesAsString(String email) {
-        return createAuthorities(email).stream().map(String::valueOf).toList();
-    }
-
-    public List<GrantedAuthority> createAuthorities(List<String> roles) {
-        return roles.stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE" + role))
-                .collect(Collectors.toList());
-
-    }
-
-    public List<String> createRoles(String email) {
-        if (email.equals(adminMailAddress)) {
-            return ADMIN_ROLES_STRING;
-        }
-
-        return userRepository.findByEmail(email)
-                .map(member -> USER_ROLES_STRING)
-                .orElse(GUEST_ROLES_STRING);
-    }
+//    public List<String> getAuthoritiesAsString(String email) {
+//        return createAuthorities(email).stream().map(String::valueOf).toList();
+//    }
+//
+//    public List<GrantedAuthority> createAuthorities(List<String> roles) {
+//        return roles.stream()
+//                .map(role -> new SimpleGrantedAuthority("ROLE" + role))
+//                .collect(Collectors.toList());
+//
+//    }
+//
+//    public List<String> createRoles(String email) {
+//        if (email.equals(adminMailAddress)) {
+//            return ADMIN_ROLES_STRING;
+//        }
+//
+//        return userRepository.findByEmail(email)
+//                .map(member -> USER_ROLES_STRING)
+//                .orElse(GUEST_ROLES_STRING);
+//    }
 
 }

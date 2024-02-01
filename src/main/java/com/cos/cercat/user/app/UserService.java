@@ -58,9 +58,4 @@ public class UserService {
         return logoutTokenRepository.isLoginUser(userEmail);
     }
 
-//    private void refreshMember(UserDTO user) { 캐시 새로고침
-//        memberCacheRepository.deleteUser(user.getEmail());
-//        memberCacheRepository.setUser(user);
-//    }
-
 }

@@ -59,16 +59,14 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         log.info("roles - {}", roles);
 
         String email = oAuth2User.getEmail();
-        redirect(request, response, email, roles);
+        redirect(response, email, roles);
 
     }
 
-    private void redirect(HttpServletRequest request, HttpServletResponse response, String email, List<String> roles) throws IOException {
+    private void redirect(HttpServletResponse response, String email, List<String> roles) throws IOException {
         String accessToken = delegateAccessToken(email, roles);  // Access Token 생성// Refresh Token 생성
         String refreshToken = jwtTokenizer.generateRefreshToken(email);
         UserDTO user = userService.findByEmail(email);
-
-        log.info("userDTO : {}", user);
 
         tokenCacheRepository.getRefreshToken(email) // 이미 로그인 한 유저가 또 로그인했을 경우 리프레시토큰 갱신
                         .ifPresent(token ->
@@ -84,9 +82,11 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
         if (roles.contains("ROLE_GUEST")) { // 첫 소셜로그인 하는 유저일경우 추가 회원정보를 입력하는 폼으로 리다이렉트
             response.sendRedirect(getURIString(accessToken, refreshToken, SIGN_UP_PATH));
+            log.info("신규 유저 {} 리다이렉트", user);
             return;
         }
 
+        log.info("기존 유저 {} 리다이렉트", user);
         response.sendRedirect(getURIString(accessToken, refreshToken, HOME_PATH));
     }
 

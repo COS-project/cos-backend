@@ -6,9 +6,11 @@ import com.cos.cercat.certificate.dto.request.CertificateCreateRequest;
 import com.cos.cercat.certificate.dto.request.ExamInfoCreateRequest;
 import com.cos.cercat.certificate.dto.request.InterestCertificateCreateRequest;
 import com.cos.cercat.global.Response;
+import com.cos.cercat.user.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,8 +40,9 @@ public class CertificateCreateApi {
 
     @PostMapping("/interest-certificates")
     @Operation(summary = "흥미 자격증 리스트 생성")
-    public Response<Void> createInterestCertificates(@RequestBody List<InterestCertificateCreateRequest> requests) {
-        certificateCreateService.createInterestCertificates(requests, 1L);
+    public Response<Void> createInterestCertificates(@RequestBody List<InterestCertificateCreateRequest> requests,
+                                                     @AuthenticationPrincipal UserDTO user) {
+        certificateCreateService.createInterestCertificates(requests, user.getId());
         return Response.success("흥미 자격증 리스트 생성 성공");
     }
 }
