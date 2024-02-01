@@ -1,5 +1,9 @@
 package com.cos.cercat.comment.app;
 
+import com.cos.cercat.alarm.app.producer.AlarmProducer;
+import com.cos.cercat.alarm.domain.AlarmType;
+import com.cos.cercat.alarm.dto.AlarmArg;
+import com.cos.cercat.alarm.dto.AlarmEvent;
 import com.cos.cercat.board.app.PostService;
 import com.cos.cercat.board.domain.Post;
 import com.cos.cercat.comment.domain.PostComment;
@@ -19,6 +23,7 @@ public class PostCommentCreateService {
     private final PostCommentService postCommentService;
     private final UserService userService;
     private final PostService postService;
+    private final AlarmProducer alarmProducer;
 
     @Transactional
     public void createPostComment(Long postId, PostCommentCreateRequest request, Long userId) {
@@ -34,7 +39,15 @@ public class PostCommentCreateService {
         }
 
         post.addComment(postComment);
+        alarmProducer.send(createAlarmEvent(post, user));
     }
 
+    private AlarmEvent createAlarmEvent(Post targetPost, User fromUser) {
+        return AlarmEvent.of(
+                targetPost.getUser(),
+                AlarmArg.of(fromUser, targetPost.getId()),
+                AlarmType.NEW_COMMENT_ON_POST
+        );
+    }
 
 }

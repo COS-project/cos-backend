@@ -30,7 +30,7 @@ public class Post extends BaseTimeEntity {
 
     protected String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     protected User user;
 

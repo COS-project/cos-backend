@@ -1,5 +1,6 @@
 package com.cos.cercat.like.app;
 
+import com.cos.cercat.alarm.app.producer.AlarmProducer;
 import com.cos.cercat.board.app.PostService;
 import com.cos.cercat.board.domain.Post;
 import com.cos.cercat.comment.app.PostCommentService;
@@ -20,9 +21,7 @@ public class LikeFlipService {
     private final PostService postService;
     private final PostCommentService postCommentService;
     private final UserService userService;
-    private final PostLikeService postLikeService;
-    private final CommentLikeService commentLikeService;
-
+    private final LikeStrategyFactory likeStrategyFactory;
 
     @Transactional
     public void flipLike(LikeType likeType, Long id, Long userId) {
@@ -32,11 +31,13 @@ public class LikeFlipService {
         switch (likeType) {
             case POST -> {
                 Post post = postService.getPostWithLock(id);
-                postLikeService.flipPostLike(post, user);
+                LikeStrategy<Post> strategy = likeStrategyFactory.findStrategy(StrategyName.POST_LIKE_STRATEGY, Post.class);
+                strategy.flipLike(post, user);
             }
             case COMMENT -> {
                 PostComment postComment = postCommentService.getPostCommentWithLock(id);
-                commentLikeService.flipPostLike(postComment, user);
+                LikeStrategy<PostComment> strategy = likeStrategyFactory.findStrategy(StrategyName.COMMENT_LIKE_STRATEGY, PostComment.class);
+                strategy.flipLike(postComment, user);
             }
         }
     }

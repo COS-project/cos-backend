@@ -1,5 +1,9 @@
 package com.cos.cercat.like.app;
 
+import com.cos.cercat.alarm.app.producer.AlarmProducer;
+import com.cos.cercat.alarm.domain.AlarmType;
+import com.cos.cercat.alarm.dto.AlarmArg;
+import com.cos.cercat.alarm.dto.AlarmEvent;
 import com.cos.cercat.board.domain.Post;
 import com.cos.cercat.like.domain.EmbeddedId.PostLikePK;
 import com.cos.cercat.like.domain.PostLike;
@@ -15,28 +19,18 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class PostLikeService {
 
-
     private final PostLikeRepository postLikeRepository;
 
-    @Transactional
-    public void flipPostLike(Post post, User user) {
-
-        PostLikePK postLikePK = PostLikePK.of(user.getId(), post.getId());
-
-        if (postLikeRepository.existsById(postLikePK)) {
-            deletePostLike(post, postLikePK);
-            return;
-        }
-
-        createPostLike(post, user);
+    public boolean existsLike(PostLikePK postLikePK) {
+        return postLikeRepository.existsById(postLikePK);
     }
 
-    private void createPostLike(Post post, User user) {
+    public void createLike(Post post, User user) {
         postLikeRepository.save(PostLike.of(user, post));
         post.increaseLikeCount();
     }
 
-    private void deletePostLike(Post post, PostLikePK postLikePK) {
+    public void deleteLike(Post post, PostLikePK postLikePK) {
         postLikeRepository.deleteById(postLikePK);
         post.decreaseLikeCount();
     }
