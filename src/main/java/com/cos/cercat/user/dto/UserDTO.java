@@ -70,7 +70,6 @@ public class UserDTO implements UserDetails {
     }
 
     @Override
-    @JsonIgnore
     public String getUsername() {
         return this.username;
     }
