@@ -15,7 +15,7 @@ spring:
     listener:
       ack-mode: manual
     consumer:
-      bootstrap-servers: kafka:29092
+      bootstrap-servers: kafka:9092
       group-id: alarm
       auto-offset-reset: latest
       key-deserializer: org.apache.kafka.common.serialization.LongDeserializer
@@ -23,7 +23,7 @@ spring:
       properties:
         spring.json.trusted.packages: "*"
     producer:
-      bootstrap-servers: kafka:29092
+      bootstrap-servers: kafka:9092
       key-serializer: org.apache.kafka.common.serialization.LongSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     topic:
