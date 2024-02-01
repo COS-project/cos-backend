@@ -20,6 +20,7 @@ public enum ErrorCode {
     CERTIFICATE_NOT_FOUND(HttpStatus.NOT_FOUND, "certificate not founded"),
     QUESTION_NOT_FOUND(HttpStatus.NOT_FOUND, "question not founded"),
     INCORRECT_FILE_FORMAT(HttpStatus.BAD_REQUEST, "incorrect file format"),
+    REFRESH_TOKEN_REISSUE(HttpStatus.CREATED, "refresh token reissued"),
     GOAL_CREATE_ERROR(HttpStatus.BAD_REQUEST, "can set only one certification per goal"),
     INVALID_PASSWORD(HttpStatus.NOT_FOUND, "invalid password"),
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "bad request"),
@@ -27,7 +28,10 @@ public enum ErrorCode {
     IMAGE_UPLOAD_FAIL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "image upload fail"),
     NO_PERMISSION_ERROR(HttpStatus.FORBIDDEN, "user have no permission"),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "there is internal server error"),
-    ALARM_CONNECT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "alarm connect error");
+    ALARM_CONNECT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "alarm connect error"),
+    INVALID_REFRESH_TOKEN(HttpStatus.BAD_REQUEST, "invalid refresh token"),
+    INVALID_ACCESS_TOKEN(HttpStatus.BAD_REQUEST, "invalid access token");
+
 
     private final HttpStatus httpStatus;
     private final String message;

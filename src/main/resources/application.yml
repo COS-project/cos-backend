@@ -20,3 +20,9 @@ logging:
             bind: trace
         SQL: debug
 
+front:
+  host: localhost
+  port: 3000
+  home-path: /home
+  sign-up-path: /sign-up
+

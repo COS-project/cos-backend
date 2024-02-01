@@ -1,5 +1,6 @@
 package com.cos.cercat.user.domain;
 
+import com.cos.cercat.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,8 +9,9 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @ToString
+@Builder
 @Table(name = "Users")
-public class User {
+public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

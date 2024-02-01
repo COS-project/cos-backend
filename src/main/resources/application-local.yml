@@ -28,10 +28,44 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     topic:
       alarm: alarm
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: ${KAKAO_API_KEY}
+            redirect-uri: ${KAKAO_REDIRECT_URI}
+            client-authentication-method: client_secret_post
+            client-secret: ${CLIENT_SECRET}
+            scope:
+              - profile_nickname
+              - profile_image
+              - account_email
+            authorization-grant-type: authorization_code
+            client_name: kakao
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+jwt:
+  token:
+    secret-key: ${SECRET_KEY}
+  access-token:
+    header: Access-token
+    expire-length: 259200 #3일
+  refresh-token:
+    header: Refresh-token
+
+admin:
+  address: ${ADMIN_ADDRESS}
 
 logging:
   level:
     org:
+      springframework:
+        security: debug
       hibernate:
         orm:
           jdbc:

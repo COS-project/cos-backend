@@ -29,7 +29,7 @@ public record PostCommentResponse(
     public static PostCommentResponse from(PostComment entity) {
         return PostCommentResponse.of(
                 entity.getId(),
-                UserResponse.from(entity.getUser()),
+                UserResponse.fromEntity(entity.getUser()),
                 entity.getCreatedAt(),
                 entity.getParentCommentId(),
                 entity.getLikeCount(),

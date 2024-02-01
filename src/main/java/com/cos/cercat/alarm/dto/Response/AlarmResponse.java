@@ -13,7 +13,7 @@ public record AlarmResponse(
     public static AlarmResponse from(Alarm entity) {
         return new AlarmResponse(
                 entity.getId(),
-                UserResponse.from(entity.getFromUser()),
+                UserResponse.fromEntity(entity.getFromUser()),
                 entity.getTargetId(),
                 entity.getAlarmType()
         );

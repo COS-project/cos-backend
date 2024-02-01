@@ -1,5 +1,7 @@
 package com.cos.cercat.global.config;
 
+import com.cos.cercat.user.cache.RefreshToken;
+import com.cos.cercat.user.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +35,33 @@ public class RedisConfig {
         sseEmitterRedisTemplate.setKeySerializer(new StringRedisSerializer());
         sseEmitterRedisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(SseEmitter.class));
         return sseEmitterRedisTemplate;
+    }
+
+    @Bean
+    public RedisTemplate<String, UserDTO> userRedisTemplate() {
+        RedisTemplate<String, UserDTO> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory());
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(UserDTO.class));
+        return redisTemplate;
+    }
+
+    @Bean
+    public RedisTemplate<String, RefreshToken> tokenRedisTemplate() {
+        RedisTemplate<String, RefreshToken> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory());
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(RefreshToken.class));
+        return redisTemplate;
+    }
+
+    @Bean
+    public RedisTemplate<String, String> logoutRedisTemplate() {
+        RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory());
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new StringRedisSerializer());
+        return redisTemplate;
     }
 
 }

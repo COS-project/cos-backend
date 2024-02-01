@@ -1,6 +1,7 @@
 package com.cos.cercat.user.dto.response;
 
 import com.cos.cercat.user.domain.User;
+import com.cos.cercat.user.dto.UserDTO;
 
 public record UserResponse(
         Long userId,
@@ -8,7 +9,7 @@ public record UserResponse(
         String email,
         String profileImage
     ) {
-    public static UserResponse from(User entity) {
+    public static UserResponse fromEntity(User entity) {
         return new UserResponse(
                 entity.getId(),
                 entity.getUsername(),
@@ -16,4 +17,14 @@ public record UserResponse(
                 entity.getProfileImage()
         );
     }
+
+    public static UserResponse fromDTO(UserDTO dto) {
+        return new UserResponse(
+                dto.getId(),
+                dto.getUsername(),
+                dto.getEmail(),
+                dto.getProfileImage()
+        );
+    }
+
 }

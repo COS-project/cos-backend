@@ -3,7 +3,6 @@ package com.cos.cercat.board.dto.response;
 import com.cos.cercat.board.domain.*;
 import com.cos.cercat.mockExam.dto.response.MockExamResponse;
 import com.cos.cercat.user.dto.response.UserResponse;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.time.LocalDateTime;
@@ -30,7 +29,7 @@ public record PostResponse(
                 commentaryPost.getPostType(),
                 commentaryPost.getTitle(),
                 commentaryPost.getContent(),
-                UserResponse.from(commentaryPost.getUser()),
+                UserResponse.fromEntity(commentaryPost.getUser()),
                 commentaryPost.getPostImages().getThumbnailImageUrl(),
                 commentaryPost.getLikeCount(),
                 commentaryPost.getPostComments().countComments(),
@@ -46,7 +45,7 @@ public record PostResponse(
                 tipPost.getPostType(),
                 tipPost.getTitle(),
                 tipPost.getContent(),
-                UserResponse.from(tipPost.getUser()),
+                UserResponse.fromEntity(tipPost.getUser()),
                 tipPost.getPostImages().getThumbnailImageUrl(),
                 tipPost.getLikeCount(),
                 tipPost.getPostComments().countComments(),
@@ -62,7 +61,7 @@ public record PostResponse(
                 normalPost.getPostType(),
                 normalPost.getTitle(),
                 normalPost.getContent(),
-                UserResponse.from(normalPost.getUser()),
+                UserResponse.fromEntity(normalPost.getUser()),
                 normalPost.getPostImages().getThumbnailImageUrl(),
                 normalPost.getLikeCount(),
                 normalPost.getPostComments().countComments(),
