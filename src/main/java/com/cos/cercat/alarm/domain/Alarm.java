@@ -1,6 +1,7 @@
 package com.cos.cercat.alarm.domain;
 
 import com.cos.cercat.board.domain.Post;
+import com.cos.cercat.global.entity.BaseTimeEntity;
 import com.cos.cercat.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -12,7 +13,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @NoArgsConstructor
 @Getter
-public class Alarm {
+public class Alarm extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
