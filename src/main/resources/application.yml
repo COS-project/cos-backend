@@ -20,3 +20,7 @@ logging:
             bind: trace
         SQL: debug
 
+springdoc:
+  swagger-ui:
+    persist-authorization: true
+    default-models-expand-depth: -1
