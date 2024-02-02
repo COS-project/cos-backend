@@ -35,13 +35,13 @@ public class CertificateCreateService {
     }
 
     public void createInterestCertificates(List<InterestCertificateCreateRequest> requests, Long userId) {
-        requests.forEach(request -> createInterestCertificate(userId, request));
+        User user = userService.getUser(userId);
+        requests.forEach(request -> createInterestCertificate(user, request));
+        user.updateRole();
     }
 
-    private void createInterestCertificate(Long userId, InterestCertificateCreateRequest request) {
+    private void createInterestCertificate(User user, InterestCertificateCreateRequest request) {
         Certificate certificate = certificateService.getCertificate(request.certificateId());
-        User user = userService.getUser(userId);
-
         interestCertificateService.createInterestCertificate(request.toEntity(certificate, user));
     }
 

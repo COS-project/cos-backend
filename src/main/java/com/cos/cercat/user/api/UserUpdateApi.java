@@ -1,7 +1,7 @@
 package com.cos.cercat.user.api;
 
 import com.cos.cercat.global.Response;
-import com.cos.cercat.user.app.UserCreateService;
+import com.cos.cercat.user.app.UserUpdateService;
 import com.cos.cercat.user.app.UserService;
 import com.cos.cercat.user.dto.UserDTO;
 import com.cos.cercat.user.dto.request.UserCreateRequest;
@@ -20,15 +20,15 @@ import org.springframework.web.multipart.MultipartFile;
 @Tag(name = "유저 정보 추가 API")
 public class UserUpdateApi {
 
-    private final UserCreateService userCreateService;
+    private final UserUpdateService userUpdateService;
     private final UserService userService;
 
     @PatchMapping(path = "/users", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @Operation(summary = "회원 정보 추가", description = "회원 정보를 수정할 때도 사용 가능")
-    public Response<Void> createUserInfo(@RequestPart UserCreateRequest request,
+    @Operation(summary = "회원 정보 추가")
+    public Response<Void> updateUserInfo(@RequestPart UserCreateRequest request,
                                          @RequestPart MultipartFile file,
                                          @AuthenticationPrincipal UserDTO user) {
-        userCreateService.createUserInfo(request, file, user.getId());
+        userUpdateService.updateUserInfo(request, file, user.getId());
         return Response.success("회원 정보 추가 성공");
     }
 

@@ -3,21 +3,17 @@ package com.cos.cercat.user.app;
 import com.cos.cercat.global.entity.Image;
 import com.cos.cercat.global.exception.CustomException;
 import com.cos.cercat.global.exception.ErrorCode;
-import com.cos.cercat.global.util.FileUploader;
 import com.cos.cercat.global.util.JwtTokenUtil;
 import com.cos.cercat.user.cache.LogoutTokenRepository;
 import com.cos.cercat.user.cache.UserCacheRepository;
 import com.cos.cercat.user.cache.TokenCacheRepository;
 import com.cos.cercat.user.domain.User;
 import com.cos.cercat.user.dto.UserDTO;
-import com.cos.cercat.user.dto.request.UserCreateRequest;
 import com.cos.cercat.user.repository.UserRepository;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -42,10 +38,9 @@ public class UserService {
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
     }
 
-    public void createUser(Long userId, String nickName, Image image) {
+    public void updateUser(Long userId, String nickName, Image image) {
         User user = getUser(userId);
         user.createUserInfo(nickName, image);
-        user.updateRole();
         refreshUserCache(user);
     }
 
@@ -66,7 +61,7 @@ public class UserService {
         return logoutTokenRepository.isLoginUser(userEmail);
     }
 
-    private void refreshUserCache(User user) {
+    public void refreshUserCache(User user) {
         userCacheRepository.deleteUser(user.getEmail());
         userCacheRepository.setUser(UserDTO.fromEntity(user));
     }
