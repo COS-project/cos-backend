@@ -6,6 +6,7 @@ import com.cos.cercat.user.dto.request.UserCreateRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class UserCreateService {
     private final UserService userService;
     private final FileUploader fileUploader;
 
+    @Transactional
     public void createUserInfo(UserCreateRequest request,
                                MultipartFile file,
                                Long userId) {

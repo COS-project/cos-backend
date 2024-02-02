@@ -10,6 +10,7 @@ import com.cos.cercat.mockExam.domain.Question;
 import com.cos.cercat.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,10 @@ public class CommentaryPostService {
     public CommentaryPost getCommentaryPost(Long postId) {
         return commentaryPostRepository.findById(postId).orElseThrow(() ->
                 new CustomException(ErrorCode.POST_NOT_FOUND));
+    }
+
+    public Page<CommentaryPost> getMyCommentaryPosts(User user, Pageable pageable) {
+        return commentaryPostRepository.findCommentaryPostsByUser(user, pageable);
     }
 
     public void updateCommentaryPost(Long postId,

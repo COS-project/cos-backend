@@ -4,8 +4,11 @@ import com.cos.cercat.board.domain.Post;
 import com.cos.cercat.board.repository.PostRepository;
 import com.cos.cercat.global.exception.CustomException;
 import com.cos.cercat.global.exception.ErrorCode;
+import com.cos.cercat.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +27,10 @@ public class PostService {
     public Post getPostWithLock(Long postId) {
         return postRepository.findByIdWithPessimisticLock(postId).orElseThrow(() ->
                 new CustomException(ErrorCode.POST_NOT_FOUND));
+    }
+
+    public Page<Post> getMyPosts(User user, Pageable pageable) {
+        return postRepository.findPostsByUser(user, pageable);
     }
 
     public void deletePost(Long postId) {

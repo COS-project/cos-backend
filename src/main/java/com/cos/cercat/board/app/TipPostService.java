@@ -11,6 +11,7 @@ import com.cos.cercat.user.domain.User;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,10 @@ public class TipPostService {
     public TipPost getTipPost(Long postId) {
         return tipPostRepository.findById(postId).orElseThrow(() ->
                 new CustomException(ErrorCode.POST_NOT_FOUND));
+    }
+
+    public Page<TipPost> getMyTipPosts(User user, Pageable pageable) {
+        return tipPostRepository.findTipPostsByUser(user, pageable);
     }
 
     public List<TipPost> getTop3TipPosts(Certificate certificate) {

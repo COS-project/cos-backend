@@ -68,7 +68,14 @@ public record PostResponse(
                 null,
                 null,
                 normalPost.getCreatedAt()
-
         );
+    }
+
+    public static PostResponse from(Post post) {
+        return switch (post.getPostType()) {
+            case COMMENTARY -> from((CommentaryPost) post);
+            case TIP -> from((TipPost) post);
+            case NORMAL -> from((NormalPost) post);
+        };
     }
 }

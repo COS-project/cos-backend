@@ -28,7 +28,7 @@ public class User extends BaseTimeEntity {
 
     private String kakaoProfileImage;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "image_id")
     private Image mainProfileImage;
 

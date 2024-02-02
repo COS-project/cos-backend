@@ -12,6 +12,7 @@ import com.cos.cercat.user.domain.User;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,10 @@ public class NormalPostService {
     public NormalPost getNormalPost(Long postId) {
         return normalPostRepository.findById(postId).orElseThrow(() ->
                 new CustomException(ErrorCode.POST_NOT_FOUND));
+    }
+
+    public Page<NormalPost> getMyNormalPosts(User user, Pageable pageable) {
+        return normalPostRepository.findNormalPostsByUser(user, pageable);
     }
 
     public Slice<NormalPost> searchNormalPosts(Pageable pageable, Certificate certificate, String keyword) {

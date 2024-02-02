@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
-@Tag(name = "알람 생성 API")
+@Tag(name = "알람(SSE) 연결 API")
 public class AlarmConnectApi {
 
     private final SseEmitterService sseEmitterService;
