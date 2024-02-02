@@ -6,6 +6,8 @@ import com.cos.cercat.certificate.repository.ExamInfoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class ExamInfoService {
@@ -14,6 +16,15 @@ public class ExamInfoService {
 
     public ExamInfo getRecentExamInfo(Certificate certificate) {
         return examInfoRepository.findRecentExamInfo(certificate.getId());
+    }
+
+    public Boolean isExamDatePassed(Certificate certificate) {
+        ExamInfo recentExamInfo = examInfoRepository.findRecentExamInfo(certificate.getId());
+
+        LocalDateTime today = LocalDateTime.now();
+        LocalDateTime resultAnnouncementDateTime = recentExamInfo.getExamSchedule().getResultAnnouncementDateTime();
+
+        return today.isAfter(resultAnnouncementDateTime);
     }
 
     public void createExamInfo(ExamInfo examInfo) {

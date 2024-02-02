@@ -31,6 +31,13 @@ public class LearningFetchService {
         return GoalResponse.from(goal);
     }
 
+    public Boolean existsGoal(Long certificateId, Long userId) {
+        Certificate certificate = certificateService.getCertificate(certificateId);
+        User user = userService.getUser(userId);
+
+        return goalService.isGoalAlreadyExists(user, certificate);
+    }
+
     public GoalAchievementResponse getGoalAchievement(Long certificateId, Long userId) {
         Certificate certificate = certificateService.getCertificate(certificateId);
         User user = userService.getUser(userId);

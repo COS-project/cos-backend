@@ -41,7 +41,7 @@ public class TipPostService {
                 new CustomException(ErrorCode.POST_NOT_FOUND));
     }
 
-    public Page<TipPost> getMyTipPosts(User user, Pageable pageable) {
+    public Slice<TipPost> getMyTipPosts(User user, Pageable pageable) {
         return tipPostRepository.findTipPostsByUser(user, pageable);
     }
 

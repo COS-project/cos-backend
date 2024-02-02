@@ -14,9 +14,9 @@ public class ExamInfo {
     @Column(name = "exam_info_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "certificate_id")
-    private Certificate certificate;
+    private CertificateExam certificateExam;
 
     @Embedded
     private ExamSchedule examSchedule; //시험 일정
@@ -39,7 +39,7 @@ public class ExamInfo {
     private String examEligibility; //응시 자격
 
     public ExamInfo(
-                    Certificate certificate,
+                    CertificateExam certificateExam,
                     ExamSchedule examSchedule,
                     ExamFee examFee,
                     ExamTimeLimit examTimeLimit,
@@ -48,7 +48,7 @@ public class ExamInfo {
                     String description,
                     String examFormat,
                     String examEligibility) {
-        this.certificate = certificate;
+        this.certificateExam = certificateExam;
         this.examSchedule = examSchedule;
         this.examFee = examFee;
         this.examTimeLimit = examTimeLimit;

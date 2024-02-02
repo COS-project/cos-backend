@@ -22,6 +22,7 @@ public enum ErrorCode {
     INCORRECT_FILE_FORMAT(HttpStatus.BAD_REQUEST, "incorrect file format"),
     REFRESH_TOKEN_REISSUE(HttpStatus.CREATED, "refresh token reissued"),
     GOAL_CREATE_ERROR(HttpStatus.BAD_REQUEST, "can set only one certification per goal"),
+    DUPLICATE_EXAM_REVIEW(HttpStatus.BAD_REQUEST, "can write only one exam review per certificate exam"),
     INVALID_PASSWORD(HttpStatus.NOT_FOUND, "invalid password"),
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "bad request"),
     UNAUTHORIZED_USER(HttpStatus.UNAUTHORIZED, "unauthorized user"),
@@ -32,7 +33,6 @@ public enum ErrorCode {
     INVALID_REFRESH_TOKEN(HttpStatus.BAD_REQUEST, "invalid refresh token"),
     INVALID_ACCESS_TOKEN(HttpStatus.BAD_REQUEST, "invalid access token"),
     ACCESS_TOKEN_EXPIRED(HttpStatus.BAD_REQUEST, "access token expired");
-
 
     private final HttpStatus httpStatus;
     private final String message;

@@ -9,7 +9,8 @@ public interface ExamInfoRepository extends JpaRepository<ExamInfo, Long> {
 
     @Query("""
             SELECT ei from ExamInfo ei
-            WHERE ei.certificate.id = :certificateId
+            JOIN FETCH ei.certificateExam
+            WHERE ei.certificateExam.certificate.id = :certificateId
             ORDER BY ei.examSchedule.examDateTime ASC
             LIMIT 1
             """)

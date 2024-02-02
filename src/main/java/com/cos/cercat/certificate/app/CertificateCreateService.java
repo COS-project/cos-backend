@@ -1,7 +1,6 @@
 package com.cos.cercat.certificate.app;
 
 import com.cos.cercat.certificate.domain.Certificate;
-import com.cos.cercat.certificate.domain.InterestCertificate;
 import com.cos.cercat.certificate.dto.request.CertificateCreateRequest;
 import com.cos.cercat.certificate.dto.request.ExamInfoCreateRequest;
 import com.cos.cercat.certificate.dto.request.InterestCertificateCreateRequest;

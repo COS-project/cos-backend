@@ -31,6 +31,12 @@ public class CertificateFetchService {
         return ExamInfoResponse.from(recentExamInfo);
     }
 
+    public Boolean isExamDatePassed(Long certificateId) {
+        Certificate certificate = certificateService.getCertificate(certificateId);
+
+        return examInfoService.isExamDatePassed(certificate);
+    }
+
     /**
      * 전체 자격증 리스트를 조횧한다.
      * @return 자격증 리스트

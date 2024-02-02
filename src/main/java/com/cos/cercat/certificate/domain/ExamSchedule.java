@@ -17,6 +17,8 @@ public class ExamSchedule {
 
     private LocalDateTime applicationDeadlineDateTime;
 
+    private LocalDateTime ResultAnnouncementDateTime;
+
     private LocalDateTime examDateTime;
 
 }

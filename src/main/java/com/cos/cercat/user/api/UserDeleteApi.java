@@ -5,7 +5,6 @@ import com.cos.cercat.user.app.UserService;
 import com.cos.cercat.user.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,11 +19,10 @@ public class UserDeleteApi {
 
     private final UserService userService;
 
-    @DeleteMapping("/logout")
-    @Operation(summary = "회원 로그아웃")
-    public Response<Void> logout(HttpServletRequest request, @AuthenticationPrincipal UserDTO user) {
-        userService.logout(request.getHeader("Access-Token"), user.getEmail());
-        return Response.success("로그아웃 성공");
+    @DeleteMapping("/users")
+    @Operation(summary = "회원 탈퇴")
+    public Response<Void> deleteUser(@AuthenticationPrincipal UserDTO user) {
+        userService.deleteUser(user.getId());
+        return Response.success("회원탈퇴 성공");
     }
-
 }

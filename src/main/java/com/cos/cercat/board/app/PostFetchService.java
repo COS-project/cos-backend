@@ -71,7 +71,7 @@ public class PostFetchService {
     }
 
     @Transactional(readOnly = true)
-    public Page<PostResponse> getMyPosts(PostType postType, Long userId, Pageable pageable) {
+    public Slice<PostResponse> getMyPosts(PostType postType, Long userId, Pageable pageable) {
 
         User user = userService.getUser(userId);
 

@@ -29,10 +29,6 @@ public class PostService {
                 new CustomException(ErrorCode.POST_NOT_FOUND));
     }
 
-    public Page<Post> getMyPosts(User user, Pageable pageable) {
-        return postRepository.findPostsByUser(user, pageable);
-    }
-
     public void deletePost(Long postId) {
         postRepository.delete(getPost(postId));
     }

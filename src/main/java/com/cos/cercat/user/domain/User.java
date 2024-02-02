@@ -4,7 +4,9 @@ import com.cos.cercat.global.entity.BaseTimeEntity;
 import com.cos.cercat.global.entity.Image;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -14,10 +16,12 @@ import java.util.Objects;
 @ToString
 @Builder
 @Table(name = "Users")
+@SQLDelete(sql = "UPDATE users SET removed_at = NOW() WHERE user_id = ?")
 public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
     private String nickname;
@@ -27,6 +31,8 @@ public class User extends BaseTimeEntity {
     private String email;
 
     private String kakaoProfileImage;
+
+    private LocalDateTime removedAt;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "image_id")

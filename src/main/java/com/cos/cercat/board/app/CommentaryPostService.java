@@ -39,7 +39,7 @@ public class CommentaryPostService {
                 new CustomException(ErrorCode.POST_NOT_FOUND));
     }
 
-    public Page<CommentaryPost> getMyCommentaryPosts(User user, Pageable pageable) {
+    public Slice<CommentaryPost> getMyCommentaryPosts(User user, Pageable pageable) {
         return commentaryPostRepository.findCommentaryPostsByUser(user, pageable);
     }
 

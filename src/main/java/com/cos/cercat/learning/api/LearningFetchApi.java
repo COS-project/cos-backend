@@ -36,4 +36,11 @@ public class LearningFetchApi {
         return Response.success(learningFetchService.getGoalAchievement(certificateId, user.getId()));
     }
 
+    @GetMapping("/{certificateId}/goal-status")
+    @Operation(summary = "유저 목표 설정 여부 조회")
+    public Response<Boolean> existsGoal(@PathVariable Long certificateId,
+                                        @AuthenticationPrincipal UserDTO user) {
+        return Response.success(learningFetchService.existsGoal(certificateId, user.getId()));
+    }
+
 }

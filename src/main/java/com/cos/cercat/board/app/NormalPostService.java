@@ -36,7 +36,7 @@ public class NormalPostService {
                 new CustomException(ErrorCode.POST_NOT_FOUND));
     }
 
-    public Page<NormalPost> getMyNormalPosts(User user, Pageable pageable) {
+    public Slice<NormalPost> getMyNormalPosts(User user, Pageable pageable) {
         return normalPostRepository.findNormalPostsByUser(user, pageable);
     }
 

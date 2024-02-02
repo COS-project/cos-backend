@@ -58,6 +58,10 @@ public class UserService {
         logoutTokenRepository.setLogout(email, accessToken, accessTokenExpirationMillis);
     }
 
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
+    }
+
     public Boolean isLoginUser(String userEmail) {
         return logoutTokenRepository.isLoginUser(userEmail);
     }

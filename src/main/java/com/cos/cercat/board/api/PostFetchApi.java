@@ -52,7 +52,7 @@ public class PostFetchApi {
 
     @GetMapping("/my/{postType}/posts")
     @Operation(summary = "내가 쓴 글 조회")
-    public Response<Page<PostResponse>> getMyPosts(@PathVariable PostType postType,
+    public Response<Slice<PostResponse>> getMyPosts(@PathVariable PostType postType,
                                                    @AuthenticationPrincipal UserDTO user,
                                                    @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         return Response.success(postFetchService.getMyPosts(postType, user.getId(), pageable));

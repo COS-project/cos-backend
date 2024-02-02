@@ -33,4 +33,10 @@ public class CertificateFetchApi {
     public Response<ExamInfoResponse> getCertificateDetail(@PathVariable Long certificateId) {
         return Response.success(certificateFetchService.getCertificateWithInfo(certificateId));
     }
+
+    @GetMapping("/certificates/{certificateId}/check-exam-date")
+    @Operation(summary = "합격자 발표날이 지났는지 여부 조회")
+    public Response<Boolean> isDatePassed(@PathVariable Long certificateId) {
+        return Response.success(certificateFetchService.isExamDatePassed(certificateId));
+    }
 }

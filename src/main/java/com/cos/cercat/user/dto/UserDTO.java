@@ -45,6 +45,9 @@ public class UserDTO implements UserDetails {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime updatedAt;
 
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime removedAt;
 
     public static UserDTO fromEntity(User entity) {
 
@@ -58,7 +61,8 @@ public class UserDTO implements UserDetails {
                 entity.getEmail(),
                 entity.getRole(),
                 entity.getCreatedAt(),
-                entity.getModifiedAt()
+                entity.getModifiedAt(),
+                entity.getRemovedAt()
         );
     }
 
@@ -82,24 +86,24 @@ public class UserDTO implements UserDetails {
     @Override
     @JsonIgnore
     public boolean isAccountNonExpired() {
-        return false;
+        return removedAt == null;
     }
 
     @Override
     @JsonIgnore
     public boolean isAccountNonLocked() {
-        return false;
+        return removedAt == null;
     }
 
     @Override
     @JsonIgnore
     public boolean isCredentialsNonExpired() {
-        return false;
+        return removedAt == null;
     }
 
     @Override
     @JsonIgnore
     public boolean isEnabled() {
-        return false;
+        return removedAt == null;
     }
 }
