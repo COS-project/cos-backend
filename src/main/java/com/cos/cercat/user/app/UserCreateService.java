@@ -2,6 +2,7 @@ package com.cos.cercat.user.app;
 
 import com.cos.cercat.global.entity.Image;
 import com.cos.cercat.global.util.FileUploader;
+import com.cos.cercat.user.cache.TokenCacheRepository;
 import com.cos.cercat.user.dto.request.UserCreateRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

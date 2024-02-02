@@ -55,7 +55,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             throw new CustomException(ErrorCode.REFRESH_TOKEN_REISSUE); //리프레시토큰 재발급 시 401 에러 발생을 방지
         }
 
-
         jwtTokenUtil.extractAccessToken(request)//토큰 검증
                 .map(jwtTokenUtil::extractEmail)
                 .filter(userService::isLoginUser)

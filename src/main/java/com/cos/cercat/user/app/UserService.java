@@ -32,12 +32,9 @@ public class UserService {
 
     @Transactional
     public UserDTO findByEmail(String email) {
-        UserDTO userDTO = userCacheRepository.getUser(email).orElseGet(() ->
+        return userCacheRepository.getUser(email).orElseGet(() ->
                 userRepository.findByEmail(email).map(UserDTO::fromEntity).orElseThrow(
                         () -> new CustomException(ErrorCode.USER_NOT_FOUND)));
-
-        log.info("userDTO : {}", userDTO);
-        return userDTO;
     }
 
     public User getUser(Long userId) {
@@ -48,6 +45,8 @@ public class UserService {
     public void createUser(Long userId, String nickName, Image image) {
         User user = getUser(userId);
         user.createUserInfo(nickName, image);
+        user.updateRole();
+        refreshUserCache(user);
     }
 
     @Transactional
@@ -63,4 +62,8 @@ public class UserService {
         return logoutTokenRepository.isLoginUser(userEmail);
     }
 
+    private void refreshUserCache(User user) {
+        userCacheRepository.deleteUser(user.getEmail());
+        userCacheRepository.setUser(UserDTO.fromEntity(user));
+    }
 }

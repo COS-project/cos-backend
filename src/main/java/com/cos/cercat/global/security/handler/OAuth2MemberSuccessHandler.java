@@ -59,6 +59,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         log.info("roles - {}", roles);
 
         String email = oAuth2User.getEmail();
+
         redirect(response, email, roles);
 
     }

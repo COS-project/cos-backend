@@ -53,6 +53,10 @@ public class User extends BaseTimeEntity {
         return this;
     }
 
+    public void updateRole() {
+        this.role = Role.ROLE_USER;
+    }
+
 
     @Override
     public boolean equals(Object o) {

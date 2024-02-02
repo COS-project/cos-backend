@@ -30,7 +30,8 @@ public enum ErrorCode {
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "there is internal server error"),
     ALARM_CONNECT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "alarm connect error"),
     INVALID_REFRESH_TOKEN(HttpStatus.BAD_REQUEST, "invalid refresh token"),
-    INVALID_ACCESS_TOKEN(HttpStatus.BAD_REQUEST, "invalid access token");
+    INVALID_ACCESS_TOKEN(HttpStatus.BAD_REQUEST, "invalid access token"),
+    ACCESS_TOKEN_EXPIRED(HttpStatus.BAD_REQUEST, "access token expired");
 
 
     private final HttpStatus httpStatus;

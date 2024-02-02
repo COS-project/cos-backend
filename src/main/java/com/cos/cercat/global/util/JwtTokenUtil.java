@@ -25,9 +25,6 @@ public class JwtTokenUtil {
     @Value("${jwt.refresh-token.header}")
     private String refreshHeader;
 
-    @Value("${jwt.token.secret-key}")
-    private String secretKey;
-
     /**
      * JWT의 Subject와 Claim으로 email 사용 -> 클레임의 name을 "email"으로 설정
      * JWT의 헤더에 들어오는 값 : 'Authorization(Key) = Bearer {토큰} (Value)' 형식
@@ -95,7 +92,7 @@ public class JwtTokenUtil {
                     .parseClaimsJws(refreshToken)
                     .getBody()
                     .getSubject();
-        } catch (Exception e) {
+        } catch (ExpiredJwtException e) {
             log.warn("리프레시 토큰으로 부터 이메일 추출중 예외 발생 - {}", e.getMessage());
             throw new CustomException(ErrorCode.INVALID_REFRESH_TOKEN);
         }
@@ -105,14 +102,13 @@ public class JwtTokenUtil {
 
         try {
             return extractAllClaims(token).get(EMAIL_CLAIM, String.class);
+        } catch (ExpiredJwtException e) {
+            log.warn("액세스 토큰 만료 - {}", e.getMessage());
+            throw new CustomException(ErrorCode.ACCESS_TOKEN_EXPIRED);
         } catch (Exception e) {
             log.warn("엑세스 토큰으로 부터 이메일 추출중 예외 발생 - {}", e.getMessage());
             throw new CustomException(ErrorCode.INVALID_ACCESS_TOKEN, e.getMessage());
         }
-    }
-
-    public boolean validateToken(String token) {
-        return extractAllClaims(token) != null;
     }
 
     public Claims extractAllClaims(String token) {

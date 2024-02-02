@@ -27,10 +27,6 @@ public class JwtTokenizer {
     @Value("${jwt.access-token.expire-length}")
     private int accessTokenExpirationMinutes;
 
-    private String encodeBase64SecretKey(String secretKey) {
-        return Encoders.BASE64.encode(secretKey.getBytes(StandardCharsets.UTF_8));
-    }
-
     public String generateAccessToken(Map<String, Object> claims,
                                       String subject,
                                       Date expiration) {
@@ -88,5 +84,9 @@ public class JwtTokenizer {
         byte[] keyBytes = Decoders.BASE64.decode(base64SecretKey);
         Key key = Keys.hmacShaKeyFor(keyBytes);
         return key;
+    }
+
+    private String encodeBase64SecretKey(String secretKey) {
+        return Encoders.BASE64.encode(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 }
