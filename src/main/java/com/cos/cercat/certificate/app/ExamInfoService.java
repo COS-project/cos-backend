@@ -23,9 +23,7 @@ public class ExamInfoService {
     public Boolean isExamDatePassed(Certificate certificate) {
         ExamInfo recentExamInfo = examInfoRepository.findRecentExamInfo(certificate.getId());
 
-        LocalDateTime today = LocalDateTime.now();
-        log.info("localTime - {}", today);
-
+        LocalDateTime today = LocalDateTime.now().plusHours(9);
         LocalDateTime resultAnnouncementDateTime = recentExamInfo.getExamSchedule().getResultAnnouncementDateTime();
 
         return today.isAfter(resultAnnouncementDateTime);
