@@ -72,7 +72,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        log.info("{} 유저 인증 성공", user.getUsername());
+        log.info("{} 유저 인증 성공", user.getNickname());
     }
 
     private void sendAccessTokenAndRefreshToken(String email, HttpServletResponse response){

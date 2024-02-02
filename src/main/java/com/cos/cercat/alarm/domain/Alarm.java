@@ -1,6 +1,5 @@
 package com.cos.cercat.alarm.domain;
 
-import com.cos.cercat.board.domain.Post;
 import com.cos.cercat.global.entity.BaseTimeEntity;
 import com.cos.cercat.user.domain.User;
 import jakarta.persistence.*;
@@ -29,16 +28,19 @@ public class Alarm extends BaseTimeEntity {
     @JoinColumn(name = "from_user_id")
     private User fromUser;
 
-    private Long targetId;
+    private Long postId;
 
     @Enumerated(EnumType.STRING)
     private AlarmType alarmType;
 
+    private Boolean isRead;
+
     @Builder
-    public Alarm(User receiveUser, User fromUser, Long targetId, AlarmType alarmType) {
+    public Alarm(User receiveUser, User fromUser, Long postId, AlarmType alarmType, Boolean isRead) {
         this.receiveUser = receiveUser;
         this.fromUser = fromUser;
-        this.targetId = targetId;
+        this.postId = postId;
         this.alarmType = alarmType;
+        this.isRead = isRead;
     }
 }

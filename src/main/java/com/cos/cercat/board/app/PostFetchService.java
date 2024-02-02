@@ -53,12 +53,8 @@ public class PostFetchService {
     }
 
     @Transactional(readOnly = true)
-    public PostWithCommentsResponse getPostDetail(PostType postType, Long postId) {
-        return switch (postType) {
-            case COMMENTARY -> PostWithCommentsResponse.from(commentaryPostService.getCommentaryPost(postId));
-            case TIP -> PostWithCommentsResponse.from(tipPostService.getTipPost(postId));
-            case NORMAL -> PostWithCommentsResponse.from(normalPostService.getNormalPost(postId));
-        };
+    public PostWithCommentsResponse getPostDetail(Long postId) {
+        return PostWithCommentsResponse.from(postService.getPost(postId));
     }
 
     @Transactional(readOnly = true)

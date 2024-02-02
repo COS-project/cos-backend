@@ -37,11 +37,10 @@ public class PostFetchApi {
         return Response.success(postFetchService.searchPosts(pageable, postType, certificateId, keyword));
     }
 
-    @GetMapping("/{postType}/posts/{postId}")
+    @GetMapping("/posts/{postId}")
     @Operation(summary = "게시글 상세 조회")
-    public Response<PostWithCommentsResponse> getCommentaryPostDetail(@PathVariable PostType postType,
-                                                                      @PathVariable Long postId) {
-        return Response.success(postFetchService.getPostDetail(postType, postId));
+    public Response<PostWithCommentsResponse> getCommentaryPostDetail(@PathVariable Long postId) {
+        return Response.success(postFetchService.getPostDetail(postId));
     }
 
     @GetMapping("/{certificateId}/tip-posts/best")

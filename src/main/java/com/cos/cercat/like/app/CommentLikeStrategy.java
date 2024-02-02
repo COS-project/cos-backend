@@ -27,7 +27,7 @@ public class CommentLikeStrategy implements LikeStrategy<PostComment>{
         }
 
         commentLikeService.createLike(postComment, user);
-        alarmProducer.send(AlarmEvent.of(postComment.getUser(), AlarmArg.of(user, postComment.getId()), AlarmType.NEW_LIKE_ON_COMMENT));
+        alarmProducer.send(AlarmEvent.of(postComment.getUser(), AlarmArg.of(user, postComment.getPost().getId()), AlarmType.NEW_LIKE_ON_COMMENT));
     }
 
     @Override

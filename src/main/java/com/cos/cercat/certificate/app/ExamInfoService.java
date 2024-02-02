@@ -24,9 +24,9 @@ public class ExamInfoService {
         ExamInfo recentExamInfo = examInfoRepository.findRecentExamInfo(certificate.getId());
 
         LocalDateTime today = LocalDateTime.now().plusHours(9);
-        LocalDateTime resultAnnouncementDateTime = recentExamInfo.getExamSchedule().getResultAnnouncementDateTime();
+        LocalDateTime examDateTime = recentExamInfo.getExamSchedule().getExamDateTime();
 
-        return today.isAfter(resultAnnouncementDateTime);
+        return today.isAfter(examDateTime);
     }
 
     public void createExamInfo(ExamInfo examInfo) {

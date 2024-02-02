@@ -1,13 +1,18 @@
 package com.cos.cercat.alarm.app;
 
+import com.cos.cercat.alarm.domain.Alarm;
 import com.cos.cercat.alarm.dto.Response.AlarmResponse;
 import com.cos.cercat.user.app.UserService;
 import com.cos.cercat.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,9 +22,20 @@ public class AlarmFetchService {
     private final AlarmService alarmService;
     private final UserService userService;
 
-    public Page<AlarmResponse> getAlarms(Long userId, Pageable pageable) {
+    @Transactional
+    public List<AlarmResponse> getAlarms(Long userId) {
         User user = userService.getUser(userId);
-        return alarmService.getAlarms(user, pageable).map(AlarmResponse::from);
+
+        List<AlarmResponse> alarmResponses = alarmService.getAlarms(user).stream().map(AlarmResponse::from).toList();
+        alarmService.markAllAsRead(user); //안읽은 모든 알림을 읽음으로 업데이트
+
+        return alarmResponses;
+    }
+
+    public Long countUnreadAlarm(Long userId) {
+        User user = userService.getUser(userId);
+
+        return alarmService.countUnreadAlarm(user);
     }
 
 }

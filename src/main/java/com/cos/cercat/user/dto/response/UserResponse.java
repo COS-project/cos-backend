@@ -16,7 +16,7 @@ public record UserResponse(
     public static UserResponse fromDTO(UserDTO dto) {
         return new UserResponse(
                 dto.getId(),
-                dto.getUsername(),
+                dto.getNickname(),
                 dto.getEmail(),
                 dto.getProfileImage()
         );

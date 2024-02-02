@@ -35,18 +35,20 @@ public class PostCommentCreateService {
         if (request.parentCommentId() != null) {
             PostComment parentComment = postCommentService.getPostComment(request.parentCommentId());
             parentComment.addChildComment(postComment);
+            alarmProducer.send(createAlarmEvent(post.getUser(), post.getId(), user, AlarmType.NEW_COMMENT_ON_POST));
+            alarmProducer.send(createAlarmEvent(parentComment.getUser(), post.getId(), user, AlarmType.NEW_COMMENT_ON_COMMENT));
             return;
         }
 
         post.addComment(postComment);
-        alarmProducer.send(createAlarmEvent(post, user));
+        alarmProducer.send(createAlarmEvent(post.getUser(), postId, user, AlarmType.NEW_COMMENT_ON_POST));
     }
 
-    private AlarmEvent createAlarmEvent(Post targetPost, User fromUser) {
+    private AlarmEvent createAlarmEvent(User toUser, Long postId, User fromUser, AlarmType alarmType) {
         return AlarmEvent.of(
-                targetPost.getUser(),
-                AlarmArg.of(fromUser, targetPost.getId()),
-                AlarmType.NEW_COMMENT_ON_POST
+                toUser,
+                AlarmArg.of(fromUser, postId),
+                alarmType
         );
     }
 

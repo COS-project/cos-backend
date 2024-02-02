@@ -2,6 +2,7 @@ package com.cos.cercat.board.dto.response;
 
 import com.cos.cercat.board.domain.CommentaryPost;
 import com.cos.cercat.board.domain.NormalPost;
+import com.cos.cercat.board.domain.Post;
 import com.cos.cercat.board.domain.TipPost;
 import com.cos.cercat.comment.domain.PostComment;
 import com.cos.cercat.comment.dto.response.PostCommentResponse;
@@ -32,7 +33,15 @@ public record PostWithCommentsResponse(
         List<PostCommentResponse> postComments
 ) {
 
-    public static PostWithCommentsResponse from(CommentaryPost commentaryPost) {
+    public static PostWithCommentsResponse from(Post post) {
+        return switch (post.getPostType()) {
+            case COMMENTARY -> from((CommentaryPost) post);
+            case TIP -> from((TipPost) post);
+            case NORMAL -> from((NormalPost) post);
+        };
+    }
+
+    private static PostWithCommentsResponse from(CommentaryPost commentaryPost) {
         return new PostWithCommentsResponse(
                 commentaryPost.getId(),
                 commentaryPost.getTitle(),
@@ -48,7 +57,7 @@ public record PostWithCommentsResponse(
         );
     }
 
-    public static PostWithCommentsResponse from(TipPost tipPost) {
+    private static PostWithCommentsResponse from(TipPost tipPost) {
         return new PostWithCommentsResponse(
                 tipPost.getId(),
                 tipPost.getTitle(),
@@ -64,7 +73,7 @@ public record PostWithCommentsResponse(
         );
     }
 
-    public static PostWithCommentsResponse from(NormalPost normalPost) {
+    private static PostWithCommentsResponse from(NormalPost normalPost) {
         return new PostWithCommentsResponse(
                 normalPost.getId(),
                 normalPost.getTitle(),

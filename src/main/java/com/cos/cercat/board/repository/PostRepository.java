@@ -26,6 +26,4 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("select p from Post p where p.id = :id")
     Optional<Post> findByIdWithPessimisticLock(Long id);
 
-    Page<Post> findPostsByUser(User user, Pageable pageable);
-
 }

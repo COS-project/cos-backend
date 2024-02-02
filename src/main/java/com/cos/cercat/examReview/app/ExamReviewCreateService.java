@@ -29,7 +29,7 @@ public class ExamReviewCreateService {
     private final GoalService goalService;
 
     @Transactional
-    public void createExamReview(ExamReviewCreateRequest request, Long certificateId ,Long userId) {
+    public void createExamReview(ExamReviewCreateRequest request, Long certificateId , Long userId) {
         User user = userService.getUser(userId);
         Certificate certificate = certificateService.getCertificate(certificateId);
 
@@ -42,7 +42,6 @@ public class ExamReviewCreateService {
         Period preparePeriod = Period.between(prepareStartDate, prepareFinishDate);
         examReviewService.createExamReview(request.toEntity(user, recentExamInfo.getCertificateExam(), periodToMonths(preparePeriod)));
     }
-
 
     private int periodToMonths(Period preparePeriod) {
         return preparePeriod.getYears() * 12 + preparePeriod.getMonths();

@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 @Slf4j
@@ -21,8 +23,17 @@ public class AlarmService {
         return alarmRepository.save(event.toEntity());
     }
 
-    public Page<Alarm> getAlarms(User user, Pageable pageable) {
-        return alarmRepository.findAlarmsByReceiveUser(user, pageable);
+    public List<Alarm> getAlarms(User user) {
+        return alarmRepository.findAlarmsByReceiveUserAndIsReadFalse(user);
     }
+
+    public void markAllAsRead(User user) {
+        alarmRepository.markAllAsReadByUser(user.getId());
+    }
+
+    public Long countUnreadAlarm(User user) {
+        return alarmRepository.countAlarmsByReceiveUserAndIsReadFalse(user);
+    }
+
 
 }
