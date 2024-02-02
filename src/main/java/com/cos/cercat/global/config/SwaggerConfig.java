@@ -13,69 +13,77 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SwaggerConfig {
 
-    @Bean
-    public GroupedOpenApi post() {
-        return GroupedOpenApi.builder()
-                .group("게시글")
-                .packagesToScan("com.cos.cercat.board.api")
-                .build();
-    }
-
-    @Bean
-    public GroupedOpenApi alarm() {
-        return GroupedOpenApi.builder()
-                .group("알림")
-                .packagesToScan("com.cos.cercat.alarm.api")
-                .build();
-    }
-
-    @Bean
-    public GroupedOpenApi certificate() {
-        return GroupedOpenApi.builder()
-                .group("자격증")
-                .packagesToScan("com.cos.cercat.certificate.api")
-                .build();
-    }
-
-    @Bean
-    public GroupedOpenApi comment() {
-        return GroupedOpenApi.builder()
-                .group("댓글")
-                .packagesToScan("com.cos.cercat.comment.api")
-                .build();
-    }
-
-    @Bean
-    public GroupedOpenApi learning() {
-        return GroupedOpenApi.builder()
-                .group("학습")
-                .packagesToScan("com.cos.cercat.learning.api")
-                .build();
-    }
-
-    @Bean
-    public GroupedOpenApi like() {
-        return GroupedOpenApi.builder()
-                .group("좋아요")
-                .packagesToScan("com.cos.cercat.like.api")
-                .build();
-    }
-
-    @Bean
-    public GroupedOpenApi mockExam() {
-        return GroupedOpenApi.builder()
-                .group("모의고사")
-                .packagesToScan("com.cos.cercat.mockExam.api")
-                .build();
-    }
-
-    @Bean
-    public GroupedOpenApi user() {
-        return GroupedOpenApi.builder()
-                .group("유저")
-                .packagesToScan("com.cos.cercat.user.api")
-                .build();
-    }
+//    @Bean
+//    public GroupedOpenApi post() {
+//        return GroupedOpenApi.builder()
+//                .group("게시글")
+//                .packagesToScan("com.cos.cercat.board.api")
+//                .build();
+//    }
+//
+//    @Bean
+//    public GroupedOpenApi alarm() {
+//        return GroupedOpenApi.builder()
+//                .group("알림")
+//                .packagesToScan("com.cos.cercat.alarm.api")
+//                .build();
+//    }
+//
+//    @Bean
+//    public GroupedOpenApi certificate() {
+//        return GroupedOpenApi.builder()
+//                .group("자격증")
+//                .packagesToScan("com.cos.cercat.certificate.api")
+//                .build();
+//    }
+//
+//    @Bean
+//    GroupedOpenApi examReview() {
+//        return GroupedOpenApi.builder()
+//                .group("따끈 후기")
+//                .packagesToScan("com.cos.cercat.examReview.api")
+//                .build();
+//    }
+//
+//    @Bean
+//    public GroupedOpenApi comment() {
+//        return GroupedOpenApi.builder()
+//                .group("댓글")
+//                .packagesToScan("com.cos.cercat.comment.api")
+//                .build();
+//    }
+//
+//    @Bean
+//    public GroupedOpenApi learning() {
+//        return GroupedOpenApi.builder()
+//                .group("학습")
+//                .packagesToScan("com.cos.cercat.learning.api")
+//                .build();
+//    }
+//
+//    @Bean
+//    public GroupedOpenApi like() {
+//        return GroupedOpenApi.builder()
+//                .group("좋아요")
+//                .packagesToScan("com.cos.cercat.like.api")
+//                .build();
+//    }
+//
+//    @Bean
+//    public GroupedOpenApi mockExam() {
+//        return GroupedOpenApi.builder()
+//                .group("모의고사")
+//                .packagesToScan("com.cos.cercat.mockExam.api")
+//                .build();
+//    }
+//
+//    @Bean
+//    public GroupedOpenApi user() {
+//        return GroupedOpenApi.builder()
+//                .group("유저")
+//                .packagesToScan("com.cos.cercat.user.api")
+//                .build();
+//    }
 
     @Bean
     public OpenAPI openAPI() {
