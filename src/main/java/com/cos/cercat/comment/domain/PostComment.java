@@ -1,6 +1,6 @@
 package com.cos.cercat.comment.domain;
 
-import com.cos.cercat.board.domain.Post;
+import com.cos.cercat.post.domain.Post;
 import com.cos.cercat.global.entity.BaseTimeEntity;
 import com.cos.cercat.user.domain.User;
 import jakarta.persistence.*;

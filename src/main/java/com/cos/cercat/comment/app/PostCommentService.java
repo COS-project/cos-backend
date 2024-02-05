@@ -1,8 +1,6 @@
 package com.cos.cercat.comment.app;
 
-import com.cos.cercat.board.domain.Post;
 import com.cos.cercat.comment.domain.PostComment;
-import com.cos.cercat.comment.domain.PostComments;
 import com.cos.cercat.comment.repository.PostCommentRepository;
 import com.cos.cercat.global.exception.CustomException;
 import com.cos.cercat.global.exception.ErrorCode;

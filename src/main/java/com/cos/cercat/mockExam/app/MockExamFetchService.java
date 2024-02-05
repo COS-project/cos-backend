@@ -4,6 +4,7 @@ import com.cos.cercat.certificate.app.CertificateService;
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.mockExam.domain.MockExam;
 import com.cos.cercat.mockExam.dto.response.ExamYearWithRoundsResponse;
+import com.cos.cercat.mockExam.dto.response.QuestionListResponse;
 import com.cos.cercat.mockExamResult.app.MockExamResultService;
 import com.cos.cercat.mockExamResult.domain.MockExamResult;
 import com.cos.cercat.mockExam.dto.response.MockExamWithResultResponse;
@@ -12,13 +13,13 @@ import com.cos.cercat.user.app.UserService;
 import com.cos.cercat.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -63,13 +64,14 @@ public class MockExamFetchService {
      * @param mockExamId 모의고사 고유 ID
      * */
     @Transactional(readOnly = true)
-    public List<QuestionResponse> getQuestionList(Long mockExamId) {
+    @Cacheable(cacheNames = "questions", key = "'all'")
+    public QuestionListResponse getQuestionList(Long mockExamId) {
 
         MockExam mockExam = mockExamService.getMockExam(mockExamId);
 
-        return questionService.getQuestionListByMockExam(mockExam).stream()
+        return QuestionListResponse.from(questionService.getQuestionListByMockExam(mockExam).stream()
                 .map(QuestionResponse::from)
-                .toList();
+                .toList());
     }
 
 

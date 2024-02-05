@@ -1,6 +1,6 @@
 package com.cos.cercat.like.domain;
 
-import com.cos.cercat.board.domain.Post;
+import com.cos.cercat.post.domain.Post;
 import com.cos.cercat.like.domain.EmbeddedId.PostLikePK;
 import com.cos.cercat.user.domain.User;
 import jakarta.persistence.*;

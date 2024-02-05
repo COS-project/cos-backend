@@ -1,6 +1,5 @@
 package com.cos.cercat.comment.repository;
 
-import com.cos.cercat.board.domain.Post;
 import com.cos.cercat.comment.domain.PostComment;
 import com.cos.cercat.user.domain.User;
 import jakarta.persistence.LockModeType;

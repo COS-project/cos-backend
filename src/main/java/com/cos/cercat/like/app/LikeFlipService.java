@@ -1,7 +1,7 @@
 package com.cos.cercat.like.app;
 
-import com.cos.cercat.board.app.PostService;
-import com.cos.cercat.board.domain.Post;
+import com.cos.cercat.post.app.PostService;
+import com.cos.cercat.post.domain.Post;
 import com.cos.cercat.comment.app.PostCommentService;
 import com.cos.cercat.comment.domain.PostComment;
 import com.cos.cercat.like.dto.request.LikeType;

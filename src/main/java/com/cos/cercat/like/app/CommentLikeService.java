@@ -18,7 +18,7 @@ public class CommentLikeService {
     private final CommentLikeRepository commentLikeRepository;
 
     public boolean existsLike(CommentLikePK commentLikePK) {
-        return commentLikeRepository.existsById(commentLikePK);
+        return commentLikeRepository.existsCommentLikeByCommentLikePK(commentLikePK);
     }
 
     public void createLike(PostComment postComment, User user) {

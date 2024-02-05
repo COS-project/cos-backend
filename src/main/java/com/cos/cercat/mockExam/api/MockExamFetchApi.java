@@ -6,6 +6,7 @@ import com.cos.cercat.mockExam.app.MockExamFetchService;
 import com.cos.cercat.mockExam.dto.request.MockExamSearchRequest;
 import com.cos.cercat.mockExam.dto.response.ExamYearWithRoundsResponse;
 import com.cos.cercat.mockExam.dto.response.MockExamWithResultResponse;
+import com.cos.cercat.mockExam.dto.response.QuestionListResponse;
 import com.cos.cercat.mockExam.dto.response.QuestionResponse;
 import com.cos.cercat.user.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -43,7 +44,7 @@ public class MockExamFetchApi {
 
     @GetMapping("mock-exams/{mockExamId}/questions")
     @Operation(summary = "모의고사 문제들 가져오기")
-    public Response<List<QuestionResponse>> getQuestionList(@PathVariable Long mockExamId) {
+    public Response<QuestionListResponse> getQuestionList(@PathVariable Long mockExamId) {
 
         return Response.success(mockExamFetchService.getQuestionList(mockExamId));
     }

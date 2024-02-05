@@ -5,4 +5,6 @@ import com.cos.cercat.like.domain.EmbeddedId.CommentLikePK;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CommentLikeRepository extends JpaRepository<CommentLike, CommentLikePK> {
+
+    boolean existsCommentLikeByCommentLikePK(CommentLikePK commentLikePK);
 }

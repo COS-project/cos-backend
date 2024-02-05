@@ -49,14 +49,11 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        log.info("onAuthenticationSuccess 진입 - 소셜로그인 성공 로직");
         OAuth2CustomUser oAuth2User = (OAuth2CustomUser) authentication.getPrincipal();
 
         List<String> roles = oAuth2User.getAuthorities().stream()
                 .map(String::valueOf)
                 .toList(); // Authorities에서 문자열로 권한 추출
-
-        log.info("roles - {}", roles);
 
         String email = oAuth2User.getEmail();
 
@@ -71,7 +68,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
         tokenCacheRepository.getRefreshToken(email) // 이미 로그인 한 유저가 또 로그인했을 경우 리프레시토큰 갱신
                         .ifPresent(token ->
-                                tokenCacheRepository.deleteRefreshToken(token.getEmail())
+                                tokenCacheRepository.deleteRefreshToken(email)
                         );
 
         tokenCacheRepository.setRefreshToken(RefreshToken.of(user.getEmail(), refreshToken));

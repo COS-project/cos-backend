@@ -4,7 +4,7 @@ import com.cos.cercat.alarm.app.producer.AlarmProducer;
 import com.cos.cercat.alarm.domain.AlarmType;
 import com.cos.cercat.alarm.dto.AlarmArg;
 import com.cos.cercat.alarm.dto.AlarmEvent;
-import com.cos.cercat.board.domain.Post;
+import com.cos.cercat.post.domain.Post;
 import com.cos.cercat.like.domain.EmbeddedId.PostLikePK;
 import com.cos.cercat.user.domain.User;
 import lombok.RequiredArgsConstructor;

@@ -16,10 +16,18 @@ import org.springframework.context.annotation.Configuration;
 public class SwaggerConfig {
 
     @Bean
-    public GroupedOpenApi board() {
+    public GroupedOpenApi post() {
         return GroupedOpenApi.builder()
                 .group("게시글")
-                .packagesToScan("com.cos.cercat.board.api")
+                .packagesToScan("com.cos.cercat.post.api")
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi board() {
+        return GroupedOpenApi.builder()
+                .group("게시판")
+                .packagesToScan("com.cos.cercat.favoriteBoard.api")
                 .build();
     }
 

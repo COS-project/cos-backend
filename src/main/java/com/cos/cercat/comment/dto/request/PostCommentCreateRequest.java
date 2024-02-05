@@ -1,6 +1,6 @@
 package com.cos.cercat.comment.dto.request;
 
-import com.cos.cercat.board.domain.Post;
+import com.cos.cercat.post.domain.Post;
 import com.cos.cercat.comment.domain.PostComment;
 import com.cos.cercat.user.domain.User;
 

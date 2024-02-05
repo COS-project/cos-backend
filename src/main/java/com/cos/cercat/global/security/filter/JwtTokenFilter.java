@@ -36,8 +36,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-
-        log.info("-------------- 유저 검증 필터 진입 ---------------");
         String refreshToken = jwtTokenUtil.extractRefreshToken(request)
                 .orElse(null);
 

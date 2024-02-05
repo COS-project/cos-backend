@@ -1,6 +1,6 @@
 package com.cos.cercat.like.app;
 
-import com.cos.cercat.board.domain.Post;
+import com.cos.cercat.post.domain.Post;
 import com.cos.cercat.like.domain.EmbeddedId.PostLikePK;
 import com.cos.cercat.like.domain.PostLike;
 import com.cos.cercat.like.repository.PostLikeRepository;
@@ -17,7 +17,7 @@ public class PostLikeService {
     private final PostLikeRepository postLikeRepository;
 
     public boolean existsLike(PostLikePK postLikePK) {
-        return postLikeRepository.existsById(postLikePK);
+        return postLikeRepository.existsPostLikeByPostLikePK(postLikePK);
     }
 
     public void createLike(Post post, User user) {
