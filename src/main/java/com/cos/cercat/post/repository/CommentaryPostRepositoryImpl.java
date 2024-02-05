@@ -60,7 +60,18 @@ public class CommentaryPostRepositoryImpl implements PostRepositoryCustom<Commen
             return null;
         }
 
-        return commentaryPost.title.containsIgnoreCase(keyword).or(commentaryPost.content.containsIgnoreCase(keyword));
+        BooleanExpression keywordExpression = null;
+
+        try {
+            Integer keywordAsInteger = Integer.parseInt(keyword);
+            keywordExpression = commentaryPost.question.questionSeq.eq(keywordAsInteger);
+        } catch (NumberFormatException e) {
+            // Ignore the exception if parsing fails
+        }
+
+        return commentaryPost.title.containsIgnoreCase(keyword)
+                .or(commentaryPost.content.containsIgnoreCase(keyword))
+                .or(keywordExpression);
     }
 
     public static OrderSpecifier<?> postSort(Pageable pageable) {

@@ -9,14 +9,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class TipPost extends Post{
 
+    private RecommendTags recommendTags = new RecommendTags();
 
-    public TipPost(String title, String content, User user, Certificate certificate, PostType postType, List<Image> images) {
+    public TipPost(String title, String content, User user, Certificate certificate, PostType postType, List<Image> images, Set<RecommendTag> recommendTags) {
         super(title, content, user, certificate, postType, images);
+        addRecommendTags(recommendTags);
+    }
+
+    private void addRecommendTags(Set<RecommendTag> recommendTags) {
+        recommendTags.forEach(recommendTag -> recommendTag.setTipPost(this));
+        this.recommendTags.addAll(recommendTags);
     }
 }

@@ -21,6 +21,7 @@ public class PostComments {
         return this.postComments;
     }
 
+
     public int countComments() {
         return this.postComments.size();
     }

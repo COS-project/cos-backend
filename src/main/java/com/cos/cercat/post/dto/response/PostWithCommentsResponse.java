@@ -1,13 +1,11 @@
 package com.cos.cercat.post.dto.response;
 
-import com.cos.cercat.post.domain.CommentaryPost;
-import com.cos.cercat.post.domain.NormalPost;
-import com.cos.cercat.post.domain.Post;
-import com.cos.cercat.post.domain.TipPost;
+import com.cos.cercat.post.domain.*;
 import com.cos.cercat.comment.domain.PostComment;
 import com.cos.cercat.comment.dto.response.PostCommentResponse;
 import com.cos.cercat.mockExam.dto.response.MockExamResponse;
 import com.cos.cercat.mockExam.dto.response.QuestionResponse;
+import com.cos.cercat.post.dto.RecommendTagDTO;
 import com.cos.cercat.user.dto.response.UserResponse;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -15,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -27,6 +26,7 @@ public record PostWithCommentsResponse(
         List<String> postImages,
         Integer likeCount,
         Integer commentCount,
+        Set<RecommendTagDTO> recommendTags,
         QuestionResponse question,
         MockExamResponse mockExam,
         LocalDateTime createdAt,
@@ -50,6 +50,7 @@ public record PostWithCommentsResponse(
                 commentaryPost.getPostImages().getImageUrls(),
                 commentaryPost.getLikeCount(),
                 commentaryPost.getPostComments().countComments(),
+                null,
                 QuestionResponse.from(commentaryPost.getQuestion()),
                 MockExamResponse.from(commentaryPost.getQuestion().getMockExam()),
                 commentaryPost.getCreatedAt(),
@@ -66,6 +67,9 @@ public record PostWithCommentsResponse(
                 tipPost.getPostImages().getImageUrls(),
                 tipPost.getLikeCount(),
                 tipPost.getPostComments().countComments(),
+                tipPost.getRecommendTags().getAll().stream()
+                        .map(RecommendTagDTO::from)
+                        .collect(Collectors.toSet()),
                 null,
                 null,
                 tipPost.getCreatedAt(),
@@ -82,6 +86,7 @@ public record PostWithCommentsResponse(
                 normalPost.getPostImages().getImageUrls(),
                 normalPost.getLikeCount(),
                 normalPost.getPostComments().countComments(),
+                null,
                 null,
                 null,
                 normalPost.getCreatedAt(),

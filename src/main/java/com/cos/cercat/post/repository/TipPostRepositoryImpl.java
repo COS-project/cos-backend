@@ -1,5 +1,6 @@
 package com.cos.cercat.post.repository;
 
+import com.cos.cercat.post.domain.QRecommendTag;
 import com.cos.cercat.post.domain.TipPost;
 import com.cos.cercat.global.util.PagingUtil;
 import com.cos.cercat.certificate.domain.Certificate;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static com.cos.cercat.post.domain.QRecommendTag.*;
 import static com.cos.cercat.post.domain.QTipPost.tipPost;
 import static com.cos.cercat.user.domain.QUser.user;
 
@@ -34,6 +36,7 @@ public class TipPostRepositoryImpl implements PostRepositoryCustom<TipPost>{
                 .fetchJoin()
                 .leftJoin(tipPost.certificate, QCertificate.certificate)
                 .fetchJoin()
+                .leftJoin(tipPost.recommendTags.recommendTags, recommendTag)
                 .where(
                         containKeyword(keyword),
                         tipPost.certificate.eq(certificate)
@@ -54,7 +57,9 @@ public class TipPostRepositoryImpl implements PostRepositoryCustom<TipPost>{
             return null;
         }
 
-        return tipPost.title.containsIgnoreCase(keyword).or(tipPost.content.containsIgnoreCase(keyword));
+        return tipPost.title.containsIgnoreCase(keyword)
+                .or(tipPost.content.containsIgnoreCase(keyword))
+                .or(recommendTag.tagName.in(keyword));
     }
 
 
