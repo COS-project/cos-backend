@@ -1,6 +1,7 @@
 package com.cos.cercat.post.app;
 
 import com.cos.cercat.post.domain.PostType;
+import com.cos.cercat.post.dto.request.PostSearchCond;
 import com.cos.cercat.post.dto.response.PostResponse;
 import com.cos.cercat.post.dto.response.PostWithCommentsResponse;
 import com.cos.cercat.certificate.app.CertificateService;
@@ -34,18 +35,18 @@ public class PostFetchService {
 
 
     @Transactional(readOnly = true)
-    public Slice<PostResponse> searchPosts(Pageable pageable, PostType postType, Long certificateId, String keyword) {
+    public Slice<PostResponse> searchPosts(Pageable pageable, PostType postType, Long certificateId, PostSearchCond cond) {
         Certificate certificate = certificateService.getCertificate(certificateId);
 
         return switch (postType) {
             case COMMENTARY -> commentaryPostService
-                    .searchCommentaryPosts(pageable, certificate, keyword)
+                    .searchCommentaryPosts(pageable, certificate, cond)
                     .map(PostResponse::from);
             case TIP -> tipPostService
-                    .searchTipPosts(pageable, certificate, keyword)
+                    .searchTipPosts(pageable, certificate, cond)
                     .map(PostResponse::from);
             case NORMAL -> normalPostService
-                    .searchNormalPosts(pageable, certificate, keyword)
+                    .searchNormalPosts(pageable, certificate, cond)
                     .map(PostResponse::from);
         };
     }

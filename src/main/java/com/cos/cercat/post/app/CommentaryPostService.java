@@ -1,6 +1,7 @@
 package com.cos.cercat.post.app;
 
 import com.cos.cercat.post.domain.CommentaryPost;
+import com.cos.cercat.post.dto.request.PostSearchCond;
 import com.cos.cercat.post.repository.CommentaryPostRepository;
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.global.entity.Image;
@@ -29,8 +30,8 @@ public class CommentaryPostService {
         commentaryPostRepository.save(commentaryPost);
     }
 
-    public Slice<CommentaryPost> searchCommentaryPosts(Pageable pageable, Certificate certificate, String keyword) {
-        return commentaryPostRepository.searchPosts(pageable, certificate, keyword);
+    public Slice<CommentaryPost> searchCommentaryPosts(Pageable pageable, Certificate certificate, PostSearchCond cond) {
+        return commentaryPostRepository.searchPosts(pageable, certificate, cond);
     }
 
     public CommentaryPost getCommentaryPost(Long postId) {

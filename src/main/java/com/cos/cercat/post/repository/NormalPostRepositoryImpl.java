@@ -4,6 +4,7 @@ import com.cos.cercat.post.domain.NormalPost;
 import com.cos.cercat.global.util.PagingUtil;
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.certificate.domain.QCertificate;
+import com.cos.cercat.post.dto.request.PostSearchCond;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -27,7 +28,7 @@ public class NormalPostRepositoryImpl implements PostRepositoryCustom<NormalPost
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Slice<NormalPost> searchPosts(Pageable pageable, Certificate certificate, String keyword) {
+    public Slice<NormalPost> searchPosts(Pageable pageable, Certificate certificate, PostSearchCond cond) {
         List<NormalPost> contents = queryFactory
                 .selectFrom(normalPost)
                 .leftJoin(normalPost.user, user)
@@ -35,7 +36,7 @@ public class NormalPostRepositoryImpl implements PostRepositoryCustom<NormalPost
                 .leftJoin(normalPost.certificate, QCertificate.certificate)
                 .fetchJoin()
                 .where(
-                        containKeyword(keyword),
+                        containKeyword(cond.keyword()),
                         normalPost.certificate.eq(certificate)
                 )
                 .orderBy(postSort(pageable))

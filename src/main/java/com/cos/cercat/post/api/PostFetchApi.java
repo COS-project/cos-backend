@@ -2,6 +2,7 @@ package com.cos.cercat.post.api;
 
 import com.cos.cercat.post.app.PostFetchService;
 import com.cos.cercat.post.domain.PostType;
+import com.cos.cercat.post.dto.request.PostSearchCond;
 import com.cos.cercat.post.dto.response.PostResponse;
 import com.cos.cercat.post.dto.response.PostWithCommentsResponse;
 import com.cos.cercat.global.Response;
@@ -32,9 +33,9 @@ public class PostFetchApi {
     public Response<Slice<PostResponse>> getCommentaryPosts(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
                                                             @PathVariable Long certificateId,
                                                             @PathVariable PostType postType,
-                                                            @RequestParam(required = false) String keyword) {
+                                                            PostSearchCond cond) {
 
-        return Response.success(postFetchService.searchPosts(pageable, postType, certificateId, keyword));
+        return Response.success(postFetchService.searchPosts(pageable, postType, certificateId, cond));
     }
 
     @GetMapping("/posts/{postId}")

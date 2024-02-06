@@ -9,4 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface CommentaryPostRepository extends JpaRepository<CommentaryPost, Long>, PostRepositoryCustom<CommentaryPost> {
 
     Slice<CommentaryPost> findCommentaryPostsByUser(User user, Pageable pageable);
+
+
 }

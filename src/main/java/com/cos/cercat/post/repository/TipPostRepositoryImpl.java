@@ -5,6 +5,7 @@ import com.cos.cercat.post.domain.TipPost;
 import com.cos.cercat.global.util.PagingUtil;
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.certificate.domain.QCertificate;
+import com.cos.cercat.post.dto.request.PostSearchCond;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -29,7 +30,7 @@ public class TipPostRepositoryImpl implements PostRepositoryCustom<TipPost>{
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Slice<TipPost> searchPosts(Pageable pageable, Certificate certificate, String keyword) {
+    public Slice<TipPost> searchPosts(Pageable pageable, Certificate certificate, PostSearchCond cond) {
         List<TipPost> contents = queryFactory
                 .selectFrom(tipPost)
                 .leftJoin(tipPost.user, user)
@@ -38,7 +39,7 @@ public class TipPostRepositoryImpl implements PostRepositoryCustom<TipPost>{
                 .fetchJoin()
                 .leftJoin(tipPost.recommendTags.recommendTags, recommendTag)
                 .where(
-                        containKeyword(keyword),
+                        containKeyword(cond.keyword()),
                         tipPost.certificate.eq(certificate)
                 )
                 .orderBy(postSort(pageable))

@@ -4,6 +4,7 @@ import com.cos.cercat.post.domain.CommentaryPost;
 import com.cos.cercat.global.util.PagingUtil;
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.certificate.domain.QCertificate;
+import com.cos.cercat.post.dto.request.PostSearchCond;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -29,7 +30,7 @@ public class CommentaryPostRepositoryImpl implements PostRepositoryCustom<Commen
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Slice<CommentaryPost> searchPosts(Pageable pageable, Certificate certificate, String keyword) {
+    public Slice<CommentaryPost> searchPosts(Pageable pageable, Certificate certificate, PostSearchCond cond) {
         List<CommentaryPost> contents = queryFactory
                 .selectFrom(commentaryPost)
                 .leftJoin(commentaryPost.user, user)
@@ -41,7 +42,10 @@ public class CommentaryPostRepositoryImpl implements PostRepositoryCustom<Commen
                 .leftJoin(commentaryPost.certificate, QCertificate.certificate)
                 .fetchJoin()
                 .where(
-                        containKeyword(keyword),
+                        containKeyword(cond.keyword()),
+                        eqExamYear(cond.examYear()),
+                        eqRound(cond.round()),
+                        eqQuestionSequence(cond.questionSequence()),
                         commentaryPost.certificate.eq(certificate)
                 )
                 .orderBy(postSort(pageable))
@@ -72,6 +76,25 @@ public class CommentaryPostRepositoryImpl implements PostRepositoryCustom<Commen
         return commentaryPost.title.containsIgnoreCase(keyword)
                 .or(commentaryPost.content.containsIgnoreCase(keyword))
                 .or(keywordExpression);
+    }
+
+    private BooleanExpression eqExamYear(Integer examYear) {
+        if (examYear == null) return null;
+
+
+        return commentaryPost.question.mockExam.examYear.eq(examYear);
+    }
+
+    private BooleanExpression eqRound(Integer round) {
+        if (round == null) return null;
+
+        return commentaryPost.question.mockExam.round.eq(round);
+    }
+
+    private BooleanExpression eqQuestionSequence(Integer questionSequence) {
+        if (questionSequence == null) return null;
+
+        return commentaryPost.question.questionSeq.eq(questionSequence);
     }
 
     public static OrderSpecifier<?> postSort(Pageable pageable) {

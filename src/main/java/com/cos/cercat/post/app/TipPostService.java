@@ -1,6 +1,7 @@
 package com.cos.cercat.post.app;
 
 import com.cos.cercat.post.domain.TipPost;
+import com.cos.cercat.post.dto.request.PostSearchCond;
 import com.cos.cercat.post.repository.TipPostRepository;
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.global.entity.Image;
@@ -27,8 +28,8 @@ public class TipPostService {
         tipPostRepository.save(tipPost);
     }
 
-    public Slice<TipPost> searchTipPosts(Pageable pageable, Certificate certificate, String keyword) {
-        return tipPostRepository.searchPosts(pageable, certificate, keyword);
+    public Slice<TipPost> searchTipPosts(Pageable pageable, Certificate certificate, PostSearchCond cond) {
+        return tipPostRepository.searchPosts(pageable, certificate, cond);
     }
 
     public TipPost getTipPost(Long postId) {
