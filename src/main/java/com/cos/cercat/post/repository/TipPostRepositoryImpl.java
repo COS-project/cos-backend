@@ -59,7 +59,7 @@ public class TipPostRepositoryImpl implements PostRepositoryCustom<TipPost>{
 
         return tipPost.title.containsIgnoreCase(keyword)
                 .or(tipPost.content.containsIgnoreCase(keyword))
-                .or(recommendTag.tagName.in(keyword));
+                .or(recommendTag.tagName.containsIgnoreCase(keyword));
     }
 
 
