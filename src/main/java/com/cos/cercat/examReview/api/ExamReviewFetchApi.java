@@ -1,12 +1,10 @@
 package com.cos.cercat.examReview.api;
 
-import com.cos.cercat.TestInit;
 import com.cos.cercat.examReview.app.ExamReviewFetchService;
 import com.cos.cercat.examReview.dto.request.ExamReviewSearchCond;
 import com.cos.cercat.examReview.dto.response.ExamReviewResponse;
 import com.cos.cercat.global.Response;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
