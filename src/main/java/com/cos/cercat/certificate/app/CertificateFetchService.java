@@ -1,7 +1,9 @@
 package com.cos.cercat.certificate.app;
 
 import com.cos.cercat.certificate.domain.Certificate;
+import com.cos.cercat.certificate.domain.CertificateExam;
 import com.cos.cercat.certificate.domain.ExamInfo;
+import com.cos.cercat.certificate.dto.response.CertificateExamResponse;
 import com.cos.cercat.certificate.dto.response.CertificateResponse;
 import com.cos.cercat.certificate.dto.response.ExamInfoResponse;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +18,7 @@ import java.util.List;
 public class CertificateFetchService {
 
     private final CertificateService certificateService;
-    private final ExamInfoService examInfoService;
+    private final CertificateExamService certificateExamService;
 
     /**
      * 자격증 ID를 통해 자격증 상세정보를 조회한다
@@ -24,17 +26,17 @@ public class CertificateFetchService {
      * @param certificateId 자격증 ID
      * @return 자격증 상세 정보
      */
-    public ExamInfoResponse getCertificateWithInfo(Long certificateId) {
+    public CertificateExamResponse getCertificateExam(Long certificateId) {
         Certificate certificate = certificateService.getCertificate(certificateId);
-        ExamInfo recentExamInfo = examInfoService.getRecentExamInfo(certificate);
+        CertificateExam recentCertificateExam = certificateExamService.getRecentCertificateExam(certificate);
 
-        return ExamInfoResponse.from(recentExamInfo);
+        return CertificateExamResponse.from(recentCertificateExam);
     }
 
     public Boolean isExamDatePassed(Long certificateId) {
         Certificate certificate = certificateService.getCertificate(certificateId);
 
-        return examInfoService.isExamDatePassed(certificate);
+        return certificateExamService.isExamDatePassed(certificate);
     }
 
     /**

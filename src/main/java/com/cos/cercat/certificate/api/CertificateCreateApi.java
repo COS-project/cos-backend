@@ -3,7 +3,7 @@ package com.cos.cercat.certificate.api;
 
 import com.cos.cercat.certificate.app.CertificateCreateService;
 import com.cos.cercat.certificate.dto.request.CertificateCreateRequest;
-import com.cos.cercat.certificate.dto.request.ExamInfoCreateRequest;
+import com.cos.cercat.certificate.dto.request.CertificateExamCreateRequest;
 import com.cos.cercat.certificate.dto.request.InterestCertificateCreateRequest;
 import com.cos.cercat.global.Response;
 import com.cos.cercat.user.dto.UserDTO;
@@ -30,12 +30,12 @@ public class CertificateCreateApi {
         return Response.success("자격증 생성 성공");
     }
 
-    @PostMapping("/certificates/{certificateId}/exam-infos")
-    @Operation(summary = "자격증 응시 정보 생성")
+    @PostMapping("/certificates/{certificateId}/certificate-exams")
+    @Operation(summary = "자격증 시험 정보 생성")
     public Response<Void> createCertificate(@PathVariable Long certificateId,
-                                            @RequestBody ExamInfoCreateRequest request) {
-        certificateCreateService.createExamInfo(certificateId, request);
-        return Response.success("자격증 응시 정보 생성 성공");
+                                            @RequestBody CertificateExamCreateRequest request) {
+        certificateCreateService.createCertificateExam(certificateId, request);
+        return Response.success("자격증 시험 정보 생성 성공");
     }
 
     @PostMapping("/interest-certificates")

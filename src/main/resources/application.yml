@@ -11,6 +11,11 @@ spring:
           encoded-key: ${GCS_KEY}
         project-id: ${GCP_PROJECT_ID}
         bucket: ${BUCKET_NAME}
+  batch:
+    jdbc:
+      initialize-schema: always
+    job:
+      enabled: false
 logging:
   level:
     org:

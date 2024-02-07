@@ -1,8 +1,9 @@
 package com.cos.cercat.certificate.app;
 
 import com.cos.cercat.certificate.domain.Certificate;
+import com.cos.cercat.certificate.domain.CertificateExam;
 import com.cos.cercat.certificate.dto.request.CertificateCreateRequest;
-import com.cos.cercat.certificate.dto.request.ExamInfoCreateRequest;
+import com.cos.cercat.certificate.dto.request.CertificateExamCreateRequest;
 import com.cos.cercat.certificate.dto.request.InterestCertificateCreateRequest;
 import com.cos.cercat.user.app.UserService;
 import com.cos.cercat.user.domain.User;
@@ -20,8 +21,8 @@ import java.util.List;
 public class CertificateCreateService {
 
     private final CertificateService certificateService;
-    private final ExamInfoService examInfoService;
     private final UserService userService;
+    private final CertificateExamService certificateExamService;
     private final InterestCertificateService interestCertificateService;
 
 
@@ -29,9 +30,11 @@ public class CertificateCreateService {
         certificateService.createCertificate(request.toEntity());
     }
 
-    public void createExamInfo(Long certificateId, ExamInfoCreateRequest request) {
+    public void createCertificateExam(Long certificateId, CertificateExamCreateRequest request) {
         Certificate certificate = certificateService.getCertificate(certificateId);
-        examInfoService.createExamInfo(request.toEntity(certificate));
+
+        CertificateExam certificateExam = CertificateExam.of(certificate, request.toEntity(), request.examYear(), request.round());
+        certificateExamService.createCertificateExam(certificateExam);
     }
 
     public void createInterestCertificates(List<InterestCertificateCreateRequest> requests, Long userId) {

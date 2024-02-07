@@ -1,9 +1,9 @@
 package com.cos.cercat.examReview.app;
 
+import com.cos.cercat.certificate.app.CertificateExamService;
 import com.cos.cercat.certificate.app.CertificateService;
-import com.cos.cercat.certificate.app.ExamInfoService;
 import com.cos.cercat.certificate.domain.Certificate;
-import com.cos.cercat.certificate.domain.ExamInfo;
+import com.cos.cercat.certificate.domain.CertificateExam;
 import com.cos.cercat.examReview.dto.request.ExamReviewCreateRequest;
 import com.cos.cercat.learning.app.GoalService;
 import com.cos.cercat.learning.domain.Goal;
@@ -25,7 +25,7 @@ public class ExamReviewCreateService {
     private final ExamReviewService examReviewService;
     private final UserService userService;
     private final CertificateService certificateService;
-    private final ExamInfoService examInfoService;
+    private final CertificateExamService certificateExamService;
     private final GoalService goalService;
 
     @Transactional
@@ -34,13 +34,13 @@ public class ExamReviewCreateService {
         Certificate certificate = certificateService.getCertificate(certificateId);
 
         Goal goal = goalService.getGoal(user, certificate);
-        ExamInfo recentExamInfo = examInfoService.getRecentExamInfo(certificate);
+        CertificateExam recentCertificateExam = certificateExamService.getRecentCertificateExam(certificate);
 
         LocalDate prepareStartDate = goal.getPrepareStartDateTime().toLocalDate();
         LocalDate prepareFinishDate = goal.getPrepareFinishDateTime().toLocalDate();
 
         Period preparePeriod = Period.between(prepareStartDate, prepareFinishDate);
-        examReviewService.createExamReview(request.toEntity(user, recentExamInfo.getCertificateExam(), periodToMonths(preparePeriod)));
+        examReviewService.createExamReview(request.toEntity(user, recentCertificateExam, periodToMonths(preparePeriod)));
     }
 
     private int periodToMonths(Period preparePeriod) {

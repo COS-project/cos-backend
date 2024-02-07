@@ -2,7 +2,7 @@ package com.cos.cercat.certificate.dto.request;
 
 import com.cos.cercat.certificate.domain.*;
 
-public record ExamInfoCreateRequest(
+public record CertificateExamCreateRequest(
         Integer examYear,
         Integer round,
         ExamSchedule examSchedule,
@@ -14,9 +14,8 @@ public record ExamInfoCreateRequest(
         String examFormat,
         String examEligibility
 ) {
-    public ExamInfo toEntity(Certificate certificate) {
+    public ExamInfo toEntity() {
         return new ExamInfo(
-                CertificateExam.of(certificate, examYear, round),
                 examSchedule,
                 examFee,
                 examTimeLimit,

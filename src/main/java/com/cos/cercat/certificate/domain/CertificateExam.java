@@ -22,19 +22,25 @@ public class CertificateExam {
     @JoinColumn(name = "certificate_id")
     private Certificate certificate;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "exam_info_id")
+    private ExamInfo examInfo;
+
     private Integer examYear;
 
     private Integer round;
 
-    private CertificateExam(Certificate certificate, Integer examYear, Integer round) {
+    private CertificateExam(Certificate certificate, ExamInfo examInfo, Integer examYear, Integer round) {
         this.certificate = certificate;
+        this.examInfo = examInfo;
         this.examYear = examYear;
         this.round = round;
     }
 
-    public static CertificateExam of(Certificate certificate, Integer examYear, Integer round) {
+    public static CertificateExam of(Certificate certificate, ExamInfo examInfo, Integer examYear, Integer round) {
         return new CertificateExam(
                 certificate,
+                examInfo,
                 examYear,
                 round
         );

@@ -1,9 +1,9 @@
 package com.cos.cercat.examReview.app;
 
+import com.cos.cercat.certificate.app.CertificateExamService;
 import com.cos.cercat.certificate.app.CertificateService;
-import com.cos.cercat.certificate.app.ExamInfoService;
 import com.cos.cercat.certificate.domain.Certificate;
-import com.cos.cercat.certificate.domain.ExamInfo;
+import com.cos.cercat.certificate.domain.CertificateExam;
 import com.cos.cercat.examReview.dto.request.ExamReviewSearchCond;
 import com.cos.cercat.examReview.dto.response.ExamReviewResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,12 +19,12 @@ public class ExamReviewFetchService {
 
     private final ExamReviewService examReviewService;
     private final CertificateService certificateService;
-    private final ExamInfoService examInfoService;
+    private final CertificateExamService certificateExamService;
 
     public Slice<ExamReviewResponse> getExamReviews(Long certificateId, ExamReviewSearchCond cond, Pageable pageable) {
         Certificate certificate = certificateService.getCertificate(certificateId);
-        ExamInfo recentExamInfo = examInfoService.getRecentExamInfo(certificate);
+        CertificateExam recentCertificateExam = certificateExamService.getRecentCertificateExam(certificate);
 
-        return examReviewService.getExamReviews(recentExamInfo.getCertificateExam(), cond, pageable).map(ExamReviewResponse::from);
+        return examReviewService.getExamReviews(recentCertificateExam, cond, pageable).map(ExamReviewResponse::from);
     }
 }

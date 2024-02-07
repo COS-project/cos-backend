@@ -13,6 +13,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
@@ -44,13 +45,16 @@ public class TipPostRepositoryImpl implements PostRepositoryCustom<TipPost>{
                 )
                 .orderBy(postSort(pageable))
                 .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
+                .limit(pageable.getPageSize() + 1)
                 .fetch();
 
-        JPAQuery<Long> count = queryFactory.select(tipPost.count())
-                .from(tipPost);
+        boolean hasNext = false;
+        if (contents.size() > pageable.getPageSize()) {
+            contents.remove(pageable.getPageSize());
+            hasNext = true;
+        }
 
-        return PageableExecutionUtils.getPage(contents, pageable, count::fetchOne);
+        return new SliceImpl<>(contents, pageable, hasNext);
     }
 
     private BooleanExpression containKeyword(String keyword) {

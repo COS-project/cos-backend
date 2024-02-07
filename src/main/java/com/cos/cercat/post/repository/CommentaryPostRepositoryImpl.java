@@ -12,6 +12,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
@@ -31,6 +32,7 @@ public class CommentaryPostRepositoryImpl implements PostRepositoryCustom<Commen
 
     @Override
     public Slice<CommentaryPost> searchPosts(Pageable pageable, Certificate certificate, PostSearchCond cond) {
+
         List<CommentaryPost> contents = queryFactory
                 .selectFrom(commentaryPost)
                 .leftJoin(commentaryPost.user, user)
@@ -50,13 +52,16 @@ public class CommentaryPostRepositoryImpl implements PostRepositoryCustom<Commen
                 )
                 .orderBy(postSort(pageable))
                 .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
+                .limit(pageable.getPageSize() + 1)
                 .fetch();
 
-        JPAQuery<Long> count = queryFactory.select(commentaryPost.count())
-                .from(commentaryPost);
+        boolean hasNext = false;
+        if (contents.size() > pageable.getPageSize()) {
+            contents.remove(pageable.getPageSize() + 1);
+            hasNext = true;
+        }
 
-        return PageableExecutionUtils.getPage(contents, pageable, count::fetchOne);
+        return new SliceImpl<>(contents, pageable, hasNext);
     }
 
     private BooleanExpression containKeyword(String keyword) {
