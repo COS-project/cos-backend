@@ -20,7 +20,6 @@ import org.springframework.web.cors.CorsUtils;
 @EnableWebSecurity
 @Configuration
 @RequiredArgsConstructor
-
 public class SecurityConfig {
 
     private final OAuth2MemberSuccessHandler oAuth2MemberSuccessHandler;
