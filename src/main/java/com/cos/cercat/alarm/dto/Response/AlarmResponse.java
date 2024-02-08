@@ -20,7 +20,7 @@ public record AlarmResponse(
         AlarmType alarmType = entity.getAlarmType();
 
         return switch (alarmType) {
-            case BEFORE_APPLICATION, DEADLINE -> from((ExamAlarm) entity);
+            case BEFORE_APPLICATION, DEADLINE, START_APPLICATION -> from((ExamAlarm) entity);
             default -> from((BoardAlarm) entity);
         };
     }
