@@ -26,7 +26,7 @@ public class TestInit {
     @PostConstruct
     public void init() {
         Certificate testCertificate = certificateRepository.save(new Certificate(1L, "컴퓨터활용능력1급"));
-        ExamInfo testExamInfo = new ExamInfo(
+        ExamInfo testExamInfo = ExamInfo.of(
                 new ExamSchedule(LocalDateTime.now().plusDays(1), LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now()),
                 new ExamFee(20000, 30000),
                 new ExamTimeLimit(1000000L, 2000000L),
