@@ -33,8 +33,7 @@ public class CertificateCreateService {
     public void createCertificateExam(Long certificateId, CertificateExamCreateRequest request) {
         Certificate certificate = certificateService.getCertificate(certificateId);
 
-        CertificateExam certificateExam = CertificateExam.of(certificate, request.toEntity(), request.examYear(), request.round());
-        certificateExamService.createCertificateExam(certificateExam);
+        certificateExamService.createCertificateExam(request.toEntity(certificate));
     }
 
     public void createInterestCertificates(List<InterestCertificateCreateRequest> requests, Long userId) {

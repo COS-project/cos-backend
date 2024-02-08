@@ -58,17 +58,6 @@ jwt:
   refresh-token:
     header: Refresh-token
 
-logging:
-  level:
-    org:
-      springframework:
-        security: debug
-      hibernate:
-        orm:
-          jdbc:
-            bind: trace
-        SQL: debug
-
 front:
   host: localhost
   port: 3000

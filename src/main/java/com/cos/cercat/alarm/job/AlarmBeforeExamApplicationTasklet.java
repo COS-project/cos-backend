@@ -1,6 +1,5 @@
 package com.cos.cercat.alarm.job;
 
-import com.cos.cercat.alarm.app.producer.AlarmProducer;
 import com.cos.cercat.alarm.domain.Alarm;
 import com.cos.cercat.alarm.domain.AlarmType;
 import com.cos.cercat.alarm.repository.AlarmRepository;

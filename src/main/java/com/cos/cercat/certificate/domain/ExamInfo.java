@@ -34,7 +34,7 @@ public class ExamInfo {
 
     private String examEligibility; //응시 자격
 
-    public ExamInfo(
+    private ExamInfo(
                     ExamSchedule examSchedule,
                     ExamFee examFee,
                     ExamTimeLimit examTimeLimit,
@@ -52,4 +52,25 @@ public class ExamInfo {
         this.examFormat = examFormat;
         this.examEligibility = examEligibility;
     }
+
+    public static ExamInfo of(ExamSchedule examSchedule,
+                              ExamFee examFee,
+                              ExamTimeLimit examTimeLimit,
+                              PassingCriteria passingCriteria,
+                              String subjectsInfo,
+                              String description,
+                              String examFormat,
+                              String examEligibility) {
+        return new ExamInfo(
+                examSchedule,
+                examFee,
+                examTimeLimit,
+                passingCriteria,
+                subjectsInfo,
+                description,
+                examFormat,
+                examEligibility
+        );
+    }
+
 }

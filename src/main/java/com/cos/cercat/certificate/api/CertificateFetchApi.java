@@ -30,7 +30,7 @@ public class CertificateFetchApi {
     }
 
     @GetMapping("/certificates/{certificateId}/certificate-exams")
-    @Operation(summary = "자격증 응시 정보 조회")
+    @Operation(summary = "자격증 시험 정보 조회")
     public Response<CertificateExamResponse> getCertificateExamDetail(@PathVariable Long certificateId) {
         return Response.success(certificateFetchService.getCertificateExam(certificateId));
     }

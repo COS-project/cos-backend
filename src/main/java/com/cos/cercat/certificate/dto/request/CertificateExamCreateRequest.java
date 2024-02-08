@@ -14,16 +14,21 @@ public record CertificateExamCreateRequest(
         String examFormat,
         String examEligibility
 ) {
-    public ExamInfo toEntity() {
-        return new ExamInfo(
-                examSchedule,
-                examFee,
-                examTimeLimit,
-                passingCriteria,
-                subjectsInfo,
-                description,
-                examFormat,
-                examEligibility
+    public CertificateExam toEntity(Certificate certificate) {
+        return CertificateExam.of(
+                certificate,
+                ExamInfo.of(
+                        examSchedule,
+                        examFee,
+                        examTimeLimit,
+                        passingCriteria,
+                        subjectsInfo,
+                        description,
+                        examFormat,
+                        examEligibility
+                ),
+                examYear,
+                round
         );
     }
 }
