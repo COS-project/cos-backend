@@ -9,5 +9,5 @@ public enum AlarmType {
     NEW_LIKE_ON_COMMENT,
     NEW_COMMENT_ON_COMMENT,
     APPLICATION,
-    BEFORE_DEADLINE
+    DEADLINE
 }

@@ -2,6 +2,7 @@ package com.cos.cercat.alarm.dto;
 
 import com.cos.cercat.alarm.domain.Alarm;
 import com.cos.cercat.alarm.domain.AlarmType;
+import com.cos.cercat.alarm.domain.BoardAlarm;
 import com.cos.cercat.user.domain.User;
 
 public record AlarmEvent(
@@ -18,13 +19,13 @@ public record AlarmEvent(
         );
     }
 
-    public Alarm toEntity() {
-        return new Alarm(
+    public BoardAlarm toEntity() {
+        return new BoardAlarm(
                 receiveUser,
-                alarmArg.fromUser(),
-                alarmArg.postId(),
                 alarmType,
-                false
+                false,
+                alarmArg.fromUser(),
+                alarmArg.postId()
         );
     }
 }
