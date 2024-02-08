@@ -20,7 +20,7 @@ public record AlarmResponse(
         AlarmType alarmType = entity.getAlarmType();
 
         return switch (alarmType) {
-            case APPLICATION, DEADLINE -> from((ExamAlarm) entity);
+            case BEFORE_APPLICATION, DEADLINE -> from((ExamAlarm) entity);
             default -> from((BoardAlarm) entity);
         };
     }
@@ -55,8 +55,9 @@ public record AlarmResponse(
 
     private static String makeExamAlarmText(AlarmType alarmType, CertificateExam certificateExam) {
         return switch (alarmType) {
-            case APPLICATION -> "회원님의 관심자격증 " + certificateExam.getCertificate().getCertificateName() + " 접수 하루 남았어요!";
+            case BEFORE_APPLICATION -> "회원님의 관심자격증 " + certificateExam.getCertificate().getCertificateName() + " 접수 하루 남았어요!";
             case DEADLINE -> "회원님의 관심자격증 " + certificateExam.getCertificate().getCertificateName() + " 마감 하루 남았어요!";
+            case START_APPLICATION -> "회원님의 관심자격증 " + certificateExam.getCertificate().getCertificateName() + " 접수를 시작했어요!";
             default -> null;
         };
     }
