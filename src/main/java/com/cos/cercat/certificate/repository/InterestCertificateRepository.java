@@ -1,6 +1,5 @@
 package com.cos.cercat.certificate.repository;
 
-import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.certificate.domain.InterestCertificate;
 import com.cos.cercat.certificate.domain.embededId.InterestCertificatePK;
 import com.cos.cercat.user.domain.User;

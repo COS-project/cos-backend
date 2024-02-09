@@ -4,11 +4,14 @@ import com.cos.cercat.examReview.app.ExamReviewFetchService;
 import com.cos.cercat.examReview.dto.request.ExamReviewSearchCond;
 import com.cos.cercat.examReview.dto.response.ExamReviewResponse;
 import com.cos.cercat.global.Response;
+import com.cos.cercat.user.dto.UserDTO;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,5 +32,11 @@ public class ExamReviewFetchApi {
         return Response.success(examReviewFetchService.getExamReviews(certificateId, cond, pageable));
     }
 
+    @GetMapping("/certificates/{certificateId}/check-reviews")
+    @Operation(summary = "따끈후기 작성 대상자인지 조회")
+    public Response<Boolean> checkReviewDateAfterExamDate(@PathVariable Long certificateId,
+                                                          @AuthenticationPrincipal UserDTO userDTO) {
+        return Response.success(examReviewFetchService.checkReviewDateAfterExamDate(certificateId, userDTO.getId()));
+    }
 
 }

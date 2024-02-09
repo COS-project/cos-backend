@@ -6,6 +6,8 @@ import com.cos.cercat.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -15,6 +17,10 @@ public class InterestCertificateService {
 
     public void createInterestCertificate(InterestCertificate interestCertificate) {
         interestCertificateRepository.save(interestCertificate);
+    }
+
+    public List<InterestCertificate> getInterestCertificate(User user) {
+        return interestCertificateRepository.findInterestCertificatesByUser(user);
     }
 
     public void deleteAllInterestCertificates(User user) {

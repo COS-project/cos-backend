@@ -22,8 +22,12 @@ public class CertificateExamService {
         return certificateExamRepository.findRecentCertificateExam(certificate.getId());
     }
 
-    public Boolean isExamDatePassed(Certificate certificate) {
-        CertificateExam recentCertificateExam = certificateExamRepository.findRecentCertificateExam(certificate.getId());
+    public boolean isExamDatePassed(Certificate certificate) {
+        CertificateExam recentCertificateExam = getRecentCertificateExam(certificate);
+
+        if (recentCertificateExam == null) {
+            return false;
+        }
 
         LocalDateTime todayDateTime = LocalDateTime.now().plusHours(9);
         LocalDateTime examDateTime = recentCertificateExam.getExamInfo().getExamSchedule().getExamDateTime();
