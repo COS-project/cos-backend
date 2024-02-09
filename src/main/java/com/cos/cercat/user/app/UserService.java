@@ -26,7 +26,6 @@ public class UserService {
     private final LogoutTokenRepository logoutTokenRepository;
     private final JwtTokenUtil jwtTokenUtil;
 
-    @Transactional
     public UserDTO findByEmail(String email) {
         return userCacheRepository.getUser(email).orElseGet(() ->
                 userRepository.findByEmail(email).map(UserDTO::fromEntity).orElseThrow(
@@ -42,9 +41,9 @@ public class UserService {
         User user = getUser(userId);
         user.createUserInfo(nickName, image);
         refreshUserCache(user);
+        log.info("user - {} 프로필 수정", user.getEmail());
     }
 
-    @Transactional
     public void logout(String accessToken, String email) {
         tokenCacheRepository.deleteRefreshToken(accessToken);
 
@@ -62,6 +61,7 @@ public class UserService {
     }
 
     public void refreshUserCache(User user) {
+        log.info("user - {} 유저 캐시 리프레시", user.getEmail());
         userCacheRepository.deleteUser(user.getEmail());
         userCacheRepository.setUser(UserDTO.fromEntity(user));
     }

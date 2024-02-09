@@ -14,9 +14,15 @@ public class PostCommentDeleteService {
     private final PostCommentService postCommentService;
     private final UserService userService;
 
+    /***
+     * 댓글을 삭제합니다.
+     *
+     * @param commentId 댓글 ID
+     * @param userId 유저 ID
+     */
     public void deletePostComment(Long commentId, Long userId) {
         User user = userService.getUser(userId);
-
+        log.info("user - {}, commentId - {} 댓글 삭제", user.getEmail(), commentId);
         postCommentService.deletePostComment(commentId, user);
 
     }

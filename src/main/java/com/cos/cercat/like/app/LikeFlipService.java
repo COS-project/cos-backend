@@ -22,6 +22,12 @@ public class LikeFlipService {
     private final UserService userService;
     private final LikeStrategyFactory likeStrategyFactory;
 
+    /***
+     * 게시글 또는 댓글의 좋아요를 생성하거나 취소합니다.
+     * @param likeType 게시글 또는 댓글
+     * @param id 게시글 또는 댓글 ID
+     * @param userId 유저 ID
+     */
     @Transactional
     public void flipLike(LikeType likeType, Long id, Long userId) {
 

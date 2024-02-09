@@ -60,7 +60,7 @@ public class PostFetchApi {
 
     @GetMapping("/my/comment-posts")
     @Operation(summary = "내가 댓글 쓴 게시글 조회")
-    public Response<Page<PostResponse>> getMyCommentPosts(@AuthenticationPrincipal UserDTO user,
+    public Response<Slice<PostResponse>> getMyCommentPosts(@AuthenticationPrincipal UserDTO user,
                                                           @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         return Response.success(postFetchService.getMyCommentPosts(user.getId(), pageable));
     }

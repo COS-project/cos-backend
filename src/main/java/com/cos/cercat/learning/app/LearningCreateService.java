@@ -24,22 +24,37 @@ public class LearningCreateService {
     private final UserService userService;
     private final StudyTimeLogService studyTimeLogService;
 
+    /***
+     * 자격증 시험의 목표를 생성합니다.
+     * @param request 목표 생성 정보
+     * @param certificateId 자격증 ID
+     * @param userId 유저 ID
+     */
     public void createGoal(GoalCreateRequest request, Long certificateId, Long userId) {
         Certificate certificate = certificateService.getCertificate(certificateId);
         User user = userService.getUser(userId);
 
         if (goalService.isGoalAlreadyExists(user, certificate)) {
+            log.warn("user - {}, certificate - {} 목표가 이미 존재합니다.", user.getEmail(), certificate.getCertificateName());
             throw new CustomException(ErrorCode.GOAL_CREATE_ERROR);
         }
 
+        log.info("user - {}, certificate - {} 목표 생성.", user.getEmail(), certificate.getCertificateName());
         goalService.createGoal(request.toEntity(certificate, user));
     }
 
+    /***
+     * 유저의 자격증 시험 목표의 공부시간을 누적합니다.
+     * @param certificateId 자격증 ID
+     * @param studyTime 누적할 공부시간
+     * @param userId 유저 ID
+     */
     public void createStudyTimeLog(Long certificateId, Long studyTime, Long userId) {
         User user = userService.getUser(userId);
         Certificate certificate = certificateService.getCertificate(certificateId);
         Goal goal = goalService.getGoal(user, certificate);
 
+        log.info("user - {}, goalId - {}, studyTime - {} 공부 시간 누적", user.getEmail(), goal.getId(), studyTime);
         studyTimeLogService.createStudyTimeLog(goal, studyTime);
     }
 }

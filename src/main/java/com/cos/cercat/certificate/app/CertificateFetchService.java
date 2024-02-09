@@ -30,12 +30,13 @@ public class CertificateFetchService {
         Certificate certificate = certificateService.getCertificate(certificateId);
         CertificateExam recentCertificateExam = certificateExamService.getRecentCertificateExam(certificate);
 
+        log.info("certificate - {} 자격증 시험 정보 조회", certificate.getCertificateName());
         return CertificateExamResponse.from(recentCertificateExam);
     }
 
     public Boolean isExamDatePassed(Long certificateId) {
         Certificate certificate = certificateService.getCertificate(certificateId);
-
+        log.info("certificate - {} 자격증 시험 날짜 지났는지 여부 조회", certificate.getCertificateName());
         return certificateExamService.isExamDatePassed(certificate);
     }
 
@@ -44,6 +45,7 @@ public class CertificateFetchService {
      * @return 자격증 리스트
      */
     public List<CertificateResponse> getCertificates() {
+        log.info("전체 자격증 리스트 조회");
         return certificateService.getCertificates().stream()
                 .map(CertificateResponse::from)
                 .toList();

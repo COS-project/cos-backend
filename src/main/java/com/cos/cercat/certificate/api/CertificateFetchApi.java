@@ -36,7 +36,7 @@ public class CertificateFetchApi {
     }
 
     @GetMapping("/certificates/{certificateId}/check-exam-date")
-    @Operation(summary = "합격자 발표날이 지났는지 여부 조회")
+    @Operation(summary = "자격증 시험날이 지났는지 여부 조회")
     public Response<Boolean> isDatePassed(@PathVariable Long certificateId) {
         return Response.success(certificateFetchService.isExamDatePassed(certificateId));
     }

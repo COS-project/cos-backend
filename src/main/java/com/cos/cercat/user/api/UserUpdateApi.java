@@ -21,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserUpdateApi {
 
     private final UserUpdateService userUpdateService;
-    private final UserService userService;
 
     @PatchMapping(path = "/users", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "회원 정보 추가")
@@ -35,7 +34,7 @@ public class UserUpdateApi {
     @PatchMapping("/logout")
     @Operation(summary = "회원 로그아웃")
     public Response<Void> logout(HttpServletRequest request, @AuthenticationPrincipal UserDTO user) {
-        userService.logout(request.getHeader("Access-Token"), user.getEmail());
+        userUpdateService.logout(request.getHeader("Access-Token"), user.getEmail());
         return Response.success("로그아웃 성공");
     }
 }

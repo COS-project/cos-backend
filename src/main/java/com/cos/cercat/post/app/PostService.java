@@ -27,6 +27,7 @@ public class PostService {
     }
 
     public void deletePost(Long postId) {
+        log.info("postId - {} 게시글 삭제", postId);
         postRepository.delete(getPost(postId));
     }
 

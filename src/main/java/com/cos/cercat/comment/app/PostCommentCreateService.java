@@ -25,6 +25,13 @@ public class PostCommentCreateService {
     private final PostService postService;
     private final AlarmProducer alarmProducer;
 
+    /***
+     * 댓글을 생성합니다.
+     *
+     * @param postId 게시글 ID
+     * @param request 게시글 생성 정보
+     * @param userId 유저 ID
+     */
     @Transactional
     public void createPostComment(Long postId, PostCommentCreateRequest request, Long userId) {
         Post post = postService.getPost(postId);
@@ -37,11 +44,13 @@ public class PostCommentCreateService {
             parentComment.addChildComment(postComment);
             alarmProducer.send(createAlarmEvent(post.getUser(), post.getId(), user, AlarmType.NEW_COMMENT_ON_POST));
             alarmProducer.send(createAlarmEvent(parentComment.getUser(), post.getId(), user, AlarmType.NEW_COMMENT_ON_COMMENT));
+            log.info("parentCommentId - {}  user - {} 대댓글 생성", request.parentCommentId(), user.getEmail());
             return;
         }
 
         post.addComment(postComment);
         alarmProducer.send(createAlarmEvent(post.getUser(), postId, user, AlarmType.NEW_COMMENT_ON_POST));
+        log.info("user - {} 댓글 생성", user.getEmail());
     }
 
     private AlarmEvent createAlarmEvent(User toUser, Long postId, User fromUser, AlarmType alarmType) {

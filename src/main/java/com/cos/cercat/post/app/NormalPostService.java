@@ -23,7 +23,8 @@ public class NormalPostService {
     private final NormalPostRepository normalPostRepository;
 
     public void createNormalPost(NormalPost normalPost) {
-
+        log.info("user - {}, certificate - {} 꿀팁 게시글 생성",
+                normalPost.getUser().getEmail(), normalPost.getCertificate().getCertificateName());
         normalPostRepository.save(normalPost);
 
     }

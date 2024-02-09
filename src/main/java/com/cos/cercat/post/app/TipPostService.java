@@ -24,7 +24,8 @@ public class TipPostService {
     private final TipPostRepository tipPostRepository;
 
     public void createTipPost(TipPost tipPost) {
-
+        log.info("user - {}, certificate - {} 꿀팁 게시글 생성",
+                tipPost.getUser().getEmail(), tipPost.getCertificate().getCertificateName());
         tipPostRepository.save(tipPost);
     }
 

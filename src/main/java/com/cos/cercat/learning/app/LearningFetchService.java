@@ -23,21 +23,41 @@ public class LearningFetchService {
     private final StudyTimeLogService studyTimeLogService;
     private final MockExamResultService mockExamResultService;
 
+    /***
+     * 목표를 조회합니다.
+     * @param certificateId
+     * @param userId
+     * @return 목표 Response DTO
+     */
     public GoalResponse getGoal(Long certificateId, Long userId) {
         Certificate certificate = certificateService.getCertificate(certificateId);
         User user = userService.getUser(userId);
         Goal goal = goalService.getGoal(user, certificate);
 
+        log.info("user - {}, certificate - {} 목표 조회", user.getEmail(), certificate.getCertificateName());
         return GoalResponse.from(goal);
     }
 
+    /***
+     * 유저의 목표 설정 여부를 조회합니다.
+     * @param certificateId 자격증 ID
+     * @param userId 유저 ID
+     * @return 목표를 설정했다면 true, 목표를 아직 설정하지않았다면 false를 반환합니다.
+     */
     public Boolean existsGoal(Long certificateId, Long userId) {
         Certificate certificate = certificateService.getCertificate(certificateId);
         User user = userService.getUser(userId);
 
+        log.info("user - {}, certificate - {} 목표 설정 여부 조회", user.getEmail(), certificate.getCertificateName());
         return goalService.isGoalAlreadyExists(user, certificate);
     }
 
+    /***
+     * 유저의 목표 달성도를 조회합니다.
+     * @param certificateId 자격증 ID
+     * @param userId 유저 ID
+     * @return 목표 달성도 Response DTO를 조회합니다.
+     */
     public GoalAchievementResponse getGoalAchievement(Long certificateId, Long userId) {
         Certificate certificate = certificateService.getCertificate(certificateId);
         User user = userService.getUser(userId);
@@ -49,6 +69,7 @@ public class LearningFetchService {
         int todayMockExamResults = mockExamResultService.countTodayMockExamResults(certificate, user);
         int totalMockExamResults = mockExamResultService.countMockExamResults(certificate, user);
 
+        log.info("user - {}, goalId - {} 목표 달성도 조회", user.getEmail(), goal.getId());
         return GoalAchievementResponse.of(
                 goal,
                 currentMaxScore,

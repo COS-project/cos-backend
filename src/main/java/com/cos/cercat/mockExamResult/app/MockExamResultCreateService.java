@@ -37,6 +37,7 @@ public class MockExamResultCreateService {
      * @param mockExamId 모의고사 고유 ID
      * @param request 모의고사 채점 결과
      * @param userId 유저 정보
+     * @return 모의고사 결과 정보를 반환합니다.
      * */
     @Transactional
     public MockExamResultResponse createMockExamResult(Long mockExamId, MockExamResultRequest request, Long userId) {
@@ -47,7 +48,7 @@ public class MockExamResultCreateService {
         MockExamResult mockExamResult = MockExamResult.of(mockExam, user, beforeRound + 1, subjectResults);
 
         MockExamResult saved = mockExamResultService.save(mockExamResult);
-
+        log.info("user - {}, mockExamId - {}, round - {}번째 모의고사 성적리포트 생성", user.getEmail(), mockExamId, beforeRound + 1);
         return MockExamResultResponse.from(saved);
     }
 

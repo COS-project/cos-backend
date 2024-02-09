@@ -29,4 +29,10 @@ public class UserUpdateService {
         userService.updateUser(userId, request.nickname(), userImage);
     }
 
+    @Transactional
+    public void logout(String accessToken, String email) {
+        userService.logout(accessToken, email);
+        log.info("user - {} 로그아웃", email);
+    }
+
 }

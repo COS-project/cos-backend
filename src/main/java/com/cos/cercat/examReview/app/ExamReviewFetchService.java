@@ -21,10 +21,19 @@ public class ExamReviewFetchService {
     private final CertificateService certificateService;
     private final CertificateExamService certificateExamService;
 
+    /***
+     * 최근 자격증시험의 따끈 후기를 조회합니다.
+     * @param certificateId 자격증 ID
+     * @param cond 검색 필터
+     * @param pageable 페이징 정보
+     * @return 슬라이스 형태의 따끈후기 Response DTO
+     */
     public Slice<ExamReviewResponse> getExamReviews(Long certificateId, ExamReviewSearchCond cond, Pageable pageable) {
         Certificate certificate = certificateService.getCertificate(certificateId);
         CertificateExam recentCertificateExam = certificateExamService.getRecentCertificateExam(certificate);
 
+        log.info("certificate - {}, examYear - {}, round - {} 따끈 후기 조회",
+                certificate.getCertificateName(), recentCertificateExam.getExamYear(), recentCertificateExam.getRound());
         return examReviewService.getExamReviews(recentCertificateExam, cond, pageable).map(ExamReviewResponse::from);
     }
 }

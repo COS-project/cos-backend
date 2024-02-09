@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -23,7 +24,7 @@ public class PostCommentService {
                 new CustomException(ErrorCode.COMMENT_NOT_FOUND));
     }
 
-    public Page<PostComment> getMyPostComments(User user, Pageable pageable) {
+    public Slice<PostComment> getMyPostComments(User user, Pageable pageable) {
         return postCommentRepository.findPostCommentsByUser(user, pageable);
     }
 

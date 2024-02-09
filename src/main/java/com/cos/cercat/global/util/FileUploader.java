@@ -48,6 +48,7 @@ public class FileUploader {
             try {
                 Blob blob = storage.create(blobInfo, file.getInputStream());
                 images.add(Image.from(storagePath + uuid));
+                log.info("이미지 업로드 성공 - {}", storagePath + uuid);
             } catch (IOException e) {
                 log.warn("image Upload fail");
                 throw new CustomException(ErrorCode.IMAGE_UPLOAD_FAIL_ERROR);

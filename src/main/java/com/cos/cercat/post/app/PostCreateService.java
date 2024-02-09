@@ -36,6 +36,14 @@ public class PostCreateService {
     private final UserService userService;
 
 
+    /***
+     * 해당 자격증 게시판에 게시글을 생성합니다.
+     * @param certificateId 자격증 ID
+     * @param postType COMMENTARY(해설), TIP(꿀팁), NORMAL(자유)
+     * @param request 게시글 생성 정보
+     * @param files 게시글 파일 리스트
+     * @param userId 유저 ID
+     */
     @Transactional
     public void createPost(Long certificateId,
                            PostType postType,
@@ -57,6 +65,7 @@ public class PostCreateService {
     private void createCommentaryPost(PostCreateRequest request, Certificate certificate, List<Image> images, User user) {
         Question question = getQuestion(certificate, request.examYear(), request.round(), request.questionSequence());
         commentaryPostService.createCommentaryPost(request.toCommentaryPost(images, certificate, user, question));
+        log.info("user - {}, certificate - {}, questionId - {} 해설 게시글 생성", user.getEmail(), certificate.getCertificateName(), question.getId());
     }
 
 

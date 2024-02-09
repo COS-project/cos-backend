@@ -27,6 +27,7 @@ public class SseEmitterService {
         sseEmitter.onTimeout(() -> emitterRepository.delete(userId));
         try {
             sseEmitter.send(SseEmitter.event().id("").name(EVENT_NAME).data("connect completed"));
+            log.info("SSE 연결 userId - {}", userId);
         } catch (IOException e) {
             throw new CustomException(ErrorCode.ALARM_CONNECT_ERROR);
         }

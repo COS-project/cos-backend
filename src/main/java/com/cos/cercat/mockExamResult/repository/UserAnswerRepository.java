@@ -27,9 +27,9 @@ public interface UserAnswerRepository extends JpaRepository<UserAnswer, Long> {
                 AND ua.is_correct = false
                 AND ua.user.id = :userId
               """)
-    Slice<UserAnswer> getUserAnswersByUserAndCertificate(Pageable pageable,
-                                                         @Param("userId") Long userId,
-                                                         @Param("certificateId") Long certificateId);
+    Slice<UserAnswer> getIncorrectUserAnswersByUserAndCertificate(Pageable pageable,
+                                                                  @Param("userId") Long userId,
+                                                                  @Param("certificateId") Long certificateId);
 
     @Query("""
             SELECT ua FROM UserAnswer ua
@@ -37,6 +37,6 @@ public interface UserAnswerRepository extends JpaRepository<UserAnswer, Long> {
             JOIN ua.subjectResult sr
             WHERE ua.is_correct = false AND sr.mockExamResult.id = :mockExamResultId
             """)
-    Slice<UserAnswer> getUserAnswersByMockExamResult(Pageable pageable, @Param("mockExamResultId") Long mockExamResultId);
+    Slice<UserAnswer> getIncorrectUserAnswersByMockExamResult(Pageable pageable, @Param("mockExamResultId") Long mockExamResultId);
 
 }

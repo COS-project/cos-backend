@@ -5,6 +5,7 @@ import com.cos.cercat.certificate.dto.request.InterestCertificateUpdateRequest;
 import com.cos.cercat.user.app.UserService;
 import com.cos.cercat.user.domain.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CertificateUpdateService {
 
     private final InterestCertificateService interestCertificateService;
@@ -27,6 +29,7 @@ public class CertificateUpdateService {
             Certificate certificate = certificateService.getCertificate(request.certificateId());
             interestCertificateService.createInterestCertificate(request.toEntity(certificate, user)); //다시 생성
         });
+        log.info("user - {} 흥미 자격증 수정", user.getEmail());
     }
 
 }

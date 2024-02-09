@@ -8,10 +8,12 @@ import com.cos.cercat.comment.domain.PostComment;
 import com.cos.cercat.like.domain.EmbeddedId.CommentLikePK;
 import com.cos.cercat.user.domain.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
+@Slf4j
 public class CommentLikeStrategy implements LikeStrategy<PostComment>{
 
     private final CommentLikeService commentLikeService;
@@ -23,9 +25,11 @@ public class CommentLikeStrategy implements LikeStrategy<PostComment>{
 
         if (commentLikeService.existsLike(commentLikePK)) {
             commentLikeService.deleteLike(postComment, commentLikePK);
+            log.info("user - {}, postCommentId - {} 댓글 좋아요 취소", user.getEmail(), postComment.getId());
             return;
         }
 
+        log.info("user - {}, postCommentId - {} 댓글 좋아요 생성", user.getEmail(), postComment.getId());
         commentLikeService.createLike(postComment, user);
         alarmProducer.send(AlarmEvent.of(postComment.getUser(), AlarmArg.of(user, postComment.getPost().getId()), AlarmType.NEW_LIKE_ON_COMMENT));
     }

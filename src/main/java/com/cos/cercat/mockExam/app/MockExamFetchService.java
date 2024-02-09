@@ -45,8 +45,9 @@ public class MockExamFetchService {
     @Transactional(readOnly = true)
     public List<MockExamWithResultResponse> getMockExamList(Long certificateId, Integer examYear, Long userId) {
         List<MockExamWithResultResponse> resultResponses = new ArrayList<>();
+        Certificate certificate = certificateService.getCertificate(certificateId);
 
-        List<MockExam> mockExamList = mockExamService.getMockExamList(certificateService.getCertificate(certificateId), examYear);
+        List<MockExam> mockExamList = mockExamService.getMockExamList(certificate, examYear);
         User user = userService.getUser(userId);
 
         for (MockExam mockExam : mockExamList) {
@@ -55,6 +56,7 @@ public class MockExamFetchService {
         }
         resultResponses.sort(Comparator.comparing(MockExamWithResultResponse::round));
 
+        log.info("user - {}, certificate - {}, {}년도 모의고사 리스트 조회", user.getEmail(), certificate.getCertificateName(), examYear);
         return resultResponses;
     }
 
@@ -66,19 +68,25 @@ public class MockExamFetchService {
     @Transactional(readOnly = true)
     @Cacheable(cacheNames = "questions", key = "'all'")
     public QuestionListResponse getQuestionList(Long mockExamId) {
-
         MockExam mockExam = mockExamService.getMockExam(mockExamId);
 
+        log.info("{}년도 {}회차 모의고사 문제리스트 조회", mockExam.getExamYear(), mockExam.getRound());
         return QuestionListResponse.from(questionService.getQuestionListByMockExam(mockExam).stream()
                 .map(QuestionResponse::from)
                 .toList());
     }
 
 
+    /***
+     * 자격증의 모의고사의 시험년도와 해당년도의 회차정보를 조회합니다.
+     * @param certificateId 자격증 ID
+     * @return 시험년도가 Key이고 List형태의 회차정보를 Value로 가지는 Map을 반환합니다.
+     */
     public ExamYearWithRoundsResponse getMockExamInfoList(Long certificateId) {
         Certificate certificate = certificateService.getCertificate(certificateId);
         List<Integer> mockExamYears = mockExamService.getMockExamYears(certificate);
 
+        log.info("certificate - {} 자격증의 모의고사 시험년도 및 회차정보 조회", certificate.getCertificateName());
         return ExamYearWithRoundsResponse.from(
                 mockExamYears.stream()
                 .collect(Collectors.toMap(

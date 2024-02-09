@@ -11,6 +11,7 @@ import com.cos.cercat.user.app.UserService;
 import com.cos.cercat.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +29,12 @@ public class ExamReviewCreateService {
     private final CertificateExamService certificateExamService;
     private final GoalService goalService;
 
+    /***
+     * 자격증 시험의 따끈 후기를 생성합니다.
+     * @param request 따끈후기 생성 정보
+     * @param certificateId 자격증 ID
+     * @param userId 유저 ID
+     */
     @Transactional
     public void createExamReview(ExamReviewCreateRequest request, Long certificateId , Long userId) {
         User user = userService.getUser(userId);
@@ -40,6 +47,7 @@ public class ExamReviewCreateService {
         LocalDate prepareFinishDate = goal.getPrepareFinishDateTime().toLocalDate();
 
         Period preparePeriod = Period.between(prepareStartDate, prepareFinishDate);
+        log.info("user - {}, certificate - {} 따끈 후기 생성", user.getEmail(), certificate.getCertificateName());
         examReviewService.createExamReview(request.toEntity(user, recentCertificateExam, periodToMonths(preparePeriod)));
     }
 
