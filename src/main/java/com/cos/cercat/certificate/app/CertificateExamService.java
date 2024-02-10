@@ -29,7 +29,7 @@ public class CertificateExamService {
             return false;
         }
 
-        LocalDateTime todayDateTime = LocalDateTime.now().plusHours(9);
+        LocalDateTime todayDateTime = LocalDateTime.now();
         LocalDateTime examDateTime = recentCertificateExam.getExamInfo().getExamSchedule().getExamDateTime();
 
         return todayDateTime.isAfter(examDateTime);
