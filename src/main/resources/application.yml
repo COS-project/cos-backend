@@ -24,6 +24,8 @@ logging:
           jdbc:
             bind: trace
         SQL: debug
+  pattern:
+    dateformat: yyyy-MM-dd HH:mm:ss.SSS,Asia/Seoul
 
 springdoc:
   swagger-ui:
