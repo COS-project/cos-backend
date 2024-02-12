@@ -28,21 +28,25 @@ public class MockExamResult extends BaseTimeEntity {
     @Embedded
     private SubjectResults subjectResults = new SubjectResults();
 
+    private Integer totalScore;
+
     private Integer round; //유저가 모의고사를 푼 횟수
 
-    private MockExamResult(MockExam mockExam, User user, Integer round, SubjectResults subjectResults) {
+    private MockExamResult(MockExam mockExam, User user, Integer round, SubjectResults subjectResults, Integer totalScore) {
         this.mockExam = mockExam;
         this.user = user;
         this.round = round;
         setSubjectResults(subjectResults);
+        this.totalScore = totalScore;
     }
 
-    public static MockExamResult of(MockExam mockExam, User user, Integer round, SubjectResults subjectResults) {
+    public static MockExamResult of(MockExam mockExam, User user, Integer round, SubjectResults subjectResults, Integer totalScore) {
         return new MockExamResult(
                 mockExam,
                 user,
                 round,
-                subjectResults
+                subjectResults,
+                totalScore
         );
     }
 

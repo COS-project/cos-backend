@@ -2,7 +2,7 @@ package com.cos.cercat.mockExam.dto.response;
 
 import com.cos.cercat.mockExam.domain.MockExam;
 import com.cos.cercat.mockExamResult.domain.MockExamResult;
-import com.cos.cercat.mockExamResult.dto.response.MockExamResultResponse;
+import com.cos.cercat.mockExamResult.dto.response.MockExamResultWithSubjectsResponse;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
@@ -14,7 +14,7 @@ public record MockExamWithResultResponse(
         Integer round,
         Boolean isTake,
         @JsonInclude(Include.NON_NULL)
-        MockExamResultResponse recentMockExamResultResponse
+        MockExamResultWithSubjectsResponse recentMockExamResultWithSubjectsResponse
 ) {
 
     public static MockExamWithResultResponse from(MockExam mockExam, List<MockExamResult> mockExamResults) {
@@ -25,7 +25,7 @@ public record MockExamWithResultResponse(
                 mockExam.getId(),
                 mockExam.getRound(),
                 isTake,
-                (isTake) ? MockExamResultResponse.from(mockExamResults.get(0)) : null
+                (isTake) ? MockExamResultWithSubjectsResponse.from(mockExamResults.get(0)) : null
         );
     }
 }

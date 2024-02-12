@@ -5,9 +5,7 @@ import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.mockExam.app.MockExamService;
 import com.cos.cercat.mockExam.domain.MockExam;
 import com.cos.cercat.mockExamResult.domain.MockExamResult;
-import com.cos.cercat.mockExamResult.dto.response.MockExamResultResponse;
-import com.cos.cercat.mockExamResult.dto.response.SubjectResultsAVGResponse;
-import com.cos.cercat.mockExamResult.dto.response.UserAnswerResponse;
+import com.cos.cercat.mockExamResult.dto.response.*;
 import com.cos.cercat.user.app.UserService;
 import com.cos.cercat.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +14,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.temporal.TemporalAdjusters;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -36,14 +38,14 @@ public class MockExamResultFetchService {
      * @param userId 유저 ID
      * @return 리스트 형태의 성적리포트 Reponse DTO를 반환합니다.
      */
-    public List<MockExamResultResponse> getMockExamResults(Long mockExamId, Long userId) {
+    public List<MockExamResultWithSubjectsResponse> getMockExamResults(Long mockExamId, Long userId) {
         MockExam mockExam = mockExamService.getMockExam(mockExamId);
         User user = userService.getUser(userId);
 
         List<MockExamResult> mockExamResults = mockExamResultService.getMockExamResults(mockExam, user);
         log.info("user - {}, mockExamId - {} 성적리포트 리스트 조회", user.getEmail(), mockExamId);
         return mockExamResults.stream()
-                .map(MockExamResultResponse::from)
+                .map(MockExamResultWithSubjectsResponse::from)
                 .toList();
     }
 
@@ -87,6 +89,31 @@ public class MockExamResultFetchService {
         log.info("user - {}, certificate - {} 과목별 정답률 및 머문시간 평균 조회", user.getEmail(), certificate.getCertificateName());
         return subjectResultService.getSubjectResultsAVG(certificate, user).stream()
                 .map(SubjectResultsAVGResponse::from)
+                .toList();
+    }
+
+    public Report<List<DailyScoreAVG>> getWeeklyReport(Long certificateId, Long userId) {
+        Certificate certificate = certificateService.getCertificate(certificateId);
+        User user = userService.getUser(userId);
+        LocalDateTime now = LocalDateTime.now();
+
+        // 이번 주의 월요일 구하기
+        LocalDateTime thisMonday = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)).toLocalDate().atStartOfDay();
+        // 이번 주의 일요일 구하기
+        LocalDateTime thisSunday = now.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY)).toLocalDate().plusDays(1).atStartOfDay();
+
+        List<DailyScoreAVG> dailyScoreAVGList = mockExamResultService.getDailyScoreAVGList(certificate, user, thisMonday, thisSunday);
+        double average = dailyScoreAVGList.stream().mapToDouble(DailyScoreAVG::scoreAVG).average().orElse(0);
+
+        return Report.of(average, dailyScoreAVGList);
+    }
+
+    public List<MockExamResultResponse> getMockExamResultsByDate(Long certificateId, Long userId, Date date) {
+        Certificate certificate = certificateService.getCertificate(certificateId);
+        User user = userService.getUser(userId);
+
+        return mockExamResultService.getMockExamResultsByDate(certificate, user, date).stream()
+                .map(MockExamResultResponse::from)
                 .toList();
     }
 }

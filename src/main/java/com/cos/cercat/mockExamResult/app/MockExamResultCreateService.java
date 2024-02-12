@@ -7,7 +7,7 @@ import com.cos.cercat.mockExam.app.QuestionService;
 import com.cos.cercat.mockExam.domain.*;
 import com.cos.cercat.mockExam.domain.Question;
 import com.cos.cercat.mockExamResult.domain.*;
-import com.cos.cercat.mockExamResult.dto.response.MockExamResultResponse;
+import com.cos.cercat.mockExamResult.dto.response.MockExamResultWithSubjectsResponse;
 import com.cos.cercat.user.app.UserService;
 import com.cos.cercat.user.domain.User;
 import com.cos.cercat.mockExamResult.dto.request.MockExamResultRequest;
@@ -40,16 +40,19 @@ public class MockExamResultCreateService {
      * @return 모의고사 결과 정보를 반환합니다.
      * */
     @Transactional
-    public MockExamResultResponse createMockExamResult(Long mockExamId, MockExamResultRequest request, Long userId) {
+    public MockExamResultWithSubjectsResponse createMockExamResult(Long mockExamId, MockExamResultRequest request, Long userId) {
         User user = userService.getUser(userId);
         MockExam mockExam = mockExamService.getMockExam(mockExamId);
+
         int beforeRound = mockExamResultService.getMockExamResultsCount(mockExam, user);
         SubjectResults subjectResults = toSubjectResults(request, user);
-        MockExamResult mockExamResult = MockExamResult.of(mockExam, user, beforeRound + 1, subjectResults);
+        int totalScore = subjectResults.getSubjectResults().stream().mapToInt(SubjectResult::getScore).sum();
+
+        MockExamResult mockExamResult = MockExamResult.of(mockExam, user, beforeRound + 1, subjectResults, totalScore);
 
         MockExamResult saved = mockExamResultService.save(mockExamResult);
         log.info("user - {}, mockExamId - {}, round - {}번째 모의고사 성적리포트 생성", user.getEmail(), mockExamId, beforeRound + 1);
-        return MockExamResultResponse.from(saved);
+        return MockExamResultWithSubjectsResponse.from(saved);
     }
 
     private SubjectResults toSubjectResults(MockExamResultRequest request, User user) {
