@@ -1,13 +1,15 @@
 package com.cos.cercat.mockExamResult.dto.response;
 
-public record Report<T>(
+import java.util.List;
+
+public record Report(
         double average,
-        T scoreAVGList
+        List<? extends ScoreAverage> scoreAVGList
 ) {
 
-    public static <T> Report<T> of(double average, T scoreAVGList) {
-        return new Report<>(
-                average,
+    public static Report from(List<? extends ScoreAverage> scoreAVGList) {
+        return new Report(
+                scoreAVGList.stream().mapToDouble(ScoreAverage::getScoreAverage).average().orElse(0),
                 scoreAVGList
         );
     }

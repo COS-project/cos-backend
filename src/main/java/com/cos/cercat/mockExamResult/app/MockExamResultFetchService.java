@@ -5,6 +5,7 @@ import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.mockExam.app.MockExamService;
 import com.cos.cercat.mockExam.domain.MockExam;
 import com.cos.cercat.mockExamResult.domain.MockExamResult;
+import com.cos.cercat.mockExamResult.dto.request.ReportType;
 import com.cos.cercat.mockExamResult.dto.response.*;
 import com.cos.cercat.user.app.UserService;
 import com.cos.cercat.user.domain.User;
@@ -14,9 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
-import java.time.DayOfWeek;
-import java.time.LocalDateTime;
-import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 import java.util.List;
 
@@ -92,20 +90,15 @@ public class MockExamResultFetchService {
                 .toList();
     }
 
-    public Report<List<DailyScoreAVG>> getWeeklyReport(Long certificateId, Long userId) {
+    public Report getReport(Long certificateId, ReportType reportType, Long userId) {
         Certificate certificate = certificateService.getCertificate(certificateId);
         User user = userService.getUser(userId);
-        LocalDateTime now = LocalDateTime.now();
 
-        // 이번 주의 월요일 구하기
-        LocalDateTime thisMonday = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)).toLocalDate().atStartOfDay();
-        // 이번 주의 일요일 구하기
-        LocalDateTime thisSunday = now.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY)).toLocalDate().plusDays(1).atStartOfDay();
-
-        List<DailyScoreAVG> dailyScoreAVGList = mockExamResultService.getDailyScoreAVGList(certificate, user, thisMonday, thisSunday);
-        double average = dailyScoreAVGList.stream().mapToDouble(DailyScoreAVG::scoreAVG).average().orElse(0);
-
-        return Report.of(average, dailyScoreAVGList);
+        return switch (reportType) {
+            case WEEK -> Report.from(mockExamResultService.getWeeklyReport(certificate, user));
+            case MONTH -> null;
+            case YEAR -> null;
+        };
     }
 
     public List<MockExamResultResponse> getMockExamResultsByDate(Long certificateId, Long userId, Date date) {
@@ -116,4 +109,5 @@ public class MockExamResultFetchService {
                 .map(MockExamResultResponse::from)
                 .toList();
     }
+
 }

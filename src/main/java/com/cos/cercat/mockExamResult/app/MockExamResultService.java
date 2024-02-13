@@ -5,14 +5,16 @@ import com.cos.cercat.global.exception.CustomException;
 import com.cos.cercat.global.exception.ErrorCode;
 import com.cos.cercat.mockExam.domain.MockExam;
 import com.cos.cercat.mockExamResult.domain.MockExamResult;
-import com.cos.cercat.mockExamResult.dto.response.DailyScoreAVG;
+import com.cos.cercat.mockExamResult.dto.response.DailyScoreAverage;
 import com.cos.cercat.user.domain.User;
 import com.cos.cercat.mockExamResult.repository.MockExamResultRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -63,11 +65,18 @@ public class MockExamResultService {
         return Objects.requireNonNullElse(countTodayMockExamResults, 0);
     }
 
-    public List<DailyScoreAVG> getDailyScoreAVGList(Certificate certificate, User user, LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        return mockExamResultRepository.getDailyReport(user, certificate, startDateTime, endDateTime);
-    }
-
     public List<MockExamResult> getMockExamResultsByDate(Certificate certificate, User user, Date date) {
         return mockExamResultRepository.findMockExamResultsByDate(certificate.getId(), user.getId(), date);
     }
+
+    public List<DailyScoreAverage> getWeeklyReport(Certificate certificate, User user) {
+        LocalDateTime now = LocalDateTime.now();
+        // 이번 주의 월요일 구하기
+        LocalDateTime thisMonday = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)).toLocalDate().atStartOfDay();
+        // 이번 주의 일요일 구하기
+        LocalDateTime thisSunday = now.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY)).toLocalDate().plusDays(1).atStartOfDay();
+        return mockExamResultRepository.getDailyReport(user, certificate, thisMonday, thisSunday);
+    }
+
+
 }

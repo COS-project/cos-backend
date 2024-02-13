@@ -1,25 +1,22 @@
 package com.cos.cercat.post.repository;
 
-import com.cos.cercat.post.domain.QRecommendTag;
+import com.cos.cercat.certificate.domain.QCertificate;
 import com.cos.cercat.post.domain.TipPost;
 import com.cos.cercat.global.util.PagingUtil;
 import com.cos.cercat.certificate.domain.Certificate;
-import com.cos.cercat.certificate.domain.QCertificate;
 import com.cos.cercat.post.dto.request.PostSearchCond;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
-import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static com.cos.cercat.post.domain.QRecommendTag.*;
+import static com.cos.cercat.post.domain.QRecommendTag.recommendTag;
 import static com.cos.cercat.post.domain.QTipPost.tipPost;
 import static com.cos.cercat.user.domain.QUser.user;
 

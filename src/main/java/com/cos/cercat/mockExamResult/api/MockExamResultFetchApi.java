@@ -2,6 +2,7 @@ package com.cos.cercat.mockExamResult.api;
 
 import com.cos.cercat.global.Response;
 import com.cos.cercat.mockExamResult.app.MockExamResultFetchService;
+import com.cos.cercat.mockExamResult.dto.request.ReportType;
 import com.cos.cercat.mockExamResult.dto.response.*;
 import com.cos.cercat.user.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -58,11 +59,12 @@ public class MockExamResultFetchApi {
         return Response.success(mockExamResultFetchService.getSubjectResultsAVG(certificateId, user.getId()));
     }
 
-    @GetMapping("/{certificateId}/mock-exam-results/weekly-reports")
-    @Operation(summary = "주간 성적 리포트 통계")
-    public Response<Report<List<DailyScoreAVG>>> getWeeklyReport(@PathVariable Long certificateId,
-                                                                 @AuthenticationPrincipal UserDTO user) {
-        return Response.success(mockExamResultFetchService.getWeeklyReport(certificateId, user.getId()));
+    @GetMapping("/{certificateId}/mock-exam-results/{reportType}/reports")
+    @Operation(summary = "성적 리포트 통계")
+    public Response<Report> getReport(@PathVariable Long certificateId,
+                                                            @PathVariable ReportType reportType,
+                                                            @AuthenticationPrincipal UserDTO user) {
+        return Response.success(mockExamResultFetchService.getReport(certificateId, reportType, user.getId()));
     }
 
     @GetMapping("{certificateId}/mock-exam-results/date")
