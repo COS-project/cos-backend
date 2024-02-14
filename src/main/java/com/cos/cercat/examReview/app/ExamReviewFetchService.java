@@ -54,7 +54,7 @@ public class ExamReviewFetchService {
     public boolean checkReviewDateAfterExamDate(Long certificateId, Long userId) {
         Certificate certificate = certificateService.getCertificate(certificateId);
         User user = userService.getUser(userId);
-        List<Certificate> certificates = interestCertificateService.getInterestCertificate(user).stream()
+        List<Certificate> certificates = interestCertificateService.getInterestCertificates(user).stream()
                 .map(InterestCertificate::getCertificate)
                 .toList();
         boolean interest = certificates.contains(certificate);

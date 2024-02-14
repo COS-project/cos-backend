@@ -19,7 +19,7 @@ public class InterestCertificateService {
         interestCertificateRepository.save(interestCertificate);
     }
 
-    public List<InterestCertificate> getInterestCertificate(User user) {
+    public List<InterestCertificate> getInterestCertificates(User user) {
         return interestCertificateRepository.findInterestCertificatesByUser(user);
     }
 

@@ -3,6 +3,7 @@ package com.cos.cercat.certificate.api;
 import com.cos.cercat.certificate.app.CertificateFetchService;
 import com.cos.cercat.certificate.dto.response.CertificateExamResponse;
 import com.cos.cercat.certificate.dto.response.CertificateResponse;
+import com.cos.cercat.certificate.dto.response.InterestCertificateResponse;
 import com.cos.cercat.global.Response;
 import com.cos.cercat.user.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,5 +35,11 @@ public class CertificateFetchApi {
     @Operation(summary = "자격증 시험 정보 조회")
     public Response<CertificateExamResponse> getCertificateExamDetail(@PathVariable Long certificateId) {
         return Response.success(certificateFetchService.getCertificateExam(certificateId));
+    }
+
+    @GetMapping("/interest-certificates")
+    @Operation(summary = "관심 자격증 조회")
+    public Response<List<InterestCertificateResponse>> getInterestCertificates(@AuthenticationPrincipal UserDTO user) {
+        return Response.success(certificateFetchService.getInterestCertificate(user.getId()));
     }
 }

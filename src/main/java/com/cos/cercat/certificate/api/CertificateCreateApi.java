@@ -39,10 +39,10 @@ public class CertificateCreateApi {
     }
 
     @PostMapping("/interest-certificates")
-    @Operation(summary = "흥미 자격증 리스트 생성")
+    @Operation(summary = "관심 자격증 리스트 생성")
     public Response<Void> createInterestCertificates(@RequestBody List<InterestCertificateCreateRequest> requests,
                                                      @AuthenticationPrincipal UserDTO user) {
         certificateCreateService.createInterestCertificates(requests, user.getId());
-        return Response.success("흥미 자격증 리스트 생성 성공");
+        return Response.success("관심 자격증 리스트 생성 성공");
     }
 }

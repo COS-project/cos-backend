@@ -4,7 +4,7 @@ import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.certificate.domain.CertificateExam;
 import com.cos.cercat.certificate.dto.response.CertificateExamResponse;
 import com.cos.cercat.certificate.dto.response.CertificateResponse;
-import com.cos.cercat.examReview.app.ExamReviewService;
+import com.cos.cercat.certificate.dto.response.InterestCertificateResponse;
 import com.cos.cercat.user.app.UserService;
 import com.cos.cercat.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +20,8 @@ public class CertificateFetchService {
 
     private final CertificateService certificateService;
     private final CertificateExamService certificateExamService;
+    private final InterestCertificateService interestCertificateService;
     private final UserService userService;
-    private final ExamReviewService examReviewService;
 
     /**
      * 자격증 ID를 통해 자격증 상세정보를 조회한다
@@ -47,4 +47,13 @@ public class CertificateFetchService {
                 .map(CertificateResponse::from)
                 .toList();
     }
+
+    public List<InterestCertificateResponse> getInterestCertificate(Long userId) {
+        User user = userService.getUser(userId);
+        return interestCertificateService.getInterestCertificates(user).stream()
+                .map(InterestCertificateResponse::from)
+                .toList();
+    }
+
+
 }
