@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  cercat-batch:
+    container_name: cercat-batch
+    image: ghcr.io/jiwonkkang/cercat-batch:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
+      - SPRING_DATABASE_HOST=${SPRING_DATABASE_HOST}
+      - SPRING_DATABASE_PORT=${SPRING_DATABASE_PORT}
+      - SPRING_DATABASE_USERNAME=${SPRING_DATABASE_USERNAME}
+      - SPRING_DATABASE_PASSWORD=${SPRING_DATABASE_PASSWORD}

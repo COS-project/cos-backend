@@ -34,7 +34,6 @@ public class PostFetchApi {
                                                             @PathVariable Long certificateId,
                                                             @PathVariable PostType postType,
                                                             PostSearchCond cond) {
-
         return Response.success(postFetchService.searchPosts(pageable, postType, certificateId, cond));
     }
 

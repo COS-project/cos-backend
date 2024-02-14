@@ -1,0 +1,66 @@
+version: "3.8"
+networks:
+  app-tier:
+    driver: bridge
+services:
+  cercat:
+    container_name: cercat
+    networks:
+      - app-tier
+    image: ghcr.io/jiwonkkang/cercat:latest
+    depends_on:
+      - redis
+      - kafka
+    environment:
+      - BUCKET_NAME=${BUCKET_NAME}
+      - GCP_PROJECT_ID=${GCP_PROJECT_ID}
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
+      - SPRING_DATABASE_HOST=${SPRING_DATABASE_HOST}
+      - SPRING_DATABASE_PORT=${SPRING_DATABASE_PORT}
+      - SPRING_DATABASE_USERNAME=${SPRING_DATABASE_USERNAME}
+      - SPRING_DATABASE_PASSWORD=${SPRING_DATABASE_PASSWORD}
+      - GCS_KEY=${GCS_KEY}
+      - KAKAO_API_KEY=${KAKAO_API_KEY}
+      - KAKAO_REDIRECT_URI=${KAKAO_REDIRECT_URI}
+      - CLIENT_SECRET=${CLIENT_SECRET}
+      - SECRET_KEY=${SECRET_KEY}
+    ports:
+      - "80:8080"
+    restart: always
+  redis:
+    container_name: cercat-redis
+    networks:
+      - app-tier
+    image: redis:latest
+    ports:
+      - "6379:6379"
+  zookeeper:
+    container_name: cercat-zookeeper
+    image: confluentinc/cp-zookeeper:latest
+    networks:
+      - app-tier
+    environment:
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_INIT_LIMIT: 5
+      ZOOKEEPER_SYNC_LIMIT: 2
+    ports:
+      - "22181:2181"
+  kafka:
+    container_name: cercat-kafka
+    image: confluentinc/cp-kafka:latest
+    networks:
+      - app-tier
+    depends_on:
+      - zookeeper
+    ports:
+      - "29092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
