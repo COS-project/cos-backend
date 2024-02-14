@@ -3,9 +3,18 @@ package com.cos.cercat.mockExamResult.dto.response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
-@Getter
+
 @AllArgsConstructor
 public class ScoreAverage {
     private final double scoreAverage;
+
+    public double getScoreAverage() {
+        // 소수점 2자리까지 반올림
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+        return Double.parseDouble(df.format(scoreAverage));
+    }
 }

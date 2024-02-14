@@ -2,6 +2,7 @@ package com.cos.cercat.mockExamResult.repository;
 
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.mockExamResult.dto.response.DailyScoreAverage;
+import com.cos.cercat.mockExamResult.dto.response.MonthlyScoreAverage;
 import com.cos.cercat.mockExamResult.dto.response.WeeklyScoreAverage;
 import com.cos.cercat.user.domain.User;
 
@@ -14,5 +15,6 @@ public interface MockExamResultRepositoryCustom {
 
     List<WeeklyScoreAverage> getWeeklyReport(Certificate certificate, User user, LocalDateTime startDateTime, LocalDateTime endDateTime);
 
+    List<MonthlyScoreAverage> getYearlyReport(Certificate certificate, User user, LocalDateTime startDateTime, LocalDateTime endDateTime);
 
 }

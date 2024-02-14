@@ -4,13 +4,16 @@ import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.global.exception.CustomException;
 import com.cos.cercat.global.exception.ErrorCode;
 import com.cos.cercat.mockExam.domain.MockExam;
+import com.cos.cercat.mockExam.util.DateUtils;
 import com.cos.cercat.mockExamResult.domain.MockExamResult;
 import com.cos.cercat.mockExamResult.dto.response.DailyScoreAverage;
+import com.cos.cercat.mockExamResult.dto.response.MonthlyScoreAverage;
 import com.cos.cercat.mockExamResult.dto.response.WeeklyScoreAverage;
 import com.cos.cercat.user.domain.User;
 import com.cos.cercat.mockExamResult.repository.MockExamResultRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
@@ -71,35 +74,19 @@ public class MockExamResultService {
     }
 
     public List<DailyScoreAverage> getWeeklyReport(Certificate certificate, User user) {
-        LocalDateTime thisMonday = getThisMonday(LocalDateTime.now());
-        LocalDateTime thisSunday = getThisSunday(LocalDateTime.now());
-
-        return mockExamResultRepository.getDailyReport(certificate, user, thisMonday, thisSunday);
+        return mockExamResultRepository.getDailyReport(certificate, user, DateUtils.getThisMonday(), DateUtils.getThisSunday());
     }
 
     public List<WeeklyScoreAverage> getMonthlyReport(Certificate certificate, User user) {
-        LocalDateTime firstDayOfMonth = getFirstDayOfMonth(LocalDateTime.now());
-        LocalDateTime lastDayOfMonth = getLastDayOfMonth(LocalDateTime.now());
-
-        return mockExamResultRepository.getWeeklyReport(certificate, user, firstDayOfMonth, lastDayOfMonth).stream()
+        return mockExamResultRepository.getWeeklyReport(certificate, user,  DateUtils.getFirstDayOfMonth(), DateUtils.getLastDayOfMonth()).stream()
                 .sorted(Comparator.comparing(WeeklyScoreAverage::getWeekOfMonth))
                 .toList();
     }
 
-    private LocalDateTime getThisSunday(LocalDateTime now) {
-        return now.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY)).toLocalDate().plusDays(1).atStartOfDay();
-    }
-
-    private LocalDateTime getThisMonday(LocalDateTime now) {
-        return now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)).toLocalDate().atStartOfDay();
-    }
-
-    private LocalDateTime getLastDayOfMonth(LocalDateTime now) {
-        return now.with(TemporalAdjusters.lastDayOfMonth()).toLocalDate().plusDays(1).atStartOfDay();
-    }
-
-    private LocalDateTime getFirstDayOfMonth(LocalDateTime now) {
-        return now.with(TemporalAdjusters.firstDayOfMonth()).toLocalDate().atStartOfDay();
+    public List<MonthlyScoreAverage> getYearlyReport(Certificate certificate, User user) {
+        return mockExamResultRepository.getYearlyReport(certificate, user, DateUtils.getFirstDayOfYear(), DateUtils.getLastDayOfYear()).stream()
+                .sorted(Comparator.comparing(MonthlyScoreAverage::getMonth))
+                .toList();
     }
 
 

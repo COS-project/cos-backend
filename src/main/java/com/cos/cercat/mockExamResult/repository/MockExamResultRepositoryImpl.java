@@ -2,10 +2,7 @@ package com.cos.cercat.mockExamResult.repository;
 
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.certificate.domain.QCertificate;
-import com.cos.cercat.mockExamResult.dto.response.DailyScoreAverage;
-import com.cos.cercat.mockExamResult.dto.response.QDailyScoreAverage;
-import com.cos.cercat.mockExamResult.dto.response.QWeeklyScoreAverage;
-import com.cos.cercat.mockExamResult.dto.response.WeeklyScoreAverage;
+import com.cos.cercat.mockExamResult.dto.response.*;
 import com.cos.cercat.user.domain.QUser;
 import com.cos.cercat.user.domain.User;
 import com.querydsl.core.types.dsl.*;
@@ -68,6 +65,26 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepositoryCus
                         betweenStartDateAndEndDate(startDateTime, endDateTime)
                 )
                 .groupBy(weekOfMonth)
+                .fetch();
+    }
+
+    @Override
+    public List<MonthlyScoreAverage> getYearlyReport(Certificate certificate, User user, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+
+        return queryFactory.select(
+                new QMonthlyScoreAverage(
+                        mockExamResult.totalScore.avg(),
+                        mockExamResult.createdAt.month())
+                )
+                .from(mockExamResult)
+                .leftJoin(mockExamResult.mockExam.certificate, QCertificate.certificate)
+                .leftJoin(mockExamResult.user, QUser.user)
+                .where(
+                        QCertificate.certificate.eq(certificate),
+                        QUser.user.eq(user),
+                        betweenStartDateAndEndDate(startDateTime, endDateTime)
+                )
+                .groupBy(mockExamResult.createdAt.month())
                 .fetch();
     }
 

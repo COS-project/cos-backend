@@ -13,10 +13,4 @@ public class WeeklyScoreAverage extends ScoreAverage {
         this.weekOfMonth = weekOfMonth;
     }
 
-    public static WeeklyScoreAverage of(double scoreAverage, int weekOfMonth) {
-        return new WeeklyScoreAverage(
-                scoreAverage,
-                weekOfMonth
-        );
-    }
 }
