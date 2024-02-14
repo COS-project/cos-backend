@@ -4,11 +4,14 @@ import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.user.domain.User;
 import com.cos.cercat.mockExam.domain.MockExam;
 import com.cos.cercat.mockExamResult.domain.MockExamResult;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -42,13 +45,43 @@ public interface MockExamResultRepository extends JpaRepository<MockExamResult, 
 
     @Query("""
             SELECT mr from MockExamResult mr
-            JOIN mr.mockExam.certificate c
+            JOIN FETCH mr.mockExam me
+            LEFT JOIN me.certificate c
             WHERE FUNCTION('DATE_FORMAT', mr.createdAt, '%Y-%m-%d') = FUNCTION('DATE_FORMAT', :date, '%Y-%m-%d')
             AND mr.user.id = :userId
             AND c.id = :certificateId
             """)
-    List<MockExamResult> findMockExamResultsByDate(@Param("certificateId") Long certificateId,
-                                                   @Param("userId") Long userId,
-                                                   Date date);
+    Slice<MockExamResult> findMockExamResultsByDate(@Param("certificateId") Long certificateId,
+                                                    @Param("userId") Long userId,
+                                                    Date date,
+                                                    Pageable pageable);
+
+    @Query("""
+            SELECT mr from MockExamResult mr
+            JOIN FETCH mr.mockExam me
+            LEFT JOIN me.certificate c
+            WHERE FUNCTION('WEEK', mr.createdAt) - FUNCTION('WEEK', :firstDayOfMonth) + 1 = :weekOfDay
+            AND FUNCTION('MONTH', mr.createdAt) = FUNCTION('MONTH', CURRENT_DATE)
+            AND mr.user.id = :userId
+            AND c.id = :certificateId
+            """)
+    Slice<MockExamResult> findMockExamResultsByWeekOfMonth(@Param("certificateId") Long certificateId,
+                                                           @Param("userId") Long userId,
+                                                           LocalDateTime firstDayOfMonth,
+                                                           int weekOfDay,
+                                                           Pageable pageable);
+
+    @Query("""
+            SELECT mr from MockExamResult mr
+            JOIN FETCH mr.mockExam me
+            LEFT JOIN me.certificate c
+            WHERE FUNCTION('MONTH', mr.createdAt) = :month
+            AND mr.user.id = :userId
+            AND c.id = :certificateId
+            """)
+    Slice<MockExamResult> findMockExamResultsByMonth(@Param("certificateId") Long certificateId,
+                                                    @Param("userId") Long userId,
+                                                    int month,
+                                                    Pageable pageable);
 
 }

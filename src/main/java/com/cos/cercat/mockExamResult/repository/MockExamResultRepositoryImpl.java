@@ -2,6 +2,7 @@ package com.cos.cercat.mockExamResult.repository;
 
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.certificate.domain.QCertificate;
+import com.cos.cercat.mockExam.util.DateUtils;
 import com.cos.cercat.mockExamResult.dto.response.*;
 import com.cos.cercat.user.domain.QUser;
 import com.cos.cercat.user.domain.User;
@@ -24,7 +25,10 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepositoryCus
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<DailyScoreAverage> getDailyReport(Certificate certificate, User user, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    public List<DailyScoreAverage> getDailyReport(Certificate certificate, User user) {
+
+        LocalDateTime thisMonday = DateUtils.getThisMonday();
+        LocalDateTime thisSunday = DateUtils.getThisSunday();
 
         DateTemplate<Date> date = Expressions.dateTemplate(Date.class, "DATE({0})", mockExamResult.createdAt);
 
@@ -40,17 +44,20 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepositoryCus
                 .where(
                         QCertificate.certificate.eq(certificate),
                         QUser.user.eq(user),
-                        betweenStartDateAndEndDate(startDateTime, endDateTime)
+                        betweenStartDateAndEndDate(thisMonday, thisSunday)
                 )
                 .groupBy(date, mockExamResult.createdAt.dayOfWeek())
                 .fetch();
     }
 
     @Override
-    public List<WeeklyScoreAverage> getWeeklyReport(Certificate certificate, User user, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    public List<WeeklyScoreAverage> getWeeklyReport(Certificate certificate, User user) {
+
+        LocalDateTime firstDayOfMonth = DateUtils.getFirstDayOfMonth();
+        LocalDateTime lastDayOfMonth = DateUtils.getLastDayOfMonth();
 
         NumberTemplate<Integer> weekOfMonth = Expressions.numberTemplate(Integer.class,
-                "FUNCTION('WEEK', {0}) - FUNCTION('WEEK', {1}) + 1", mockExamResult.createdAt, startDateTime);
+                "FUNCTION('WEEK', {0}) - FUNCTION('WEEK', {1}) + 1", mockExamResult.createdAt, firstDayOfMonth);
 
         return queryFactory.select(
                 new QWeeklyScoreAverage(
@@ -62,14 +69,17 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepositoryCus
                 .where(
                         QCertificate.certificate.eq(certificate),
                         QUser.user.eq(user),
-                        betweenStartDateAndEndDate(startDateTime, endDateTime)
+                        betweenStartDateAndEndDate(firstDayOfMonth, lastDayOfMonth)
                 )
                 .groupBy(weekOfMonth)
                 .fetch();
     }
 
     @Override
-    public List<MonthlyScoreAverage> getYearlyReport(Certificate certificate, User user, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    public List<MonthlyScoreAverage> getYearlyReport(Certificate certificate, User user) {
+
+        LocalDateTime firstDayOfYear = DateUtils.getFirstDayOfYear();
+        LocalDateTime lastDayOfYear = DateUtils.getLastDayOfYear();
 
         return queryFactory.select(
                 new QMonthlyScoreAverage(
@@ -82,7 +92,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepositoryCus
                 .where(
                         QCertificate.certificate.eq(certificate),
                         QUser.user.eq(user),
-                        betweenStartDateAndEndDate(startDateTime, endDateTime)
+                        betweenStartDateAndEndDate(firstDayOfYear, lastDayOfYear)
                 )
                 .groupBy(mockExamResult.createdAt.month())
                 .fetch();

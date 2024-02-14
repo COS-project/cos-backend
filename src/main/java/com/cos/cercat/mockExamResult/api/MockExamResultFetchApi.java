@@ -2,6 +2,8 @@ package com.cos.cercat.mockExamResult.api;
 
 import com.cos.cercat.global.Response;
 import com.cos.cercat.mockExamResult.app.MockExamResultFetchService;
+import com.cos.cercat.mockExamResult.dto.request.DateQueryParam;
+import com.cos.cercat.mockExamResult.dto.request.DateType;
 import com.cos.cercat.mockExamResult.dto.request.ReportType;
 import com.cos.cercat.mockExamResult.dto.response.*;
 import com.cos.cercat.user.dto.UserDTO;
@@ -10,13 +12,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -67,11 +68,13 @@ public class MockExamResultFetchApi {
         return Response.success(mockExamResultFetchService.getReport(certificateId, reportType, user.getId()));
     }
 
-    @GetMapping("{certificateId}/mock-exam-results/date")
-    @Operation(summary = "해당하는 날짜의 성적 리포트 조회")
-    public Response<List<MockExamResultResponse>> getMockExamResultsByDate(@PathVariable Long certificateId,
-                                                                                       @AuthenticationPrincipal UserDTO user,
-                                                                                       @DateTimeFormat(pattern="yyyy-MM-dd") Date date) {
-        return Response.success(mockExamResultFetchService.getMockExamResultsByDate(certificateId, user.getId(), date));
+    @GetMapping("{certificateId}/mock-exam-results/{dateType}")
+    @Operation(summary = "날짜/주차/월 로 성적 리포트 조회")
+    public Response<Slice<MockExamResultResponse>> getMockExamResultsByDate(@PathVariable Long certificateId,
+                                                                            @PathVariable DateType dateType,
+                                                                            DateQueryParam dateQueryParam,
+                                                                            @AuthenticationPrincipal UserDTO user,
+                                                                            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        return Response.success(mockExamResultFetchService.getMockExamResultsByDate(certificateId, user.getId(), dateType, dateQueryParam, pageable));
     }
 }

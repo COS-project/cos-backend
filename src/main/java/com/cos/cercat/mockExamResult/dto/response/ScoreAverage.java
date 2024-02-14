@@ -1,7 +1,6 @@
 package com.cos.cercat.mockExamResult.dto.response;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;

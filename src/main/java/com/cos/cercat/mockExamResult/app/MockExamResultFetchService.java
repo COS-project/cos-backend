@@ -5,6 +5,8 @@ import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.mockExam.app.MockExamService;
 import com.cos.cercat.mockExam.domain.MockExam;
 import com.cos.cercat.mockExamResult.domain.MockExamResult;
+import com.cos.cercat.mockExamResult.dto.request.DateQueryParam;
+import com.cos.cercat.mockExamResult.dto.request.DateType;
 import com.cos.cercat.mockExamResult.dto.request.ReportType;
 import com.cos.cercat.mockExamResult.dto.response.*;
 import com.cos.cercat.user.app.UserService;
@@ -15,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -101,13 +102,22 @@ public class MockExamResultFetchService {
         };
     }
 
-    public List<MockExamResultResponse> getMockExamResultsByDate(Long certificateId, Long userId, Date date) {
+    public Slice<MockExamResultResponse> getMockExamResultsByDate(Long certificateId,
+                                                                  Long userId,
+                                                                  DateType dateType,
+                                                                  DateQueryParam dateQueryParam,
+                                                                  Pageable pageable) {
         Certificate certificate = certificateService.getCertificate(certificateId);
         User user = userService.getUser(userId);
 
-        return mockExamResultService.getMockExamResultsByDate(certificate, user, date).stream()
-                .map(MockExamResultResponse::from)
-                .toList();
+        return switch (dateType) {
+            case DATE -> mockExamResultService.getMockExamResultsByDate(certificate, user, dateQueryParam.date(), pageable)
+                    .map(MockExamResultResponse::from);
+            case WEEK_OF_MONTH -> mockExamResultService.getMockExamResultsByWeekOfMonth(certificate, user, dateQueryParam.weekOfMonth(), pageable)
+                    .map(MockExamResultResponse::from);
+            case MONTH -> mockExamResultService.getMockExamResultsByMonth(certificate, user, dateQueryParam.month(), pageable)
+                    .map(MockExamResultResponse::from);
+        };
     }
 
 }

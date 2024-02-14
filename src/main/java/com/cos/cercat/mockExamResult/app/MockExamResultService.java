@@ -13,12 +13,10 @@ import com.cos.cercat.user.domain.User;
 import com.cos.cercat.mockExamResult.repository.MockExamResultRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cglib.core.Local;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
-import java.time.DayOfWeek;
-import java.time.LocalDateTime;
-import java.time.temporal.TemporalAdjusters;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -69,25 +67,56 @@ public class MockExamResultService {
         return Objects.requireNonNullElse(countTodayMockExamResults, 0);
     }
 
-    public List<MockExamResult> getMockExamResultsByDate(Certificate certificate, User user, Date date) {
-        return mockExamResultRepository.findMockExamResultsByDate(certificate.getId(), user.getId(), date);
-    }
-
     public List<DailyScoreAverage> getWeeklyReport(Certificate certificate, User user) {
-        return mockExamResultRepository.getDailyReport(certificate, user, DateUtils.getThisMonday(), DateUtils.getThisSunday());
+        return mockExamResultRepository.getDailyReport(certificate, user);
     }
 
     public List<WeeklyScoreAverage> getMonthlyReport(Certificate certificate, User user) {
-        return mockExamResultRepository.getWeeklyReport(certificate, user,  DateUtils.getFirstDayOfMonth(), DateUtils.getLastDayOfMonth()).stream()
+        return mockExamResultRepository.getWeeklyReport(certificate, user).stream()
                 .sorted(Comparator.comparing(WeeklyScoreAverage::getWeekOfMonth))
                 .toList();
     }
 
     public List<MonthlyScoreAverage> getYearlyReport(Certificate certificate, User user) {
-        return mockExamResultRepository.getYearlyReport(certificate, user, DateUtils.getFirstDayOfYear(), DateUtils.getLastDayOfYear()).stream()
+        return mockExamResultRepository.getYearlyReport(certificate, user).stream()
                 .sorted(Comparator.comparing(MonthlyScoreAverage::getMonth))
                 .toList();
     }
 
+    public Slice<MockExamResult> getMockExamResultsByDate(Certificate certificate,
+                                                          User user,
+                                                          Date date,
+                                                          Pageable pageable) {
+        return mockExamResultRepository.findMockExamResultsByDate(
+                certificate.getId(),
+                user.getId(),
+                date,
+                pageable
+        );
+    }
 
+    public Slice<MockExamResult> getMockExamResultsByWeekOfMonth(Certificate certificate,
+                                                                 User user,
+                                                                 int weekOfMonth,
+                                                                 Pageable pageable) {
+        return mockExamResultRepository.findMockExamResultsByWeekOfMonth(
+                certificate.getId(),
+                user.getId(),
+                DateUtils.getFirstDayOfMonth(),
+                weekOfMonth,
+                pageable
+        );
+    }
+
+    public Slice<MockExamResult> getMockExamResultsByMonth(Certificate certificate,
+                                                           User user,
+                                                           int month,
+                                                           Pageable pageable) {
+        return mockExamResultRepository.findMockExamResultsByMonth(
+                certificate.getId(),
+                user.getId(),
+                month,
+                pageable
+        );
+    }
 }

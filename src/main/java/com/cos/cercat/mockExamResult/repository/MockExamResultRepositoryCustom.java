@@ -11,10 +11,10 @@ import java.util.List;
 
 public interface MockExamResultRepositoryCustom {
 
-    List<DailyScoreAverage> getDailyReport(Certificate certificate, User user,  LocalDateTime startDateTime, LocalDateTime endDateTime);
+    List<DailyScoreAverage> getDailyReport(Certificate certificate, User user);
 
-    List<WeeklyScoreAverage> getWeeklyReport(Certificate certificate, User user, LocalDateTime startDateTime, LocalDateTime endDateTime);
+    List<WeeklyScoreAverage> getWeeklyReport(Certificate certificate, User user);
 
-    List<MonthlyScoreAverage> getYearlyReport(Certificate certificate, User user, LocalDateTime startDateTime, LocalDateTime endDateTime);
+    List<MonthlyScoreAverage> getYearlyReport(Certificate certificate, User user);
 
 }
