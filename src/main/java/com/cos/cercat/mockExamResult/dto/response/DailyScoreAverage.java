@@ -24,7 +24,6 @@ public class DailyScoreAverage extends ScoreAverage {
         super(scoreAverage);
         this.dayOfWeek = DayOfWeek.of((dayOfWeek > 1) ? dayOfWeek - 1 : 7);
         this.date = date;
-
     }
 
     public static DailyScoreAverage of(double scoreAverage, DayOfWeek dayOfWeek, Date date) {

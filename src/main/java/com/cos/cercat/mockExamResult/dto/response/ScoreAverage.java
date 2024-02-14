@@ -7,7 +7,5 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class ScoreAverage {
-
     private final double scoreAverage;
-
 }

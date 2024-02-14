@@ -6,6 +6,7 @@ import com.cos.cercat.global.exception.ErrorCode;
 import com.cos.cercat.mockExam.domain.MockExam;
 import com.cos.cercat.mockExamResult.domain.MockExamResult;
 import com.cos.cercat.mockExamResult.dto.response.DailyScoreAverage;
+import com.cos.cercat.mockExamResult.dto.response.WeeklyScoreAverage;
 import com.cos.cercat.user.domain.User;
 import com.cos.cercat.mockExamResult.repository.MockExamResultRepository;
 import lombok.RequiredArgsConstructor;
@@ -70,12 +71,35 @@ public class MockExamResultService {
     }
 
     public List<DailyScoreAverage> getWeeklyReport(Certificate certificate, User user) {
-        LocalDateTime now = LocalDateTime.now();
-        // 이번 주의 월요일 구하기
-        LocalDateTime thisMonday = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)).toLocalDate().atStartOfDay();
-        // 이번 주의 일요일 구하기
-        LocalDateTime thisSunday = now.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY)).toLocalDate().plusDays(1).atStartOfDay();
-        return mockExamResultRepository.getDailyReport(user, certificate, thisMonday, thisSunday);
+        LocalDateTime thisMonday = getThisMonday(LocalDateTime.now());
+        LocalDateTime thisSunday = getThisSunday(LocalDateTime.now());
+
+        return mockExamResultRepository.getDailyReport(certificate, user, thisMonday, thisSunday);
+    }
+
+    public List<WeeklyScoreAverage> getMonthlyReport(Certificate certificate, User user) {
+        LocalDateTime firstDayOfMonth = getFirstDayOfMonth(LocalDateTime.now());
+        LocalDateTime lastDayOfMonth = getLastDayOfMonth(LocalDateTime.now());
+
+        return mockExamResultRepository.getWeeklyReport(certificate, user, firstDayOfMonth, lastDayOfMonth).stream()
+                .sorted(Comparator.comparing(WeeklyScoreAverage::getWeekOfMonth))
+                .toList();
+    }
+
+    private LocalDateTime getThisSunday(LocalDateTime now) {
+        return now.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY)).toLocalDate().plusDays(1).atStartOfDay();
+    }
+
+    private LocalDateTime getThisMonday(LocalDateTime now) {
+        return now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)).toLocalDate().atStartOfDay();
+    }
+
+    private LocalDateTime getLastDayOfMonth(LocalDateTime now) {
+        return now.with(TemporalAdjusters.lastDayOfMonth()).toLocalDate().plusDays(1).atStartOfDay();
+    }
+
+    private LocalDateTime getFirstDayOfMonth(LocalDateTime now) {
+        return now.with(TemporalAdjusters.firstDayOfMonth()).toLocalDate().atStartOfDay();
     }
 
 

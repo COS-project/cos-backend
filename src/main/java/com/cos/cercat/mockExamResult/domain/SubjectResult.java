@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 
 @Entity
@@ -19,9 +21,10 @@ public class SubjectResult {
     @Column(name = "subject_result_id")
     private Long id;
 
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mock_exam_result_id")
-    @Setter
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private MockExamResult mockExamResult;
 
     @ManyToOne(fetch = FetchType.LAZY)

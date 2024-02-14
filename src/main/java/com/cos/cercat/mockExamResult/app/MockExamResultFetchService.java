@@ -96,7 +96,7 @@ public class MockExamResultFetchService {
 
         return switch (reportType) {
             case WEEK -> Report.from(mockExamResultService.getWeeklyReport(certificate, user));
-            case MONTH -> null;
+            case MONTH -> Report.from(mockExamResultService.getMonthlyReport(certificate,user));
             case YEAR -> null;
         };
     }

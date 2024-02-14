@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
-@Tag(name = "모의고사 결과 생성 API")
+@Tag(name = "성적 리포트 생성 API")
 public class MockExamResultCreateApi {
 
     private final MockExamResultCreateService mockExamResultCreateService;
 
     @PostMapping("/mock-exams/{mockExamId}/results")
-    @Operation(summary = "모의고사 결과 생성 및 반환")
+    @Operation(summary = "성적 리포트 생성 및 반환")
     public Response<MockExamResultWithSubjectsResponse> createMockExamResult(@PathVariable Long mockExamId,
                                                                              @RequestBody MockExamResultRequest request,
                                                                              @AuthenticationPrincipal UserDTO user) {

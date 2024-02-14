@@ -24,14 +24,14 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
-@Tag(name = "모의고사 결과 조회 API")
+@Tag(name = "성적 리포트 조회 API")
 public class MockExamResultFetchApi {
 
 
     private final MockExamResultFetchService mockExamResultFetchService;
 
     @GetMapping("/mock-exams/{mockExamId}")
-    @Operation(summary = "모의고사 결과 리스트 조회")
+    @Operation(summary = "성적 리포트 리스트 조회")
     public Response<List<MockExamResultWithSubjectsResponse>> getMockExamResults(@PathVariable Long mockExamId,
                                                                                  @AuthenticationPrincipal UserDTO user) {
         return Response.success(mockExamResultFetchService.getMockExamResults(mockExamId, user.getId()));
@@ -68,7 +68,7 @@ public class MockExamResultFetchApi {
     }
 
     @GetMapping("{certificateId}/mock-exam-results/date")
-    @Operation(summary = "해당하는 날짜의 모의고사 성적 조회")
+    @Operation(summary = "해당하는 날짜의 성적 리포트 조회")
     public Response<List<MockExamResultResponse>> getMockExamResultsByDate(@PathVariable Long certificateId,
                                                                                        @AuthenticationPrincipal UserDTO user,
                                                                                        @DateTimeFormat(pattern="yyyy-MM-dd") Date date) {

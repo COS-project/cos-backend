@@ -58,7 +58,7 @@ public class SwaggerConfig {
     @Bean
     GroupedOpenApi mockExamResult() {
         return GroupedOpenApi.builder()
-                .group("모의고사 결과")
+                .group("성적 리포트")
                 .packagesToScan("com.cos.cercat.mockExamResult.api")
                 .build();
     }
