@@ -4,6 +4,7 @@ import com.cos.cercat.certificate.app.CertificateUpdateService;
 import com.cos.cercat.certificate.dto.request.InterestCertificateUpdateRequest;
 import com.cos.cercat.global.Response;
 import com.cos.cercat.user.dto.UserDTO;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,10 +24,11 @@ public class CertificateUpdateApi {
     private final CertificateUpdateService certificateUpdateService;
 
     @PutMapping("/interest-certificates")
+    @Operation(summary = "관심 자격증 수정")
     public Response<Void> updateInterestCertificates(@RequestBody List<InterestCertificateUpdateRequest> requests,
                                                      @AuthenticationPrincipal UserDTO user) {
         certificateUpdateService.updateInterestCertificates(requests, user.getId());
-        return Response.success("흥미 자격증 수정 성공");
+        return Response.success("관심 자격증 수정 성공");
     }
 
 }
