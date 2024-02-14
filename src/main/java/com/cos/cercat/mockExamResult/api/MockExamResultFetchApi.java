@@ -63,9 +63,10 @@ public class MockExamResultFetchApi {
     @GetMapping("/{certificateId}/mock-exam-results/{reportType}/reports")
     @Operation(summary = "성적 리포트 통계")
     public Response<Report> getReport(@PathVariable Long certificateId,
-                                                            @PathVariable ReportType reportType,
-                                                            @AuthenticationPrincipal UserDTO user) {
-        return Response.success(mockExamResultFetchService.getReport(certificateId, reportType, user.getId()));
+                                      @PathVariable ReportType reportType,
+                                      DateQueryParam dateQueryParam,
+                                      @AuthenticationPrincipal UserDTO user) {
+        return Response.success(mockExamResultFetchService.getReport(certificateId, reportType, dateQueryParam, user.getId()));
     }
 
     @GetMapping("{certificateId}/mock-exam-results/{dateType}")

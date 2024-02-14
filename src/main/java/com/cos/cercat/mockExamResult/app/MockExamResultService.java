@@ -6,6 +6,7 @@ import com.cos.cercat.global.exception.ErrorCode;
 import com.cos.cercat.mockExam.domain.MockExam;
 import com.cos.cercat.mockExam.util.DateUtils;
 import com.cos.cercat.mockExamResult.domain.MockExamResult;
+import com.cos.cercat.mockExamResult.dto.request.DateQueryParam;
 import com.cos.cercat.mockExamResult.dto.response.DailyScoreAverage;
 import com.cos.cercat.mockExamResult.dto.response.MonthlyScoreAverage;
 import com.cos.cercat.mockExamResult.dto.response.WeeklyScoreAverage;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -67,18 +69,18 @@ public class MockExamResultService {
         return Objects.requireNonNullElse(countTodayMockExamResults, 0);
     }
 
-    public List<DailyScoreAverage> getWeeklyReport(Certificate certificate, User user) {
-        return mockExamResultRepository.getDailyReport(certificate, user);
+    public List<DailyScoreAverage> getWeeklyReport(Certificate certificate, User user, DateQueryParam dateQueryParam) {
+        return mockExamResultRepository.getDailyReport(certificate, user, dateQueryParam);
     }
 
-    public List<WeeklyScoreAverage> getMonthlyReport(Certificate certificate, User user) {
-        return mockExamResultRepository.getWeeklyReport(certificate, user).stream()
+    public List<WeeklyScoreAverage> getMonthlyReport(Certificate certificate, User user, DateQueryParam dateQueryParam) {
+        return mockExamResultRepository.getWeeklyReport(certificate, user, dateQueryParam).stream()
                 .sorted(Comparator.comparing(WeeklyScoreAverage::getWeekOfMonth))
                 .toList();
     }
 
-    public List<MonthlyScoreAverage> getYearlyReport(Certificate certificate, User user) {
-        return mockExamResultRepository.getYearlyReport(certificate, user).stream()
+    public List<MonthlyScoreAverage> getYearlyReport(Certificate certificate, User user, DateQueryParam dateQueryParam) {
+        return mockExamResultRepository.getYearlyReport(certificate, user, dateQueryParam).stream()
                 .sorted(Comparator.comparing(MonthlyScoreAverage::getMonth))
                 .toList();
     }
@@ -99,10 +101,11 @@ public class MockExamResultService {
                                                                  User user,
                                                                  int weekOfMonth,
                                                                  Pageable pageable) {
+
         return mockExamResultRepository.findMockExamResultsByWeekOfMonth(
                 certificate.getId(),
                 user.getId(),
-                DateUtils.getFirstDayOfMonth(),
+                DateUtils.getFirstDayOfMonth(LocalDateTime.now().toLocalDate()),
                 weekOfMonth,
                 pageable
         );

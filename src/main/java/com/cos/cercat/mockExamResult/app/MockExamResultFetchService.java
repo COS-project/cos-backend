@@ -91,14 +91,14 @@ public class MockExamResultFetchService {
                 .toList();
     }
 
-    public Report getReport(Long certificateId, ReportType reportType, Long userId) {
+    public Report getReport(Long certificateId, ReportType reportType, DateQueryParam dateQueryParam, Long userId) {
         Certificate certificate = certificateService.getCertificate(certificateId);
         User user = userService.getUser(userId);
 
         return switch (reportType) {
-            case WEEK -> Report.from(mockExamResultService.getWeeklyReport(certificate, user));
-            case MONTH -> Report.from(mockExamResultService.getMonthlyReport(certificate,user));
-            case YEAR -> Report.from(mockExamResultService.getYearlyReport(certificate, user));
+            case WEEK -> Report.from(mockExamResultService.getWeeklyReport(certificate, user, dateQueryParam));
+            case MONTH -> Report.from(mockExamResultService.getMonthlyReport(certificate, user, dateQueryParam));
+            case YEAR -> Report.from(mockExamResultService.getYearlyReport(certificate, user, dateQueryParam));
         };
     }
 

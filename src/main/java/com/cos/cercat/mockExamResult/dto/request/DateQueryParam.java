@@ -5,8 +5,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 public record DateQueryParam(
-        @DateTimeFormat(pattern="yyyy-MM-dd") Date date,
+        Integer year,
+        Integer month,
         Integer weekOfMonth,
-        Integer month
+        @DateTimeFormat(pattern="yyyy-MM-dd") Date date
 ) {
 }
