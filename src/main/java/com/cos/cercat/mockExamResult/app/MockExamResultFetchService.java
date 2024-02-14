@@ -5,7 +5,7 @@ import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.mockExam.app.MockExamService;
 import com.cos.cercat.mockExam.domain.MockExam;
 import com.cos.cercat.mockExamResult.domain.MockExamResult;
-import com.cos.cercat.mockExamResult.dto.request.DateQueryParam;
+import com.cos.cercat.mockExamResult.dto.request.DateCond;
 import com.cos.cercat.mockExamResult.dto.request.DateType;
 import com.cos.cercat.mockExamResult.dto.request.ReportType;
 import com.cos.cercat.mockExamResult.dto.response.*;
@@ -91,31 +91,31 @@ public class MockExamResultFetchService {
                 .toList();
     }
 
-    public Report getReport(Long certificateId, ReportType reportType, DateQueryParam dateQueryParam, Long userId) {
+    public Report getReport(Long certificateId, ReportType reportType, DateCond dateCond, Long userId) {
         Certificate certificate = certificateService.getCertificate(certificateId);
         User user = userService.getUser(userId);
 
         return switch (reportType) {
-            case WEEK -> Report.from(mockExamResultService.getWeeklyReport(certificate, user, dateQueryParam));
-            case MONTH -> Report.from(mockExamResultService.getMonthlyReport(certificate, user, dateQueryParam));
-            case YEAR -> Report.from(mockExamResultService.getYearlyReport(certificate, user, dateQueryParam));
+            case WEEK -> Report.from(mockExamResultService.getWeeklyReport(certificate, user, dateCond));
+            case MONTH -> Report.from(mockExamResultService.getMonthlyReport(certificate, user, dateCond));
+            case YEAR -> Report.from(mockExamResultService.getYearlyReport(certificate, user, dateCond));
         };
     }
 
     public Slice<MockExamResultResponse> getMockExamResultsByDate(Long certificateId,
                                                                   Long userId,
                                                                   DateType dateType,
-                                                                  DateQueryParam dateQueryParam,
+                                                                  DateCond dateCond,
                                                                   Pageable pageable) {
         Certificate certificate = certificateService.getCertificate(certificateId);
         User user = userService.getUser(userId);
 
         return switch (dateType) {
-            case DATE -> mockExamResultService.getMockExamResultsByDate(certificate, user, dateQueryParam.date(), pageable)
+            case DATE -> mockExamResultService.getMockExamResultsByDate(certificate, user, dateCond.date(), pageable)
                     .map(MockExamResultResponse::from);
-            case WEEK_OF_MONTH -> mockExamResultService.getMockExamResultsByWeekOfMonth(certificate, user, dateQueryParam.weekOfMonth(), pageable)
+            case WEEK_OF_MONTH -> mockExamResultService.getMockExamResultsByWeekOfMonth(certificate, user, dateCond.weekOfMonth(), pageable)
                     .map(MockExamResultResponse::from);
-            case MONTH -> mockExamResultService.getMockExamResultsByMonth(certificate, user, dateQueryParam.month(), pageable)
+            case MONTH -> mockExamResultService.getMockExamResultsByMonth(certificate, user, dateCond.month(), pageable)
                     .map(MockExamResultResponse::from);
         };
     }

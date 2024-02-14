@@ -6,7 +6,7 @@ import com.cos.cercat.global.exception.ErrorCode;
 import com.cos.cercat.mockExam.domain.MockExam;
 import com.cos.cercat.mockExam.util.DateUtils;
 import com.cos.cercat.mockExamResult.domain.MockExamResult;
-import com.cos.cercat.mockExamResult.dto.request.DateQueryParam;
+import com.cos.cercat.mockExamResult.dto.request.DateCond;
 import com.cos.cercat.mockExamResult.dto.response.DailyScoreAverage;
 import com.cos.cercat.mockExamResult.dto.response.MonthlyScoreAverage;
 import com.cos.cercat.mockExamResult.dto.response.WeeklyScoreAverage;
@@ -69,18 +69,18 @@ public class MockExamResultService {
         return Objects.requireNonNullElse(countTodayMockExamResults, 0);
     }
 
-    public List<DailyScoreAverage> getWeeklyReport(Certificate certificate, User user, DateQueryParam dateQueryParam) {
-        return mockExamResultRepository.getDailyReport(certificate, user, dateQueryParam);
+    public List<DailyScoreAverage> getWeeklyReport(Certificate certificate, User user, DateCond dateCond) {
+        return mockExamResultRepository.getDailyReport(certificate, user, dateCond);
     }
 
-    public List<WeeklyScoreAverage> getMonthlyReport(Certificate certificate, User user, DateQueryParam dateQueryParam) {
-        return mockExamResultRepository.getWeeklyReport(certificate, user, dateQueryParam).stream()
+    public List<WeeklyScoreAverage> getMonthlyReport(Certificate certificate, User user, DateCond dateCond) {
+        return mockExamResultRepository.getWeeklyReport(certificate, user, dateCond).stream()
                 .sorted(Comparator.comparing(WeeklyScoreAverage::getWeekOfMonth))
                 .toList();
     }
 
-    public List<MonthlyScoreAverage> getYearlyReport(Certificate certificate, User user, DateQueryParam dateQueryParam) {
-        return mockExamResultRepository.getYearlyReport(certificate, user, dateQueryParam).stream()
+    public List<MonthlyScoreAverage> getYearlyReport(Certificate certificate, User user, DateCond dateCond) {
+        return mockExamResultRepository.getYearlyReport(certificate, user, dateCond).stream()
                 .sorted(Comparator.comparing(MonthlyScoreAverage::getMonth))
                 .toList();
     }

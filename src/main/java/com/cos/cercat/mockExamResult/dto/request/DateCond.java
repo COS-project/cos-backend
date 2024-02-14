@@ -4,7 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-public record DateQueryParam(
+public record DateCond(
         Integer year,
         Integer month,
         Integer weekOfMonth,
