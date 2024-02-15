@@ -7,9 +7,8 @@ import java.io.Serializable;
 
 @Embeddable
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor(staticName = "of")
 @EqualsAndHashCode
-
 public class InterestCertificatePK implements Serializable {
 
     private Long certificateId;

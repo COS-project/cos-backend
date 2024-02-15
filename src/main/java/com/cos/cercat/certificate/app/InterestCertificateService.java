@@ -1,6 +1,8 @@
 package com.cos.cercat.certificate.app;
 
+import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.certificate.domain.InterestCertificate;
+import com.cos.cercat.certificate.domain.embededId.InterestCertificatePK;
 import com.cos.cercat.certificate.repository.InterestCertificateRepository;
 import com.cos.cercat.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,10 @@ public class InterestCertificateService {
 
     public void deleteAllInterestCertificates(User user) {
         interestCertificateRepository.deleteAllByUser(user);
+    }
+
+    public void delete(User user, Certificate certificate) {
+        interestCertificateRepository.deleteById(InterestCertificatePK.of(certificate.getId(), user.getId()));
     }
 
 }
