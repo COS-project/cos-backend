@@ -14,6 +14,7 @@ jobs:
     steps:
       - uses: anc95/ChatGPT-CodeReview@main
         env:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.GPT_KEY }}
           LANGUAGE: Korean
+          MODEL: gpt-3.5-turbo
