@@ -28,12 +28,12 @@ public class LearningCreateApi {
         return Response.success("목표 생성 성공");
     }
 
-    @PostMapping("/{certificateId}/goals/study-times")
+    @PostMapping("/goals/{goalId}/study-times")
     @Operation(summary = "공부 시간 생성(누적)")
-    public Response<Void> createStudyTimeLog(@PathVariable Long certificateId,
+    public Response<Void> createStudyTimeLog(@PathVariable Long goalId,
                                              Long studyTime,
                                              @AuthenticationPrincipal UserDTO user) {
-        learningCreateService.createStudyTimeLog(certificateId, studyTime, user.getId());
+        learningCreateService.createStudyTimeLog(goalId, studyTime, user);
         return Response.success("공부 시간 생성(누적) 성공");
     }
 

@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 @Slf4j
@@ -23,12 +25,16 @@ public class GoalService {
         goalRepository.save(goal);
     }
 
-    public Goal getGoal(User user, Certificate certificate) {
-        return goalRepository.findGoalByUserAndCertificate(user, certificate).orElseThrow(() ->
+    public Goal getRecentGoal(User user, Certificate certificate) {
+        return goalRepository.findRecentGoalByUserAndCertificate(user, certificate).orElseThrow(() ->
                 new CustomException(ErrorCode.GOAL_NOT_FOUND));
     }
 
-    public Goal getGoal(Long goalId) {
+    public List<Goal> getAllGoals(Certificate certificate, User user) {
+        return goalRepository.findGoalsByUserAndCertificate(user, certificate);
+    }
+
+    public Goal getGoalById(Long goalId) {
         return goalRepository.findById(goalId).orElseThrow(() ->
                 new CustomException(ErrorCode.GOAL_NOT_FOUND));
     }
@@ -40,7 +46,7 @@ public class GoalService {
     public void updateGoal(GoalUpdateRequest request,
                            Long goalId,
                            User user) {
-        Goal goal = getGoal(goalId);
+        Goal goal = getGoalById(goalId);
 
         if (goal.isAuthorized(user)) {
             goal.updateGoalInfo(

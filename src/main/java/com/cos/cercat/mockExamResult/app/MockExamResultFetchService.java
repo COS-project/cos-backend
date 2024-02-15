@@ -2,6 +2,8 @@ package com.cos.cercat.mockExamResult.app;
 
 import com.cos.cercat.certificate.app.CertificateService;
 import com.cos.cercat.certificate.domain.Certificate;
+import com.cos.cercat.learning.app.GoalService;
+import com.cos.cercat.learning.domain.Goal;
 import com.cos.cercat.mockExam.app.MockExamService;
 import com.cos.cercat.mockExam.domain.MockExam;
 import com.cos.cercat.mockExamResult.domain.MockExamResult;
@@ -30,6 +32,7 @@ public class MockExamResultFetchService {
     private final CertificateService certificateService;
     private final UserAnswerService userAnswerService;
     private final SubjectResultService subjectResultService;
+    private final GoalService goalService;
 
     /***
      * 유저의 해당 모의고사의 성적리포트를 모두 조회
@@ -76,7 +79,7 @@ public class MockExamResultFetchService {
     }
 
     /***
-     * 유저의 해당 자격증 시험의 과목별 정답률 평균 및 머문 시간 평균 조회한다.
+     * 유저의 목표를 설정한 이후의 해당 자격증 시험의 과목별 정답률 평균 및 머문 시간 평균 조회한다.
      * @param certificateId 자격증 ID
      * @param userId 유저 ID
      * @return 과목 정답률 평균 및 머문시간 평균을 리스트 형태로 반환한다.
@@ -84,9 +87,10 @@ public class MockExamResultFetchService {
     public List<SubjectResultsAVGResponse> getSubjectResultsAVG(Long certificateId, Long userId) {
         Certificate certificate = certificateService.getCertificate(certificateId);
         User user = userService.getUser(userId);
+        Goal recentGoal = goalService.getRecentGoal(user, certificate);
 
         log.info("user - {}, certificate - {} 과목별 정답률 및 머문시간 평균 조회", user.getEmail(), certificate.getCertificateName());
-        return subjectResultService.getSubjectResultsAVG(certificate, user).stream()
+        return subjectResultService.getSubjectResultsAVG(certificate, user, recentGoal.getPrepareStartDateTime()).stream()
                 .map(SubjectResultsAVGResponse::from)
                 .toList();
     }

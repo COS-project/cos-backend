@@ -2,17 +2,14 @@ package com.cos.cercat.learning.app;
 
 import com.cos.cercat.certificate.app.CertificateService;
 import com.cos.cercat.certificate.domain.Certificate;
-import com.cos.cercat.global.exception.CustomException;
-import com.cos.cercat.global.exception.ErrorCode;
 import com.cos.cercat.learning.domain.Goal;
 import com.cos.cercat.learning.dto.request.GoalCreateRequest;
 import com.cos.cercat.user.app.UserService;
 import com.cos.cercat.user.domain.User;
+import com.cos.cercat.user.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 @Service
 @Slf4j
@@ -34,25 +31,18 @@ public class LearningCreateService {
         Certificate certificate = certificateService.getCertificate(certificateId);
         User user = userService.getUser(userId);
 
-        if (goalService.isGoalAlreadyExists(user, certificate)) {
-            log.warn("user - {}, certificate - {} 목표가 이미 존재합니다.", user.getEmail(), certificate.getCertificateName());
-            throw new CustomException(ErrorCode.GOAL_CREATE_ERROR);
-        }
-
         log.info("user - {}, certificate - {} 목표 생성.", user.getEmail(), certificate.getCertificateName());
         goalService.createGoal(request.toEntity(certificate, user));
     }
 
     /***
-     * 유저의 자격증 시험 목표의 공부시간을 누적합니다.
-     * @param certificateId 자격증 ID
-     * @param studyTime 누적할 공부시간
-     * @param userId 유저 ID
+     * 유저가 공부시간을 누적한다.
+     * @param goalId 목표 ID
+     * @param studyTime 공부 시간
+     * @param user 유저 정보
      */
-    public void createStudyTimeLog(Long certificateId, Long studyTime, Long userId) {
-        User user = userService.getUser(userId);
-        Certificate certificate = certificateService.getCertificate(certificateId);
-        Goal goal = goalService.getGoal(user, certificate);
+    public void createStudyTimeLog(Long goalId, Long studyTime, UserDTO user) {
+        Goal goal = goalService.getGoalById(goalId);
 
         log.info("user - {}, goalId - {}, studyTime - {} 공부 시간 누적", user.getEmail(), goal.getId(), studyTime);
         studyTimeLogService.createStudyTimeLog(goal, studyTime);

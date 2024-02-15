@@ -7,6 +7,7 @@ import com.cos.cercat.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -15,8 +16,8 @@ public class SubjectResultService {
 
     private final SubjectResultRepository subjectResultRepository;
 
-    public List<SubjectResultsAVG> getSubjectResultsAVG(Certificate certificate, User user) {
-        return subjectResultRepository.getSubjectResultsAVG(certificate.getId(), user.getId());
+    public List<SubjectResultsAVG> getSubjectResultsAVG(Certificate certificate, User user, LocalDateTime goalStartDateTime) {
+        return subjectResultRepository.getSubjectResultsAVG(certificate.getId(), user.getId(), goalStartDateTime);
     }
 
 }

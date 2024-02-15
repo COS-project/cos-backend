@@ -1,6 +1,7 @@
 package com.cos.cercat.learning.domain;
 
 import com.cos.cercat.certificate.domain.Certificate;
+import com.cos.cercat.global.entity.BaseTimeEntity;
 import com.cos.cercat.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
