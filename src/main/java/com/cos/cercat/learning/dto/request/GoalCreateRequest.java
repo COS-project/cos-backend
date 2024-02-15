@@ -4,7 +4,6 @@ import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.learning.domain.Goal;
 import com.cos.cercat.user.domain.User;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 

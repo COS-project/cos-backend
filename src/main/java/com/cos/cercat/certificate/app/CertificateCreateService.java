@@ -5,6 +5,7 @@ import com.cos.cercat.certificate.domain.CertificateExam;
 import com.cos.cercat.certificate.dto.request.CertificateCreateRequest;
 import com.cos.cercat.certificate.dto.request.CertificateExamCreateRequest;
 import com.cos.cercat.certificate.dto.request.InterestCertificateCreateRequest;
+import com.cos.cercat.favoriteBoard.app.FavoriteBoardService;
 import com.cos.cercat.user.app.UserService;
 import com.cos.cercat.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class CertificateCreateService {
     private final UserService userService;
     private final CertificateExamService certificateExamService;
     private final InterestCertificateService interestCertificateService;
+    private final FavoriteBoardService favoriteBoardService;
 
 
     public void createCertificate(CertificateCreateRequest request) {
@@ -48,6 +50,7 @@ public class CertificateCreateService {
     private void createInterestCertificate(User user, InterestCertificateCreateRequest request) {
         Certificate certificate = certificateService.getCertificate(request.certificateId());
         interestCertificateService.createInterestCertificate(request.toEntity(certificate, user));
+        favoriteBoardService.createFavoriteBoard(user, certificate); //관심 자격증을 게시판 즐겨찾기에 등록
     }
 
 }
