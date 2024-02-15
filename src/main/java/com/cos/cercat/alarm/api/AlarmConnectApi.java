@@ -2,6 +2,7 @@ package com.cos.cercat.alarm.api;
 
 import com.cos.cercat.alarm.app.SseEmitterService;
 import com.cos.cercat.user.dto.UserDTO;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,6 +20,7 @@ public class AlarmConnectApi {
     private final SseEmitterService sseEmitterService;
 
     @GetMapping("/alarms/subscribe")
+    @Operation(summary = "SSE 연결 엔드포인트")
     public SseEmitter subscribeAlarm(@AuthenticationPrincipal UserDTO user) {
         return sseEmitterService.connect(user.getId());
     }
