@@ -19,7 +19,7 @@ public class UserDeleteApi {
 
     private final UserService userService;
 
-    @DeleteMapping("/users")
+    @DeleteMapping("/users/me")
     @Operation(summary = "회원 탈퇴")
     public Response<Void> deleteUser(@AuthenticationPrincipal UserDTO user) {
         userService.deleteUser(user.getId());

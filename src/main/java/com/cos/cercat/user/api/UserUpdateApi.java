@@ -22,7 +22,7 @@ public class UserUpdateApi {
 
     private final UserUpdateService userUpdateService;
 
-    @PatchMapping(path = "/users", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PatchMapping(path = "/users/me", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "회원 정보 추가")
     public Response<Void> updateUserInfo(@RequestPart UserCreateRequest request,
                                          @RequestPart MultipartFile file,
