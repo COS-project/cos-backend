@@ -11,7 +11,6 @@ import com.cos.cercat.user.app.UserService;
 import com.cos.cercat.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,7 +39,7 @@ public class ExamReviewCreateService {
         User user = userService.getUser(userId);
         Certificate certificate = certificateService.getCertificate(certificateId);
 
-        Goal goal = goalService.getGoal(user, certificate);
+        Goal goal = goalService.getRecentGoal(user, certificate);
         CertificateExam recentCertificateExam = certificateExamService.getRecentCertificateExam(certificate);
 
         LocalDate prepareStartDate = goal.getPrepareStartDateTime().toLocalDate();

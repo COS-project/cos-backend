@@ -3,6 +3,7 @@ package com.cos.cercat.learning.api;
 import com.cos.cercat.global.Response;
 import com.cos.cercat.learning.app.LearningFetchService;
 import com.cos.cercat.learning.dto.response.GoalAchievementResponse;
+import com.cos.cercat.learning.dto.response.GoalDetailResponse;
 import com.cos.cercat.learning.dto.response.GoalResponse;
 import com.cos.cercat.user.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
@@ -22,13 +25,19 @@ public class LearningFetchApi {
 
     private final LearningFetchService learningFetchService;
 
-    @GetMapping("/{certificateId}/goals")
-    @Operation(summary = "목표 상세 조회")
-    public Response<GoalResponse> getGoalDetail(@PathVariable Long certificateId,
-                                                @AuthenticationPrincipal UserDTO user) {
-        return Response.success(learningFetchService.getGoal(certificateId, user.getId()));
+    @GetMapping("{certificateId}/goals")
+    @Operation(summary = "유저의 현재까지의 모든 목표 조회")
+    public Response<List<GoalResponse>> getAllGoal(@PathVariable Long certificateId,
+                                                   @AuthenticationPrincipal UserDTO user) {
+        return Response.success(learningFetchService.getAllGoals(certificateId, user.getId()));
     }
 
+    @GetMapping("/goals/{goalId}")
+    @Operation(summary = "목표 상세 조회")
+    public Response<GoalDetailResponse> getGoalDetail(@PathVariable Long goalId,
+                                                      @AuthenticationPrincipal UserDTO user) {
+        return Response.success(learningFetchService.getGoal(goalId, user));
+    }
     @GetMapping("/{certificateId}/goals/achievement")
     @Operation(summary = "목표 달성도 조회")
     public Response<GoalAchievementResponse> getGoalAchievement(@PathVariable Long certificateId,

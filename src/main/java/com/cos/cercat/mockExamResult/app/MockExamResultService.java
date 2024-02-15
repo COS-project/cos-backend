@@ -51,14 +51,14 @@ public class MockExamResultService {
                 new CustomException(ErrorCode.MOCK_EXAM_RESULT_NOT_FOUND));
     }
 
-    public int countMockExamResults(Certificate certificate, User user) {
-        Integer countMockExamResults = mockExamResultRepository.countMockExamResultsByMockExam_CertificateAndUser(certificate, user);
+    public int countTotalMockExamResults(Certificate certificate, User user, LocalDateTime goalStartDateTime) {
+        Integer countMockExamResults = mockExamResultRepository.countTotalMockExamResults(certificate.getId(), user.getId(), goalStartDateTime);
 
         return Objects.requireNonNullElse(countMockExamResults, 0);
     }
 
-    public int getCurrentMaxScore(Certificate certificate, User user) {
-        Integer mockExamResultMaxScore = mockExamResultRepository.getMockExamResultMaxScore(certificate.getId(), user.getId());
+    public int getCurrentMaxScore(Certificate certificate, User user, LocalDateTime goalStartDateTime) {
+        Integer mockExamResultMaxScore = mockExamResultRepository.getMockExamResultMaxScore(certificate.getId(), user.getId(), goalStartDateTime);
 
         return Objects.requireNonNullElse(mockExamResultMaxScore, 0);
     }

@@ -1,6 +1,5 @@
 package com.cos.cercat.mockExamResult.repository;
 
-import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.user.domain.User;
 import com.cos.cercat.mockExam.domain.MockExam;
 import com.cos.cercat.mockExamResult.domain.MockExamResult;
@@ -10,7 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -21,16 +19,26 @@ public interface MockExamResultRepository extends JpaRepository<MockExamResult, 
 
     int countMockExamResultsByMockExamAndUser(MockExam mockExam, User user);
 
-    Integer countMockExamResultsByMockExam_CertificateAndUser(Certificate certificate, User user);
+    @Query("""
+            SELECT COUNT(mer) FROM MockExamResult mer
+            WHERE mer.mockExam.certificate.id = :certificateId
+            AND mer.user.id = :userId
+            AND :goalStartDateTime < mer.createdAt
+            """)
+    Integer countTotalMockExamResults(@Param("certificateId") Long certificateId,
+                                      @Param("userId") Long userId,
+                                      LocalDateTime goalStartDateTime);
 
     @Query("""
-            SELECT MAX(mr.totalScore)
-            FROM MockExamResult mr
-            WHERE mr.mockExam.certificate.id = :certificateId
-            AND mr.user.id = :userId
+            SELECT MAX(mer.totalScore)
+            FROM MockExamResult mer
+            WHERE mer.mockExam.certificate.id = :certificateId
+            AND mer.user.id = :userId
+            AND :goalStartDateTime < mer.createdAt
             """)
     Integer getMockExamResultMaxScore(@Param("certificateId") Long certificateId,
-                                      @Param("userId") Long userId);
+                                      @Param("userId") Long userId,
+                                      LocalDateTime goalStartDateTime);
 
     @Query("""
             SELECT COUNT(mr) FROM MockExamResult mr

@@ -2,13 +2,11 @@ package com.cos.cercat.learning.dto.request;
 
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.learning.domain.Goal;
-import com.cos.cercat.learning.domain.RepeatDay;
-import com.cos.cercat.learning.domain.RepeatType;
 import com.cos.cercat.user.domain.User;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Stream;
 
 public record GoalCreateRequest(
         Integer goalScore,
