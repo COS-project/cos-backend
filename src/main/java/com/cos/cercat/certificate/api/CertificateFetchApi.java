@@ -38,7 +38,7 @@ public class CertificateFetchApi {
     }
 
     @GetMapping("/interest-certificates")
-    @Operation(summary = "관심 자격증 조회")
+    @Operation(summary = "나의 관심 자격증 조회")
     public Response<List<InterestCertificateResponse>> getInterestCertificates(@AuthenticationPrincipal UserDTO user) {
         return Response.success(certificateFetchService.getInterestCertificate(user.getId()));
     }
