@@ -16,7 +16,7 @@ public record SubjectResultRequest(
     public SubjectResult toEntity(Subject subject, UserAnswers userAnswers) {
 
         int correctCount = (int) userAnswerRequests.stream()
-                .filter(UserAnswerRequest::is_correct)
+                .filter(UserAnswerRequest::isCorrect)
                 .count();
 
         return new SubjectResult(

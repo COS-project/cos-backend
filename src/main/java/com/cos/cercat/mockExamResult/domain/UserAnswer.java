@@ -36,27 +36,27 @@ public class UserAnswer extends BaseTimeEntity {
     @JoinColumn(name = "question_id")
     private Question question;
 
-    private String selectOption;
+    private int selectOptionSeq;
 
-    private Long takenTime;
+    private long takenTime;
 
-    private Boolean is_correct;
+    private boolean isCorrect;
 
-    private UserAnswer(User user, Question question, String selectOption, long takenTime, boolean is_correct) {
+    private UserAnswer(User user, Question question, int selectOptionSeq, long takenTime, boolean isCorrect) {
         this.user = user;
         this.question = question;
-        this.selectOption = selectOption;
+        this.selectOptionSeq = selectOptionSeq;
         this.takenTime = takenTime;
-        this.is_correct = is_correct;
+        this.isCorrect = isCorrect;
     }
 
-    public static UserAnswer of(User user, Question question, String selectOption, long takenTime, boolean is_correct) {
+    public static UserAnswer of(User user, Question question, int selectOption, long takenTime, boolean isCorrect) {
         return new UserAnswer(
                 user,
                 question,
                 selectOption,
                 takenTime,
-                is_correct
+                isCorrect
         );
     }
 }

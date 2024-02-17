@@ -24,7 +24,7 @@ public interface UserAnswerRepository extends JpaRepository<UserAnswer, Long> {
                   WHERE mr2.user.id = :userId
                   GROUP BY m2.id
                 )
-                AND ua.is_correct = false
+                AND ua.isCorrect = false
                 AND ua.user.id = :userId
               """)
     Slice<UserAnswer> getIncorrectUserAnswersByUserAndCertificate(Pageable pageable,
@@ -35,7 +35,7 @@ public interface UserAnswerRepository extends JpaRepository<UserAnswer, Long> {
             SELECT ua FROM UserAnswer ua
             JOIN FETCH ua.question q
             JOIN ua.subjectResult sr
-            WHERE ua.is_correct = false AND sr.mockExamResult.id = :mockExamResultId
+            WHERE ua.isCorrect = false AND sr.mockExamResult.id = :mockExamResultId
             """)
     Slice<UserAnswer> getIncorrectUserAnswersByMockExamResult(Pageable pageable, @Param("mockExamResultId") Long mockExamResultId);
 
