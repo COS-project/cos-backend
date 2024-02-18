@@ -25,7 +25,7 @@ public class ExamReviewFetchApi {
 
     private final ExamReviewFetchService examReviewFetchService;
 
-    @GetMapping("/{certificateId}/exam-reviews")
+    @GetMapping("/certificates/{certificateId}/exam-reviews")
     @Operation(summary = "최근 시험의 따끈 후기 조회")
     public Response<Slice<ExamReviewResponse>> getExamReviews(@PathVariable Long certificateId,
                                                               ExamReviewSearchCond cond,

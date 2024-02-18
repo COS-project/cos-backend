@@ -35,7 +35,7 @@ public class MockExamResultFetchApi {
         return Response.success(mockExamResultFetchService.getMockExamResults(mockExamId, user.getId()));
     }
 
-    @GetMapping("/{certificateId}/user-answers/incorrect")
+    @GetMapping("/certificates/{certificateId}/user-answers/incorrect")
     @Operation(summary = "전체 틀린문제 조회")
     public Response<Slice<UserAnswerResponse>> getAllIncorrectUserAnswers(@PageableDefault Pageable pageable,
                                                                           @PathVariable Long certificateId,
@@ -43,21 +43,21 @@ public class MockExamResultFetchApi {
         return Response.success(mockExamResultFetchService.getAllInCorrectUserAnswers(pageable, certificateId, user.getId()));
     }
 
-    @GetMapping("/mock-exam-results/{mockExamResultId}")
+    @GetMapping("/mock-exam-results/{mockExamResultId}/user-answers/incorrect")
     @Operation(summary = "특정 모의고사 틀린문제 조회")
     public Response<Slice<UserAnswerResponse>> getIncorrectUserAnswers(@PageableDefault Pageable pageable,
                                                                        @PathVariable Long mockExamResultId) {
         return Response.success(mockExamResultFetchService.getInCorrectUserAnswers(pageable, mockExamResultId));
     }
 
-    @GetMapping("/{certificateId}/mock-exam-results/average")
+    @GetMapping("/certificates/{certificateId}/mock-exam-results/average")
     @Operation(summary = "과목별 정답률 평균 및 머문 시간 평균 조회")
     public Response<List<SubjectResultsAVGResponse>> getSubjectResultsAVG(@PathVariable Long certificateId,
                                                                           @AuthenticationPrincipal UserDTO user) {
         return Response.success(mockExamResultFetchService.getSubjectResultsAVG(certificateId, user.getId()));
     }
 
-    @GetMapping("/{certificateId}/mock-exam-results/{reportType}/reports")
+    @GetMapping("/certificates/{certificateId}/mock-exam-results/{reportType}/reports")
     @Operation(summary = "성적 리포트 통계")
     public Response<Report> getReport(@PathVariable Long certificateId,
                                       @PathVariable ReportType reportType,
@@ -66,7 +66,7 @@ public class MockExamResultFetchApi {
         return Response.success(mockExamResultFetchService.getReport(certificateId, reportType, dateCond, user.getId()));
     }
 
-    @GetMapping("{certificateId}/mock-exam-results/{dateType}")
+    @GetMapping("/certificates/{certificateId}/mock-exam-results/{dateType}")
     @Operation(summary = "날짜/주차/월 로 성적 리포트 조회")
     public Response<Slice<MockExamResultResponse>> getMockExamResultsByDate(@PathVariable Long certificateId,
                                                                             @PathVariable DateType dateType,

@@ -19,16 +19,16 @@ public record SubjectResultRequest(
                 .filter(UserAnswerRequest::isCorrect)
                 .count();
 
-        return new SubjectResult(
-                subject,
-                score,
-                correctCount,
-                userAnswerRequests.stream()
+        return SubjectResult.builder()
+                .subject(subject)
+                .score(score)
+                .numberOfCorrect(correctCount)
+                .totalTakenTime(userAnswerRequests.stream()
                         .mapToLong(UserAnswerRequest::takenTime)
-                        .sum(),
-                (int) ((double) correctCount / subject.getNumberOfQuestions() * 100),
-                userAnswers
-        );
+                        .sum())
+                .correctRate((int) ((double) correctCount / subject.getNumberOfQuestions() * 100))
+                .userAnswers(userAnswers)
+                .build();
     }
 
 }

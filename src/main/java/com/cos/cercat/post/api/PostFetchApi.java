@@ -28,7 +28,7 @@ public class PostFetchApi {
 
     private final PostFetchService postFetchService;
 
-    @GetMapping("/{certificateId}/{postType}/posts")
+    @GetMapping("/certificates/{certificateId}/{postType}/posts")
     @Operation(summary = "게시글 검색", description = "키워드가 안주어졌을 경우 전체 조회")
     public Response<Slice<PostResponse>> getCommentaryPosts(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
                                                             @PathVariable Long certificateId,
@@ -43,7 +43,7 @@ public class PostFetchApi {
         return Response.success(postFetchService.getPostDetail(postId));
     }
 
-    @GetMapping("/{certificateId}/tip-posts/best")
+    @GetMapping("/certificates/{certificateId}/tip-posts/best")
     @Operation(summary = "베스트 꿀팁 TOP3 조회")
     public Response<List<PostResponse>> getTop3TipPosts(@PathVariable Long certificateId) {
         return Response.success(postFetchService.getTop3TipPosts(certificateId));

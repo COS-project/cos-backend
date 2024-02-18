@@ -2,10 +2,7 @@ package com.cos.cercat.mockExamResult.domain;
 
 import com.cos.cercat.certificate.domain.Subject;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -41,6 +38,7 @@ public class SubjectResult {
 
     private Integer correctRate;
 
+    @Builder
     public SubjectResult(Subject subject, Integer score, Integer numberOfCorrect, Long totalTakenTime, Integer correctRate, UserAnswers userAnswers) {
         this.subject = subject;
         this.score = score;

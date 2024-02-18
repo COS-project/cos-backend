@@ -23,7 +23,7 @@ public class PostCreateApi {
 
     private final PostCreateService postCreateService;
 
-    @PostMapping(path = "/{certificateId}/{postType}/posts", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(path = "/certificates/{certificateId}/{postType}/posts", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "게시글 생성")
     public Response<Void> createPost(@PathVariable Long certificateId,
                                      @PathVariable PostType postType,

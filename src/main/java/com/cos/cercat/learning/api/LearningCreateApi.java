@@ -18,7 +18,7 @@ public class LearningCreateApi {
 
     private final LearningCreateService learningCreateService;
 
-    @PostMapping("/{certificateId}/goals")
+    @PostMapping("/certificates/{certificateId}/goals")
     @Operation(summary = "목표 생성")
     public Response<Void> createGoal(@PathVariable Long certificateId,
                                      @RequestBody GoalCreateRequest request,

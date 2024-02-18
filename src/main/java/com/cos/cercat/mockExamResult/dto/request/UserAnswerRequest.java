@@ -17,12 +17,13 @@ public record UserAnswerRequest(
         Objects.requireNonNull(selectOptionSeq, "Selected option must not be null");
         Objects.requireNonNull(takenTime, "Taken time must not be null");
 
-        return UserAnswer.of(
-                user,
-                question,
-                selectOptionSeq,
-                takenTime,
-                isCorrect
-        );
+        return UserAnswer.builder()
+                .user(user)
+                .question(question)
+                .selectOptionSeq(selectOptionSeq)
+                .takenTime(takenTime)
+                .isCorrect(isCorrect)
+                .isReviewed(false)
+                .build();
     }
 }

@@ -21,7 +21,7 @@ public class LikeFlipApi {
 
     private final LikeFlipService likeFlipService;
 
-    @PostMapping("/{likeType}/{id}")
+    @PostMapping("/{likeType}/likes/{id}")
     @Operation(summary = "좋아요 생성 및 취소")
     public Response<Void> flipPostLike(@PathVariable LikeType likeType,
                                        @PathVariable Long id,

@@ -23,7 +23,7 @@ public class PostUpdateApi {
 
     private final PostUpdateService postUpdateService;
 
-    @PutMapping(value = "/{certificateId}/{postType}/posts", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "/certificates/{certificateId}/{postType}/posts", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "게시글 수정")
     public Response<Void> updateCommentaryPost(@PathVariable Long certificateId,
                                                @PathVariable PostType postType,

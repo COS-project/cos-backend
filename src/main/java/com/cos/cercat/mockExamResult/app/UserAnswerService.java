@@ -1,6 +1,8 @@
 package com.cos.cercat.mockExamResult.app;
 
 import com.cos.cercat.certificate.domain.Certificate;
+import com.cos.cercat.global.exception.CustomException;
+import com.cos.cercat.global.exception.ErrorCode;
 import com.cos.cercat.mockExamResult.domain.MockExamResult;
 import com.cos.cercat.mockExamResult.domain.UserAnswer;
 import com.cos.cercat.mockExamResult.repository.UserAnswerRepository;
@@ -25,5 +27,11 @@ public class UserAnswerService {
     public Slice<UserAnswer> getIncorrectUserAnswers(Pageable pageable, MockExamResult mockExamResult) {
         return userAnswerRepository.getIncorrectUserAnswersByMockExamResult(pageable, mockExamResult.getId());
     }
+
+    public UserAnswer getUserAnswer(Long userAnswerId) {
+        return userAnswerRepository.findById(userAnswerId).orElseThrow(
+                () -> new CustomException(ErrorCode.USER_ANSWER_NOT_FOUND));
+    }
+
 
 }

@@ -4,10 +4,7 @@ import com.cos.cercat.global.entity.BaseTimeEntity;
 import com.cos.cercat.mockExam.domain.Question;
 import com.cos.cercat.user.domain.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -42,21 +39,23 @@ public class UserAnswer extends BaseTimeEntity {
 
     private boolean isCorrect;
 
-    private UserAnswer(User user, Question question, int selectOptionSeq, long takenTime, boolean isCorrect) {
+    private boolean isReviewed;
+
+    @Builder
+    public UserAnswer(User user, Question question, int selectOptionSeq, long takenTime, boolean isCorrect, boolean isReviewed) {
         this.user = user;
         this.question = question;
         this.selectOptionSeq = selectOptionSeq;
         this.takenTime = takenTime;
         this.isCorrect = isCorrect;
+        this.isReviewed = isReviewed;
     }
 
-    public static UserAnswer of(User user, Question question, int selectOption, long takenTime, boolean isCorrect) {
-        return new UserAnswer(
-                user,
-                question,
-                selectOption,
-                takenTime,
-                isCorrect
-        );
+    public void review() {
+        this.isReviewed = true;
+    }
+
+    public boolean isAuthorized(User user) {
+        return this.user.equals(user);
     }
 }

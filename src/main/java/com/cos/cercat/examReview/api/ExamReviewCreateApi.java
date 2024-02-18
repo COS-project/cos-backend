@@ -18,7 +18,7 @@ public class ExamReviewCreateApi {
 
     private final ExamReviewCreateService examReviewCreateService;
 
-    @PostMapping("/{certificateId}/exam-reviews")
+    @PostMapping("/certificates/{certificateId}/exam-reviews")
     @Operation(summary = "따끈후기 작성")
     public Response<Void> createExamReview(@PathVariable Long certificateId,
                                            @RequestBody ExamReviewCreateRequest request,

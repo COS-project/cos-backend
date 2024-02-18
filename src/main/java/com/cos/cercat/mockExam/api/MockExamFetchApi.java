@@ -28,7 +28,7 @@ public class MockExamFetchApi {
 
     private final MockExamFetchService mockExamFetchService;
 
-    @GetMapping("/{certificateId}/mock-exams")
+    @GetMapping("/certificates/{certificateId}/mock-exams")
     @Operation(summary = "년도별 모의고사 가져오기")
     public Response<List<MockExamWithResultResponse>> getMockExamList(@PathVariable Long certificateId,
                                                                       Integer examYear,
@@ -49,7 +49,7 @@ public class MockExamFetchApi {
         return Response.success(mockExamFetchService.getQuestionList(mockExamId));
     }
 
-    @GetMapping("/{certificateId}/mock-exam-infos")
+    @GetMapping("/certificates/{certificateId}/mock-exam-infos")
     @Operation(summary = "자격증 ID를 통해 해당 자격증 모의고사의 응시년도 및 회차정보 조회")
     public Response<ExamYearWithRoundsResponse> getMockExamInfos(@PathVariable Long certificateId) {
         return Response.success(mockExamFetchService.getMockExamInfoList(certificateId));

@@ -32,7 +32,8 @@ public enum ErrorCode {
     ALARM_CONNECT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "alarm connect error"),
     INVALID_REFRESH_TOKEN(HttpStatus.BAD_REQUEST, "invalid refresh token"),
     INVALID_ACCESS_TOKEN(HttpStatus.BAD_REQUEST, "invalid access token"),
-    ACCESS_TOKEN_EXPIRED(HttpStatus.BAD_REQUEST, "access token expired");
+    ACCESS_TOKEN_EXPIRED(HttpStatus.BAD_REQUEST, "access token expired"),
+    USER_ANSWER_NOT_FOUND(HttpStatus.NOT_FOUND, "user answer not founded");
 
     private final HttpStatus httpStatus;
     private final String message;

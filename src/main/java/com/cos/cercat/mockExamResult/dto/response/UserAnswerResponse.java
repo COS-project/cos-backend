@@ -5,6 +5,7 @@ import com.cos.cercat.mockExamResult.domain.UserAnswer;
 
 public record UserAnswerResponse(
         QuestionResponse question,
+        Long userAnswerId,
         int selectOption,
         long takenTime,
         boolean isCorrect
@@ -12,6 +13,7 @@ public record UserAnswerResponse(
     public static UserAnswerResponse from(UserAnswer entity) {
         return new UserAnswerResponse(
                 QuestionResponse.from(entity.getQuestion()),
+                entity.getId(),
                 entity.getSelectOptionSeq(),
                 entity.getTakenTime(),
                 entity.isCorrect()

@@ -4,6 +4,7 @@ import com.cos.cercat.mockExamResult.domain.UserAnswer;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -25,6 +26,7 @@ public interface UserAnswerRepository extends JpaRepository<UserAnswer, Long> {
                   GROUP BY m2.id
                 )
                 AND ua.isCorrect = false
+                AND ua.isReviewed = false
                 AND ua.user.id = :userId
               """)
     Slice<UserAnswer> getIncorrectUserAnswersByUserAndCertificate(Pageable pageable,
@@ -35,8 +37,11 @@ public interface UserAnswerRepository extends JpaRepository<UserAnswer, Long> {
             SELECT ua FROM UserAnswer ua
             JOIN FETCH ua.question q
             JOIN ua.subjectResult sr
-            WHERE ua.isCorrect = false AND sr.mockExamResult.id = :mockExamResultId
+            WHERE ua.isCorrect = false
+            AND ua.isReviewed = false
+            AND sr.mockExamResult.id = :mockExamResultId
             """)
     Slice<UserAnswer> getIncorrectUserAnswersByMockExamResult(Pageable pageable, @Param("mockExamResultId") Long mockExamResultId);
+
 
 }
