@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(indexes = @Index(name = "idx_mock_exam_result_user_id", columnList = "created_at, round"))
 public class MockExamResult extends BaseTimeEntity {
 
     @Id

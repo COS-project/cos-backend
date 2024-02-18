@@ -13,7 +13,7 @@ public record QuestionResponse(
         String questionText,
         String questionImage,
         List<QuestionOptionResponse> questionOptions,
-        int correct_option,
+        int correctOption,
         int score
 ) {
     public static QuestionResponse from(Question entity) {
@@ -27,7 +27,7 @@ public record QuestionResponse(
                 entity.getQuestionOptions().getAll().stream()
                         .map(QuestionOptionResponse::from)
                         .toList(),
-                entity.getCorrect_option(),
+                entity.getCorrectOption(),
                 entity.getScore()
         );
     }

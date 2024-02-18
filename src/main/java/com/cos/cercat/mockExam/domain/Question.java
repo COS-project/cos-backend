@@ -17,7 +17,7 @@ import java.util.regex.Matcher;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Question extends BaseTimeEntity {
+public class Question {
 
     private static final int MAX_OPTION_SIZE = 5;
 
@@ -30,9 +30,9 @@ public class Question extends BaseTimeEntity {
     @JoinColumn(name = "mock_exam_id")
     private MockExam mockExam;
 
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id")
-    @Setter
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Subject subject;
 
@@ -48,7 +48,7 @@ public class Question extends BaseTimeEntity {
     @Embedded
     private QuestionOptions questionOptions = new QuestionOptions();
 
-    private int correct_option;
+    private int correctOption;
 
     private int score;
 
@@ -125,10 +125,10 @@ public class Question extends BaseTimeEntity {
     public void setCorrectOption(String answer) {
         char answerChar = answer.charAt(0);
         switch ((int) answerChar) {
-            case 0x2460 -> this.correct_option = 1;
-            case 0x2461 -> this.correct_option = 2;
-            case 0x2462 -> this.correct_option = 3;
-            case 0x2463 -> this.correct_option = 4;
+            case 0x2460 -> this.correctOption = 1;
+            case 0x2461 -> this.correctOption = 2;
+            case 0x2462 -> this.correctOption = 3;
+            case 0x2463 -> this.correctOption = 4;
         }
     }
 

@@ -21,7 +21,7 @@ public class MockExamResultCreateApi {
 
     @PostMapping("/mock-exams/{mockExamId}/mock-exam-results")
     @Operation(summary = "성적 리포트 생성 및 반환")
-    public Response<MockExamResultWithSubjectsResponse> createMockExamResult(@PathVariable Long mockExamId,
+    public Response<Long> createMockExamResult(@PathVariable Long mockExamId,
                                                                              @RequestBody MockExamResultRequest request,
                                                                              @AuthenticationPrincipal UserDTO user) {
 

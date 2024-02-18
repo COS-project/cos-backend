@@ -40,19 +40,19 @@ public class MockExamResultCreateService {
      * @return 모의고사 결과 정보를 반환합니다.
      * */
     @Transactional
-    public MockExamResultWithSubjectsResponse createMockExamResult(Long mockExamId, MockExamResultRequest request, Long userId) {
+    public long createMockExamResult(Long mockExamId, MockExamResultRequest request, Long userId) {
         User user = userService.getUser(userId);
         MockExam mockExam = mockExamService.getMockExam(mockExamId);
 
+        questionService.getQuestionListByMockExam(mockExam);// 문제정보 JPA 1차 캐싱
         int beforeRound = mockExamResultService.getMockExamResultsCount(mockExam, user);
         SubjectResults subjectResults = toSubjectResults(request, user);
         int totalScore = subjectResults.getSubjectResults().stream().mapToInt(SubjectResult::getScore).sum();
 
-        MockExamResult mockExamResult = MockExamResult.of(mockExam, user, beforeRound + 1, subjectResults, totalScore);
 
-        MockExamResult saved = mockExamResultService.save(mockExamResult);
+        MockExamResult mockExamResult = MockExamResult.of(mockExam, user, beforeRound + 1, subjectResults, totalScore);
         log.info("user - {}, mockExamId - {}, round - {}번째 모의고사 성적리포트 생성", user.getEmail(), mockExamId, beforeRound + 1);
-        return MockExamResultWithSubjectsResponse.from(saved);
+        return mockExamResultService.batchInsert(mockExamResult);
     }
 
     private SubjectResults toSubjectResults(MockExamResultRequest request, User user) {

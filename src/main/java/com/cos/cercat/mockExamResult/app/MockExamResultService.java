@@ -10,6 +10,7 @@ import com.cos.cercat.mockExamResult.dto.request.DateCond;
 import com.cos.cercat.mockExamResult.dto.response.DailyScoreAverage;
 import com.cos.cercat.mockExamResult.dto.response.MonthlyScoreAverage;
 import com.cos.cercat.mockExamResult.dto.response.WeeklyScoreAverage;
+import com.cos.cercat.mockExamResult.repository.MockExamResultBatchRepositoryImpl;
 import com.cos.cercat.user.domain.User;
 import com.cos.cercat.mockExamResult.repository.MockExamResultRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +41,11 @@ public class MockExamResultService {
 
     public MockExamResult save(MockExamResult mockExamResult) {
         return mockExamResultRepository.save(mockExamResult);
+    }
+
+    public long batchInsert(MockExamResult mockExamResult) {
+
+        return mockExamResultRepository.batchInsert(mockExamResult);
     }
 
     public int getMockExamResultsCount(MockExam mockExam, User user) {

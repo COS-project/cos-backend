@@ -1,6 +1,5 @@
 package com.cos.cercat.mockExamResult.domain;
 
-import com.cos.cercat.global.entity.BaseTimeEntity;
 import com.cos.cercat.mockExam.domain.Question;
 import com.cos.cercat.user.domain.User;
 import jakarta.persistence.*;
@@ -12,7 +11,8 @@ import org.hibernate.annotations.OnDeleteAction;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserAnswer extends BaseTimeEntity {
+@Table(indexes = @Index(name = "idx_user_answer_user_id", columnList = "is_reviewed, is_correct"))
+public class UserAnswer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

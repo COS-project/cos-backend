@@ -4,6 +4,7 @@ import com.cos.cercat.certificate.app.SubjectService;
 import com.cos.cercat.certificate.domain.Subject;
 import com.cos.cercat.mockExam.dto.MockExamInfoDTO;
 import com.cos.cercat.certificate.domain.Certificate;
+import com.cos.cercat.mockExam.repository.QuestionBatchRepository;
 import com.cos.cercat.mockExam.util.ObjectMapper;
 import com.cos.cercat.mockExam.domain.MockExam;
 import com.cos.cercat.mockExam.domain.Question;
@@ -63,10 +64,14 @@ public class QuestionConvertService {
 
                 String answer = mockExamInfoDTO.getCorrectAnswerViaSeq(question.getQuestionSeq());
                 question.setCorrectOption(answer);
-                questionRepository.save(question);
+                questions.add(question);
             }
         });
+
+        questionRepository.batchInsert(questions);
     }
+
+
 
     private Matcher matchingQuestionPattern(String questionTitle) {
         Pattern pattern = Pattern.compile("(\\d+)\\.(.+)");
