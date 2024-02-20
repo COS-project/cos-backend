@@ -26,6 +26,14 @@
 # 인프라 구성
 <img width="1035" alt="cercat-infra" src="https://github.com/COS-project/cos-backend/assets/128073698/26671112-219b-42f5-9f3a-3104ee7737a3">
 
+- Nginx로 리버스 프록시
+- Kafka를 통해 비동기 알림 pub/sub
+- 수정이 없고 조회가 굉장히 많은 모의고사 문제 데이터 Redis 캐싱
+- Git Actions의 Cron job을 통해 Batch 서버 실행
+# CI/CD
+<img width="1021" alt="cercat-cicd" src="https://github.com/COS-project/cos-backend/assets/128073698/bb6a8975-1660-4ce0-9cad-02fb50db9eac">
+
+
 # ERD
 ![erd](https://github.com/COS-project/cos-backend/assets/128073698/a54221cb-5c76-4b2d-87bd-a816401e6b8d)
 
