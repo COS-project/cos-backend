@@ -31,7 +31,7 @@
 - 수정이 없고 조회가 굉장히 많은 모의고사 문제 데이터 Redis 캐싱
 - Git Actions의 Cron job을 통해 Batch 서버 실행
 # CI/CD
-<img width="1021" alt="cercat-cicd" src="https://github.com/COS-project/cos-backend/assets/128073698/bb6a8975-1660-4ce0-9cad-02fb50db9eac">
+<img width="1015" alt="cercat-cicd" src="https://github.com/COS-project/cos-backend/assets/128073698/9abc44f9-eace-4dfd-9760-2be7046fc215">
 
 
 # ERD
