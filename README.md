@@ -54,7 +54,7 @@ com
         | ㄴ domain
         | ㄴ repository
         | ㄴ app
-        | ...
+        ...
         ㄴ global
             ㄴ common
             ㄴ config
