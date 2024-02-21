@@ -2,7 +2,7 @@ package com.cos.cercat.mockExamResult.domain;
 
 import com.cos.cercat.mockExam.domain.MockExam;
 import com.cos.cercat.user.domain.User;
-import com.cos.cercat.global.entity.BaseTimeEntity;
+import com.cos.cercat.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

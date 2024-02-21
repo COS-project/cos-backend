@@ -4,7 +4,7 @@ import com.cos.cercat.post.domain.TipPost;
 import com.cos.cercat.post.dto.request.PostSearchCond;
 import com.cos.cercat.post.repository.TipPostRepository;
 import com.cos.cercat.certificate.domain.Certificate;
-import com.cos.cercat.global.entity.Image;
+import com.cos.cercat.global.common.Image;
 import com.cos.cercat.global.exception.CustomException;
 import com.cos.cercat.global.exception.ErrorCode;
 import com.cos.cercat.user.domain.User;

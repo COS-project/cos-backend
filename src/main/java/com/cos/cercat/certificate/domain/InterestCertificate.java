@@ -1,7 +1,7 @@
 package com.cos.cercat.certificate.domain;
 
 import com.cos.cercat.certificate.domain.embededId.InterestCertificatePK;
-import com.cos.cercat.global.entity.BaseTimeEntity;
+import com.cos.cercat.global.common.BaseTimeEntity;
 import com.cos.cercat.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;

@@ -4,7 +4,7 @@ import com.cos.cercat.post.domain.PostType;
 import com.cos.cercat.post.dto.request.PostUpdateRequest;
 import com.cos.cercat.certificate.app.CertificateService;
 import com.cos.cercat.certificate.domain.Certificate;
-import com.cos.cercat.global.entity.Image;
+import com.cos.cercat.global.common.Image;
 import com.cos.cercat.global.util.FileUploader;
 import com.cos.cercat.mockExam.app.MockExamService;
 import com.cos.cercat.mockExam.app.QuestionService;

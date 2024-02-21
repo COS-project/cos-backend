@@ -1,6 +1,6 @@
 package com.cos.cercat.global.util;
 
-import com.cos.cercat.global.entity.Image;
+import com.cos.cercat.global.common.Image;
 import com.cos.cercat.global.exception.CustomException;
 import com.cos.cercat.global.exception.ErrorCode;
 import com.google.cloud.storage.Blob;

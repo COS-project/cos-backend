@@ -1,7 +1,6 @@
 package com.cos.cercat.learning.domain;
 
-import com.cos.cercat.global.entity.BaseTimeEntity;
-import com.cos.cercat.user.domain.User;
+import com.cos.cercat.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

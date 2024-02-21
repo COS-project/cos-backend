@@ -1,6 +1,6 @@
 package com.cos.cercat.user.app;
 
-import com.cos.cercat.global.entity.Image;
+import com.cos.cercat.global.common.Image;
 import com.cos.cercat.global.util.FileUploader;
 import com.cos.cercat.user.dto.request.UserCreateRequest;
 import lombok.RequiredArgsConstructor;

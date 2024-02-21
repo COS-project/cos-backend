@@ -1,11 +1,8 @@
 package com.cos.cercat.certificate.domain;
 
-import com.cos.cercat.global.entity.BaseTimeEntity;
+import com.cos.cercat.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.stereotype.Service;
 
 @Entity
 @Getter

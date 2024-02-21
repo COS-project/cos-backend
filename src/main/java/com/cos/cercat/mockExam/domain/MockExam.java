@@ -1,17 +1,12 @@
 package com.cos.cercat.mockExam.domain;
 
 import com.cos.cercat.certificate.domain.Certificate;
-import com.cos.cercat.global.entity.BaseTimeEntity;
+import com.cos.cercat.global.common.BaseTimeEntity;
 import com.cos.cercat.mockExam.dto.MockExamDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter

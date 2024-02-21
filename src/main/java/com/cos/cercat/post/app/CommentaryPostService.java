@@ -4,7 +4,7 @@ import com.cos.cercat.post.domain.CommentaryPost;
 import com.cos.cercat.post.dto.request.PostSearchCond;
 import com.cos.cercat.post.repository.CommentaryPostRepository;
 import com.cos.cercat.certificate.domain.Certificate;
-import com.cos.cercat.global.entity.Image;
+import com.cos.cercat.global.common.Image;
 import com.cos.cercat.global.exception.CustomException;
 import com.cos.cercat.global.exception.ErrorCode;
 import com.cos.cercat.mockExam.domain.Question;

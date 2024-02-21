@@ -1,7 +1,7 @@
 package com.cos.cercat.post.domain;
 
 import com.cos.cercat.certificate.domain.Certificate;
-import com.cos.cercat.global.entity.Image;
+import com.cos.cercat.global.common.Image;
 import com.cos.cercat.mockExam.domain.Question;
 import com.cos.cercat.user.domain.User;
 import jakarta.persistence.*;

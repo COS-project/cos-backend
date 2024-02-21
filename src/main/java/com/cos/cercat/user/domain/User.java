@@ -1,7 +1,7 @@
 package com.cos.cercat.user.domain;
 
-import com.cos.cercat.global.entity.BaseTimeEntity;
-import com.cos.cercat.global.entity.Image;
+import com.cos.cercat.global.common.BaseTimeEntity;
+import com.cos.cercat.global.common.Image;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
