@@ -40,21 +40,20 @@
 # 패키지 구조
 ```
 com
- ㄴ example
-    ㄴ cos
-        ㄴ domain
-        |   ㄴ post
-        |   | ㄴ api
-        |   | ㄴ dto
-        |   | ㄴ domain
-        |   | ㄴ repository
-        |   | ㄴ app
-        |   ㄴ user
-        |   | ㄴ controller
-        |   | ㄴ dto
-        |   | ㄴ domain
-        |   | ㄴ repository
-        |   | ㄴ app
+ ㄴ cos
+    ㄴ cercat
+        ㄴ post
+        | ㄴ api
+        | ㄴ dto
+        | ㄴ domain
+        | ㄴ repository
+        | ㄴ app
+        ㄴ user
+        | ㄴ controller
+        | ㄴ dto
+        | ㄴ domain
+        | ㄴ repository
+        | ㄴ app
         | ...
         ㄴ global
             ㄴ common
