@@ -12,6 +12,7 @@ import com.cos.cercat.user.dto.UserDTO;
 import com.cos.cercat.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,10 +26,10 @@ public class UserService {
     private final LogoutTokenRepository logoutTokenRepository;
     private final JwtTokenUtil jwtTokenUtil;
 
+    @Cacheable(cacheNames = "USER", key = "#email")
     public UserDTO findByEmail(String email) {
-        return userCacheRepository.getUser(email).orElseGet(() ->
-                userRepository.findByEmail(email).map(UserDTO::fromEntity).orElseThrow(
-                        () -> new CustomException(ErrorCode.USER_NOT_FOUND)));
+        return userRepository.findByEmail(email).map(UserDTO::fromEntity)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
     }
 
     public User getUser(Long userId) {

@@ -72,7 +72,6 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
                         );
 
         tokenCacheRepository.setRefreshToken(RefreshToken.of(user.getEmail(), refreshToken));
-        userCacheRepository.setUser(user); // 로그인 시 유저 캐싱
 
         log.info("로그인 성공 accessToken 발급  - {}", accessToken);
         log.info("로그인 성공 refreshToken 발급 - {}", refreshToken);

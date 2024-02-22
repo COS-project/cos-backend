@@ -66,7 +66,7 @@ public class MockExamFetchService {
      * @param mockExamId 모의고사 고유 ID
      * */
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = "questions", key = "#mockExamId")
+    @Cacheable(cacheNames = "QUESTIONS", key = "#mockExamId")
     public QuestionListResponse getQuestionList(Long mockExamId) {
         MockExam mockExam = mockExamService.getMockExam(mockExamId);
 

@@ -40,15 +40,13 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 .orElse(null);
 
         if (refreshToken != null) {
-            log.info("리프레시 토큰이 헤더에 존재 - {}", refreshToken);
-
             String email = jwtTokenUtil.extractEmailFromRefreshToken(refreshToken);
 
             RefreshToken validRefreshToken = tokenCacheRepository.getRefreshToken(email)
                     .filter(existingToken -> existingToken.getRefreshToken().equals(refreshToken))
                     .orElseThrow(() -> new CustomException(ErrorCode.INVALID_REFRESH_TOKEN));
 
-            log.info("리프레시 토큰 유효, 재발급 로직 실행");
+            log.info("user - {} 리프레시 토큰 재발급", email);
             sendAccessTokenAndRefreshToken(validRefreshToken.getEmail(), response);
             throw new CustomException(ErrorCode.REFRESH_TOKEN_REISSUE); //리프레시토큰 재발급 시 401 에러 발생을 방지
         }
