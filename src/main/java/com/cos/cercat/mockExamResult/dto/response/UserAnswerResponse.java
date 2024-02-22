@@ -6,7 +6,7 @@ import com.cos.cercat.mockExamResult.domain.UserAnswer;
 public record UserAnswerResponse(
         QuestionResponse question,
         Long userAnswerId,
-        int selectOption,
+        int selectOptionSeq,
         long takenTime,
         boolean isCorrect
 ) {
