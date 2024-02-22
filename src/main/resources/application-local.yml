@@ -67,3 +67,12 @@ front:
 redis:
   host: localhost
   port: 6379
+
+logging:
+  level:
+    org:
+      hibernate:
+        orm:
+          jdbc:
+            bind: trace
+        SQL: debug

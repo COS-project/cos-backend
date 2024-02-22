@@ -51,6 +51,9 @@ public class MockExamResult extends BaseTimeEntity {
         );
     }
 
+    public boolean isAuthorized(User user) {
+        return this.user.equals(user);
+    }
     private void setSubjectResults(SubjectResults subjectResults) {
         for (SubjectResult subjectResult : subjectResults.getSubjectResults()) {
             subjectResult.setMockExamResult(this);

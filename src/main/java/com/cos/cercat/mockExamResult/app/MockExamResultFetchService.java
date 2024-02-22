@@ -2,6 +2,8 @@ package com.cos.cercat.mockExamResult.app;
 
 import com.cos.cercat.certificate.app.CertificateService;
 import com.cos.cercat.certificate.domain.Certificate;
+import com.cos.cercat.global.exception.CustomException;
+import com.cos.cercat.global.exception.ErrorCode;
 import com.cos.cercat.learning.app.GoalService;
 import com.cos.cercat.learning.domain.Goal;
 import com.cos.cercat.mockExam.app.MockExamService;
@@ -72,8 +74,14 @@ public class MockExamResultFetchService {
      * @param mockExamResultId 모의고사 결과 ID
      * @return 슬라이스 형태로 문제 정보를 포함하여 유저가 제출한 답을 반환한다.
      */
-    public Slice<UserAnswerResponse> getInCorrectUserAnswers(Pageable pageable, Long mockExamResultId) {
+    public Slice<UserAnswerResponse> getInCorrectUserAnswers(Pageable pageable, Long mockExamResultId, Long userId) {
+        User user = userService.getUser(userId);
         MockExamResult mockExamResult = mockExamResultService.getMockExamResult(mockExamResultId);
+
+        if (!mockExamResult.isAuthorized(user)) {
+            throw new CustomException(ErrorCode.NO_PERMISSION_ERROR);
+        }
+
         log.info("mockExamResultId - {} 모든 오답 조회", mockExamResultId);
         return userAnswerService.getIncorrectUserAnswers(pageable, mockExamResult).map(UserAnswerResponse::from);
     }

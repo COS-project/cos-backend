@@ -45,9 +45,10 @@ public class MockExamResultFetchApi {
 
     @GetMapping("/mock-exam-results/{mockExamResultId}/user-answers/incorrect")
     @Operation(summary = "특정 모의고사 틀린문제 조회")
-    public Response<Slice<UserAnswerResponse>> getIncorrectUserAnswers(@PageableDefault Pageable pageable,
-                                                                       @PathVariable Long mockExamResultId) {
-        return Response.success(mockExamResultFetchService.getInCorrectUserAnswers(pageable, mockExamResultId));
+    public Response<Slice<UserAnswerResponse>> getIncorrectUserAnswers(@PageableDefault() Pageable pageable,
+                                                                       @PathVariable Long mockExamResultId,
+                                                                       @AuthenticationPrincipal UserDTO user) {
+        return Response.success(mockExamResultFetchService.getInCorrectUserAnswers(pageable, mockExamResultId, user.getId()));
     }
 
     @GetMapping("/certificates/{certificateId}/mock-exam-results/average")
