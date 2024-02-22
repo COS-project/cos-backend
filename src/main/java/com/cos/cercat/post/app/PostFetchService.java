@@ -23,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 @Slf4j
+@Transactional(readOnly = true)
 public class PostFetchService {
 
     private final CommentaryPostService commentaryPostService;
@@ -42,7 +43,6 @@ public class PostFetchService {
      * @param cond 검색 필터
      * @return Slice 형태의 게시글 Response DTO를 반환합니다.
      */
-    @Transactional(readOnly = true)
     public Slice<PostResponse> searchPosts(Pageable pageable, PostType postType, Long certificateId, PostSearchCond cond) {
         Certificate certificate = certificateService.getCertificate(certificateId);
 
@@ -66,7 +66,6 @@ public class PostFetchService {
      * @param postId 게시글 ID
      * @return 댓글을 포함한 게시글 상세정보를 반환합니다.
      */
-    @Transactional(readOnly = true)
     public PostWithCommentsResponse getPostDetail(Long postId) {
         log.info("postId - {} 게시글 상세정보 조회", postId);
         return PostWithCommentsResponse.from(postService.getPost(postId));
@@ -77,7 +76,6 @@ public class PostFetchService {
      * @param certificateId 자격증 ID
      * @return 리스트 형태의 게시글 정보
      */
-    @Transactional(readOnly = true)
     public List<PostResponse> getTop3TipPosts(Long certificateId) {
         Certificate certificate = certificateService.getCertificate(certificateId);
 
@@ -94,7 +92,6 @@ public class PostFetchService {
      * @param pageable 페이징 정보
      * @return 내가 쓴 게시글들을 반환합니다.
      */
-    @Transactional(readOnly = true)
     public Slice<PostResponse> getMyPosts(PostType postType, Long userId, Pageable pageable) {
         User user = userService.getUser(userId);
 
@@ -112,7 +109,6 @@ public class PostFetchService {
      * @param pageable 페이징 정보
      * @return 유저 본인이 댓글을 쓴 게시글들을 반환한다.
      */
-    @Transactional(readOnly = true)
     public Slice<PostResponse> getMyCommentPosts(Long userId, Pageable pageable) {
         User user = userService.getUser(userId);
 

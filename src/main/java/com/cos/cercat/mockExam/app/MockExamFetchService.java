@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MockExamFetchService {
 
     private final MockExamResultService mockExamResultService;
@@ -42,7 +43,6 @@ public class MockExamFetchService {
      * @param examYear 시험년도
      * @param userId 로그인한 유저
      * */
-    @Transactional(readOnly = true)
     public List<MockExamWithResultResponse> getMockExamList(Long certificateId, Integer examYear, Long userId) {
         List<MockExamWithResultResponse> resultResponses = new ArrayList<>();
         Certificate certificate = certificateService.getCertificate(certificateId);
@@ -65,7 +65,6 @@ public class MockExamFetchService {
      *
      * @param mockExamId 모의고사 고유 ID
      * */
-    @Transactional(readOnly = true)
     @Cacheable(cacheNames = "QUESTIONS", key = "#mockExamId")
     public QuestionListResponse getQuestionList(Long mockExamId) {
         MockExam mockExam = mockExamService.getMockExam(mockExamId);
