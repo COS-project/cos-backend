@@ -27,7 +27,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepositoryCus
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<DailyScoreAverage> getDailyReport(Certificate certificate, User user, DateCond dateCond) {
+    public List<DailyScoreAverage> getDailyScoreAverages(Certificate certificate, User user, DateCond dateCond) {
 
         LocalDate firstDayOfMonth = LocalDate.of(dateCond.year(), dateCond.month(), 1);
 
@@ -58,7 +58,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepositoryCus
     }
 
     @Override
-    public List<WeeklyScoreAverage> getWeeklyReport(Certificate certificate, User user, DateCond dateCond) {
+    public List<WeeklyScoreAverage> getWeeklyScoreAverages(Certificate certificate, User user, DateCond dateCond) {
 
         LocalDate month = LocalDate.of(dateCond.year(), dateCond.month(), 1);
 
@@ -85,7 +85,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepositoryCus
     }
 
     @Override
-    public List<MonthlyScoreAverage> getYearlyReport(Certificate certificate, User user, DateCond dateCond) {
+    public List<MonthlyScoreAverage> getMonthlyScoreAverages(Certificate certificate, User user, DateCond dateCond) {
 
         LocalDate year = LocalDate.of(dateCond.year(), 1, 1);
 

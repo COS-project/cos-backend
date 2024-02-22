@@ -62,12 +62,12 @@ public class MockExamResultFetchService {
      * @param userId 유저 ID
      * @return 슬라이스 형태로 문제 정보를 포함하여 유저가 제출한 답을 반환한다.
      */
-    public Slice<UserAnswerResponse> getAllInCorrectUserAnswers(Pageable pageable, Long certificateId, Long userId) {
+    public Slice<UserAnswerResponse> getAllWrongUserAnswers(Pageable pageable, Long certificateId, Long userId) {
         Certificate certificate = certificateService.getCertificate(certificateId);
         User user = userService.getUser(userId);
 
         log.info("user - {}, certificate - {} 모든 오답 조회", user.getEmail(), certificate.getCertificateName());
-        return userAnswerService.getAllIncorrectUserAnswers(pageable, user, certificate).map(UserAnswerResponse::from);
+        return userAnswerService.getAllWrongUserAnswers(pageable, user, certificate).map(UserAnswerResponse::from);
     }
 
     /***
@@ -76,7 +76,7 @@ public class MockExamResultFetchService {
      * @param mockExamResultId 모의고사 결과 ID
      * @return 슬라이스 형태로 문제 정보를 포함하여 유저가 제출한 답을 반환한다.
      */
-    public Slice<UserAnswerResponse> getInCorrectUserAnswers(Pageable pageable, Long mockExamResultId, Long userId) {
+    public Slice<UserAnswerResponse> getWrongUserAnswers(Pageable pageable, Long mockExamResultId, Long userId) {
         User user = userService.getUser(userId);
         MockExamResult mockExamResult = mockExamResultService.getMockExamResult(mockExamResultId);
 
@@ -85,7 +85,7 @@ public class MockExamResultFetchService {
         }
 
         log.info("mockExamResultId - {} 모든 오답 조회", mockExamResultId);
-        return userAnswerService.getIncorrectUserAnswers(pageable, mockExamResult).map(UserAnswerResponse::from);
+        return userAnswerService.getWrongUserAnswers(pageable, mockExamResult).map(UserAnswerResponse::from);
     }
 
     /***

@@ -20,12 +20,12 @@ public class UserAnswerService {
 
     private final UserAnswerRepository userAnswerRepository;
 
-    public Slice<UserAnswer> getAllIncorrectUserAnswers(Pageable pageable, User user, Certificate certificate) {
-        return userAnswerRepository.getIncorrectUserAnswersByUserAndCertificate(pageable, user.getId(), certificate.getId());
+    public Slice<UserAnswer> getAllWrongUserAnswers(Pageable pageable, User user, Certificate certificate) {
+        return userAnswerRepository.getWrongUserAnswersByUserAndCertificate(pageable, user.getId(), certificate.getId());
     }
 
-    public Slice<UserAnswer> getIncorrectUserAnswers(Pageable pageable, MockExamResult mockExamResult) {
-        return userAnswerRepository.getIncorrectUserAnswersByMockExamResult(pageable, mockExamResult.getId());
+    public Slice<UserAnswer> getWrongUserAnswers(Pageable pageable, MockExamResult mockExamResult) {
+        return userAnswerRepository.getWrongUserAnswersByMockExamResult(pageable, mockExamResult.getId());
     }
 
     public UserAnswer getUserAnswer(Long userAnswerId) {

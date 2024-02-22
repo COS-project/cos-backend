@@ -10,7 +10,6 @@ import com.cos.cercat.mockExamResult.dto.request.DateCond;
 import com.cos.cercat.mockExamResult.dto.response.DailyScoreAverage;
 import com.cos.cercat.mockExamResult.dto.response.MonthlyScoreAverage;
 import com.cos.cercat.mockExamResult.dto.response.WeeklyScoreAverage;
-import com.cos.cercat.mockExamResult.repository.MockExamResultBatchRepositoryImpl;
 import com.cos.cercat.user.domain.User;
 import com.cos.cercat.mockExamResult.repository.MockExamResultRepository;
 import lombok.RequiredArgsConstructor;
@@ -76,17 +75,17 @@ public class MockExamResultService {
     }
 
     public List<DailyScoreAverage> getWeeklyReport(Certificate certificate, User user, DateCond dateCond) {
-        return mockExamResultRepository.getDailyReport(certificate, user, dateCond);
+        return mockExamResultRepository.getDailyScoreAverages(certificate, user, dateCond);
     }
 
     public List<WeeklyScoreAverage> getMonthlyReport(Certificate certificate, User user, DateCond dateCond) {
-        return mockExamResultRepository.getWeeklyReport(certificate, user, dateCond).stream()
+        return mockExamResultRepository.getWeeklyScoreAverages(certificate, user, dateCond).stream()
                 .sorted(Comparator.comparing(WeeklyScoreAverage::getWeekOfMonth))
                 .toList();
     }
 
     public List<MonthlyScoreAverage> getYearlyReport(Certificate certificate, User user, DateCond dateCond) {
-        return mockExamResultRepository.getYearlyReport(certificate, user, dateCond).stream()
+        return mockExamResultRepository.getMonthlyScoreAverages(certificate, user, dateCond).stream()
                 .sorted(Comparator.comparing(MonthlyScoreAverage::getMonth))
                 .toList();
     }

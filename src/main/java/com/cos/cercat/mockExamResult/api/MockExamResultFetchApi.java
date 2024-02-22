@@ -35,20 +35,20 @@ public class MockExamResultFetchApi {
         return Response.success(mockExamResultFetchService.getMockExamResults(mockExamId, user.getId()));
     }
 
-    @GetMapping("/certificates/{certificateId}/user-answers/incorrect")
+    @GetMapping("/certificates/{certificateId}/user-answers/wrong-answers")
     @Operation(summary = "전체 틀린문제 조회")
-    public Response<Slice<UserAnswerResponse>> getAllIncorrectUserAnswers(@PageableDefault Pageable pageable,
-                                                                          @PathVariable Long certificateId,
-                                                                          @AuthenticationPrincipal UserDTO user) {
-        return Response.success(mockExamResultFetchService.getAllInCorrectUserAnswers(pageable, certificateId, user.getId()));
+    public Response<Slice<UserAnswerResponse>> getAllWrongUserAnswers(@PageableDefault Pageable pageable,
+                                                                      @PathVariable Long certificateId,
+                                                                      @AuthenticationPrincipal UserDTO user) {
+        return Response.success(mockExamResultFetchService.getAllWrongUserAnswers(pageable, certificateId, user.getId()));
     }
 
-    @GetMapping("/mock-exam-results/{mockExamResultId}/user-answers/incorrect")
+    @GetMapping("/mock-exam-results/{mockExamResultId}/user-answers/wrong-answers")
     @Operation(summary = "특정 모의고사 틀린문제 조회")
-    public Response<Slice<UserAnswerResponse>> getIncorrectUserAnswers(@PageableDefault() Pageable pageable,
-                                                                       @PathVariable Long mockExamResultId,
-                                                                       @AuthenticationPrincipal UserDTO user) {
-        return Response.success(mockExamResultFetchService.getInCorrectUserAnswers(pageable, mockExamResultId, user.getId()));
+    public Response<Slice<UserAnswerResponse>> getWrongUserAnswers(@PageableDefault() Pageable pageable,
+                                                                   @PathVariable Long mockExamResultId,
+                                                                   @AuthenticationPrincipal UserDTO user) {
+        return Response.success(mockExamResultFetchService.getWrongUserAnswers(pageable, mockExamResultId, user.getId()));
     }
 
     @GetMapping("/certificates/{certificateId}/mock-exam-results/average")
@@ -58,8 +58,7 @@ public class MockExamResultFetchApi {
         return Response.success(mockExamResultFetchService.getSubjectResultsAVG(certificateId, user.getId()));
     }
 
-    @GetMapping("/certificates/{certificateId}/mock-exam-results/{reportType}/reports")
-    @Operation(summary = "성적 리포트 통계")
+    @GetMapping("/certificates/{certificateId}/mock-exam-results/{reportType}/statistics")
     public Response<Report> getReport(@PathVariable Long certificateId,
                                       @PathVariable ReportType reportType,
                                       DateCond dateCond,
