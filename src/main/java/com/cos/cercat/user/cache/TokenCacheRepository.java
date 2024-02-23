@@ -41,7 +41,7 @@ public class TokenCacheRepository{
     }
 
     public String getKey(String email) {
-        return "REFRESH_TOKEN:" + email;
+        return "REFRESH_TOKEN::" + email;
     }
 
 

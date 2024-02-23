@@ -25,7 +25,7 @@ public class LogoutTokenRepository {
     }
 
     public String getLogoutKey(String email) {
-        return "logout:" + email;
+        return "LOGOUT::" + email;
     }
 
 }
