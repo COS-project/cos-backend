@@ -49,7 +49,7 @@ public class PostFetchApi {
         return Response.success(postFetchService.getTop3TipPosts(certificateId));
     }
 
-    @GetMapping("/my/{postType}/posts")
+    @GetMapping("/{postType}/posts/my-posts")
     @Operation(summary = "내가 쓴 글 조회")
     public Response<Slice<PostResponse>> getMyPosts(@PathVariable PostType postType,
                                                    @AuthenticationPrincipal UserDTO user,
@@ -57,7 +57,7 @@ public class PostFetchApi {
         return Response.success(postFetchService.getMyPosts(postType, user.getId(), pageable));
     }
 
-    @GetMapping("/my/comment-posts")
+    @GetMapping("/comment-posts/my-comment-posts")
     @Operation(summary = "내가 댓글 쓴 게시글 조회")
     public Response<Slice<PostResponse>> getMyCommentPosts(@AuthenticationPrincipal UserDTO user,
                                                           @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {

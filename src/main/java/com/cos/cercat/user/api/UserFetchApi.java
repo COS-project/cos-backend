@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "유저 정보 조회 API")
 public class UserFetchApi {
 
-    @GetMapping("/user/me")
+    @GetMapping("/users/me")
     @Operation(summary = "회원 정보 가져오기")
     public Response<UserResponse> getMemberInfo(@AuthenticationPrincipal UserDTO user) {
         return Response.success(UserResponse.fromDTO(user));
