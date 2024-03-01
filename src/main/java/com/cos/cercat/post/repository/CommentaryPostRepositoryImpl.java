@@ -55,7 +55,7 @@ public class CommentaryPostRepositoryImpl implements PostRepositoryCustom<Commen
 
         boolean hasNext = false;
         if (contents.size() > pageable.getPageSize()) {
-            contents.remove(pageable.getPageSize() + 1);
+            contents.remove(pageable.getPageSize());
             hasNext = true;
         }
 
