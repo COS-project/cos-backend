@@ -21,4 +21,9 @@ public class RecommendTags {
         this.recommendTags.addAll(recommendTags);
     }
 
+    public void updateTags(Set<RecommendTag> newTags) {
+        this.recommendTags.clear();
+        this.recommendTags.addAll(newTags);
+    }
+
 }

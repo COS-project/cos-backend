@@ -1,5 +1,6 @@
 package com.cos.cercat.post.app;
 
+import com.cos.cercat.post.domain.RecommendTag;
 import com.cos.cercat.post.domain.TipPost;
 import com.cos.cercat.post.dto.request.PostSearchCond;
 import com.cos.cercat.post.repository.TipPostRepository;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
@@ -49,6 +51,7 @@ public class TipPostService {
     public void updateTipPost(Long postId,
                               String title,
                               String content,
+                              Set<RecommendTag> newTags,
                               List<Image> images,
                               User user
     ) {
@@ -56,6 +59,7 @@ public class TipPostService {
 
         if (tipPost.isAuthorized(user)) {
             tipPost.updatePostInfo(title, content, images);
+            tipPost.updateRecommendTags(newTags);
             return;
         }
 

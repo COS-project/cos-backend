@@ -27,4 +27,9 @@ public class TipPost extends Post{
         recommendTags.forEach(recommendTag -> recommendTag.setTipPost(this));
         this.recommendTags.addAll(recommendTags);
     }
+
+    public void updateRecommendTags(Set<RecommendTag> newTags) {
+        newTags.forEach(newTag -> newTag.setTipPost(this));
+        this.recommendTags.updateTags(newTags);
+    }
 }

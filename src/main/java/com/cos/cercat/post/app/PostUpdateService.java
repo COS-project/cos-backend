@@ -1,6 +1,7 @@
 package com.cos.cercat.post.app;
 
 import com.cos.cercat.post.domain.PostType;
+import com.cos.cercat.post.dto.RecommendTagDTO;
 import com.cos.cercat.post.dto.request.PostUpdateRequest;
 import com.cos.cercat.certificate.app.CertificateService;
 import com.cos.cercat.certificate.domain.Certificate;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -64,6 +66,9 @@ public class PostUpdateService {
                         request.postId(),
                         request.title(),
                         request.content(),
+                        request.newTags().stream()
+                                .map(RecommendTagDTO::toEntity)
+                                .collect(Collectors.toSet()),
                         images,
                         user
                 );
