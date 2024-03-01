@@ -37,6 +37,6 @@ public class UserCacheRepository {
     }
 
     public String getKey(String email) {
-        return "USER::" + email;
+        return "USER:" + email;
     }
 }
