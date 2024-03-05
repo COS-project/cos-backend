@@ -59,6 +59,7 @@ public class MockExamResultFetchApi {
     }
 
     @GetMapping("/certificates/{certificateId}/mock-exam-results/{reportType}/statistics")
+    @Operation(summary = "주간/월간/년간 성적 리포트 통계 조회")
     public Response<Report> getReport(@PathVariable Long certificateId,
                                       @PathVariable ReportType reportType,
                                       DateCond dateCond,
