@@ -29,12 +29,13 @@ public class PostCommentService {
     }
 
     public void deletePostComment(Long commentId, User user) {
-
         PostComment postComment = getPostComment(commentId);
 
         if (postComment.isAuthorized(user)) {
             postCommentRepository.delete(postComment);
+            return;
         }
+        throw new CustomException(ErrorCode.NO_PERMISSION_ERROR);
     }
 
     public PostComment getPostCommentWithLock(Long commentId) {

@@ -34,7 +34,7 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     protected User user;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "certificate_id")
     protected Certificate certificate;
 

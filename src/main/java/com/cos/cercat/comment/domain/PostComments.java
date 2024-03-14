@@ -10,7 +10,7 @@ import java.util.List;
 public class PostComments {
 
     @OrderBy("createdAt ASC")
-    @OneToMany(mappedBy = "post",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PostComment> postComments = new ArrayList<>();
 
     public void addComment(PostComment comment) {

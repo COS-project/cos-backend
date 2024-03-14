@@ -5,6 +5,7 @@ import com.cos.cercat.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -20,11 +21,11 @@ public class PostCommentDeleteService {
      * @param commentId 댓글 ID
      * @param userId 유저 ID
      */
+    @Transactional
     public void deletePostComment(Long commentId, Long userId) {
         User user = userService.getUser(userId);
         log.info("user - {}, commentId - {} 댓글 삭제", user.getEmail(), commentId);
         postCommentService.deletePostComment(commentId, user);
-
     }
 
 }
