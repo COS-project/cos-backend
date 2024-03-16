@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/cercat_test
-    username: root
-    password: 1234
+    username: mysqluser
+    password: mysqlpw
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -76,3 +76,5 @@ logging:
           jdbc:
             bind: trace
         SQL: debug
+elasticsearch:
+  host: ${ELASTICSEARCH_HOST:localhost:9200}

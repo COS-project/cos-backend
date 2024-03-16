@@ -59,6 +59,9 @@ dependencies {
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.2'
 
+	//elastic search
+	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+
 	//Database 관련
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'com.mysql:mysql-connector-j'
