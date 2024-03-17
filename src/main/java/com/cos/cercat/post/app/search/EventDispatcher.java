@@ -20,7 +20,7 @@ public class EventDispatcher {
 
     private final EventHandlerFactory eventHandlerFactory;
 
-    @KafkaListener(topics = {"cercat.cercat_test.post", "cercat.cercat_test.post_comment"})
+    @KafkaListener(topics = {"${spring.kafka.topic.debezium}"})
     public void handleEvents(List<ConsumerRecord<String, DebeziumEvent>> records,
                              Acknowledgment acknowledgment) {
         log.info("Request to process {} records", records.size());
