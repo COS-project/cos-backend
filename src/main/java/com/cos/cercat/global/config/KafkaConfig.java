@@ -53,6 +53,7 @@ public class KafkaConfig {
     kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, DebeziumEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
+        factory.setConcurrency(3);
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
         factory.setBatchListener(true);
         return factory;
@@ -63,6 +64,7 @@ public class KafkaConfig {
     alarmEventConcurrentKafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<Long, AlarmEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(alarmConsumerFactory());
+        factory.setConcurrency(3);
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
         factory.setBatchListener(true);
         return factory;
@@ -84,7 +86,7 @@ public class KafkaConfig {
                 .put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class)
                 .put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class)
                 .put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest")
-                .put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false")
+                .put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true")
                 .put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "10")
                 .build();
     }
@@ -107,10 +109,9 @@ public class KafkaConfig {
                 .put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, LongDeserializer.class)
                 .put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class)
                 .put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest")
-                .put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false")
+                .put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true")
                 .put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "1")
                 .build();
     }
-
 
 }
