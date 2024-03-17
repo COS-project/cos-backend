@@ -30,7 +30,7 @@
 - Kafka를 통해 비동기 알림 pub/sub
 - Debezium 커넥터를 통해 MySQL의 데이터변경을 캡쳐하여 Kafka로 발행 -> Elastic Search 저장
 - Elastic Search의 ngram, nori 분석기등을 통해 검색 최적화
-- 수정이 없고 조회가 굉장히 많은 모의고사 문제 데이터 Redis 캐싱
+- Redis를 통해 최근 검색기록 및 모의고사 문제 데이터 캐싱
 - Git Actions의 Cron job을 통해 Batch 서버 실행
 # CI/CD
 <img width="1015" alt="cercat-cicd" src="https://github.com/COS-project/cos-backend/assets/128073698/9abc44f9-eace-4dfd-9760-2be7046fc215">
