@@ -16,7 +16,7 @@ public class DebeziumEvent {
 
     @RequiredArgsConstructor
     public enum DebeziumEventPayloadOperation {
-        CREATE("c"), UPDATE("u"), DELETE("r");
+        CREATE("c"), UPDATE("u"), DELETE("d");
         private final String value;
 
         @JsonValue
