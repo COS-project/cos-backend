@@ -86,7 +86,7 @@ public class KafkaConfig {
                 .put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class)
                 .put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class)
                 .put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest")
-                .put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true")
+                .put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false")
                 .put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "10")
                 .build();
     }
@@ -109,7 +109,7 @@ public class KafkaConfig {
                 .put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, LongDeserializer.class)
                 .put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class)
                 .put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest")
-                .put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true")
+                .put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false")
                 .put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "1")
                 .build();
     }
