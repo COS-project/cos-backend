@@ -18,16 +18,18 @@
 중요한 정보를 놓치지 않고, 커뮤니티 내에서의 소통도 놓치지 않을 수 있도록 알림 서비스를 제공합니다.
 
 # 기술 스택
-- 백엔드 : Spring Boot, Redis, Kafka, Docker, Spring Security
+- 백엔드 : Spring Boot, Redis, Kafka, ELK, Docker
 - 클라우드 : GCP VM, GCS, GCP MySQL
 - CI/CD : Git Actions, Docker Compose
 - 협업도구 : Slack
 
 # 인프라 구성
-<img width="1035" alt="cercat-infra" src="https://github.com/COS-project/cos-backend/assets/128073698/26671112-219b-42f5-9f3a-3104ee7737a3">
+<img width="1013" alt="cercat 아키텍쳐" src="https://github.com/COS-project/cos-backend/assets/128073698/14d2c909-676d-4419-b090-72b6d3a9870b">
 
 - Nginx로 리버스 프록시
 - Kafka를 통해 비동기 알림 pub/sub
+- Debezium 커넥터를 통해 MySQL의 데이터변경을 캡쳐하여 Kafka로 발행 -> Elastic Search 저장
+- Elastic Search의 ngram, nori 분석기등을 통해 검색 최적화
 - 수정이 없고 조회가 굉장히 많은 모의고사 문제 데이터 Redis 캐싱
 - Git Actions의 Cron job을 통해 Batch 서버 실행
 # CI/CD
