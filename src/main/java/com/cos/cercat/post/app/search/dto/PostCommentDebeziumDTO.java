@@ -1,10 +1,16 @@
 package com.cos.cercat.post.app.search.dto;
 
+import com.cos.cercat.post.app.search.domain.PostCommentDocument;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Date;
 
 @Data
 public class PostCommentDebeziumDTO implements Serializable {
@@ -27,8 +33,26 @@ public class PostCommentDebeziumDTO implements Serializable {
     @JsonProperty("created_at")
     private LocalDateTime createdAt;
 
-    @JsonProperty("modified_at")
-    private LocalDateTime modifiedAt;
+    public void setCreatedAt(Long timestamp) {
+        // 마이크로초를 밀리초로 변환하여 Instant 생성
+        Instant instant = Instant.ofEpochMilli(timestamp / 1000);
+        // 서울 시간대의 ZoneId를 얻음
+        ZoneId seoulZoneId = ZoneId.of("UTC");
+        // Instant를 서울 시간대 기준으로 ZonedDateTime으로 변환
+        ZonedDateTime seoulZonedDateTime = instant.atZone(seoulZoneId);
+        // ZonedDateTime에서 LocalDateTime을 추출
+        this.createdAt = seoulZonedDateTime.toLocalDateTime();
+    }
 
+    public PostCommentDocument toEntity() {
+        return PostCommentDocument.builder()
+                .id(id)
+                .postId(postId)
+                .userId(userId)
+                .content(content)
+                .likeCount(likeCount)
+                .createdAt(createdAt)
+                .build();
+    }
 
 }

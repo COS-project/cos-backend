@@ -3,12 +3,14 @@ package com.cos.cercat.user.api;
 import com.cos.cercat.global.Response;
 import com.cos.cercat.user.app.UserService;
 import com.cos.cercat.user.dto.UserDTO;
+import com.cos.cercat.user.dto.request.SearchLogDeleteRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -25,4 +27,21 @@ public class UserDeleteApi {
         userService.deleteUser(user.getId());
         return Response.success("회원탈퇴 성공");
     }
+
+    @DeleteMapping("/users/search-logs")
+    @Operation(summary = "특정 검색 기록 삭제")
+    public Response<Void> deleteSearchLogs(@AuthenticationPrincipal UserDTO user,
+                                           @RequestParam SearchLogDeleteRequest request) {
+        userService.deleteSearchLog(user, request);
+        return Response.success("검색 기록 삭제 성공");
+    }
+
+    @DeleteMapping("/users/search-logs/all")
+    @Operation(summary = "모든 검색 기록 삭제")
+    public Response<Void> deleteAllSearchLogs(@AuthenticationPrincipal UserDTO user) {
+        userService.deleteAllSearchLogs(user);
+        return Response.success("모든 검색 기록 삭제 성공");
+    }
+
+
 }

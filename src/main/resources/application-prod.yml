@@ -11,20 +11,7 @@ spring:
       hibernate:
         default_batch_fetch_size: 100
   kafka:
-    listener:
-      ack-mode: manual
-    consumer:
-      bootstrap-servers: kafka:9092
-      group-id: alarm
-      auto-offset-reset: latest
-      key-deserializer: org.apache.kafka.common.serialization.LongDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      properties:
-        spring.json.trusted.packages: "*"
-    producer:
-      bootstrap-servers: kafka:9092
-      key-serializer: org.apache.kafka.common.serialization.LongSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    bootstrap-servers: kafka:9092
     topic:
       alarm: alarm
   security:
@@ -62,7 +49,9 @@ front:
   port: 3000
   home-path: /home
   sign-up-path: /onboarding
-
 redis:
   host: redis
   port: 6379
+
+elasticsearch:
+  host: ${ELASTICSEARCH_HOST:es:9200}

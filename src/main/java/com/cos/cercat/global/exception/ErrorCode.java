@@ -33,7 +33,8 @@ public enum ErrorCode {
     INVALID_REFRESH_TOKEN(HttpStatus.BAD_REQUEST, "invalid refresh token"),
     INVALID_ACCESS_TOKEN(HttpStatus.BAD_REQUEST, "invalid access token"),
     ACCESS_TOKEN_EXPIRED(HttpStatus.BAD_REQUEST, "access token expired"),
-    USER_ANSWER_NOT_FOUND(HttpStatus.NOT_FOUND, "user answer not founded");
+    USER_ANSWER_NOT_FOUND(HttpStatus.NOT_FOUND, "user answer not founded"),
+    SEARCH_LOG_NOT_EXIST(HttpStatus.BAD_REQUEST, "search log not exist");
 
     private final HttpStatus httpStatus;
     private final String message;

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Date;
 import java.util.Map;
 
 @Data
@@ -32,5 +33,8 @@ public class DebeziumEvent {
 
         @JsonProperty("op")
         private DebeziumEventPayloadOperation operation;
+
+        @JsonProperty("ts_ms")
+        private Date date;
     }
 }

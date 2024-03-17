@@ -1,6 +1,5 @@
 package com.cos.cercat.alarm.dto;
 
-import com.cos.cercat.alarm.domain.Alarm;
 import com.cos.cercat.alarm.domain.AlarmType;
 import com.cos.cercat.alarm.domain.BoardAlarm;
 import com.cos.cercat.user.domain.User;

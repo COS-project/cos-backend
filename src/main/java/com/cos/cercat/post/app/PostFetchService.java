@@ -1,5 +1,8 @@
 package com.cos.cercat.post.app;
 
+import com.cos.cercat.post.app.search.domain.PostDocument;
+import com.cos.cercat.post.app.search.dto.SearchCond;
+import com.cos.cercat.post.app.search.service.PostSearchService;
 import com.cos.cercat.post.domain.PostType;
 import com.cos.cercat.post.dto.request.PostSearchCond;
 import com.cos.cercat.post.dto.response.PostResponse;
@@ -10,13 +13,15 @@ import com.cos.cercat.comment.app.PostCommentService;
 import com.cos.cercat.comment.domain.PostComment;
 import com.cos.cercat.user.app.UserService;
 import com.cos.cercat.user.domain.User;
+import com.cos.cercat.user.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -32,33 +37,47 @@ public class PostFetchService {
     private final TipPostService tipPostService;
     private final UserService userService;
     private final PostService postService;
+    private final PostSearchService postSearchService;
     private final PostCommentService postCommentService;
 
+    /***
+     * 댓글, 게시글을 포함해 통합 검색합니다.
+     * @param cond 검색 필터
+     * @param pageable 페이징 정보
+     * @return Slice 형태의 게시글 Response DTO를 반환합니다.
+     */
+    public Slice<PostResponse> search(SearchCond cond,
+                                      UserDTO user,
+                                      Long certificateId,
+                                      Pageable pageable) {
+        Slice<PostDocument> documents = postSearchService.search(cond, certificateId, pageable);
+
+        if (StringUtils.hasText(cond.keyword())) {
+            userService.saveSearchLog(user, cond.keyword());
+        }
+
+        List<PostResponse> responses = documents.map(PostDocument::getId)
+                .map(postService::getPost)
+                .map(PostResponse::from)
+                .toList();
+
+        return new SliceImpl<>(responses, pageable, documents.hasNext());
+    }
 
     /***
      * 게시글을 필터에 따라 검색합니다.
      * @param pageable 페이징 정보
-     * @param postType COMMENTARY(해설), TIP(꿀팁), NORMAL(자유)
      * @param certificateId 자격증 ID
      * @param cond 검색 필터
      * @return Slice 형태의 게시글 Response DTO를 반환합니다.
      */
-    public Slice<PostResponse> searchPosts(Pageable pageable, PostType postType, Long certificateId, PostSearchCond cond) {
+    public Slice<PostResponse> searchCommentaryPosts(Pageable pageable,
+                                                     Long certificateId,
+                                                     PostSearchCond cond) {
         Certificate certificate = certificateService.getCertificate(certificateId);
 
-        log.info("certificate - {}, postType - {}, cond - {} 게시글 검색",
-                certificate.getCertificateName(), postType, cond);
-        return switch (postType) {
-            case COMMENTARY -> commentaryPostService
-                    .searchCommentaryPosts(pageable, certificate, cond)
-                    .map(PostResponse::from);
-            case TIP -> tipPostService
-                    .searchTipPosts(pageable, certificate, cond)
-                    .map(PostResponse::from);
-            case NORMAL -> normalPostService
-                    .searchNormalPosts(pageable, certificate, cond)
-                    .map(PostResponse::from);
-        };
+        log.info("certificate - {}, cond - {} 해설게시글 검색", certificate.getCertificateName(), cond);
+        return commentaryPostService.searchCommentaryPosts(pageable, certificate, cond).map(PostResponse::from);
     }
 
     /***

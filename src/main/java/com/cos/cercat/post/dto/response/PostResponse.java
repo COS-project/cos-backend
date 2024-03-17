@@ -1,5 +1,6 @@
 package com.cos.cercat.post.dto.response;
 
+import com.cos.cercat.post.app.search.domain.PostDocument;
 import com.cos.cercat.post.domain.*;
 import com.cos.cercat.mockExam.dto.response.MockExamResponse;
 import com.cos.cercat.user.dto.response.UserResponse;
@@ -78,4 +79,5 @@ public record PostResponse(
             case NORMAL -> from((NormalPost) post);
         };
     }
+
 }

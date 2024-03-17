@@ -4,16 +4,18 @@ import com.cos.cercat.global.common.Image;
 import com.cos.cercat.global.exception.CustomException;
 import com.cos.cercat.global.exception.ErrorCode;
 import com.cos.cercat.global.util.JwtTokenUtil;
-import com.cos.cercat.user.cache.LogoutTokenRepository;
-import com.cos.cercat.user.cache.UserCacheRepository;
-import com.cos.cercat.user.cache.TokenCacheRepository;
+import com.cos.cercat.user.cache.*;
 import com.cos.cercat.user.domain.User;
 import com.cos.cercat.user.dto.UserDTO;
+import com.cos.cercat.user.dto.request.SearchLogDeleteRequest;
 import com.cos.cercat.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +26,7 @@ public class UserService {
     private final UserCacheRepository userCacheRepository;
     private final TokenCacheRepository tokenCacheRepository;
     private final LogoutTokenRepository logoutTokenRepository;
+    private final SearchLogCacheRepository searchLogCacheRepository;
     private final JwtTokenUtil jwtTokenUtil;
 
     @Cacheable(cacheNames = "USER", key = "#email")
@@ -35,6 +38,30 @@ public class UserService {
     public User getUser(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+    }
+
+    public void saveSearchLog(UserDTO userDTO, String searchKeyword) {
+        SearchLog searchLog = SearchLog.builder()
+                .keyword(searchKeyword)
+                .createdAt(LocalDateTime.now().toString())
+                .build();
+        searchLogCacheRepository.setLog(userDTO.getEmail(), searchLog);
+    }
+
+    public List<SearchLog> getSearchLogs(UserDTO userDTO) {
+        return searchLogCacheRepository.getSearchLogs(userDTO.getEmail());
+    }
+
+    public void deleteSearchLog(UserDTO userDTO, SearchLogDeleteRequest request) {
+        SearchLog searchLog = SearchLog.builder()
+                .keyword(request.keyword())
+                .createdAt(request.createdAt())
+                .build();
+        searchLogCacheRepository.deleteLog(userDTO.getEmail(), searchLog);
+    }
+
+    public void deleteAllSearchLogs(UserDTO userDTO) {
+        searchLogCacheRepository.deleteAllLogs(userDTO.getEmail());
     }
 
     public void updateUser(Long userId, String nickName, Image image) {

@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface TipPostRepository extends JpaRepository<TipPost, Long>, PostRepositoryCustom<TipPost> {
+public interface TipPostRepository extends JpaRepository<TipPost, Long> {
 
     List<TipPost> findTop3ByCertificateOrderByLikeCountDesc(Certificate certificate);
 

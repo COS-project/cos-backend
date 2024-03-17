@@ -42,7 +42,6 @@ public class CommentaryPostRepositoryImpl implements PostRepositoryCustom<Commen
                 .leftJoin(commentaryPost.certificate, QCertificate.certificate)
                 .fetchJoin()
                 .where(
-                        containKeyword(cond.keyword()),
                         eqExamYear(cond.examYear()),
                         eqRound(cond.round()),
                         eqQuestionSequence(cond.questionSequence()),
@@ -62,24 +61,6 @@ public class CommentaryPostRepositoryImpl implements PostRepositoryCustom<Commen
         return new SliceImpl<>(contents, pageable, hasNext);
     }
 
-    private BooleanExpression containKeyword(String keyword) {
-        if (keyword == null || keyword.isEmpty()) {
-            return null;
-        }
-
-        BooleanExpression keywordExpression = null;
-
-        try {
-            Integer keywordAsInteger = Integer.parseInt(keyword);
-            keywordExpression = commentaryPost.question.questionSeq.eq(keywordAsInteger);
-        } catch (NumberFormatException e) {
-            // Ignore the exception if parsing fails
-        }
-
-        return commentaryPost.title.containsIgnoreCase(keyword)
-                .or(commentaryPost.content.containsIgnoreCase(keyword))
-                .or(keywordExpression);
-    }
 
     private BooleanExpression eqExamYear(Integer examYear) {
         if (examYear == null) return null;

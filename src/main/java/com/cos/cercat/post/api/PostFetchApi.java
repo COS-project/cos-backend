@@ -1,6 +1,7 @@
 package com.cos.cercat.post.api;
 
 import com.cos.cercat.post.app.PostFetchService;
+import com.cos.cercat.post.app.search.dto.SearchCond;
 import com.cos.cercat.post.domain.PostType;
 import com.cos.cercat.post.dto.request.PostSearchCond;
 import com.cos.cercat.post.dto.response.PostResponse;
@@ -10,7 +11,6 @@ import com.cos.cercat.user.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
@@ -30,16 +30,24 @@ public class PostFetchApi {
 
     @GetMapping("/certificates/{certificateId}/{postType}/posts")
     @Operation(summary = "게시글 검색", description = "키워드가 안주어졌을 경우 전체 조회")
-    public Response<Slice<PostResponse>> getCommentaryPosts(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+    public Response<Slice<PostResponse>> searchCommentaryPosts(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
                                                             @PathVariable Long certificateId,
-                                                            @PathVariable PostType postType,
                                                             PostSearchCond cond) {
-        return Response.success(postFetchService.searchPosts(pageable, postType, certificateId, cond));
+        return Response.success(postFetchService.searchCommentaryPosts(pageable, certificateId, cond));
+    }
+
+    @GetMapping("/certificates/{certificateId}/search")
+    @Operation(summary = "통합 검색(모든 게시글, 댓글)", description = "통합 검색엔진")
+    public Response<Slice<PostResponse>> search(SearchCond cond,
+                                                @AuthenticationPrincipal UserDTO user,
+                                                @PathVariable Long certificateId,
+                                                Pageable pageable) {
+        return Response.success(postFetchService.search(cond, user, certificateId, pageable));
     }
 
     @GetMapping("/posts/{postId}")
     @Operation(summary = "게시글 상세 조회")
-    public Response<PostWithCommentsResponse> getCommentaryPostDetail(@PathVariable Long postId) {
+    public Response<PostWithCommentsResponse> getPostDetail(@PathVariable Long postId) {
         return Response.success(postFetchService.getPostDetail(postId));
     }
 

@@ -1,10 +1,13 @@
 package com.cos.cercat.post.app.search.handler;
 
+import com.cos.cercat.post.app.search.DebeziumEvent;
 import com.cos.cercat.post.app.search.dto.PostCommentDebeziumDTO;
 import com.cos.cercat.post.app.search.service.PostSearchService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
+
+import static com.cos.cercat.post.app.search.DebeziumEvent.*;
 
 @Component
 public class PostCommentEventHandler extends AbstractSimpleEventHandler<PostCommentDebeziumDTO> implements EventHandler{
@@ -23,6 +26,7 @@ public class PostCommentEventHandler extends AbstractSimpleEventHandler<PostComm
 
     @Override
     public void initActions() {
-
+        actions.put(DebeziumEventPayloadOperation.CREATE, (before, after) -> postSearchService.saveComment(after));
+        actions.put(DebeziumEventPayloadOperation.DELETE, (before, after) -> postSearchService.deleteComment(before));
     }
 }

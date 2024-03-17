@@ -38,10 +38,6 @@ public class NormalPostService {
         return normalPostRepository.findNormalPostsByUser(user, pageable);
     }
 
-    public Slice<NormalPost> searchNormalPosts(Pageable pageable, Certificate certificate, PostSearchCond cond) {
-        return normalPostRepository.searchPosts(pageable, certificate, cond);
-    }
-
     public void updateNormalPost(Long postId,
                                  String title,
                                  String content,

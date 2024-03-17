@@ -12,20 +12,7 @@ spring:
         format_sql: true
         default_batch_fetch_size: 100
   kafka:
-    listener:
-      ack-mode: manual
-    consumer:
-      bootstrap-servers: localhost:29092
-      group-id: alarm
-      auto-offset-reset: latest
-      key-deserializer: org.apache.kafka.common.serialization.LongDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      properties:
-        spring.json.trusted.packages: "*"
-    producer:
-      bootstrap-servers: localhost:29092
-      key-serializer: org.apache.kafka.common.serialization.LongSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    bootstrap-servers: localhost:29092
     topic:
       alarm: alarm
   security:
@@ -70,11 +57,15 @@ redis:
 
 logging:
   level:
+    tracer: trace
     org:
+      springframework:
+        data:
+          elasticsearch:
+            client:
+              WIRE: trace
       hibernate:
         orm:
           jdbc:
             bind: trace
         SQL: debug
-elasticsearch:
-  host: ${ELASTICSEARCH_HOST:localhost:9200}

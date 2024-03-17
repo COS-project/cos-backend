@@ -31,10 +31,6 @@ public class TipPostService {
         tipPostRepository.save(tipPost);
     }
 
-    public Slice<TipPost> searchTipPosts(Pageable pageable, Certificate certificate, PostSearchCond cond) {
-        return tipPostRepository.searchPosts(pageable, certificate, cond);
-    }
-
     public TipPost getTipPost(Long postId) {
         return tipPostRepository.findById(postId).orElseThrow(() ->
                 new CustomException(ErrorCode.POST_NOT_FOUND));
