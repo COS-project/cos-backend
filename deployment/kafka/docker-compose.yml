@@ -42,6 +42,7 @@ services:
   kafka-connect:
     build: ../connect
     hostname: kafka-connect
+    restart: always
     container_name: kafka-connect
     links:
       - zookeeper
@@ -80,7 +81,7 @@ services:
       - cluster.name=search-cluster
       - discovery.type=single-node
       - xpack.security.enabled=false
-      - xpack.security.http.ssl.enabled=falsedocker
+      - xpack.security.http.ssl.enabled=false
       - xpack.security.transport.ssl.enabled=false
     mem_limit: 1073741824
     ulimits:
@@ -94,6 +95,7 @@ services:
   kibana:
     container_name: kibana
     image: docker.elastic.co/kibana/kibana:8.5.3
+    restart: always
     environment:
       SERVER_NAME: kibana
       ELASTICSEARCH_HOSTS: http://es:9200

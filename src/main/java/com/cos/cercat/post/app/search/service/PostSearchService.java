@@ -7,6 +7,7 @@ import com.cos.cercat.post.app.search.dto.SearchCond;
 import com.cos.cercat.post.app.search.repository.PostSearchRepository;
 import com.cos.cercat.post.domain.PostType;
 import com.cos.cercat.post.dto.request.PostSearchCond;
+import io.jsonwebtoken.lang.Assert;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +40,7 @@ public class PostSearchService {
 
     public void delete(PostDebeziumDTO postDTO) {
         log.debug("delete: {}", postDTO);
+        Assert.notNull(postDTO, "postDTO is null");
         postSearchRepository.delete(findById(postDTO.getId()));
     }
 
@@ -51,6 +53,7 @@ public class PostSearchService {
 
     public void deleteComment(PostCommentDebeziumDTO commentDTO) {
         log.debug("deleteComment: {}", commentDTO);
+        Assert.notNull(commentDTO, "commentDTO is null");
         PostDocument postDocument = findById(commentDTO.getPostId());
         postDocument.removeComment(commentDTO.toEntity());
         postSearchRepository.save(postDocument);

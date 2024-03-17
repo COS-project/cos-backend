@@ -14,7 +14,8 @@ spring:
     bootstrap-servers: kafka:9092
     topic:
       alarm: alarm
-      debezium: cercat.cercat.post, cercat.cercat.post_comment
+      debezium_post: cercat.cercat.post
+      debezium_comment: cercat.cercat.post_comment
   security:
     oauth2:
       client:
