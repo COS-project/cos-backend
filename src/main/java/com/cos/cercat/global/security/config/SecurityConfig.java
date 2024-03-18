@@ -1,4 +1,4 @@
-package com.cos.cercat.global.config;
+package com.cos.cercat.global.security.config;
 
 import com.cos.cercat.global.security.filter.JwtExceptionHandleFilter;
 import com.cos.cercat.global.security.filter.JwtTokenFilter;
