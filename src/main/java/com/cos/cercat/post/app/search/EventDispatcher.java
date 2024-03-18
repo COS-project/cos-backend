@@ -26,6 +26,7 @@ public class EventDispatcher {
         log.info("Request to process {} records", records.size());
 
         List<ConsumerRecord<String, DebeziumEvent>> sortedRecords = records.stream()
+                .filter(record -> record.value().getPayload().getOperation() != DebeziumEvent.DebeziumEventPayloadOperation.READ)
                 .sorted(Comparator.comparing(r -> r.value().getPayload().getDate()))
                 .toList();
 
