@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(indexes = @Index(name = "idx_examYear_round", columnList = "exam_year, round"))
 public class MockExam extends BaseTimeEntity {
 
     @Id

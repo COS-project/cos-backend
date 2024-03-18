@@ -25,6 +25,7 @@ public record PostWithCommentsResponse(
         UserResponse user,
         List<String> postImages,
         Integer likeCount,
+        boolean isLiked,
         Integer commentCount,
         Set<RecommendTagDTO> recommendTags,
         QuestionResponse question,
@@ -33,15 +34,15 @@ public record PostWithCommentsResponse(
         List<PostCommentResponse> postComments
 ) {
 
-    public static PostWithCommentsResponse from(Post post) {
+    public static PostWithCommentsResponse of(Post post, List<PostCommentResponse> postComments, boolean isLiked) {
         return switch (post.getPostType()) {
-            case COMMENTARY -> from((CommentaryPost) post);
-            case TIP -> from((TipPost) post);
-            case NORMAL -> from((NormalPost) post);
+            case COMMENTARY -> of((CommentaryPost) post, postComments, isLiked);
+            case TIP -> of((TipPost) post, postComments, isLiked);
+            case NORMAL -> of((NormalPost) post, postComments, isLiked);
         };
     }
 
-    private static PostWithCommentsResponse from(CommentaryPost commentaryPost) {
+    private static PostWithCommentsResponse of(CommentaryPost commentaryPost, List<PostCommentResponse> postComments, boolean isLiked) {
         return new PostWithCommentsResponse(
                 commentaryPost.getId(),
                 commentaryPost.getTitle(),
@@ -49,16 +50,17 @@ public record PostWithCommentsResponse(
                 UserResponse.fromEntity(commentaryPost.getUser()),
                 commentaryPost.getPostImages().getImageUrls(),
                 commentaryPost.getLikeCount(),
+                isLiked,
                 commentaryPost.getPostComments().countComments(),
                 null,
                 QuestionResponse.from(commentaryPost.getQuestion()),
                 MockExamResponse.from(commentaryPost.getQuestion().getMockExam()),
                 commentaryPost.getCreatedAt(),
-                organizeChildComments(commentaryPost.getPostComments().getAll())
+                postComments
         );
     }
 
-    private static PostWithCommentsResponse from(TipPost tipPost) {
+    private static PostWithCommentsResponse of(TipPost tipPost, List<PostCommentResponse> postComments, boolean isLiked) {
         return new PostWithCommentsResponse(
                 tipPost.getId(),
                 tipPost.getTitle(),
@@ -66,6 +68,7 @@ public record PostWithCommentsResponse(
                 UserResponse.fromEntity(tipPost.getUser()),
                 tipPost.getPostImages().getImageUrls(),
                 tipPost.getLikeCount(),
+                isLiked,
                 tipPost.getPostComments().countComments(),
                 tipPost.getRecommendTags().getAll().stream()
                         .map(RecommendTagDTO::from)
@@ -73,11 +76,11 @@ public record PostWithCommentsResponse(
                 null,
                 null,
                 tipPost.getCreatedAt(),
-                organizeChildComments(tipPost.getPostComments().getAll())
+                postComments
         );
     }
 
-    private static PostWithCommentsResponse from(NormalPost normalPost) {
+    private static PostWithCommentsResponse of(NormalPost normalPost, List<PostCommentResponse> postComments, boolean isLiked) {
         return new PostWithCommentsResponse(
                 normalPost.getId(),
                 normalPost.getTitle(),
@@ -85,33 +88,15 @@ public record PostWithCommentsResponse(
                 UserResponse.fromEntity(normalPost.getUser()),
                 normalPost.getPostImages().getImageUrls(),
                 normalPost.getLikeCount(),
+                isLiked,
                 normalPost.getPostComments().countComments(),
                 null,
                 null,
                 null,
                 normalPost.getCreatedAt(),
-                organizeChildComments(normalPost.getPostComments().getAll())
+                postComments
         );
     }
 
-    private static List<PostCommentResponse> organizeChildComments(List<PostComment> postComments) {
-        Map<Long, PostCommentResponse> map = postComments.stream()
-                .map(PostCommentResponse::from)
-                .collect(Collectors.toMap(PostCommentResponse::postCommentId, Function.identity()));
 
-        map.values().stream()
-                .filter(PostCommentResponse::hasParentComment)
-                .forEach(postComment -> {
-                    PostCommentResponse parentComment = map.get(postComment.parentCommentId());
-                    parentComment.addChildComment(postComment);
-                });
-
-        return map.values().stream()
-                .filter(postComment -> !postComment.hasParentComment())
-                .sorted(Comparator
-                        .comparing(PostCommentResponse::createdAt)
-                        .reversed()
-                        .thenComparing(PostCommentResponse::postCommentId))
-                .collect(Collectors.toList());
-    }
 }

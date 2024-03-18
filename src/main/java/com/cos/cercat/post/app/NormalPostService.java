@@ -1,9 +1,7 @@
 package com.cos.cercat.post.app;
 
 import com.cos.cercat.post.domain.NormalPost;
-import com.cos.cercat.post.dto.request.PostSearchCond;
 import com.cos.cercat.post.repository.NormalPostRepository;
-import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.global.common.Image;
 import com.cos.cercat.global.exception.CustomException;
 import com.cos.cercat.global.exception.ErrorCode;

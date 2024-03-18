@@ -16,6 +16,7 @@ import java.util.regex.Matcher;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(indexes = @Index(name = "idx_question_seq", columnList = "question_seq"))
 public class Question {
 
     private static final int MAX_OPTION_SIZE = 5;

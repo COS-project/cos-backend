@@ -2,7 +2,6 @@ package com.cos.cercat.post.app;
 
 import com.cos.cercat.post.domain.RecommendTag;
 import com.cos.cercat.post.domain.TipPost;
-import com.cos.cercat.post.dto.request.PostSearchCond;
 import com.cos.cercat.post.repository.TipPostRepository;
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.global.common.Image;

@@ -1,6 +1,5 @@
 package com.cos.cercat.post.dto.response;
 
-import com.cos.cercat.post.app.search.domain.PostDocument;
 import com.cos.cercat.post.domain.*;
 import com.cos.cercat.mockExam.dto.response.MockExamResponse;
 import com.cos.cercat.user.dto.response.UserResponse;
@@ -19,12 +18,22 @@ public record PostResponse(
         UserResponse user,
         String thumbnailImage,
         Integer likeCount,
+        boolean isLiked,
         Integer commentCount,
         Integer questionSequence,
         MockExamResponse mockExam,
         LocalDateTime createdAt
 ) {
-    public static PostResponse from(CommentaryPost commentaryPost) {
+
+
+    public static PostResponse of(Post post, boolean isLiked) {
+        return switch (post.getPostType()) {
+            case COMMENTARY -> of((CommentaryPost) post, isLiked);
+            case TIP -> of((TipPost) post, isLiked);
+            case NORMAL -> of((NormalPost) post, isLiked);
+        };
+    }
+    private static PostResponse of(CommentaryPost commentaryPost, boolean isLiked) {
         return new PostResponse(
                 commentaryPost.getId(),
                 commentaryPost.getPostType(),
@@ -33,6 +42,7 @@ public record PostResponse(
                 UserResponse.fromEntity(commentaryPost.getUser()),
                 commentaryPost.getPostImages().getThumbnailImageUrl(),
                 commentaryPost.getLikeCount(),
+                isLiked,
                 commentaryPost.getPostComments().countComments(),
                 commentaryPost.getQuestion().getQuestionSeq(),
                 MockExamResponse.from(commentaryPost.getQuestion().getMockExam()),
@@ -40,7 +50,7 @@ public record PostResponse(
         );
     }
 
-    public static PostResponse from(TipPost tipPost) {
+    private static PostResponse of(TipPost tipPost, boolean isLiked) {
         return new PostResponse(
                 tipPost.getId(),
                 tipPost.getPostType(),
@@ -49,6 +59,7 @@ public record PostResponse(
                 UserResponse.fromEntity(tipPost.getUser()),
                 tipPost.getPostImages().getThumbnailImageUrl(),
                 tipPost.getLikeCount(),
+                isLiked,
                 tipPost.getPostComments().countComments(),
                 null,
                 null,
@@ -56,7 +67,7 @@ public record PostResponse(
         );
     }
 
-    public static PostResponse from(NormalPost normalPost) {
+    private static PostResponse of(NormalPost normalPost, boolean isLiked) {
         return new PostResponse(
                 normalPost.getId(),
                 normalPost.getPostType(),
@@ -65,19 +76,12 @@ public record PostResponse(
                 UserResponse.fromEntity(normalPost.getUser()),
                 normalPost.getPostImages().getThumbnailImageUrl(),
                 normalPost.getLikeCount(),
+                isLiked,
                 normalPost.getPostComments().countComments(),
                 null,
                 null,
                 normalPost.getCreatedAt()
         );
-    }
-
-    public static PostResponse from(Post post) {
-        return switch (post.getPostType()) {
-            case COMMENTARY -> from((CommentaryPost) post);
-            case TIP -> from((TipPost) post);
-            case NORMAL -> from((NormalPost) post);
-        };
     }
 
 }

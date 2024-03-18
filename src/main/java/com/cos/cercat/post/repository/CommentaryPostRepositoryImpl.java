@@ -4,7 +4,7 @@ import com.cos.cercat.certificate.domain.QCertificate;
 import com.cos.cercat.post.domain.CommentaryPost;
 import com.cos.cercat.global.util.PagingUtil;
 import com.cos.cercat.certificate.domain.Certificate;
-import com.cos.cercat.post.dto.request.PostSearchCond;
+import com.cos.cercat.post.dto.request.CommentaryPostSearchCond;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -29,7 +29,7 @@ public class CommentaryPostRepositoryImpl implements PostRepositoryCustom<Commen
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Slice<CommentaryPost> searchPosts(Pageable pageable, Certificate certificate, PostSearchCond cond) {
+    public Slice<CommentaryPost> searchPosts(Pageable pageable, Certificate certificate, CommentaryPostSearchCond cond) {
 
         List<CommentaryPost> contents = queryFactory
                 .selectFrom(commentaryPost)

@@ -1,10 +1,18 @@
 package com.cos.cercat.post.app;
 
+import com.cos.cercat.comment.dto.response.PostCommentResponse;
+import com.cos.cercat.like.app.CommentLikeService;
+import com.cos.cercat.like.app.PostLikeService;
+import com.cos.cercat.like.domain.CommentLike;
+import com.cos.cercat.like.domain.EmbeddedId.CommentLikePK;
+import com.cos.cercat.like.domain.EmbeddedId.PostLikePK;
+import com.cos.cercat.like.dto.request.LikeType;
 import com.cos.cercat.post.app.search.domain.PostDocument;
 import com.cos.cercat.post.app.search.dto.SearchCond;
 import com.cos.cercat.post.app.search.service.PostSearchService;
+import com.cos.cercat.post.domain.Post;
 import com.cos.cercat.post.domain.PostType;
-import com.cos.cercat.post.dto.request.PostSearchCond;
+import com.cos.cercat.post.dto.request.CommentaryPostSearchCond;
 import com.cos.cercat.post.dto.response.PostResponse;
 import com.cos.cercat.post.dto.response.PostWithCommentsResponse;
 import com.cos.cercat.certificate.app.CertificateService;
@@ -23,7 +31,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -39,6 +51,8 @@ public class PostFetchService {
     private final PostService postService;
     private final PostSearchService postSearchService;
     private final PostCommentService postCommentService;
+    private final PostLikeService postLikeService;
+    private final CommentLikeService commentLikeService;
 
     /***
      * 댓글, 게시글을 포함해 통합 검색합니다.
@@ -56,9 +70,10 @@ public class PostFetchService {
             userService.saveSearchLog(user, cond.keyword());
         }
 
+
         List<PostResponse> responses = documents.map(PostDocument::getId)
                 .map(postService::getPost)
-                .map(PostResponse::from)
+                .map(post -> PostResponse.of(post, isLiked(LikeType.POST, user.getId(), post.getId())))
                 .toList();
 
         return new SliceImpl<>(responses, pageable, documents.hasNext());
@@ -73,11 +88,13 @@ public class PostFetchService {
      */
     public Slice<PostResponse> searchCommentaryPosts(Pageable pageable,
                                                      Long certificateId,
-                                                     PostSearchCond cond) {
+                                                     CommentaryPostSearchCond cond,
+                                                     Long userId) {
         Certificate certificate = certificateService.getCertificate(certificateId);
 
         log.info("certificate - {}, cond - {} 해설게시글 검색", certificate.getCertificateName(), cond);
-        return commentaryPostService.searchCommentaryPosts(pageable, certificate, cond).map(PostResponse::from);
+        return commentaryPostService.searchCommentaryPosts(pageable, certificate, cond)
+                .map(post -> PostResponse.of(post, isLiked(LikeType.POST, userId, post.getId())));
     }
 
     /***
@@ -85,9 +102,19 @@ public class PostFetchService {
      * @param postId 게시글 ID
      * @return 댓글을 포함한 게시글 상세정보를 반환합니다.
      */
-    public PostWithCommentsResponse getPostDetail(Long postId) {
+    public PostWithCommentsResponse getPostDetail(Long postId, Long userId) {
         log.info("postId - {} 게시글 상세정보 조회", postId);
-        return PostWithCommentsResponse.from(postService.getPost(postId));
+
+        Post post = postService.getPost(postId);
+
+        List<PostCommentResponse> postCommentResponses = organizeChildComments(
+                post.getPostComments().getAll()
+                        .stream()
+                        .map(postComment -> PostCommentResponse.of(postComment, isLiked(LikeType.COMMENT, userId, postComment.getId())))
+                        .toList()
+        );
+
+        return PostWithCommentsResponse.of(postService.getPost(postId), postCommentResponses, isLiked(LikeType.POST, userId, postId));
     }
 
     /***
@@ -95,12 +122,12 @@ public class PostFetchService {
      * @param certificateId 자격증 ID
      * @return 리스트 형태의 게시글 정보
      */
-    public List<PostResponse> getTop3TipPosts(Long certificateId) {
+    public List<PostResponse> getTop3TipPosts(Long certificateId, Long userId) {
         Certificate certificate = certificateService.getCertificate(certificateId);
 
         log.info("certificate - {} 자격증 Best TOP3 게시글 조회", certificate.getCertificateName());
         return tipPostService.getTop3TipPosts(certificate).stream()
-                .map(PostResponse::from)
+                .map(post -> PostResponse.of(post, isLiked(LikeType.POST, userId, post.getId())))
                 .toList();
     }
 
@@ -116,9 +143,9 @@ public class PostFetchService {
 
         log.info("user - {} 가 쓴 게시글 조회", user.getEmail());
         return switch (postType) {
-            case COMMENTARY -> commentaryPostService.getMyCommentaryPosts(user, pageable).map(PostResponse::from);
-            case TIP -> tipPostService.getMyTipPosts(user, pageable).map(PostResponse::from);
-            case NORMAL -> normalPostService.getMyNormalPosts(user, pageable).map(PostResponse::from);
+            case COMMENTARY -> commentaryPostService.getMyCommentaryPosts(user, pageable).map(post -> PostResponse.of(post, isLiked(LikeType.POST, userId, post.getId())));
+            case TIP -> tipPostService.getMyTipPosts(user, pageable).map(post -> PostResponse.of(post, isLiked(LikeType.POST, userId, post.getId())));
+            case NORMAL -> normalPostService.getMyNormalPosts(user, pageable).map(post -> PostResponse.of(post, isLiked(LikeType.POST, userId, post.getId())));
         };
     }
 
@@ -134,6 +161,33 @@ public class PostFetchService {
         log.info("user - {} 가 댓글을 쓴 게시글 조회", user.getEmail());
         return postCommentService.getMyPostComments(user, pageable)
                 .map(PostComment::getPost)
-                .map(PostResponse::from);
+                .map(post -> PostResponse.of(post, isLiked(LikeType.POST, userId, post.getId())));
+    }
+
+    public List<PostCommentResponse> organizeChildComments(List<PostCommentResponse> postComments) {
+        Map<Long, PostCommentResponse> map = postComments.stream()
+                .collect(Collectors.toMap(PostCommentResponse::postCommentId, Function.identity()));
+
+        map.values().stream()
+                .filter(PostCommentResponse::hasParentComment)
+                .forEach(postComment -> {
+                    PostCommentResponse parentComment = map.get(postComment.parentCommentId());
+                    parentComment.addChildComment(postComment);
+                });
+
+        return map.values().stream()
+                .filter(postComment -> !postComment.hasParentComment())
+                .sorted(Comparator
+                        .comparing(PostCommentResponse::createdAt)
+                        .reversed()
+                        .thenComparing(PostCommentResponse::postCommentId))
+                .collect(Collectors.toList());
+    }
+
+    private boolean isLiked(LikeType likeType, Long userId, Long postId) {
+        return switch (likeType) {
+            case POST -> postLikeService.existsLike(PostLikePK.of(userId, postId));
+            case COMMENT -> commentLikeService.existsLike(CommentLikePK.of(userId, postId));
+        };
     }
 }

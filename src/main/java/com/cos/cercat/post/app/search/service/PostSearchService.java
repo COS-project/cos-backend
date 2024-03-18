@@ -5,19 +5,13 @@ import com.cos.cercat.post.app.search.dto.PostCommentDebeziumDTO;
 import com.cos.cercat.post.app.search.dto.PostDebeziumDTO;
 import com.cos.cercat.post.app.search.dto.SearchCond;
 import com.cos.cercat.post.app.search.repository.PostSearchRepository;
-import com.cos.cercat.post.domain.PostType;
-import com.cos.cercat.post.dto.request.PostSearchCond;
 import io.jsonwebtoken.lang.Assert;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

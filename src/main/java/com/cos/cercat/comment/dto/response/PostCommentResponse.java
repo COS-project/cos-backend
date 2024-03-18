@@ -18,21 +18,23 @@ public record PostCommentResponse(
         LocalDateTime createdAt,
         Long parentCommentId,
         Integer likeCount,
+        boolean isLiked,
         String content,
         List<PostCommentResponse> childPostComments
 ) {
 
-    public static PostCommentResponse of(Long id, UserResponse user, LocalDateTime createdAt, Long parentCommentId, Integer likeCount, String content) {
-        return new PostCommentResponse(id, user, createdAt, parentCommentId, likeCount, content, new ArrayList<>());
+    public static PostCommentResponse of(Long id, UserResponse user, LocalDateTime createdAt, Long parentCommentId, Integer likeCount, boolean isLiked, String content) {
+        return new PostCommentResponse(id, user, createdAt, parentCommentId, likeCount, isLiked, content, new ArrayList<>());
     }
 
-    public static PostCommentResponse from(PostComment entity) {
+    public static PostCommentResponse of(PostComment entity, boolean isLiked) {
         return PostCommentResponse.of(
                 entity.getId(),
                 UserResponse.fromEntity(entity.getUser()),
                 entity.getCreatedAt(),
                 entity.getParentCommentId(),
                 entity.getLikeCount(),
+                isLiked,
                 entity.getContent()
         );
     }

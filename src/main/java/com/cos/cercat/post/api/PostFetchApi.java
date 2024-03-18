@@ -3,7 +3,7 @@ package com.cos.cercat.post.api;
 import com.cos.cercat.post.app.PostFetchService;
 import com.cos.cercat.post.app.search.dto.SearchCond;
 import com.cos.cercat.post.domain.PostType;
-import com.cos.cercat.post.dto.request.PostSearchCond;
+import com.cos.cercat.post.dto.request.CommentaryPostSearchCond;
 import com.cos.cercat.post.dto.response.PostResponse;
 import com.cos.cercat.post.dto.response.PostWithCommentsResponse;
 import com.cos.cercat.global.Response;
@@ -28,14 +28,6 @@ public class PostFetchApi {
 
     private final PostFetchService postFetchService;
 
-    @GetMapping("/certificates/{certificateId}/{postType}/posts")
-    @Operation(summary = "게시글 검색", description = "키워드가 안주어졌을 경우 전체 조회")
-    public Response<Slice<PostResponse>> searchCommentaryPosts(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
-                                                            @PathVariable Long certificateId,
-                                                            PostSearchCond cond) {
-        return Response.success(postFetchService.searchCommentaryPosts(pageable, certificateId, cond));
-    }
-
     @GetMapping("/certificates/{certificateId}/search")
     @Operation(summary = "통합 검색(모든 게시글, 댓글)", description = "통합 검색엔진")
     public Response<Slice<PostResponse>> search(SearchCond cond,
@@ -45,16 +37,27 @@ public class PostFetchApi {
         return Response.success(postFetchService.search(cond, user, certificateId, pageable));
     }
 
+    @GetMapping("/certificates/{certificateId}/posts")
+    @Operation(summary = "해설 게시글 검색")
+    public Response<Slice<PostResponse>> searchCommentaryPosts(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+                                                               @PathVariable Long certificateId,
+                                                               CommentaryPostSearchCond cond,
+                                                               @AuthenticationPrincipal UserDTO user) {
+        return Response.success(postFetchService.searchCommentaryPosts(pageable, certificateId, cond, user.getId()));
+    }
+
     @GetMapping("/posts/{postId}")
     @Operation(summary = "게시글 상세 조회")
-    public Response<PostWithCommentsResponse> getPostDetail(@PathVariable Long postId) {
-        return Response.success(postFetchService.getPostDetail(postId));
+    public Response<PostWithCommentsResponse> getPostDetail(@PathVariable Long postId,
+                                                            @AuthenticationPrincipal UserDTO user) {
+        return Response.success(postFetchService.getPostDetail(postId, user.getId()));
     }
 
     @GetMapping("/certificates/{certificateId}/tip-posts/best")
     @Operation(summary = "베스트 꿀팁 TOP3 조회")
-    public Response<List<PostResponse>> getTop3TipPosts(@PathVariable Long certificateId) {
-        return Response.success(postFetchService.getTop3TipPosts(certificateId));
+    public Response<List<PostResponse>> getTop3TipPosts(@PathVariable Long certificateId,
+                                                        @AuthenticationPrincipal UserDTO user) {
+        return Response.success(postFetchService.getTop3TipPosts(certificateId, user.getId()));
     }
 
     @GetMapping("/{postType}/posts/my-posts")

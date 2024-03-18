@@ -11,7 +11,6 @@ spring:
       hibernate:
         format_sql: true
         default_batch_fetch_size: 100
-        dialect: org.hibernate.dialect.MySQLDialect
   kafka:
     bootstrap-servers: localhost:29092
     topic:
@@ -71,6 +70,6 @@ logging:
         orm:
           jdbc:
             bind: trace
-        SQL: debug
+        SQL: trace
 elasticsearch:
   host: ${ELASTICSEARCH_HOST:localhost:9200}
