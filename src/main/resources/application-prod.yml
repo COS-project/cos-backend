@@ -10,6 +10,7 @@ spring:
     properties:
       hibernate:
         default_batch_fetch_size: 100
+        dialect: org.hibernate.dialect.MySQLDialect
   kafka:
     bootstrap-servers: kafka:9092
     topic:
