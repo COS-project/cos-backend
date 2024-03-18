@@ -55,12 +55,12 @@ public class CustomPostSearchRepositoryImpl implements CustomPostSearchRepositor
             MultiMatchQuery.Builder multiMatchBuilder = QueryBuilders.multiMatch();
             Query query = multiMatchBuilder
                     .query(searchCond.keyword())
-                    .fields(List.of("title",
-                            "title.nori",
-                            "title.ngram",
-                            "content",
-                            "content.nori",
-                            "content.ngram",
+                    .fields(List.of("title^2",
+                            "title.nori^2",
+                            "title.ngram^2",
+                            "content^2",
+                            "content.nori^2",
+                            "content.ngram^2",
                             "postComments.content",
                             "postComments.content.nori",
                             "postComments.content.ngram"))
