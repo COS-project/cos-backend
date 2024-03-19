@@ -58,6 +58,6 @@ redis:
 logging:
   pattern:
     dateformat: yyyy-MM-dd HH:mm:ss.SSSz,Asia/Seoul
-    
+
 elasticsearch:
   host: ${ELASTICSEARCH_HOST:es:9200}

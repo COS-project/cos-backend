@@ -68,15 +68,11 @@ public class PostFetchService {
 
         if (StringUtils.hasText(cond.keyword())) {
             userService.saveSearchLog(user, cond.keyword());
-        }
+        }   
 
-
-        List<PostResponse> responses = documents.map(PostDocument::getId)
+        return documents.map(PostDocument::getId)
                 .map(postService::getPost)
-                .map(post -> PostResponse.of(post, isLiked(LikeType.POST, user.getId(), post.getId())))
-                .toList();
-
-        return new SliceImpl<>(responses, pageable, documents.hasNext());
+                .map(post -> PostResponse.of(post, isLiked(LikeType.POST, user.getId(), post.getId())));
     }
 
     /***
