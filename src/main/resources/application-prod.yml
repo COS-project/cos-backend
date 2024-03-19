@@ -6,7 +6,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         default_batch_fetch_size: 100
@@ -57,13 +57,3 @@ redis:
 
 elasticsearch:
   host: ${ELASTICSEARCH_HOST:es:9200}
-
-logging:
-  level:
-    tracer: trace
-    org:
-      springframework:
-        data:
-          elasticsearch:
-            client:
-              WIRE: trace
