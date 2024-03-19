@@ -68,7 +68,7 @@ public class PostFetchService {
 
         if (StringUtils.hasText(cond.keyword())) {
             userService.saveSearchLog(user, cond.keyword());
-        }   
+        }
 
         return documents.map(PostDocument::getId)
                 .map(postService::getPost)
@@ -103,7 +103,7 @@ public class PostFetchService {
 
         Post post = postService.getPost(postId);
 
-        List<PostCommentResponse> postCommentResponses = organizeChildComments(
+        List<PostCommentResponse> postCommentResponses = organizeChildComments( // 대댓글을 댓글의 children으로 정리
                 post.getPostComments().getAll()
                         .stream()
                         .map(postComment -> PostCommentResponse.of(postComment, isLiked(LikeType.COMMENT, userId, postComment.getId())))
@@ -160,7 +160,7 @@ public class PostFetchService {
                 .map(post -> PostResponse.of(post, isLiked(LikeType.POST, userId, post.getId())));
     }
 
-    public List<PostCommentResponse> organizeChildComments(List<PostCommentResponse> postComments) {
+    private List<PostCommentResponse> organizeChildComments(List<PostCommentResponse> postComments) {
         Map<Long, PostCommentResponse> map = postComments.stream()
                 .collect(Collectors.toMap(PostCommentResponse::postCommentId, Function.identity()));
 
