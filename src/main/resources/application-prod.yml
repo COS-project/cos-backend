@@ -55,5 +55,9 @@ redis:
   host: redis
   port: 6379
 
+logging:
+  pattern:
+    dateformat: yyyy-MM-dd HH:mm:ss.SSSz,Asia/Seoul
+    
 elasticsearch:
   host: ${ELASTICSEARCH_HOST:es:9200}
