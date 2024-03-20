@@ -1,7 +1,9 @@
-package com.cos.cercat.mockExam.app;
+package com.cos.cercat.mockExam.app.facade;
 
 import com.cos.cercat.certificate.app.CertificateService;
 import com.cos.cercat.certificate.domain.Certificate;
+import com.cos.cercat.mockExam.app.MockExamService;
+import com.cos.cercat.mockExam.app.QuestionService;
 import com.cos.cercat.mockExam.domain.MockExam;
 import com.cos.cercat.mockExam.dto.response.ExamYearWithRoundsResponse;
 import com.cos.cercat.mockExam.dto.response.QuestionListResponse;

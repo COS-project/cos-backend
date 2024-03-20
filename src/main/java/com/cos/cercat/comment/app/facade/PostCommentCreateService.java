@@ -1,9 +1,10 @@
-package com.cos.cercat.comment.app;
+package com.cos.cercat.comment.app.facade;
 
-import com.cos.cercat.alarm.app.producer.AlarmProducer;
+import com.cos.cercat.alarm.app.kafka.producer.AlarmProducer;
 import com.cos.cercat.alarm.domain.AlarmType;
 import com.cos.cercat.alarm.dto.AlarmArg;
 import com.cos.cercat.alarm.dto.AlarmEvent;
+import com.cos.cercat.comment.app.PostCommentService;
 import com.cos.cercat.post.app.PostService;
 import com.cos.cercat.post.domain.Post;
 import com.cos.cercat.comment.domain.PostComment;

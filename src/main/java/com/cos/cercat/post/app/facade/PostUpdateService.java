@@ -1,5 +1,9 @@
-package com.cos.cercat.post.app;
+package com.cos.cercat.post.app.facade;
 
+import com.cos.cercat.post.app.CommentaryPostService;
+import com.cos.cercat.post.app.NormalPostService;
+import com.cos.cercat.post.app.PostService;
+import com.cos.cercat.post.app.TipPostService;
 import com.cos.cercat.post.domain.PostType;
 import com.cos.cercat.post.dto.RecommendTagDTO;
 import com.cos.cercat.post.dto.request.PostUpdateRequest;

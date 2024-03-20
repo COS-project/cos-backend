@@ -1,6 +1,6 @@
 package com.cos.cercat.favoriteBoard.api;
 
-import com.cos.cercat.favoriteBoard.app.FavoriteBoardFlipService;
+import com.cos.cercat.favoriteBoard.app.facade.FavoriteBoardFlipService;
 import com.cos.cercat.global.Response;
 import com.cos.cercat.user.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;

@@ -1,7 +1,8 @@
-package com.cos.cercat.favoriteBoard.app;
+package com.cos.cercat.favoriteBoard.app.facade;
 
 import com.cos.cercat.certificate.app.CertificateService;
 import com.cos.cercat.certificate.domain.Certificate;
+import com.cos.cercat.favoriteBoard.app.FavoriteBoardService;
 import com.cos.cercat.user.app.UserService;
 import com.cos.cercat.user.domain.User;
 import lombok.RequiredArgsConstructor;

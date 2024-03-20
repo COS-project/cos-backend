@@ -1,6 +1,6 @@
 package com.cos.cercat.certificate.api;
 
-import com.cos.cercat.certificate.app.CertificateUpdateService;
+import com.cos.cercat.certificate.app.facade.CertificateUpdateService;
 import com.cos.cercat.certificate.dto.request.InterestCertificateUpdateRequest;
 import com.cos.cercat.global.Response;
 import com.cos.cercat.user.dto.UserDTO;

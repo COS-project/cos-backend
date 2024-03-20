@@ -1,6 +1,5 @@
 package com.cos.cercat.global.config;
 
-import com.cos.cercat.alarm.app.consumer.AlarmConsumer;
 import com.cos.cercat.alarm.dto.AlarmEvent;
 import com.cos.cercat.post.app.search.DebeziumEvent;
 import com.google.common.collect.ImmutableMap;

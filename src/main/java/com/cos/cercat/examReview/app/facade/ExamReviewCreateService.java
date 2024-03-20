@@ -1,9 +1,10 @@
-package com.cos.cercat.examReview.app;
+package com.cos.cercat.examReview.app.facade;
 
 import com.cos.cercat.certificate.app.CertificateExamService;
 import com.cos.cercat.certificate.app.CertificateService;
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.certificate.domain.CertificateExam;
+import com.cos.cercat.examReview.app.ExamReviewService;
 import com.cos.cercat.examReview.dto.request.ExamReviewCreateRequest;
 import com.cos.cercat.learning.app.GoalService;
 import com.cos.cercat.learning.domain.Goal;

@@ -1,4 +1,4 @@
-package com.cos.cercat.mockExamResult.app;
+package com.cos.cercat.mockExamResult.app.facade;
 
 import com.cos.cercat.certificate.app.CertificateService;
 import com.cos.cercat.certificate.domain.Certificate;
@@ -8,6 +8,9 @@ import com.cos.cercat.learning.app.GoalService;
 import com.cos.cercat.learning.domain.Goal;
 import com.cos.cercat.mockExam.app.MockExamService;
 import com.cos.cercat.mockExam.domain.MockExam;
+import com.cos.cercat.mockExamResult.app.MockExamResultService;
+import com.cos.cercat.mockExamResult.app.SubjectResultService;
+import com.cos.cercat.mockExamResult.app.UserAnswerService;
 import com.cos.cercat.mockExamResult.domain.MockExamResult;
 import com.cos.cercat.mockExamResult.dto.request.DateCond;
 import com.cos.cercat.mockExamResult.dto.request.DateType;

@@ -1,6 +1,6 @@
 package com.cos.cercat.comment.api;
 
-import com.cos.cercat.comment.app.PostCommentCreateService;
+import com.cos.cercat.comment.app.facade.PostCommentCreateService;
 import com.cos.cercat.comment.dto.request.PostCommentCreateRequest;
 import com.cos.cercat.global.Response;
 import com.cos.cercat.user.dto.UserDTO;

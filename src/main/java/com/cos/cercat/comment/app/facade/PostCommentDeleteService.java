@@ -1,5 +1,6 @@
-package com.cos.cercat.comment.app;
+package com.cos.cercat.comment.app.facade;
 
+import com.cos.cercat.comment.app.PostCommentService;
 import com.cos.cercat.user.app.UserService;
 import com.cos.cercat.user.domain.User;
 import lombok.RequiredArgsConstructor;

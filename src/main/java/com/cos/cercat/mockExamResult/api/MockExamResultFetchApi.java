@@ -1,7 +1,7 @@
 package com.cos.cercat.mockExamResult.api;
 
 import com.cos.cercat.global.Response;
-import com.cos.cercat.mockExamResult.app.MockExamResultFetchService;
+import com.cos.cercat.mockExamResult.app.facade.MockExamResultFetchService;
 import com.cos.cercat.mockExamResult.dto.request.DateCond;
 import com.cos.cercat.mockExamResult.dto.request.DateType;
 import com.cos.cercat.mockExamResult.dto.request.ReportType;

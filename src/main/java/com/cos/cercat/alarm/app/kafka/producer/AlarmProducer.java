@@ -1,4 +1,4 @@
-package com.cos.cercat.alarm.app.producer;
+package com.cos.cercat.alarm.app.kafka.producer;
 
 import com.cos.cercat.alarm.dto.AlarmEvent;
 import lombok.RequiredArgsConstructor;

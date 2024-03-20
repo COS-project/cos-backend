@@ -1,8 +1,9 @@
-package com.cos.cercat.favoriteBoard.app;
+package com.cos.cercat.favoriteBoard.app.facade;
 
 import com.cos.cercat.certificate.app.CertificateService;
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.certificate.dto.response.CertificateResponse;
+import com.cos.cercat.favoriteBoard.app.FavoriteBoardService;
 import com.cos.cercat.favoriteBoard.domain.FavoriteBoard;
 import com.cos.cercat.favoriteBoard.dto.response.BoardResponse;
 import com.cos.cercat.user.app.UserService;

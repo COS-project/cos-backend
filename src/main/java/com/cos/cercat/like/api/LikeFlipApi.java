@@ -1,7 +1,7 @@
 package com.cos.cercat.like.api;
 
 import com.cos.cercat.global.Response;
-import com.cos.cercat.like.app.LikeFlipService;
+import com.cos.cercat.like.app.facade.LikeFlipService;
 import com.cos.cercat.like.dto.request.LikeType;
 import com.cos.cercat.user.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;

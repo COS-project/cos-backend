@@ -1,6 +1,6 @@
 package com.cos.cercat.comment.api;
 
-import com.cos.cercat.comment.app.PostCommentDeleteService;
+import com.cos.cercat.comment.app.facade.PostCommentDeleteService;
 import com.cos.cercat.global.Response;
 import com.cos.cercat.user.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;

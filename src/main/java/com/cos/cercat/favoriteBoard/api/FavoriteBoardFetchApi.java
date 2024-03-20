@@ -1,6 +1,6 @@
 package com.cos.cercat.favoriteBoard.api;
 
-import com.cos.cercat.favoriteBoard.app.FavoriteBoardFetchService;
+import com.cos.cercat.favoriteBoard.app.facade.FavoriteBoardFetchService;
 import com.cos.cercat.favoriteBoard.dto.response.BoardResponse;
 import com.cos.cercat.global.Response;
 import com.cos.cercat.user.dto.UserDTO;

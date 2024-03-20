@@ -1,5 +1,8 @@
-package com.cos.cercat.like.app;
+package com.cos.cercat.like.app.facade;
 
+import com.cos.cercat.like.app.LikeStrategy;
+import com.cos.cercat.like.app.LikeStrategyFactory;
+import com.cos.cercat.like.app.StrategyName;
 import com.cos.cercat.post.app.PostService;
 import com.cos.cercat.post.domain.Post;
 import com.cos.cercat.comment.app.PostCommentService;

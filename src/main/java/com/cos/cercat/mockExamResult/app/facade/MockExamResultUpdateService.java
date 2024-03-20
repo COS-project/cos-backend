@@ -1,7 +1,8 @@
-package com.cos.cercat.mockExamResult.app;
+package com.cos.cercat.mockExamResult.app.facade;
 
 import com.cos.cercat.global.exception.CustomException;
 import com.cos.cercat.global.exception.ErrorCode;
+import com.cos.cercat.mockExamResult.app.UserAnswerService;
 import com.cos.cercat.mockExamResult.domain.UserAnswer;
 import com.cos.cercat.user.app.UserService;
 import com.cos.cercat.user.domain.User;

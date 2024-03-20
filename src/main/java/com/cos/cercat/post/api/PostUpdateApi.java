@@ -1,6 +1,6 @@
 package com.cos.cercat.post.api;
 
-import com.cos.cercat.post.app.PostUpdateService;
+import com.cos.cercat.post.app.facade.PostUpdateService;
 import com.cos.cercat.post.domain.PostType;
 import com.cos.cercat.post.dto.request.PostUpdateRequest;
 import com.cos.cercat.global.Response;

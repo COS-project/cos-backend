@@ -1,6 +1,6 @@
 package com.cos.cercat.post.api;
 
-import com.cos.cercat.post.app.PostFetchService;
+import com.cos.cercat.post.app.facade.PostFetchService;
 import com.cos.cercat.post.app.search.dto.SearchCond;
 import com.cos.cercat.post.domain.PostType;
 import com.cos.cercat.post.dto.request.CommentaryPostSearchCond;

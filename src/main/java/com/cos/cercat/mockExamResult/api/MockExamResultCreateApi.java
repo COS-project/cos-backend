@@ -2,8 +2,7 @@ package com.cos.cercat.mockExamResult.api;
 
 import com.cos.cercat.global.Response;
 import com.cos.cercat.mockExamResult.dto.request.MockExamResultRequest;
-import com.cos.cercat.mockExamResult.app.MockExamResultCreateService;
-import com.cos.cercat.mockExamResult.dto.response.MockExamResultWithSubjectsResponse;
+import com.cos.cercat.mockExamResult.app.facade.MockExamResultCreateService;
 import com.cos.cercat.user.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

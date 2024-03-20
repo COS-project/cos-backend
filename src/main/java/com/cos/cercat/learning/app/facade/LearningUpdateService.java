@@ -1,5 +1,6 @@
-package com.cos.cercat.learning.app;
+package com.cos.cercat.learning.app.facade;
 
+import com.cos.cercat.learning.app.GoalService;
 import com.cos.cercat.learning.dto.request.GoalUpdateRequest;
 import com.cos.cercat.user.app.UserService;
 import com.cos.cercat.user.domain.User;

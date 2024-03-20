@@ -1,6 +1,6 @@
 package com.cos.cercat.examReview.api;
 
-import com.cos.cercat.examReview.app.ExamReviewCreateService;
+import com.cos.cercat.examReview.app.facade.ExamReviewCreateService;
 import com.cos.cercat.examReview.dto.request.ExamReviewCreateRequest;
 import com.cos.cercat.global.Response;
 import com.cos.cercat.user.dto.UserDTO;

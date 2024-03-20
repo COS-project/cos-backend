@@ -1,6 +1,6 @@
-package com.cos.cercat.alarm.app.consumer;
+package com.cos.cercat.alarm.app.kafka.consumer;
 
-import com.cos.cercat.alarm.app.AlarmCreateService;
+import com.cos.cercat.alarm.app.facade.AlarmCreateService;
 import com.cos.cercat.alarm.dto.AlarmEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

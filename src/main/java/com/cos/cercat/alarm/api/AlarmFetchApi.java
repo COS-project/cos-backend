@@ -1,6 +1,6 @@
 package com.cos.cercat.alarm.api;
 
-import com.cos.cercat.alarm.app.AlarmFetchService;
+import com.cos.cercat.alarm.app.facade.AlarmFetchService;
 import com.cos.cercat.alarm.dto.Response.AlarmResponse;
 import com.cos.cercat.global.Response;
 import com.cos.cercat.user.dto.UserDTO;

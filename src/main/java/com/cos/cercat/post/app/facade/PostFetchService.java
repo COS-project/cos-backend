@@ -1,4 +1,4 @@
-package com.cos.cercat.post.app;
+package com.cos.cercat.post.app.facade;
 
 import com.cos.cercat.comment.dto.response.PostCommentResponse;
 import com.cos.cercat.like.app.CommentLikeService;
@@ -7,6 +7,10 @@ import com.cos.cercat.like.domain.CommentLike;
 import com.cos.cercat.like.domain.EmbeddedId.CommentLikePK;
 import com.cos.cercat.like.domain.EmbeddedId.PostLikePK;
 import com.cos.cercat.like.dto.request.LikeType;
+import com.cos.cercat.post.app.CommentaryPostService;
+import com.cos.cercat.post.app.NormalPostService;
+import com.cos.cercat.post.app.PostService;
+import com.cos.cercat.post.app.TipPostService;
 import com.cos.cercat.post.app.search.domain.PostDocument;
 import com.cos.cercat.post.app.search.dto.SearchCond;
 import com.cos.cercat.post.app.search.service.PostSearchService;

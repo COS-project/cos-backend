@@ -1,7 +1,7 @@
 package com.cos.cercat.certificate.api;
 
 
-import com.cos.cercat.certificate.app.CertificateCreateService;
+import com.cos.cercat.certificate.app.facade.CertificateCreateService;
 import com.cos.cercat.certificate.dto.request.CertificateCreateRequest;
 import com.cos.cercat.certificate.dto.request.CertificateExamCreateRequest;
 import com.cos.cercat.certificate.dto.request.InterestCertificateCreateRequest;

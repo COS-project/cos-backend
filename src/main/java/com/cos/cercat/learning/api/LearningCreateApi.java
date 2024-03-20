@@ -1,7 +1,7 @@
 package com.cos.cercat.learning.api;
 
 import com.cos.cercat.global.Response;
-import com.cos.cercat.learning.app.LearningCreateService;
+import com.cos.cercat.learning.app.facade.LearningCreateService;
 import com.cos.cercat.learning.dto.request.GoalCreateRequest;
 import com.cos.cercat.user.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;

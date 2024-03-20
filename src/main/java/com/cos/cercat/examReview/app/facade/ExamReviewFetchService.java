@@ -1,4 +1,4 @@
-package com.cos.cercat.examReview.app;
+package com.cos.cercat.examReview.app.facade;
 
 import com.cos.cercat.certificate.app.CertificateExamService;
 import com.cos.cercat.certificate.app.CertificateService;
@@ -6,6 +6,7 @@ import com.cos.cercat.certificate.app.InterestCertificateService;
 import com.cos.cercat.certificate.domain.Certificate;
 import com.cos.cercat.certificate.domain.CertificateExam;
 import com.cos.cercat.certificate.domain.InterestCertificate;
+import com.cos.cercat.examReview.app.ExamReviewService;
 import com.cos.cercat.examReview.dto.request.ExamReviewSearchCond;
 import com.cos.cercat.examReview.dto.response.ExamReviewResponse;
 import com.cos.cercat.user.app.UserService;

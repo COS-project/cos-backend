@@ -1,6 +1,6 @@
 package com.cos.cercat.like.app;
 
-import com.cos.cercat.alarm.app.producer.AlarmProducer;
+import com.cos.cercat.alarm.app.kafka.producer.AlarmProducer;
 import com.cos.cercat.alarm.domain.AlarmType;
 import com.cos.cercat.alarm.dto.AlarmArg;
 import com.cos.cercat.alarm.dto.AlarmEvent;

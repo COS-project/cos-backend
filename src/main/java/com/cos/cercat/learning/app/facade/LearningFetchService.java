@@ -1,7 +1,9 @@
-package com.cos.cercat.learning.app;
+package com.cos.cercat.learning.app.facade;
 
 import com.cos.cercat.certificate.app.CertificateService;
 import com.cos.cercat.certificate.domain.Certificate;
+import com.cos.cercat.learning.app.GoalService;
+import com.cos.cercat.learning.app.StudyTimeLogService;
 import com.cos.cercat.learning.domain.Goal;
 import com.cos.cercat.learning.dto.response.GoalAchievementResponse;
 import com.cos.cercat.learning.dto.response.GoalDetailResponse;

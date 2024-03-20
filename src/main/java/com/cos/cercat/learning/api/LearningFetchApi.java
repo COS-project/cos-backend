@@ -1,7 +1,7 @@
 package com.cos.cercat.learning.api;
 
 import com.cos.cercat.global.Response;
-import com.cos.cercat.learning.app.LearningFetchService;
+import com.cos.cercat.learning.app.facade.LearningFetchService;
 import com.cos.cercat.learning.dto.response.GoalAchievementResponse;
 import com.cos.cercat.learning.dto.response.GoalDetailResponse;
 import com.cos.cercat.learning.dto.response.GoalResponse;
