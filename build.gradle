@@ -61,6 +61,7 @@ dependencies {
 
 	//elastic search
 	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+	implementation 'co.elastic.clients:elasticsearch-java:8.9.0'
 
 	//Database 관련
 	runtimeOnly 'com.h2database:h2'

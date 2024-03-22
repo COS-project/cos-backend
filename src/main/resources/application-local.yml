@@ -71,5 +71,9 @@ logging:
           jdbc:
             bind: trace
         SQL: trace
+
 elasticsearch:
+  client:
+    host: 35.216.34.187
   host: ${ELASTICSEARCH_HOST:localhost:9200}
+  port: 9200

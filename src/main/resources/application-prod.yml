@@ -60,4 +60,7 @@ logging:
     dateformat: yyyy-MM-dd HH:mm:ss.SSSz,Asia/Seoul
 
 elasticsearch:
+  client:
+    host: es
   host: ${ELASTICSEARCH_HOST:es:9200}
+  port: 9200

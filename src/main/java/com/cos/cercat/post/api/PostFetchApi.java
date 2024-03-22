@@ -63,15 +63,28 @@ public class PostFetchApi {
     @GetMapping("/{postType}/posts/my-posts")
     @Operation(summary = "내가 쓴 글 조회")
     public Response<Slice<PostResponse>> getMyPosts(@PathVariable PostType postType,
-                                                   @AuthenticationPrincipal UserDTO user,
-                                                   @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+                                                    @AuthenticationPrincipal UserDTO user,
+                                                    @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         return Response.success(postFetchService.getMyPosts(postType, user.getId(), pageable));
     }
 
     @GetMapping("/comment-posts/my-comment-posts")
     @Operation(summary = "내가 댓글 쓴 게시글 조회")
     public Response<Slice<PostResponse>> getMyCommentPosts(@AuthenticationPrincipal UserDTO user,
-                                                          @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+                                                           @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         return Response.success(postFetchService.getMyCommentPosts(user.getId(), pageable));
+    }
+
+    @GetMapping("/certificates/{certificateId}/auto-complete-keywords")
+    @Operation(summary = "자동완성 검색어 조회")
+    public Response<List<String>> getAutoCompleteKeywords(@RequestParam String searchText,
+                                                          @PathVariable Long certificateId) {
+        return Response.success(postFetchService.getAutoCompleteKeywords(certificateId, searchText));
+    }
+
+    @GetMapping("/certificates/{certificateId}/recent-top5-keywords")
+    @Operation(summary = "실시간 검색어 TOP5 조회")
+    public Response<List<String>> getRecentTop5Keywords(@PathVariable Long certificateId) {
+        return Response.success(postFetchService.getRecentTop5Keywords(certificateId));
     }
 }

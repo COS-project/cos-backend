@@ -3,7 +3,6 @@ package com.cos.cercat.post.app.facade;
 import com.cos.cercat.comment.dto.response.PostCommentResponse;
 import com.cos.cercat.like.app.CommentLikeService;
 import com.cos.cercat.like.app.PostLikeService;
-import com.cos.cercat.like.domain.CommentLike;
 import com.cos.cercat.like.domain.EmbeddedId.CommentLikePK;
 import com.cos.cercat.like.domain.EmbeddedId.PostLikePK;
 import com.cos.cercat.like.dto.request.LikeType;
@@ -30,7 +29,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -162,6 +160,14 @@ public class PostFetchService {
         return postCommentService.getMyPostComments(user, pageable)
                 .map(PostComment::getPost)
                 .map(post -> PostResponse.of(post, isLiked(LikeType.POST, userId, post.getId())));
+    }
+
+    public List<String> getAutoCompleteKeywords(Long certificateId, String keyword) {
+        return postSearchService.getAutoCompletedKeywords(certificateId, keyword);
+    }
+
+    public List<String> getRecentTop5Keywords(Long certificateId) {
+        return postSearchService.getRecentTop5Keywords(certificateId);
     }
 
     private List<PostCommentResponse> organizeChildComments(List<PostCommentResponse> postComments) {

@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -59,8 +61,15 @@ public class PostSearchService {
     }
 
     public Slice<PostDocument> search(SearchCond cond, Long certificateId, Pageable pageable) {
-
         return postSearchRepository.search(cond, certificateId, pageable);
+    }
+
+    public List<String> getAutoCompletedKeywords(Long certificateId, String searchText) {
+        return postSearchRepository.getAutoCompletedKeywords(certificateId, searchText);
+    }
+
+    public List<String> getRecentTop5Keywords(Long certificateId) {
+        return postSearchRepository.getRecentTop5Keywords(certificateId);
     }
 
     private PostDocument findById(Long id) {
