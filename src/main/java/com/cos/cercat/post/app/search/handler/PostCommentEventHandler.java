@@ -27,6 +27,8 @@ public class PostCommentEventHandler extends AbstractSimpleEventHandler<PostComm
     @Override
     public void initActions() {
         actions.put(DebeziumEventPayloadOperation.CREATE, (before, after) -> postSearchService.saveComment(after));
+        actions.put(DebeziumEventPayloadOperation.READ, (before, after) -> postSearchService.saveComment(after));
+        actions.put(DebeziumEventPayloadOperation.UPDATE, (before, after) -> postSearchService.saveComment(after));
         actions.put(DebeziumEventPayloadOperation.DELETE, (before, after) -> postSearchService.deleteComment(before));
     }
 }

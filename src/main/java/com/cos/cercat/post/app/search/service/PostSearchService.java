@@ -22,7 +22,12 @@ public class PostSearchService {
 
     public void savePost(PostDebeziumDTO postDTO) {
         log.debug("savePost: {}", postDTO);
-        postSearchRepository.save(postDTO.toEntity());
+        postSearchRepository.findById(postDTO.getId()).ifPresentOrElse(
+                post -> {
+                    post.update(postDTO.toEntity());
+                    postSearchRepository.save(post);
+                },
+                () -> postSearchRepository.save(postDTO.toEntity()));
     }
 
     public void updatePost(PostDebeziumDTO postDTO) {

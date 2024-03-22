@@ -29,6 +29,7 @@ public class PostEventHandler extends AbstractSimpleEventHandler<PostDebeziumDTO
     @Override
     public void initActions() {
         actions.put(DebeziumEventPayloadOperation.CREATE, (before, after) -> postSearchService.savePost(after));
+        actions.put(DebeziumEventPayloadOperation.READ, (before, after) -> postSearchService.savePost(after));
         actions.put(DebeziumEventPayloadOperation.UPDATE, (before, after) -> postSearchService.updatePost(after));
         actions.put(DebeziumEventPayloadOperation.DELETE, (before, after) -> postSearchService.delete(before));
     }

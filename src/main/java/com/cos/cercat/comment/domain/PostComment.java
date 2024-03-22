@@ -6,6 +6,8 @@ import com.cos.cercat.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 
 @Entity
@@ -25,9 +27,11 @@ public class PostComment extends BaseTimeEntity {
     @ManyToOne
     @Setter
     @JoinColumn(name = "post_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Post post;
 
     @Setter
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Long parentCommentId;
 
     @ColumnDefault("0")

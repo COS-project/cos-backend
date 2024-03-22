@@ -6,6 +6,8 @@ import com.cos.cercat.mockExam.domain.Question;
 import com.cos.cercat.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
 
@@ -13,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
+@OnDelete(action = OnDeleteAction.CASCADE)
 public class CommentaryPost extends Post {
 
     @ManyToOne

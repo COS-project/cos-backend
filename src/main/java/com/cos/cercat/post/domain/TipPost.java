@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
 import java.util.Set;
@@ -14,6 +16,7 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@OnDelete(action = OnDeleteAction.CASCADE)
 public class TipPost extends Post{
 
     private RecommendTags recommendTags = new RecommendTags();
