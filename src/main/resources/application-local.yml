@@ -74,6 +74,6 @@ logging:
 
 elasticsearch:
   client:
-    host: 35.216.34.187
+    host: ${ELASTIC_HOST}
   host: ${ELASTICSEARCH_HOST:localhost:9200}
   port: 9200

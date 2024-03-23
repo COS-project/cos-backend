@@ -7,7 +7,6 @@ import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.aggregations.StringTermsBucket;
 import co.elastic.clients.elasticsearch._types.query_dsl.*;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
-import co.elastic.clients.json.JsonData;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import co.elastic.clients.transport.rest_client.RestClientTransport;
 import co.elastic.clients.util.NamedValue;
@@ -44,7 +43,7 @@ public class CustomPostSearchRepositoryImpl implements CustomPostSearchRepositor
 
     private final ElasticsearchOperations elasticsearchOperations;
     private final String KEYWORD_KEYWORD = "keyword.keyword";
-    private final String KEYWORD_NGRAM = "keyword.ngram";
+    private final String KEYWORD_EDGE_NGRAM = "keyword.edge_ngram";
     private final String KEYWORD_NORI = "keyword.nori";
     private final String URI_FIELD = "uri";
     private final String URI_PREFIX = "/api/v1/certificates/";
@@ -54,7 +53,7 @@ public class CustomPostSearchRepositoryImpl implements CustomPostSearchRepositor
     private final String KEYWORD_AGGREGATION = "keywords";
     private final String POST_TYPE_FIELD = "postType";
     private final String CERTIFICATE_ID_FIELD = "certificateId";
-    private final String TIME_FIELD = "time";
+//    private final String TIME_FIELD = "time";
 
     @Value("${elasticsearch.client.host}")
     private String ES_HOST;
@@ -195,7 +194,7 @@ public class CustomPostSearchRepositoryImpl implements CustomPostSearchRepositor
                                         )
                                 ).should(s -> s
                                         .term(t -> t
-                                                .field(KEYWORD_NGRAM)
+                                                .field(KEYWORD_EDGE_NGRAM)
                                                 .value(searchText)
                                         )
                                 ).should(s -> s
