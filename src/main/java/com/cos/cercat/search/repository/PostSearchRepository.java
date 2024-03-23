@@ -1,6 +1,6 @@
-package com.cos.cercat.post.app.search.repository;
+package com.cos.cercat.search.repository;
 
-import com.cos.cercat.post.app.search.domain.PostDocument;
+import com.cos.cercat.search.domain.PostDocument;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 

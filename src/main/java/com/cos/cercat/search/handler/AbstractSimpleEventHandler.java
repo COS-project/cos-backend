@@ -1,6 +1,6 @@
-package com.cos.cercat.post.app.search.handler;
+package com.cos.cercat.search.handler;
 
-import com.cos.cercat.post.app.search.DebeziumEvent;
+import com.cos.cercat.search.kafka.DebeziumEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Maps;
 import lombok.RequiredArgsConstructor;

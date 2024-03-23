@@ -1,4 +1,4 @@
-package com.cos.cercat.post.app.search.repository;
+package com.cos.cercat.search.repository;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.FieldValue;
@@ -14,8 +14,8 @@ import co.elastic.clients.util.NamedValue;
 import co.elastic.clients.util.ObjectBuilder;
 import com.cos.cercat.global.exception.CustomException;
 import com.cos.cercat.global.exception.ErrorCode;
-import com.cos.cercat.post.app.search.domain.PostDocument;
-import com.cos.cercat.post.app.search.dto.SearchCond;
+import com.cos.cercat.search.domain.PostDocument;
+import com.cos.cercat.search.dto.SearchCond;
 import com.google.api.client.util.Lists;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpHost;
@@ -134,7 +134,53 @@ public class CustomPostSearchRepositoryImpl implements CustomPostSearchRepositor
     public List<String> getAutoCompletedKeywords(Long certificateId, String searchText) {
         ElasticsearchClient client = createElasticsearchClient();
 
-        Query query = BoolQuery.of(b -> b
+        Query query = createAutoCompletedQuery(certificateId, searchText);
+
+        try {
+            SearchResponse<Void> response = client.search(s -> s
+                            .index(LOG_INDEX_PREFIX + "*")
+                            .size(0)
+                            .query(query)
+                            .aggregations(KEYWORD_AGGREGATION, keywordAggregation()
+                            ),
+                    Void.class
+            );
+
+            return response.aggregations().get(KEYWORD_AGGREGATION).sterms().buckets().array().stream()
+                    .map(StringTermsBucket::key)
+                    .map(FieldValue::stringValue)
+                    .toList();
+
+        } catch (IOException e) {
+            throw new CustomException(ErrorCode.ES_SEARCH_ERROR);
+        }
+    }
+
+    @Override
+    public List<String> getRecentTop5Keywords(Long certificateId) {
+        ElasticsearchClient client = createElasticsearchClient();
+
+        Query query = createRecentTop5Query(certificateId);
+
+        try {
+            SearchResponse<Void> response = client.search(s -> s
+                            .index(LOG_INDEX_PREFIX + extractDate())
+                            .size(0)
+                            .query(query)
+                            .aggregations(KEYWORD_AGGREGATION, keywordAggregation()), Void.class);
+
+            return response.aggregations().get(KEYWORD_AGGREGATION).sterms().buckets().array().stream()
+                    .map(StringTermsBucket::key)
+                    .map(FieldValue::stringValue)
+                    .toList();
+
+        } catch (IOException e) {
+            throw new CustomException(ErrorCode.ES_SEARCH_ERROR);
+        }
+    }
+
+    private Query createAutoCompletedQuery(Long certificateId, String searchText) {
+        return BoolQuery.of(b -> b
                 .filter(f -> f
                         .match(m -> m
                                 .field(URI_FIELD)
@@ -161,61 +207,23 @@ public class CustomPostSearchRepositoryImpl implements CustomPostSearchRepositor
                         )
                 )
         )._toQuery();
-
-        try {
-            SearchResponse<Void> response = client.search(s -> s
-                            .index(LOG_INDEX_PREFIX + "*")
-                            .size(0)
-                            .query(query)
-                            .aggregations(KEYWORD_AGGREGATION, keywordAggregation()
-                            ),
-                    Void.class
-            );
-
-            return response.aggregations().get(KEYWORD_AGGREGATION).sterms().buckets().array().stream()
-                    .map(StringTermsBucket::key)
-                    .map(FieldValue::stringValue)
-                    .toList();
-
-        } catch (IOException e) {
-            throw new CustomException(ErrorCode.ES_SEARCH_ERROR);
-        }
     }
 
-    @Override
-    public List<String> getRecentTop5Keywords(Long certificateId) {
-        ElasticsearchClient client = createElasticsearchClient();
-
-        Query query = BoolQuery.of(b -> b
-                .filter(f -> f
-                        .range(r -> r
-                                .field(TIME_FIELD)
-                                .gte(JsonData.of("now-2h/h"))
-                                .lte(JsonData.of("now/h"))
-                        )
-                )
+    private Query createRecentTop5Query(Long certificateId) {
+        return BoolQuery.of(b -> b
+//                .filter(f -> f
+//                        .range(r -> r
+//                                .field(TIME_FIELD)
+//                                .gte(JsonData.of("now-2h/h"))
+//                                .lte(JsonData.of("now/h"))
+//                        )
+//                ) // 유저수가 적어서 최근 2시간 검색어가 없을 수 있음 -> 향후 변경
                 .filter(f -> f
                         .match(m -> m
                                 .field(URI_FIELD)
                                 .query(URI_PREFIX + certificateId + URI_SEARCH)
                         )
                 ))._toQuery();
-
-        try {
-            SearchResponse<Void> response = client.search(s -> s
-                            .index(LOG_INDEX_PREFIX + extractDate())
-                            .size(0)
-                            .query(query)
-                            .aggregations(KEYWORD_AGGREGATION, keywordAggregation()), Void.class);
-
-            return response.aggregations().get(KEYWORD_AGGREGATION).sterms().buckets().array().stream()
-                    .map(StringTermsBucket::key)
-                    .map(FieldValue::stringValue)
-                    .toList();
-
-        } catch (IOException e) {
-            throw new CustomException(ErrorCode.ES_SEARCH_ERROR);
-        }
     }
 
     private String extractDate() {

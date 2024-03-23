@@ -1,4 +1,4 @@
-package com.cos.cercat.post.app.search.domain;
+package com.cos.cercat.search.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;

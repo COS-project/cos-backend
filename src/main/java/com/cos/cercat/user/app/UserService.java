@@ -4,6 +4,8 @@ import com.cos.cercat.global.common.Image;
 import com.cos.cercat.global.exception.CustomException;
 import com.cos.cercat.global.exception.ErrorCode;
 import com.cos.cercat.global.util.JwtTokenUtil;
+import com.cos.cercat.search.cache.SearchLog;
+import com.cos.cercat.search.cache.SearchLogCacheRepository;
 import com.cos.cercat.user.cache.*;
 import com.cos.cercat.user.domain.User;
 import com.cos.cercat.user.dto.UserDTO;
@@ -38,30 +40,6 @@ public class UserService {
     public User getUser(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
-    }
-
-    public void saveSearchLog(UserDTO userDTO, String searchKeyword) {
-        SearchLog searchLog = SearchLog.builder()
-                .keyword(searchKeyword)
-                .createdAt(LocalDateTime.now().toString())
-                .build();
-        searchLogCacheRepository.setLog(userDTO.getEmail(), searchLog);
-    }
-
-    public List<SearchLog> getSearchLogs(UserDTO userDTO) {
-        return searchLogCacheRepository.getSearchLogs(userDTO.getEmail());
-    }
-
-    public void deleteSearchLog(UserDTO userDTO, SearchLogDeleteRequest request) {
-        SearchLog searchLog = SearchLog.builder()
-                .keyword(request.keyword())
-                .createdAt(request.createdAt())
-                .build();
-        searchLogCacheRepository.deleteLog(userDTO.getEmail(), searchLog);
-    }
-
-    public void deleteAllSearchLogs(UserDTO userDTO) {
-        searchLogCacheRepository.deleteAllLogs(userDTO.getEmail());
     }
 
     public void updateUser(Long userId, String nickName, Image image) {

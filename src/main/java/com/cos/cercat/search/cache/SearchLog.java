@@ -1,4 +1,4 @@
-package com.cos.cercat.user.cache;
+package com.cos.cercat.search.cache;
 
 import lombok.*;
 

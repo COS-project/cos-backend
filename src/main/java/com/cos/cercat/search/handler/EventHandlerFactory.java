@@ -1,4 +1,4 @@
-package com.cos.cercat.post.app.search.handler;
+package com.cos.cercat.search.handler;
 
 import com.google.common.collect.Maps;
 import jakarta.annotation.PostConstruct;

@@ -28,20 +28,4 @@ public class UserDeleteApi {
         return Response.success("회원탈퇴 성공");
     }
 
-    @DeleteMapping("/users/search-logs")
-    @Operation(summary = "특정 검색 기록 삭제")
-    public Response<Void> deleteSearchLogs(@AuthenticationPrincipal UserDTO user,
-                                           @RequestParam SearchLogDeleteRequest request) {
-        userService.deleteSearchLog(user, request);
-        return Response.success("검색 기록 삭제 성공");
-    }
-
-    @DeleteMapping("/users/search-logs/all")
-    @Operation(summary = "모든 검색 기록 삭제")
-    public Response<Void> deleteAllSearchLogs(@AuthenticationPrincipal UserDTO user) {
-        userService.deleteAllSearchLogs(user);
-        return Response.success("모든 검색 기록 삭제 성공");
-    }
-
-
 }

@@ -1,13 +1,13 @@
-package com.cos.cercat.post.app.search.handler;
+package com.cos.cercat.search.handler;
 
-import com.cos.cercat.post.app.search.dto.PostDebeziumDTO;
-import com.cos.cercat.post.app.search.service.PostSearchService;
+import com.cos.cercat.search.dto.PostDebeziumDTO;
+import com.cos.cercat.search.service.PostSearchService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import static com.cos.cercat.post.app.search.DebeziumEvent.*;
+import static com.cos.cercat.search.kafka.DebeziumEvent.*;
 
 @Component
 @Slf4j

@@ -1,7 +1,6 @@
-package com.cos.cercat.post.app.search;
+package com.cos.cercat.search.kafka;
 
-import com.cos.cercat.post.app.search.handler.EventHandlerFactory;
-import com.cos.cercat.post.app.search.handler.PostEventHandler;
+import com.cos.cercat.search.handler.EventHandlerFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor

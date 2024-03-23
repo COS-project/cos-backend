@@ -1,7 +1,7 @@
 package com.cos.cercat.global.config;
 
 import com.cos.cercat.alarm.dto.AlarmEvent;
-import com.cos.cercat.post.app.search.DebeziumEvent;
+import com.cos.cercat.search.kafka.DebeziumEvent;
 import com.google.common.collect.ImmutableMap;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;

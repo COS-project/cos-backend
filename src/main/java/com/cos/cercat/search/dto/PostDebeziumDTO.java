@@ -1,18 +1,15 @@
-package com.cos.cercat.post.app.search.dto;
+package com.cos.cercat.search.dto;
 
-import com.cos.cercat.post.app.search.domain.PostDocument;
+import com.cos.cercat.search.domain.PostDocument;
 import com.cos.cercat.post.domain.PostType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Date;
-import java.util.TimeZone;
 
 
 @Data

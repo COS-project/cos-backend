@@ -32,6 +32,14 @@ public class SwaggerConfig {
     }
 
     @Bean
+    public GroupedOpenApi search() {
+        return GroupedOpenApi.builder()
+                .group("통합 검색")
+                .packagesToScan("com.cos.cercat.search.api")
+                .build();
+    }
+
+    @Bean
     public GroupedOpenApi alarm() {
         return GroupedOpenApi.builder()
                 .group("알림")

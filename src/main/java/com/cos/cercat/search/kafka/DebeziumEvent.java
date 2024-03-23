@@ -1,4 +1,4 @@
-package com.cos.cercat.post.app.search;
+package com.cos.cercat.search.kafka;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;

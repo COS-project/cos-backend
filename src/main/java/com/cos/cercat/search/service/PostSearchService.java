@@ -1,10 +1,10 @@
-package com.cos.cercat.post.app.search.service;
+package com.cos.cercat.search.service;
 
-import com.cos.cercat.post.app.search.domain.PostDocument;
-import com.cos.cercat.post.app.search.dto.PostCommentDebeziumDTO;
-import com.cos.cercat.post.app.search.dto.PostDebeziumDTO;
-import com.cos.cercat.post.app.search.dto.SearchCond;
-import com.cos.cercat.post.app.search.repository.PostSearchRepository;
+import com.cos.cercat.search.domain.PostDocument;
+import com.cos.cercat.search.dto.PostCommentDebeziumDTO;
+import com.cos.cercat.search.dto.PostDebeziumDTO;
+import com.cos.cercat.search.dto.SearchCond;
+import com.cos.cercat.search.repository.PostSearchRepository;
 import io.jsonwebtoken.lang.Assert;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.cos.cercat.global.config;
 
-import com.cos.cercat.user.cache.SearchLog;
+import com.cos.cercat.search.cache.SearchLog;
 import com.cos.cercat.user.cache.RefreshToken;
 import com.cos.cercat.user.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Value;

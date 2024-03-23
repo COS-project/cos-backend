@@ -1,4 +1,4 @@
-package com.cos.cercat.post.app.search.dto;
+package com.cos.cercat.search.dto;
 
 import com.cos.cercat.post.domain.PostType;
 

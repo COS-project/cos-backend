@@ -10,9 +10,9 @@ import com.cos.cercat.post.app.CommentaryPostService;
 import com.cos.cercat.post.app.NormalPostService;
 import com.cos.cercat.post.app.PostService;
 import com.cos.cercat.post.app.TipPostService;
-import com.cos.cercat.post.app.search.domain.PostDocument;
-import com.cos.cercat.post.app.search.dto.SearchCond;
-import com.cos.cercat.post.app.search.service.PostSearchService;
+import com.cos.cercat.search.domain.PostDocument;
+import com.cos.cercat.search.dto.SearchCond;
+import com.cos.cercat.search.service.PostSearchService;
 import com.cos.cercat.post.domain.Post;
 import com.cos.cercat.post.domain.PostType;
 import com.cos.cercat.post.dto.request.CommentaryPostSearchCond;
@@ -51,31 +51,9 @@ public class PostFetchService {
     private final TipPostService tipPostService;
     private final UserService userService;
     private final PostService postService;
-    private final PostSearchService postSearchService;
     private final PostCommentService postCommentService;
     private final PostLikeService postLikeService;
     private final CommentLikeService commentLikeService;
-
-    /***
-     * 댓글, 게시글을 포함해 통합 검색합니다.
-     * @param cond 검색 필터
-     * @param pageable 페이징 정보
-     * @return Slice 형태의 게시글 Response DTO를 반환합니다.
-     */
-    public Slice<PostResponse> search(SearchCond cond,
-                                      UserDTO user,
-                                      Long certificateId,
-                                      Pageable pageable) {
-        Slice<PostDocument> documents = postSearchService.search(cond, certificateId, pageable);
-
-        if (StringUtils.hasText(cond.keyword())) {
-            userService.saveSearchLog(user, cond.keyword());
-        }
-
-        return documents.map(PostDocument::getId)
-                .map(postService::getPost)
-                .map(post -> PostResponse.of(post, isLiked(LikeType.POST, user.getId(), post.getId())));
-    }
 
     /***
      * 게시글을 필터에 따라 검색합니다.
@@ -160,14 +138,6 @@ public class PostFetchService {
         return postCommentService.getMyPostComments(user, pageable)
                 .map(PostComment::getPost)
                 .map(post -> PostResponse.of(post, isLiked(LikeType.POST, userId, post.getId())));
-    }
-
-    public List<String> getAutoCompleteKeywords(Long certificateId, String keyword) {
-        return postSearchService.getAutoCompletedKeywords(certificateId, keyword);
-    }
-
-    public List<String> getRecentTop5Keywords(Long certificateId) {
-        return postSearchService.getRecentTop5Keywords(certificateId);
     }
 
     private List<PostCommentResponse> organizeChildComments(List<PostCommentResponse> postComments) {

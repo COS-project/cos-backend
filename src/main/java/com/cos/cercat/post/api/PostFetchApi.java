@@ -1,7 +1,7 @@
 package com.cos.cercat.post.api;
 
 import com.cos.cercat.post.app.facade.PostFetchService;
-import com.cos.cercat.post.app.search.dto.SearchCond;
+import com.cos.cercat.search.dto.SearchCond;
 import com.cos.cercat.post.domain.PostType;
 import com.cos.cercat.post.dto.request.CommentaryPostSearchCond;
 import com.cos.cercat.post.dto.response.PostResponse;
@@ -27,15 +27,6 @@ import java.util.List;
 public class PostFetchApi {
 
     private final PostFetchService postFetchService;
-
-    @GetMapping("/certificates/{certificateId}/search")
-    @Operation(summary = "통합 검색(모든 게시글, 댓글)", description = "통합 검색엔진")
-    public Response<Slice<PostResponse>> search(SearchCond cond,
-                                                @AuthenticationPrincipal UserDTO user,
-                                                @PathVariable Long certificateId,
-                                                Pageable pageable) {
-        return Response.success(postFetchService.search(cond, user, certificateId, pageable));
-    }
 
     @GetMapping("/certificates/{certificateId}/posts")
     @Operation(summary = "해설 게시글 검색")
@@ -73,18 +64,5 @@ public class PostFetchApi {
     public Response<Slice<PostResponse>> getMyCommentPosts(@AuthenticationPrincipal UserDTO user,
                                                            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         return Response.success(postFetchService.getMyCommentPosts(user.getId(), pageable));
-    }
-
-    @GetMapping("/certificates/{certificateId}/auto-complete-keywords")
-    @Operation(summary = "자동완성 검색어 조회")
-    public Response<List<String>> getAutoCompleteKeywords(@RequestParam String searchText,
-                                                          @PathVariable Long certificateId) {
-        return Response.success(postFetchService.getAutoCompleteKeywords(certificateId, searchText));
-    }
-
-    @GetMapping("/certificates/{certificateId}/recent-top5-keywords")
-    @Operation(summary = "실시간 검색어 TOP5 조회")
-    public Response<List<String>> getRecentTop5Keywords(@PathVariable Long certificateId) {
-        return Response.success(postFetchService.getRecentTop5Keywords(certificateId));
     }
 }

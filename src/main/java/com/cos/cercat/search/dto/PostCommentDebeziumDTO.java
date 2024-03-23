@@ -1,16 +1,14 @@
-package com.cos.cercat.post.app.search.dto;
+package com.cos.cercat.search.dto;
 
-import com.cos.cercat.post.app.search.domain.PostCommentDocument;
+import com.cos.cercat.search.domain.PostCommentDocument;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Date;
 
 @Data
 public class PostCommentDebeziumDTO implements Serializable {
