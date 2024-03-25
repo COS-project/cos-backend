@@ -26,8 +26,8 @@ bin/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-src/main/resources/secret/
-src/main/generated
+module-application/src/main/resources/secret/
+module-application/src/main/generated
 
 ### NetBeans ###
 /nbproject/private/

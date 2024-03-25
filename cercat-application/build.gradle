@@ -1,0 +1,32 @@
+dependencies {
+    implementation project(':cercat-common')
+    implementation project(':cercat-domain')
+    implementation project(':cercat-infrastructure')
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    //인증 & 인가
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    //API 문서화 Swagger-UI
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+
+    //kakfa
+    implementation 'org.springframework.kafka:spring-kafka'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
+
+    //guava
+    implementation("com.google.guava:guava:33.1.0-jre")
+
+    //JWT
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'com.auth0:java-jwt:4.2.1'
+
+    //직렬화 및 역직렬화 관련
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.2'
+
+}

@@ -1,1 +1,6 @@
 rootProject.name = 'cercat'
+include('cercat-application')
+include('cercat-domain')
+include('cercat-infrastructure')
+include('cercat-common')
+

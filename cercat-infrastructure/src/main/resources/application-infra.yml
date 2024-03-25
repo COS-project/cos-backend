@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    group:
+      local: common
+      prod: common
+
+  cloud:
+    gcp:
+      storage:
+        url: https://storage.googleapis.com/${BUCKET_NAME}/
+        credentials:
+          encoded-key: ${GCS_KEY}
+        project-id: ${GCP_PROJECT_ID}
+        bucket: ${BUCKET_NAME}
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
