@@ -39,26 +39,23 @@
 # ERD
 ![erd](https://github.com/COS-project/cos-backend/assets/128073698/a54221cb-5c76-4b2d-87bd-a816401e6b8d)
 
+# 멀티모듈 구조
+```
+📁 cercat-application # Controller, UseCase(facade)
+📁 cercat-common # 공통 기능
+📁 cercat-domain # Entity, Service, Repository
+📁 cercat-infrastructure # 외부 API 기능(GCP Cloud Storage)
+```
+
 # 패키지 구조
 ```
 com
  ㄴ cos
     ㄴ cercat
         ㄴ post
-        | ㄴ api
-        | ㄴ dto
-        | ㄴ domain
-        | ㄴ repository
-        | ㄴ app
         ㄴ user
-        | ㄴ controller
-        | ㄴ dto
-        | ㄴ domain
-        | ㄴ repository
-        | ㄴ app
         ...
-        ㄴ global
-            ㄴ common
+        ㄴ common
             ㄴ config
             ㄴ exception
             ㄴ security
