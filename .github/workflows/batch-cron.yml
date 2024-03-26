@@ -35,8 +35,9 @@ jobs:
           key: ${{ secrets.REMOTE_SSH_KEY }}
           port: ${{ secrets.REMOTE_SSH_PORT }}
           script: |
-            docker rm ${{ env.CONTAINER_NAME }}
-            docker compose -f cercat-batch.yml run --name ${{ env.CONTAINER_NAME }} ${{ env.CONTAINER_NAME }} requestDate=${{ steps.version.outputs.builddate }}
+            docker compose run ${{ env.CONTAINER_NAME }} requestDate=${{ steps.version.outputs.builddate }}
+            docker compose stop ${{ env.CONTAINER_NAME }}
+
   slack-success:
     needs: [batch]
     if: always() && !contains(needs.*.result, 'failure')
