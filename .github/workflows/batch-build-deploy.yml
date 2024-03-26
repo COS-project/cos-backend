@@ -47,7 +47,7 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          file: ./cercat-batch/Dockerfile
+          file: ./cercat-application/app-batch/Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags: ${{ env.DOCKER_IMAGE }}:latest
