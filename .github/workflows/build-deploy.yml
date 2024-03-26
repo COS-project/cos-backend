@@ -1,5 +1,4 @@
 name: Cercat-Application Deploy with Docker
-# 본인이 만드는 pipeline의 이름입니다.
 
 on:
   push:
@@ -40,8 +39,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_TOKEN }}
-          # 우리가 방금 복사해서 setting secrets 에 붙여줬던 token 이다. 이름을 기억해 넣어주자.
-          # 우리의 ghcr.io 에 접근하기 위함이다.
+
 
       - name: Build and push
         id: docker_build
