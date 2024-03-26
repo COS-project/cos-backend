@@ -9,7 +9,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/cercat-application" />
-            <option value="$PROJECT_DIR$/cercat-batch" />
+            <option value="$PROJECT_DIR$/cercat-application/app-api" />
+            <option value="$PROJECT_DIR$/cercat-application/app-batch" />
             <option value="$PROJECT_DIR$/cercat-common" />
             <option value="$PROJECT_DIR$/cercat-domain" />
             <option value="$PROJECT_DIR$/cercat-domain/domain-alarm" />
@@ -26,7 +27,7 @@
             <option value="$PROJECT_DIR$/cercat-domain/domain-redis" />
             <option value="$PROJECT_DIR$/cercat-domain/domain-search" />
             <option value="$PROJECT_DIR$/cercat-domain/domain-user" />
-            <option value="$PROJECT_DIR$/cercat-infrastructure" />
+            <option value="$PROJECT_DIR$/cercat-external" />
           </set>
         </option>
       </GradleProjectSettings>

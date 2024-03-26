@@ -16,9 +16,9 @@ dependencies {
     implementation project(':cercat-domain:domain-jpa')
     implementation project(':cercat-domain:domain-redis')
     implementation project(':cercat-domain:domain-elasticsearch')
+    implementation project(':cercat-external')
 
     //infrastructure
-    implementation project(':cercat-infrastructure')
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
 

@@ -4,7 +4,7 @@ name: Cercat-Batch Build and Deploy
 on:
   push:
     paths:
-      - 'cercat-batch/**'
+      - 'cercat-application/app-batch/**'
       - 'cercat-domain/domain-user/**'
       - 'cercat-domain/domain-alarm/**'
       - 'cercat-domain/domain-certificate/**'

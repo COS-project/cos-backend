@@ -69,3 +69,13 @@ project(':cercat-domain') {
 		enabled = false
 	}
 }
+
+project(':cercat-application') {
+	bootJar {
+		enabled = false
+	}
+
+	jar {
+		enabled = false
+	}
+}
