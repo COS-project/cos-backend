@@ -13,3 +13,6 @@ spring:
       initialize-schema: always
     job:
       enabled: true
+
+server:
+  port: 8081
