@@ -2,3 +2,33 @@ logging:
   pattern:
     dateformat: yyyy-MM-dd HH:mm:ss.SSSz,Asia/Seoul
 
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
+jwt:
+  token:
+    secret-key: ${SECRET_KEY}
+  access-token:
+    header: Access-token
+    expire-length: 259200 #3일
+  refresh-token:
+    header: Refresh-token
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+jwt:
+  token:
+    secret-key: ${SECRET_KEY}
+  access-token:
+    header: Access-token
+    expire-length: 259200 #3일
+  refresh-token:
+    header: Refresh-token
+

@@ -11,6 +11,7 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.30/f195ee86e6c896ea47a1d39defbe20eb59cd149d/lombok-1.18.30.jar" />
         </processorPath>
         <module name="cercat.cercat-domain.test" />
+        <module name="cercat.cercat-batch.test" />
         <module name="cercat.cercat-common.test" />
         <module name="cercat.cercat-infrastructure.test" />
         <module name="cercat.cercat-application.test" />
@@ -21,8 +22,9 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.30/f195ee86e6c896ea47a1d39defbe20eb59cd149d/lombok-1.18.30.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-configuration-processor/3.2.1/9d6ac9a2fa98598d1a38e9f06d6f0aab250cae2f/spring-boot-configuration-processor-3.2.1.jar" />
         </processorPath>
-        <module name="cercat.cercat-common.main" />
+        <module name="cercat.cercat-batch.main" />
         <module name="cercat.cercat-application.main" />
+        <module name="cercat.cercat-common.main" />
         <module name="cercat.cercat-infrastructure.main" />
       </profile>
       <profile name="Gradle Imported" enabled="true">

@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/cercat-application" />
+            <option value="$PROJECT_DIR$/cercat-batch" />
             <option value="$PROJECT_DIR$/cercat-common" />
             <option value="$PROJECT_DIR$/cercat-domain" />
             <option value="$PROJECT_DIR$/cercat-infrastructure" />

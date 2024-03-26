@@ -3,4 +3,4 @@ include('cercat-application')
 include('cercat-domain')
 include('cercat-infrastructure')
 include('cercat-common')
-
+include('cercat-batch')

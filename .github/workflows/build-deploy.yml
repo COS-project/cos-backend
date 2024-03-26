@@ -3,17 +3,16 @@ name: Deploy with Docker
 
 on:
   push:
+    paths-ignore:
+      - 'cercat-batch/**'
     branches: [ main ]
-    # 무슨 브랜치가 업데이트 될 때 Actions 를 작동시킬지 적습니다.
-    # 본 실습에서는 main에 push(merge)가 될 때 작동합니다.
-    # 리스트 형태이기 때문에 여러개를 적어도 됩니다.
 
 env:
   DOCKER_IMAGE: ghcr.io/jiwonkkang/cercat
   VERSION: ${{ github.sha }}
   CONTAINER_NAME: cercat
-  # Docker image 를 ghcr.io 에 올릴 때 우리의 github이름/이미지이름 으로 저장합니다. 이미지이름을 정해주면 된다.
-  # Docker 컨테이너 의 이름을 camong 이라고 해놓은 것. 이름은 본인 임의로 정하면 됩니다.
+
+
 jobs:
   build:
     name: Build

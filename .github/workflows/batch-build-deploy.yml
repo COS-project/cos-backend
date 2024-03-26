@@ -1,0 +1,82 @@
+name: Deploy with Docker
+# 본인이 만드는 pipeline의 이름입니다.
+
+on:
+  push:
+    paths:
+      - 'cercat-batch/**'
+      - 'cercat-domain/**'
+      - 'cercat-common/**'
+    branches: [ main ]
+    # 무슨 브랜치가 업데이트 될 때 Actions 를 작동시킬지 적습니다.
+    # 본 실습에서는 main에 push(merge)가 될 때 작동합니다.
+    # 리스트 형태이기 때문에 여러개를 적어도 됩니다.
+
+env:
+  DOCKER_IMAGE: ghcr.io/jiwonkkang/cercat-batch
+  VERSION: ${{ github.sha }}
+  CONTAINER_NAME: cercat-batch
+  # Docker image 를 ghcr.io 에 올릴 때 우리의 github이름/이미지이름 으로 저장합니다. 이미지이름을 정해주면 된다.
+  # Docker 컨테이너 의 이름을 cercat-batch 이라고 해놓은 것. 이름은 본인 임의로 정하면 됩니다.
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2 # git 레파지토리를 클론하는것과 같음
+
+      - name: Setup docker buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Cache docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ env.VERSION }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Login to ghcr
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_TOKEN }}
+          # 우리가 방금 복사해서 setting secrets 에 붙여줬던 token 이다. 이름을 기억해 넣어주자.
+          # 우리의 ghcr.io 에 접근하기 위함이다.
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          file: ./cercat-batch/Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags: ${{ env.DOCKER_IMAGE }}:latest
+  deploy:
+    needs: build
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker login
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_IP }}
+          username: ${{ secrets.REMOTE_SSH_ID }}
+          key: ${{ secrets.REMOTE_SSH_KEY }}
+          port: ${{ secrets.REMOTE_SSH_PORT }}
+          script: |
+            sudo chmod 666 /var/run/docker.sock
+            echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      - name: Remove And Pull
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_IP }}
+          username: ${{ secrets.REMOTE_SSH_ID }}
+          key: ${{ secrets.REMOTE_SSH_KEY }}
+          port: ${{ secrets.REMOTE_SSH_PORT }}
+          script: |
+            docker rm ${{ env.CONTAINER_NAME }} && docker rmi ${{ env.DOCKER_IMAGE }}:latest
+            docker pull ${{ env.DOCKER_IMAGE }}:latest

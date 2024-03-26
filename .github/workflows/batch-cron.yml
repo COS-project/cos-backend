@@ -1,0 +1,67 @@
+name: CercatBatch
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+env:
+  DOCKER_IMAGE: ghcr.io/jiwonkkang/cercat-batch
+  VERSION: ${{ github.sha }}
+  CONTAINER_NAME: cercat-batch
+
+jobs:
+  batch:
+    name: Batch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker login
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_IP }}
+          username: ${{ secrets.REMOTE_SSH_ID }}
+          key: ${{ secrets.REMOTE_SSH_KEY }}
+          port: ${{ secrets.REMOTE_SSH_PORT }}
+          script: |
+            sudo chmod 666 /var/run/docker.sock
+            echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      - name: Get current date
+        id: version
+        run: echo "builddate=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_OUTPUT
+      - name: Batch Run
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_IP }}
+          username: ${{ secrets.REMOTE_SSH_ID }}
+          key: ${{ secrets.REMOTE_SSH_KEY }}
+          port: ${{ secrets.REMOTE_SSH_PORT }}
+          script: |
+            docker rm ${{ env.CONTAINER_NAME }}
+            docker compose -f cercat-batch.yml run --name ${{ env.CONTAINER_NAME }} ${{ env.CONTAINER_NAME }} requestDate=${{ steps.version.outputs.builddate }}
+  slack-success:
+    needs: [batch]
+    if: always() && !contains(needs.*.result, 'failure')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Success Notify message to slack
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_COLOR: 'good' # 또는 'green', '#ff00ff' 처럼 직접 색상 지정
+          SLACK_USERNAME: Cercat-Batch-Server
+          SLACK_ICON: https://avatars.githubusercontent.com/u/146210438?s=200&v=4
+          SLACK_TITLE: Message
+          SLACK_MESSAGE: '서캣 배치 작업이 성공적으로 완료되었습니다.'
+  slack-failure:
+    needs: [batch]
+    if: always() && !contains(needs.*.result, 'success')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Failure Notify message to slack
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_COLOR: 'danger' # 또는 'green', '#ff00ff' 처럼 직접 색상 지정
+          SLACK_USERNAME: Cercat-Batch-Server
+          SLACK_ICON: https://avatars.githubusercontent.com/u/146210438?s=200&v=4
+          SLACK_TITLE: Message
+          SLACK_MESSAGE: '서캣 배치 작업이 실패하였습니다.'

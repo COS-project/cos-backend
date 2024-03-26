@@ -7,7 +7,7 @@ ARG VERSION=0.0.2
 
 COPY .. .
 
-RUN ./gradlew build -x test
+RUN ./gradlew :cercat-application:build -x test
 RUN mkdir -p ${MODULE_NAME}/build/extracted && (java -Djarmode=layertools -jar ${MODULE_NAME}/build/libs/${MODULE_NAME}-${VERSION}.jar extract --destination ${MODULE_NAME}/build/extracted)
 
 FROM eclipse-temurin:17-jdk-alpine
