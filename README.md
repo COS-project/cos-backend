@@ -46,6 +46,10 @@
 📁 cercat-domain # Entity, Service, Repository
 📁 cercat-infrastructure # 외부 API 기능(GCP Cloud Storage)
 ```
+- [cercat-application](https://github.com/COS-project/cos-backend/blob/main/cercat-application/README.md)
+- [cercat-common](https://github.com/COS-project/cos-backend/blob/main/cercat-common/README.md)
+- [cercat-domain](https://github.com/COS-project/cos-backend/blob/main/cercat-domain/README.md)
+- [cercat-external](https://github.com/COS-project/cos-backend/blob/main/cercat-external/README.md)
 
 # 패키지 구조
 ```
