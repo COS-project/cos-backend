@@ -1,11 +1,7 @@
 package com.cos.cercat.apis.alarm.dto.Response;
 
-import com.cos.cercat.domain.alarm.domain.Alarm;
-import com.cos.cercat.domain.alarm.domain.AlarmType;
-import com.cos.cercat.domain.alarm.domain.BoardAlarm;
-import com.cos.cercat.domain.alarm.domain.ExamAlarm;
-import com.cos.cercat.domain.certificate.domain.CertificateExam;
-import com.cos.cercat.domain.user.dto.UserDTO;
+import com.cos.cercat.domain.*;
+import com.cos.cercat.dto.UserDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)

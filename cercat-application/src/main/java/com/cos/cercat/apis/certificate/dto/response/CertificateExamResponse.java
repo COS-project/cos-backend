@@ -1,6 +1,6 @@
 package com.cos.cercat.apis.certificate.dto.response;
 
-import com.cos.cercat.domain.certificate.domain.CertificateExam;
+import com.cos.cercat.domain.CertificateExam;
 
 public record CertificateExamResponse(
         Integer examYear,

@@ -1,6 +1,23 @@
 dependencies {
+
+    //domain modules
     implementation project(':cercat-common')
-    implementation project(':cercat-domain')
+    implementation project(':cercat-domain:domain-alarm')
+    implementation project(':cercat-domain:domain-board')
+    implementation project(':cercat-domain:domain-certificate')
+    implementation project(':cercat-domain:domain-examreview')
+    implementation project(':cercat-domain:domain-learning')
+    implementation project(':cercat-domain:domain-like')
+    implementation project(':cercat-domain:domain-mockexam')
+    implementation project(':cercat-domain:domain-mockexamresult')
+    implementation project(':cercat-domain:domain-post')
+    implementation project(':cercat-domain:domain-search')
+    implementation project(':cercat-domain:domain-user')
+    implementation project(':cercat-domain:domain-jpa')
+    implementation project(':cercat-domain:domain-redis')
+    implementation project(':cercat-domain:domain-elasticsearch')
+
+    //infrastructure
     implementation project(':cercat-infrastructure')
 
     implementation 'org.springframework.boot:spring-boot-starter-web'

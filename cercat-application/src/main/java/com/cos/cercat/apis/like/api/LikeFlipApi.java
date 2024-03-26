@@ -2,8 +2,8 @@ package com.cos.cercat.apis.like.api;
 
 import com.cos.cercat.apis.like.app.usecase.LikeFlipUseCase;
 import com.cos.cercat.apis.like.dto.request.LikeType;
-import com.cos.cercat.common.dto.Response;
-import com.cos.cercat.domain.user.dto.UserDTO;
+import com.cos.cercat.common.domain.Response;
+import com.cos.cercat.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

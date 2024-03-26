@@ -1,16 +1,16 @@
 package com.cos.cercat.apis.search.app.usecase;
 
+import com.cos.cercat.cache.SearchLog;
 import com.cos.cercat.common.annotation.UseCase;
-import com.cos.cercat.domain.like.service.PostLikeService;
-import com.cos.cercat.domain.like.domain.EmbeddedId.PostLikePK;
-import com.cos.cercat.domain.post.service.PostService;
 import com.cos.cercat.apis.post.dto.response.PostResponse;
-import com.cos.cercat.domain.search.cache.SearchLog;
-import com.cos.cercat.domain.search.domain.PostDocument;
-import com.cos.cercat.domain.search.dto.SearchCond;
-import com.cos.cercat.domain.search.service.PostSearchService;
-import com.cos.cercat.domain.search.service.SearchLogService;
-import com.cos.cercat.domain.user.dto.UserDTO;
+import com.cos.cercat.domain.EmbeddedId.PostLikePK;
+import com.cos.cercat.domain.PostDocument;
+import com.cos.cercat.dto.SearchCond;
+import com.cos.cercat.dto.UserDTO;;
+import com.cos.cercat.service.PostLikeService;
+import com.cos.cercat.service.PostSearchService;
+import com.cos.cercat.service.SearchLogService;
+import com.cos.cercat.service.post.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;

@@ -1,10 +1,10 @@
 package com.cos.cercat.apis.alarm.app.usecase;
 
-import com.cos.cercat.domain.alarm.service.AlarmService;
 import com.cos.cercat.apis.alarm.dto.Response.AlarmResponse;
 import com.cos.cercat.common.annotation.UseCase;
-import com.cos.cercat.domain.user.service.UserService;
-import com.cos.cercat.domain.user.domain.User;
+import com.cos.cercat.service.AlarmService;
+import com.cos.cercat.service.UserService;
+import com.cos.cercat.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;

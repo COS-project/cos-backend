@@ -1,8 +1,8 @@
 package com.cos.cercat.apis.learning.dto.response;
 
 import com.cos.cercat.apis.certificate.dto.response.CertificateResponse;
-import com.cos.cercat.domain.learning.domain.Goal;
-import com.cos.cercat.domain.learning.domain.RepeatDay;
+import com.cos.cercat.domain.Goal;
+import com.cos.cercat.domain.RepeatDay;
 
 import java.time.LocalDateTime;
 import java.util.List;

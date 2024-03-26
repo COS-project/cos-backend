@@ -1,13 +1,13 @@
 package com.cos.cercat.apis.like.app.strategy;
 
 import com.cos.cercat.apis.alarm.app.kafka.producer.AlarmProducer;
-import com.cos.cercat.domain.alarm.domain.AlarmType;
-import com.cos.cercat.domain.alarm.dto.AlarmArg;
-import com.cos.cercat.domain.alarm.dto.AlarmEvent;
-import com.cos.cercat.domain.like.service.PostLikeService;
-import com.cos.cercat.domain.post.domain.Post;
-import com.cos.cercat.domain.like.domain.EmbeddedId.PostLikePK;
-import com.cos.cercat.domain.user.domain.User;
+import com.cos.cercat.domain.AlarmType;
+import com.cos.cercat.domain.post.Post;
+import com.cos.cercat.dto.AlarmArg;
+import com.cos.cercat.dto.AlarmEvent;
+import com.cos.cercat.service.PostLikeService;
+import com.cos.cercat.domain.EmbeddedId.PostLikePK;
+import com.cos.cercat.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

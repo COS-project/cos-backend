@@ -1,8 +1,8 @@
 package com.cos.cercat.apis.search.app.usecase;
 
 import com.cos.cercat.common.annotation.UseCase;
-import com.cos.cercat.domain.search.service.SearchLogService;
-import com.cos.cercat.domain.user.dto.UserDTO;
+import com.cos.cercat.dto.UserDTO;;
+import com.cos.cercat.service.SearchLogService;
 import com.cos.cercat.apis.user.dto.request.SearchLogDeleteRequest;
 import lombok.RequiredArgsConstructor;
 

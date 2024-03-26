@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.alarm.api;
 
-import com.cos.cercat.domain.alarm.service.SseEmitterService;
-import com.cos.cercat.domain.user.dto.UserDTO;
+import com.cos.cercat.dto.UserDTO;
+import com.cos.cercat.service.SseEmitterService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

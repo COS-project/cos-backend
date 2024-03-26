@@ -2,14 +2,14 @@ package com.cos.cercat.apis.learning.app.usecase;
 
 import com.cos.cercat.apis.learning.dto.request.GoalCreateRequest;
 import com.cos.cercat.common.annotation.UseCase;
-import com.cos.cercat.domain.certificate.service.CertificateService;
-import com.cos.cercat.domain.certificate.domain.Certificate;
-import com.cos.cercat.domain.learning.service.GoalService;
-import com.cos.cercat.domain.learning.service.StudyTimeLogService;
-import com.cos.cercat.domain.learning.domain.Goal;
-import com.cos.cercat.domain.user.service.UserService;
-import com.cos.cercat.domain.user.domain.User;
-import com.cos.cercat.domain.user.dto.UserDTO;
+import com.cos.cercat.service.CertificateService;
+import com.cos.cercat.domain.Certificate;
+import com.cos.cercat.service.GoalService;
+import com.cos.cercat.service.StudyTimeLogService;
+import com.cos.cercat.domain.Goal;
+import com.cos.cercat.service.UserService;
+import com.cos.cercat.domain.User;
+import com.cos.cercat.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

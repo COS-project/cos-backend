@@ -1,6 +1,6 @@
 package com.cos.cercat.apis.certificate.dto.response;
 
-import com.cos.cercat.domain.certificate.domain.*;
+import com.cos.cercat.domain.*;
 
 public record ExamInfoResponse(
         ExamSchedule examSchedule, //시험 일정

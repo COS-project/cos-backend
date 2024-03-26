@@ -1,8 +1,8 @@
 package com.cos.cercat.apis.search.api;
 
 import com.cos.cercat.apis.search.app.usecase.SearchDeleteUseCase;
-import com.cos.cercat.common.dto.Response;
-import com.cos.cercat.domain.user.dto.UserDTO;
+import com.cos.cercat.common.domain.Response;
+import com.cos.cercat.dto.UserDTO;;
 import com.cos.cercat.apis.user.dto.request.SearchLogDeleteRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

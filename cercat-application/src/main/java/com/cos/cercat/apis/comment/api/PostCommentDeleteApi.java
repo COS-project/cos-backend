@@ -1,8 +1,8 @@
 package com.cos.cercat.apis.comment.api;
 
 import com.cos.cercat.apis.comment.app.usecase.PostCommentDeleteUseCase;
-import com.cos.cercat.common.dto.Response;
-import com.cos.cercat.domain.user.dto.UserDTO;
+import com.cos.cercat.common.domain.Response;
+import com.cos.cercat.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

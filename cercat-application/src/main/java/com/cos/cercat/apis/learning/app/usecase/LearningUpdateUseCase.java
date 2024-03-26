@@ -2,9 +2,9 @@ package com.cos.cercat.apis.learning.app.usecase;
 
 import com.cos.cercat.apis.learning.dto.request.GoalUpdateRequest;
 import com.cos.cercat.common.annotation.UseCase;
-import com.cos.cercat.domain.learning.service.GoalService;
-import com.cos.cercat.domain.user.service.UserService;
-import com.cos.cercat.domain.user.domain.User;
+import com.cos.cercat.service.GoalService;
+import com.cos.cercat.service.UserService;
+import com.cos.cercat.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;

@@ -3,7 +3,14 @@ spring:
     group:
       local: common, domain
       prod: common, domain
+    include:
+      - jpa
 
+  batch:
+    jdbc:
+      initialize-schema: always
+    job:
+      enabled: true
 ---
 spring:
   config:

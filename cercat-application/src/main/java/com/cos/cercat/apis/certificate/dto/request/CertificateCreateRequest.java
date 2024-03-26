@@ -1,6 +1,6 @@
 package com.cos.cercat.apis.certificate.dto.request;
 
-import com.cos.cercat.domain.certificate.domain.Certificate;
+import com.cos.cercat.domain.Certificate;
 
 import java.util.List;
 

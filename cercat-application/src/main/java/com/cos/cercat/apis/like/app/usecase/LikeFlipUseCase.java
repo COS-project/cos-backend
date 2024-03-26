@@ -1,16 +1,16 @@
 package com.cos.cercat.apis.like.app.usecase;
 
-import com.cos.cercat.common.annotation.UseCase;
 import com.cos.cercat.apis.like.app.strategy.LikeStrategy;
+import com.cos.cercat.common.annotation.UseCase;
 import com.cos.cercat.apis.like.app.strategy.LikeStrategyFactory;
 import com.cos.cercat.apis.like.app.strategy.StrategyName;
-import com.cos.cercat.domain.post.service.PostService;
-import com.cos.cercat.domain.post.domain.Post;
-import com.cos.cercat.domain.comment.service.PostCommentService;
-import com.cos.cercat.domain.comment.domain.PostComment;
 import com.cos.cercat.apis.like.dto.request.LikeType;
-import com.cos.cercat.domain.user.service.UserService;
-import com.cos.cercat.domain.user.domain.User;
+import com.cos.cercat.domain.comment.PostComment;
+import com.cos.cercat.domain.post.Post;
+import com.cos.cercat.service.UserService;
+import com.cos.cercat.domain.User;
+import com.cos.cercat.service.comment.PostCommentService;
+import com.cos.cercat.service.post.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;

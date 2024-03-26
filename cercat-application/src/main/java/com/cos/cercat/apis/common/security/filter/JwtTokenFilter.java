@@ -1,13 +1,13 @@
 package com.cos.cercat.apis.common.security.filter;
 
+import com.cos.cercat.cache.RefreshToken;
+import com.cos.cercat.cache.TokenCacheRepository;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.common.util.JwtTokenUtil;
 import com.cos.cercat.common.util.JwtTokenizer;
-import com.cos.cercat.domain.user.service.UserService;
-import com.cos.cercat.domain.user.cache.RefreshToken;
-import com.cos.cercat.domain.user.cache.TokenCacheRepository;
-import com.cos.cercat.domain.user.dto.UserDTO;
+import com.cos.cercat.service.UserService;
+import com.cos.cercat.dto.UserDTO;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

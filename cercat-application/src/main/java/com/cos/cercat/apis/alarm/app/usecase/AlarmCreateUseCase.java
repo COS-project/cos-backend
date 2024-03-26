@@ -1,19 +1,20 @@
 package com.cos.cercat.apis.alarm.app.usecase;
 
-import com.cos.cercat.domain.alarm.service.AlarmService;
-import com.cos.cercat.domain.alarm.service.SseEmitterService;
-import com.cos.cercat.domain.alarm.domain.Alarm;
-import com.cos.cercat.domain.alarm.dto.AlarmEvent;
 import com.cos.cercat.common.annotation.UseCase;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
+import com.cos.cercat.domain.Alarm;
+import com.cos.cercat.dto.AlarmEvent;
+import com.cos.cercat.service.AlarmService;
+import com.cos.cercat.service.SseEmitterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
 
-import static com.cos.cercat.domain.alarm.service.SseEmitterService.EVENT_NAME;
+import static com.cos.cercat.service.SseEmitterService.EVENT_NAME;
+
 
 @UseCase
 @RequiredArgsConstructor

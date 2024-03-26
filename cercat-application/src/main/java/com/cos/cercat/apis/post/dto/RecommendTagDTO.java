@@ -1,7 +1,8 @@
 package com.cos.cercat.apis.post.dto;
 
-import com.cos.cercat.domain.post.domain.RecommendTag;
-import com.cos.cercat.domain.post.domain.TagType;
+
+import com.cos.cercat.domain.post.RecommendTag;
+import com.cos.cercat.domain.post.TagType;
 
 public record RecommendTagDTO(
         TagType tagType,

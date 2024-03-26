@@ -1,0 +1,28 @@
+bootJar {
+    enabled = false
+}
+
+dependencies {
+
+    implementation project(':cercat-common');
+    api project(':cercat-domain:domain-jpa');
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    //domain-redis
+    implementation project(':cercat-domain:domain-redis')
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    //security
+    api 'org.springframework.boot:spring-boot-starter-security'
+
+    //직렬화 및 역직렬화 관련
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.2'
+
+    //query dsl
+    annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+}

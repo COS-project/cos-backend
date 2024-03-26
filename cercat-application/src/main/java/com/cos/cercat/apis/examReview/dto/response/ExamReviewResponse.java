@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.examReview.dto.response;
 
-import com.cos.cercat.domain.examReview.domain.ExamDifficulty;
-import com.cos.cercat.domain.examReview.domain.ExamReview;
+import com.cos.cercat.domain.ExamDifficulty;
+import com.cos.cercat.domain.ExamReview;
 import com.cos.cercat.apis.user.dto.response.UserResponse;
 
 import java.time.LocalDateTime;

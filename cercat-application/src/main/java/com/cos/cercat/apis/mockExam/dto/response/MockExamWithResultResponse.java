@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.mockExam.dto.response;
 
-import com.cos.cercat.domain.mockExam.domain.MockExam;
-import com.cos.cercat.domain.mockExamResult.domain.MockExamResult;
+import com.cos.cercat.domain.MockExam;
+import com.cos.cercat.domain.MockExamResult;
 import com.cos.cercat.apis.mockExamResult.dto.response.MockExamResultWithSubjectsResponse;
 import com.fasterxml.jackson.annotation.JsonInclude;
 

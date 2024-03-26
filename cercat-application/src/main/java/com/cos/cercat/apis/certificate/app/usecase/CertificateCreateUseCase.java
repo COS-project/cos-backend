@@ -1,16 +1,12 @@
 package com.cos.cercat.apis.certificate.app.usecase;
 
 import com.cos.cercat.common.annotation.UseCase;
-import com.cos.cercat.domain.certificate.service.CertificateExamService;
-import com.cos.cercat.domain.certificate.service.CertificateService;
-import com.cos.cercat.domain.certificate.service.InterestCertificateService;
-import com.cos.cercat.domain.certificate.domain.Certificate;
+import com.cos.cercat.service.*;
+import com.cos.cercat.domain.Certificate;
 import com.cos.cercat.apis.certificate.dto.request.CertificateCreateRequest;
 import com.cos.cercat.apis.certificate.dto.request.CertificateExamCreateRequest;
 import com.cos.cercat.apis.certificate.dto.request.InterestCertificateCreateRequest;
-import com.cos.cercat.domain.board.service.FavoriteBoardService;
-import com.cos.cercat.domain.user.service.UserService;
-import com.cos.cercat.domain.user.domain.User;
+import com.cos.cercat.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;

@@ -2,8 +2,8 @@ package com.cos.cercat.apis.user.api;
 
 import com.cos.cercat.apis.user.app.usecase.UserUpdateUseCase;
 import com.cos.cercat.apis.user.dto.request.UserCreateRequest;
-import com.cos.cercat.common.dto.Response;
-import com.cos.cercat.domain.user.dto.UserDTO;
+import com.cos.cercat.common.domain.Response;
+import com.cos.cercat.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;

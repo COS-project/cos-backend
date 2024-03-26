@@ -2,8 +2,8 @@ package com.cos.cercat.apis.learning.api;
 
 import com.cos.cercat.apis.learning.app.usecase.LearningUpdateUseCase;
 import com.cos.cercat.apis.learning.dto.request.GoalUpdateRequest;
-import com.cos.cercat.common.dto.Response;
-import com.cos.cercat.domain.user.dto.UserDTO;
+import com.cos.cercat.common.domain.Response;
+import com.cos.cercat.dto.UserDTO;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

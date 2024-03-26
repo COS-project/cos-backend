@@ -10,11 +10,25 @@
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.30/f195ee86e6c896ea47a1d39defbe20eb59cd149d/lombok-1.18.30.jar" />
         </processorPath>
-        <module name="cercat.cercat-domain.test" />
-        <module name="cercat.cercat-batch.test" />
+        <module name="cercat.cercat-domain.domain-learning.test" />
+        <module name="cercat.cercat-domain.domain-post.test" />
         <module name="cercat.cercat-common.test" />
-        <module name="cercat.cercat-infrastructure.test" />
+        <module name="cercat.cercat-domain.domain-search.test" />
+        <module name="cercat.cercat-domain.domain-alarm.test" />
+        <module name="cercat.cercat-domain.domain-elasticsearch.test" />
+        <module name="cercat.cercat-domain.domain-certificate.test" />
+        <module name="cercat.cercat-domain.domain-examreview.test" />
+        <module name="cercat.cercat-domain.domain-user.test" />
+        <module name="cercat.cercat-domain.domain-like.test" />
+        <module name="cercat.cercat-domain.domain-mockexam.test" />
+        <module name="cercat.cercat-domain.domain-redis.test" />
         <module name="cercat.cercat-application.test" />
+        <module name="cercat.cercat-domain.domain-jpa.test" />
+        <module name="cercat.cercat-domain.test" />
+        <module name="cercat.cercat-domain.domain-board.test" />
+        <module name="cercat.cercat-batch.test" />
+        <module name="cercat.cercat-infrastructure.test" />
+        <module name="cercat.cercat-domain.domain-mockexamresult.test" />
       </profile>
       <profile name="Gradle Imported" enabled="true">
         <outputRelativeToContentRoot value="true" />
@@ -23,9 +37,14 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-configuration-processor/3.2.1/9d6ac9a2fa98598d1a38e9f06d6f0aab250cae2f/spring-boot-configuration-processor-3.2.1.jar" />
         </processorPath>
         <module name="cercat.cercat-batch.main" />
+        <module name="cercat.cercat-domain.main" />
+        <module name="cercat.cercat-domain.domain-alarm.main" />
+        <module name="cercat.cercat-domain.domain-redis.main" />
+        <module name="cercat.cercat-infrastructure.main" />
         <module name="cercat.cercat-application.main" />
         <module name="cercat.cercat-common.main" />
-        <module name="cercat.cercat-infrastructure.main" />
+        <module name="cercat.cercat-domain.domain-search.main" />
+        <module name="cercat.cercat-domain.domain-elasticsearch.main" />
       </profile>
       <profile name="Gradle Imported" enabled="true">
         <outputRelativeToContentRoot value="true" />
@@ -43,7 +62,16 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mysema.commons/mysema-commons-lang/0.2.4/d09c8489d54251a6c22fbce804bdd4a070557317/mysema-commons-lang-0.2.4.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jdt/ecj/3.26.0/4837be609a3368a0f7e7cf0dc1bdbc7fe94993de/ecj-3.26.0.jar" />
         </processorPath>
-        <module name="cercat.cercat-domain.main" />
+        <module name="cercat.cercat-domain.domain-board.main" />
+        <module name="cercat.cercat-domain.domain-mockexam.main" />
+        <module name="cercat.cercat-domain.domain-mockexamresult.main" />
+        <module name="cercat.cercat-domain.domain-user.main" />
+        <module name="cercat.cercat-domain.domain-certificate.main" />
+        <module name="cercat.cercat-domain.domain-jpa.main" />
+        <module name="cercat.cercat-domain.domain-post.main" />
+        <module name="cercat.cercat-domain.domain-learning.main" />
+        <module name="cercat.cercat-domain.domain-examreview.main" />
+        <module name="cercat.cercat-domain.domain-like.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="17" />

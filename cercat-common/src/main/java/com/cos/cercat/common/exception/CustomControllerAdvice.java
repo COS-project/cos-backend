@@ -1,6 +1,6 @@
 package com.cos.cercat.common.exception;
 
-import com.cos.cercat.common.dto.Response;
+import com.cos.cercat.common.domain.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

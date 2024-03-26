@@ -1,15 +1,9 @@
 package com.cos.cercat.batch.alarm.job;
 
-
-import com.cos.cercat.domain.alarm.domain.AlarmType;
-import com.cos.cercat.domain.alarm.domain.ExamAlarm;
-import com.cos.cercat.domain.alarm.repository.AlarmRepository;
-import com.cos.cercat.domain.certificate.domain.Certificate;
-import com.cos.cercat.domain.certificate.domain.CertificateExam;
-import com.cos.cercat.domain.certificate.domain.InterestCertificate;
-import com.cos.cercat.domain.certificate.repository.CertificateExamRepository;
-import com.cos.cercat.domain.certificate.repository.InterestCertificateRepository;
-import com.cos.cercat.domain.user.domain.User;
+import com.cos.cercat.domain.*;
+import com.cos.cercat.repository.AlarmRepository;
+import com.cos.cercat.repository.CertificateExamRepository;
+import com.cos.cercat.repository.InterestCertificateRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.StepContribution;

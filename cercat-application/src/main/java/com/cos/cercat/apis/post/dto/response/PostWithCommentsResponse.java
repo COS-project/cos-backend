@@ -4,11 +4,11 @@ import com.cos.cercat.apis.mockExam.dto.response.MockExamResponse;
 import com.cos.cercat.apis.user.dto.response.UserResponse;
 import com.cos.cercat.apis.comment.dto.response.PostCommentResponse;
 import com.cos.cercat.apis.mockExam.dto.response.QuestionResponse;
-import com.cos.cercat.domain.post.domain.CommentaryPost;
-import com.cos.cercat.domain.post.domain.NormalPost;
-import com.cos.cercat.domain.post.domain.Post;
-import com.cos.cercat.domain.post.domain.TipPost;
 import com.cos.cercat.apis.post.dto.RecommendTagDTO;
+import com.cos.cercat.domain.post.CommentaryPost;
+import com.cos.cercat.domain.post.NormalPost;
+import com.cos.cercat.domain.post.Post;
+import com.cos.cercat.domain.post.TipPost;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.time.LocalDateTime;

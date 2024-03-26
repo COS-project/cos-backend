@@ -1,8 +1,9 @@
 package com.cos.cercat.apis.comment.dto.request;
 
-import com.cos.cercat.domain.post.domain.Post;
-import com.cos.cercat.domain.comment.domain.PostComment;
-import com.cos.cercat.domain.user.domain.User;
+
+import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.comment.PostComment;
+import com.cos.cercat.domain.post.Post;
 
 public record PostCommentCreateRequest(
         Long parentCommentId,

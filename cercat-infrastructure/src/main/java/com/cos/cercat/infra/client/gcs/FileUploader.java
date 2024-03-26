@@ -1,6 +1,6 @@
 package com.cos.cercat.infra.client.gcs;
 
-import com.cos.cercat.domain.common.domain.Image;
+import com.cos.cercat.entity.Image;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
 import com.google.api.client.util.ByteStreams;

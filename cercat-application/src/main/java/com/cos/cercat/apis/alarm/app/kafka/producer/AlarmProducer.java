@@ -1,6 +1,6 @@
 package com.cos.cercat.apis.alarm.app.kafka.producer;
 
-import com.cos.cercat.domain.alarm.dto.AlarmEvent;
+import com.cos.cercat.dto.AlarmEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

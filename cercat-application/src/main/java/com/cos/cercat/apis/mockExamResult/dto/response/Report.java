@@ -1,6 +1,6 @@
 package com.cos.cercat.apis.mockExamResult.dto.response;
 
-import com.cos.cercat.domain.mockExamResult.dto.ScoreAverage;
+import com.cos.cercat.dto.ScoreAverage;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.user.dto.response;
 
-import com.cos.cercat.domain.user.domain.User;
-import com.cos.cercat.domain.user.dto.UserDTO;
+import com.cos.cercat.domain.User;
+import com.cos.cercat.dto.UserDTO;;
 
 public record UserResponse(
         Long userId,

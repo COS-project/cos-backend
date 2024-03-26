@@ -12,6 +12,20 @@
             <option value="$PROJECT_DIR$/cercat-batch" />
             <option value="$PROJECT_DIR$/cercat-common" />
             <option value="$PROJECT_DIR$/cercat-domain" />
+            <option value="$PROJECT_DIR$/cercat-domain/domain-alarm" />
+            <option value="$PROJECT_DIR$/cercat-domain/domain-board" />
+            <option value="$PROJECT_DIR$/cercat-domain/domain-certificate" />
+            <option value="$PROJECT_DIR$/cercat-domain/domain-elasticsearch" />
+            <option value="$PROJECT_DIR$/cercat-domain/domain-examreview" />
+            <option value="$PROJECT_DIR$/cercat-domain/domain-jpa" />
+            <option value="$PROJECT_DIR$/cercat-domain/domain-learning" />
+            <option value="$PROJECT_DIR$/cercat-domain/domain-like" />
+            <option value="$PROJECT_DIR$/cercat-domain/domain-mockexam" />
+            <option value="$PROJECT_DIR$/cercat-domain/domain-mockexamresult" />
+            <option value="$PROJECT_DIR$/cercat-domain/domain-post" />
+            <option value="$PROJECT_DIR$/cercat-domain/domain-redis" />
+            <option value="$PROJECT_DIR$/cercat-domain/domain-search" />
+            <option value="$PROJECT_DIR$/cercat-domain/domain-user" />
             <option value="$PROJECT_DIR$/cercat-infrastructure" />
           </set>
         </option>

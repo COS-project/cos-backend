@@ -1,9 +1,9 @@
 package com.cos.cercat.apis.comment.app.usecase;
 
 import com.cos.cercat.common.annotation.UseCase;
-import com.cos.cercat.domain.comment.service.PostCommentService;
-import com.cos.cercat.domain.user.service.UserService;
-import com.cos.cercat.domain.user.domain.User;
+import com.cos.cercat.service.UserService;
+import com.cos.cercat.domain.User;
+import com.cos.cercat.service.comment.PostCommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;

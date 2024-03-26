@@ -1,6 +1,6 @@
 package com.cos.cercat.apis.learning.dto.response;
 
-import com.cos.cercat.domain.learning.domain.Goal;
+import com.cos.cercat.domain.Goal;
 
 public record GoalAchievementResponse(
         Long goalId,

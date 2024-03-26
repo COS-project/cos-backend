@@ -1,14 +1,14 @@
 package com.cos.cercat.apis.post.dto.request;
 
-import com.cos.cercat.domain.certificate.domain.Certificate;
-import com.cos.cercat.domain.common.domain.Image;
-import com.cos.cercat.domain.mockExam.domain.Question;
-import com.cos.cercat.domain.post.domain.CommentaryPost;
-import com.cos.cercat.domain.post.domain.NormalPost;
-import com.cos.cercat.domain.post.domain.PostType;
-import com.cos.cercat.domain.post.domain.TipPost;
+import com.cos.cercat.domain.Certificate;
+import com.cos.cercat.domain.Question;
 import com.cos.cercat.apis.post.dto.RecommendTagDTO;
-import com.cos.cercat.domain.user.domain.User;
+import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.post.CommentaryPost;
+import com.cos.cercat.domain.post.NormalPost;
+import com.cos.cercat.domain.post.PostType;
+import com.cos.cercat.domain.post.TipPost;
+import com.cos.cercat.entity.Image;
 
 import java.util.List;
 import java.util.Set;

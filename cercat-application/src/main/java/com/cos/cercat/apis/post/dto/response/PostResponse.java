@@ -2,7 +2,7 @@ package com.cos.cercat.apis.post.dto.response;
 
 import com.cos.cercat.apis.mockExam.dto.response.MockExamResponse;
 import com.cos.cercat.apis.user.dto.response.UserResponse;
-import com.cos.cercat.domain.post.domain.*;
+import com.cos.cercat.domain.post.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.time.LocalDateTime;

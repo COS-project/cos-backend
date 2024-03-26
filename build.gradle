@@ -59,3 +59,13 @@ subprojects {
 	}
 
 }
+
+project(':cercat-domain') {
+	bootJar {
+		enabled = false
+	}
+
+	jar {
+		enabled = false
+	}
+}

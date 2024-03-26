@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.alarm.app.kafka.consumer;
 
 import com.cos.cercat.apis.alarm.app.usecase.AlarmCreateUseCase;
-import com.cos.cercat.domain.alarm.dto.AlarmEvent;
+import com.cos.cercat.dto.AlarmEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;

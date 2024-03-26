@@ -2,7 +2,7 @@ package com.cos.cercat.apis.mockExam.dto.response;
 
 
 import com.cos.cercat.apis.certificate.dto.response.CertificateResponse;
-import com.cos.cercat.domain.mockExam.domain.MockExam;
+import com.cos.cercat.domain.MockExam;
 
 public record MockExamResponse(
         Long MockExamId,

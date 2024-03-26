@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.search.app.handler;
 
-import com.cos.cercat.domain.search.dto.PostCommentDebeziumDTO;
-import com.cos.cercat.domain.search.service.PostSearchService;
+import com.cos.cercat.dto.PostCommentDebeziumDTO;
+import com.cos.cercat.service.PostSearchService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;

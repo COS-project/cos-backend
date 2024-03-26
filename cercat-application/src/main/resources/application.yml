@@ -3,6 +3,10 @@ spring:
     group:
       local: common, domain, infra
       prod: common, domain, infra
+    include:
+      - elasticsearch
+      - jpa
+      - redis
 
   servlet:
     multipart:

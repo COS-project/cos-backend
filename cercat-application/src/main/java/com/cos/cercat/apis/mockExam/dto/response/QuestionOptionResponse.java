@@ -1,6 +1,6 @@
 package com.cos.cercat.apis.mockExam.dto.response;
 
-import com.cos.cercat.domain.mockExam.domain.QuestionOption;
+import com.cos.cercat.domain.QuestionOption;
 
 public record QuestionOptionResponse(
         Integer optionSequence,

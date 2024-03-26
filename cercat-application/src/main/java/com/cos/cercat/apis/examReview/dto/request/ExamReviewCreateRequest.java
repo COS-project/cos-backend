@@ -1,9 +1,9 @@
 package com.cos.cercat.apis.examReview.dto.request;
 
-import com.cos.cercat.domain.certificate.domain.CertificateExam;
-import com.cos.cercat.domain.examReview.domain.ExamDifficulty;
-import com.cos.cercat.domain.examReview.domain.ExamReview;
-import com.cos.cercat.domain.user.domain.User;
+import com.cos.cercat.domain.CertificateExam;
+import com.cos.cercat.domain.ExamDifficulty;
+import com.cos.cercat.domain.ExamReview;
+import com.cos.cercat.domain.User;
 
 public record ExamReviewCreateRequest(
         ExamDifficulty examDifficulty,

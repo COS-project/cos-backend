@@ -1,7 +1,5 @@
 package com.cos.cercat.batch;
 
-import com.cos.cercat.common.CommonRoot;
-import com.cos.cercat.domain.DomainRoot;
 import jakarta.annotation.PostConstruct;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.TimeZone;
 
 
-@SpringBootApplication(scanBasePackageClasses = { BatchRoot.class, DomainRoot.class, CommonRoot.class })
+@SpringBootApplication(scanBasePackages = "com.cos.cercat")
 public class CercatBatchApplication {
 
 	public static void main(String[] args) {

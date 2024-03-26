@@ -2,8 +2,8 @@ package com.cos.cercat.apis.mockExamResult.api;
 
 import com.cos.cercat.apis.mockExamResult.app.usecase.MockExamResultCreateUseCase;
 import com.cos.cercat.apis.mockExamResult.dto.request.MockExamResultRequest;
-import com.cos.cercat.common.dto.Response;
-import com.cos.cercat.domain.user.dto.UserDTO;
+import com.cos.cercat.common.domain.Response;
+import com.cos.cercat.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

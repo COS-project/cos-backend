@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.mockExamResult.dto.response;
 
 import com.cos.cercat.apis.mockExam.dto.response.MockExamResponse;
-import com.cos.cercat.domain.mockExamResult.domain.MockExamResult;
+import com.cos.cercat.domain.MockExamResult;
 
 
 public record MockExamResultResponse(
