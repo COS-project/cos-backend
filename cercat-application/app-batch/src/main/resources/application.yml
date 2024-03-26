@@ -5,20 +5,11 @@ spring:
       prod: common, domain
     include:
       - jpa
+  main:
+    web-application-type: none
 
   batch:
     jdbc:
       initialize-schema: always
     job:
       enabled: true
----
-spring:
-  config:
-    activate:
-      on-profile: local
-
----
-spring:
-  config:
-    activate:
-      on-profile: prod
