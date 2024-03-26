@@ -25,14 +25,12 @@ public class AlarmBeforeExamDeadlineTasklet implements Tasklet {
     private final InterestCertificateRepository interestCertificateRepository;
     private final AlarmRepository alarmRepository;
 
-
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 
         LocalDateTime currentDateTime = LocalDateTime.now();
         LocalDateTime oneDayAfter = currentDateTime.plusDays(1);
         int count = 0;
-
 
         List<CertificateExam> certificateExams = certificateExamRepository.findTomorrowDeadlineCertificateExams(oneDayAfter);
 

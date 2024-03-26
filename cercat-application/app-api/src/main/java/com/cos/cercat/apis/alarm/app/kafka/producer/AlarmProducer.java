@@ -14,7 +14,6 @@ public class AlarmProducer {
 
     @Value("${spring.kafka.topic.alarm}")
     private String topic;
-
     private final KafkaTemplate<Long, AlarmEvent> kafkaTemplate;
 
     public void send(AlarmEvent event) {
