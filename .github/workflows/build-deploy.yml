@@ -5,6 +5,7 @@ on:
     paths-ignore:
       - 'cercat-application/app-batch/**'
       - '.github/workflows/**'
+      - 'README.md'
     branches: [ main ]
 
 env:
