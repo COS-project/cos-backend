@@ -1,4 +1,4 @@
-name: Deploy with Docker
+name: Cercat-Batch Build and Deploy
 # 본인이 만드는 pipeline의 이름입니다.
 
 on:

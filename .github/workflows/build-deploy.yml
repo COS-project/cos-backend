@@ -1,10 +1,11 @@
-name: Deploy with Docker
+name: Cercat-Application Deploy with Docker
 # 본인이 만드는 pipeline의 이름입니다.
 
 on:
   push:
     paths-ignore:
       - 'cercat-batch/**'
+      - '.github/workflows/**'
     branches: [ main ]
 
 env:
