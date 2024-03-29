@@ -25,7 +25,7 @@ public class SwaggerConfig {
     public GroupedOpenApi board() {
         return GroupedOpenApi.builder()
                 .group("게시판")
-                .packagesToScan("com.cos.cercat.api.board.api")
+                .packagesToScan("com.cos.cercat.apis.board.api")
                 .build();
     }
 
@@ -73,7 +73,7 @@ public class SwaggerConfig {
     public GroupedOpenApi comment() {
         return GroupedOpenApi.builder()
                 .group("댓글")
-                .packagesToScan("com.cos.cercat.api.comment.api")
+                .packagesToScan("com.cos.cercat.apis.comment.api")
                 .build();
     }
 

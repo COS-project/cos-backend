@@ -2,9 +2,7 @@ package com.cos.cercat.repository;
 
 import com.cos.cercat.common.util.DateUtils;
 import com.cos.cercat.domain.*;
-import com.cos.cercat.dto.QDailyScoreAverage;
-import com.cos.cercat.dto.QMonthlyScoreAverage;
-import com.cos.cercat.dto.QWeeklyScoreAverage;
+import com.cos.cercat.dto.*;
 import com.querydsl.core.types.dsl.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +22,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepositoryCus
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<com.cos.cercat.dto.DailyScoreAverage> getDailyScoreAverages(Certificate certificate, User user, com.cos.cercat.dto.DateCond dateCond) {
+    public List<DailyScoreAverage> getDailyScoreAverages(Certificate certificate, User user, DateCond dateCond) {
 
         LocalDate firstDayOfMonth = LocalDate.of(dateCond.year(), dateCond.month(), 1);
 
@@ -55,7 +53,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepositoryCus
     }
 
     @Override
-    public List<com.cos.cercat.dto.WeeklyScoreAverage> getWeeklyScoreAverages(Certificate certificate, User user, com.cos.cercat.dto.DateCond dateCond) {
+    public List<WeeklyScoreAverage> getWeeklyScoreAverages(Certificate certificate, User user, DateCond dateCond) {
 
         LocalDate month = LocalDate.of(dateCond.year(), dateCond.month(), 1);
 
@@ -82,7 +80,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepositoryCus
     }
 
     @Override
-    public List<com.cos.cercat.dto.MonthlyScoreAverage> getMonthlyScoreAverages(Certificate certificate, User user, com.cos.cercat.dto.DateCond dateCond) {
+    public List<MonthlyScoreAverage> getMonthlyScoreAverages(Certificate certificate, User user, DateCond dateCond) {
 
         LocalDate year = LocalDate.of(dateCond.year(), 1, 1);
 
