@@ -12,4 +12,5 @@
 #### 아래와 같은 모듈을 주로 배치할 수 있습니다.
 
 > - app-api
+> - app-batch
 > - app-admin
