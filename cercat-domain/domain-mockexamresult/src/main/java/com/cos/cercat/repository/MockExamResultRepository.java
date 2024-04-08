@@ -69,7 +69,7 @@ public interface MockExamResultRepository extends JpaRepository<MockExamResult, 
             JOIN FETCH mr.mockExam me
             LEFT JOIN me.certificate c
             WHERE FUNCTION('WEEK', mr.createdAt) - FUNCTION('WEEK', :firstDayOfMonth) + 1 = :weekOfMonth
-            AND FUNCTION('MONTH', mr.createdAt) = FUNCTION('MONTH', :month)
+            AND FUNCTION('MONTH', mr.createdAt) = :month
             AND mr.user.id = :userId
             AND c.id = :certificateId
             """)
