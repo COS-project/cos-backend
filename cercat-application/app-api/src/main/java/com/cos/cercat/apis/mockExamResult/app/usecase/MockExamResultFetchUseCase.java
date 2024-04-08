@@ -130,7 +130,7 @@ public class MockExamResultFetchUseCase {
         return switch (dateType) {
             case DATE -> mockExamResultService.getMockExamResultsByDate(certificate, user, dateCond.date(), pageable)
                     .map(MockExamResultResponse::from);
-            case WEEK_OF_MONTH -> mockExamResultService.getMockExamResultsByWeekOfMonth(certificate, user, dateCond.month(), dateCond.weekOfMonth(), pageable)
+            case WEEK_OF_MONTH -> mockExamResultService.getMockExamResultsByWeekOfMonth(certificate, user, dateCond, pageable)
                     .map(MockExamResultResponse::from);
             case MONTH -> mockExamResultService.getMockExamResultsByMonth(certificate, user, dateCond.month(), pageable)
                     .map(MockExamResultResponse::from);

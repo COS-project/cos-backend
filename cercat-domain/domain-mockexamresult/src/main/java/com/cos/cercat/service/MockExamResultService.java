@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.Date;
@@ -104,16 +105,15 @@ public class MockExamResultService {
 
     public Slice<MockExamResult> getMockExamResultsByWeekOfMonth(Certificate certificate,
                                                                  User user,
-                                                                 int month,
-                                                                 int weekOfMonth,
+                                                                 DateCond dateCond,
                                                                  Pageable pageable) {
 
         return mockExamResultRepository.findMockExamResultsByWeekOfMonth(
                 certificate.getId(),
                 user.getId(),
-                DateUtils.getFirstDayOfMonth(LocalDateTime.now().toLocalDate()),
-                month,
-                weekOfMonth,
+                DateUtils.getFirstDayOfMonth(LocalDate.of(dateCond.year(), dateCond.month(), 1)),
+                dateCond.month(),
+                dateCond.weekOfMonth(),
                 pageable
         );
     }
