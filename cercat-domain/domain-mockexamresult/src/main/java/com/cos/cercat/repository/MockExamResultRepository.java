@@ -68,15 +68,16 @@ public interface MockExamResultRepository extends JpaRepository<MockExamResult, 
             SELECT mr from MockExamResult mr
             JOIN FETCH mr.mockExam me
             LEFT JOIN me.certificate c
-            WHERE FUNCTION('WEEK', mr.createdAt) - FUNCTION('WEEK', :firstDayOfMonth) + 1 = :weekOfDay
-            AND FUNCTION('MONTH', mr.createdAt) = FUNCTION('MONTH', CURRENT_DATE)
+            WHERE FUNCTION('WEEK', mr.createdAt) - FUNCTION('WEEK', :firstDayOfMonth) + 1 = :weekOfMonth
+            AND FUNCTION('MONTH', mr.createdAt) = FUNCTION('MONTH', :month)
             AND mr.user.id = :userId
             AND c.id = :certificateId
             """)
     Slice<MockExamResult> findMockExamResultsByWeekOfMonth(@Param("certificateId") Long certificateId,
                                                            @Param("userId") Long userId,
                                                            LocalDateTime firstDayOfMonth,
-                                                           int weekOfDay,
+                                                           int month,
+                                                           int weekOfMonth,
                                                            Pageable pageable);
 
     @Query("""

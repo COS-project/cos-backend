@@ -104,6 +104,7 @@ public class MockExamResultService {
 
     public Slice<MockExamResult> getMockExamResultsByWeekOfMonth(Certificate certificate,
                                                                  User user,
+                                                                 int month,
                                                                  int weekOfMonth,
                                                                  Pageable pageable) {
 
@@ -111,6 +112,7 @@ public class MockExamResultService {
                 certificate.getId(),
                 user.getId(),
                 DateUtils.getFirstDayOfMonth(LocalDateTime.now().toLocalDate()),
+                month,
                 weekOfMonth,
                 pageable
         );
