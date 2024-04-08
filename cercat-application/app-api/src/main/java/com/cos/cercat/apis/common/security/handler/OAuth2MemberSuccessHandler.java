@@ -2,6 +2,7 @@ package com.cos.cercat.apis.common.security.handler;
 
 import com.cos.cercat.cache.RefreshToken;
 import com.cos.cercat.cache.TokenCacheRepository;
+import com.cos.cercat.cache.UserCacheRepository;
 import com.cos.cercat.common.util.JwtTokenizer;
 import com.cos.cercat.domain.OAuth2CustomUser;
 import com.cos.cercat.service.UserService;
@@ -44,6 +45,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
     private final JwtTokenizer jwtTokenizer;
     private final UserService userService;
     private final TokenCacheRepository tokenCacheRepository;
+    private final UserCacheRepository userCacheRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -70,6 +72,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
                         );
 
         tokenCacheRepository.setRefreshToken(RefreshToken.of(user.getEmail(), refreshToken));
+        userCacheRepository.setUser(user); // 로그인 시 유저 캐싱
 
         log.info("로그인 성공 accessToken 발급  - {}", accessToken);
         log.info("로그인 성공 refreshToken 발급 - {}", refreshToken);
