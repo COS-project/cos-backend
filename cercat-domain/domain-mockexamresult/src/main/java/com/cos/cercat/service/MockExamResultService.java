@@ -14,6 +14,7 @@ import com.cos.cercat.dto.WeeklyScoreAverage;
 import com.cos.cercat.common.util.DateUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
@@ -91,10 +92,10 @@ public class MockExamResultService {
                 .toList();
     }
 
-    public Slice<MockExamResult> getMockExamResultsByDate(Certificate certificate,
-                                                          User user,
-                                                          Date date,
-                                                          Pageable pageable) {
+    public Page<MockExamResult> getMockExamResultsByDate(Certificate certificate,
+                                                         User user,
+                                                         Date date,
+                                                         Pageable pageable) {
         return mockExamResultRepository.findMockExamResultsByDate(
                 certificate.getId(),
                 user.getId(),
@@ -103,7 +104,7 @@ public class MockExamResultService {
         );
     }
 
-    public Slice<MockExamResult> getMockExamResultsByWeekOfMonth(Certificate certificate,
+    public Page<MockExamResult> getMockExamResultsByWeekOfMonth(Certificate certificate,
                                                                  User user,
                                                                  DateCond dateCond,
                                                                  Pageable pageable) {
@@ -118,7 +119,7 @@ public class MockExamResultService {
         );
     }
 
-    public Slice<MockExamResult> getMockExamResultsByMonth(Certificate certificate,
+    public Page<MockExamResult> getMockExamResultsByMonth(Certificate certificate,
                                                            User user,
                                                            int month,
                                                            Pageable pageable) {

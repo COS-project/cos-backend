@@ -21,6 +21,7 @@ import com.cos.cercat.service.UserService;
 import com.cos.cercat.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.transaction.annotation.Transactional;
@@ -119,11 +120,11 @@ public class MockExamResultFetchUseCase {
         };
     }
 
-    public Slice<MockExamResultResponse> getMockExamResultsByDate(Long certificateId,
-                                                                  Long userId,
-                                                                  DateType dateType,
-                                                                  DateCond dateCond,
-                                                                  Pageable pageable) {
+    public Page<MockExamResultResponse> getMockExamResultsByDate(Long certificateId,
+                                                                 Long userId,
+                                                                 DateType dateType,
+                                                                 DateCond dateCond,
+                                                                 Pageable pageable) {
         Certificate certificate = certificateService.getCertificate(certificateId);
         User user = userService.getUser(userId);
 

@@ -10,6 +10,7 @@ import com.cos.cercat.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
@@ -69,11 +70,11 @@ public class MockExamResultFetchApi {
 
     @GetMapping("/certificates/{certificateId}/mock-exam-results/{dateType}")
     @Operation(summary = "날짜/주차/월 로 성적 리포트 조회")
-    public Response<Slice<MockExamResultResponse>> getMockExamResultsByDate(@PathVariable Long certificateId,
-                                                                            @PathVariable DateType dateType,
-                                                                            DateCond dateCond,
-                                                                            @AuthenticationPrincipal UserDTO user,
-                                                                            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+    public Response<Page<MockExamResultResponse>> getMockExamResultsByDate(@PathVariable Long certificateId,
+                                                                           @PathVariable DateType dateType,
+                                                                           DateCond dateCond,
+                                                                           @AuthenticationPrincipal UserDTO user,
+                                                                           @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         return Response.success(mockExamResultFetchUseCase.getMockExamResultsByDate(certificateId, user.getId(), dateType, dateCond, pageable));
     }
 }

@@ -3,6 +3,7 @@ package com.cos.cercat.repository;
 import com.cos.cercat.domain.MockExam;
 import com.cos.cercat.domain.MockExamResult;
 import com.cos.cercat.domain.User;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -59,10 +60,10 @@ public interface MockExamResultRepository extends JpaRepository<MockExamResult, 
             AND mr.user.id = :userId
             AND c.id = :certificateId
             """)
-    Slice<MockExamResult> findMockExamResultsByDate(@Param("certificateId") Long certificateId,
-                                                    @Param("userId") Long userId,
-                                                    Date date,
-                                                    Pageable pageable);
+    Page<MockExamResult> findMockExamResultsByDate(@Param("certificateId") Long certificateId,
+                                                   @Param("userId") Long userId,
+                                                   Date date,
+                                                   Pageable pageable);
 
     @Query("""
             SELECT mr from MockExamResult mr
@@ -73,7 +74,7 @@ public interface MockExamResultRepository extends JpaRepository<MockExamResult, 
             AND mr.user.id = :userId
             AND c.id = :certificateId
             """)
-    Slice<MockExamResult> findMockExamResultsByWeekOfMonth(@Param("certificateId") Long certificateId,
+    Page<MockExamResult> findMockExamResultsByWeekOfMonth(@Param("certificateId") Long certificateId,
                                                            @Param("userId") Long userId,
                                                            LocalDateTime firstDayOfMonth,
                                                            int month,
@@ -88,7 +89,7 @@ public interface MockExamResultRepository extends JpaRepository<MockExamResult, 
             AND mr.user.id = :userId
             AND c.id = :certificateId
             """)
-    Slice<MockExamResult> findMockExamResultsByMonth(@Param("certificateId") Long certificateId,
+    Page<MockExamResult> findMockExamResultsByMonth(@Param("certificateId") Long certificateId,
                                                     @Param("userId") Long userId,
                                                     int month,
                                                     Pageable pageable);
