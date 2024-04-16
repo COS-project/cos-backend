@@ -36,8 +36,8 @@ public class ExamReviewFetchApi {
     @GetMapping("/certificates/{certificateId}/check-reviews")
     @Operation(summary = "따끈후기 작성 대상자인지 조회")
     public Response<Boolean> checkReviewDateAfterExamDate(@PathVariable Long certificateId,
-                                                          @AuthenticationPrincipal UserDTO userDTO) {
-        return Response.success(examReviewFetchUseCase.checkReviewDateAfterExamDate(certificateId, userDTO.getId()));
+                                                          @AuthenticationPrincipal UserDTO currentUser) {
+        return Response.success(examReviewFetchUseCase.checkReviewDateAfterExamDate(certificateId, currentUser.getId()));
     }
 
 }

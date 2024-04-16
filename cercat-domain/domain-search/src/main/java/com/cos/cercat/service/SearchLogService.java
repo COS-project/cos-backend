@@ -2,7 +2,7 @@ package com.cos.cercat.service;
 
 import com.cos.cercat.cache.SearchLog;
 import com.cos.cercat.cache.SearchLogCacheRepository;
-import com.cos.cercat.dto.UserDTO;;
+import com.cos.cercat.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,20 +23,20 @@ public class SearchLogService {
         searchLogCacheRepository.setLog(userDTO.getEmail(), searchLog);
     }
 
-    public List<SearchLog> getSearchLogs(UserDTO userDTO) {
-        return searchLogCacheRepository.getSearchLogs(userDTO.getEmail());
+    public List<SearchLog> getSearchLogs(UserDTO currentUser) {
+        return searchLogCacheRepository.getSearchLogs(currentUser.getEmail());
     }
 
-    public void deleteSearchLog(UserDTO userDTO, String keyword, String createdAt) {
+    public void deleteSearchLog(UserDTO currentUser, String keyword, String createdAt) {
         SearchLog searchLog = SearchLog.builder()
                 .keyword(keyword)
                 .createdAt(createdAt)
                 .build();
-        searchLogCacheRepository.deleteLog(userDTO.getEmail(), searchLog);
+        searchLogCacheRepository.deleteLog(currentUser.getEmail(), searchLog);
     }
 
-    public void deleteAllSearchLogs(UserDTO userDTO) {
-        searchLogCacheRepository.deleteAllLogs(userDTO.getEmail());
+    public void deleteAllSearchLogs(UserDTO currentUser) {
+        searchLogCacheRepository.deleteAllLogs(currentUser.getEmail());
     }
 
 }

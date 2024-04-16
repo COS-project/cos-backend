@@ -41,8 +41,8 @@ public class CertificateCreateApi {
     @PostMapping("/interest-certificates")
     @Operation(summary = "관심 자격증 리스트 생성")
     public Response<Void> createInterestCertificates(@RequestBody List<InterestCertificateCreateRequest> requests,
-                                                     @AuthenticationPrincipal UserDTO user) {
-        certificateCreateUseCase.createInterestCertificates(requests, user.getId());
+                                                     @AuthenticationPrincipal UserDTO currentUser) {
+        certificateCreateUseCase.createInterestCertificates(requests, currentUser.getId());
         return Response.success("관심 자격증 리스트 생성 성공");
     }
 }

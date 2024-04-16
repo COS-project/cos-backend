@@ -2,7 +2,7 @@ package com.cos.cercat.apis.search.api;
 
 import com.cos.cercat.apis.search.app.usecase.SearchDeleteUseCase;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.dto.UserDTO;;
+import com.cos.cercat.dto.UserDTO;
 import com.cos.cercat.apis.user.dto.request.SearchLogDeleteRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,16 +23,16 @@ public class SearchDeleteApi {
 
     @DeleteMapping("/search-logs")
     @Operation(summary = "특정 검색 기록 삭제")
-    public Response<Void> deleteSearchLogs(@AuthenticationPrincipal UserDTO user,
+    public Response<Void> deleteSearchLogs(@AuthenticationPrincipal UserDTO currentUser,
                                            @RequestParam SearchLogDeleteRequest request) {
-        searchDeleteUseCase.deleteSearchLog(user, request);
+        searchDeleteUseCase.deleteSearchLog(currentUser, request);
         return Response.success("검색 기록 삭제 성공");
     }
 
     @DeleteMapping("/search-logs/all")
     @Operation(summary = "모든 검색 기록 삭제")
-    public Response<Void> deleteAllSearchLogs(@AuthenticationPrincipal UserDTO user) {
-        searchDeleteUseCase.deleteAllSearchLogs(user);
+    public Response<Void> deleteAllSearchLogs(@AuthenticationPrincipal UserDTO currentUser) {
+        searchDeleteUseCase.deleteAllSearchLogs(currentUser);
         return Response.success("모든 검색 기록 삭제 성공");
     }
 

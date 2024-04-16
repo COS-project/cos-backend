@@ -26,8 +26,8 @@ public class CertificateUpdateApi {
     @PutMapping("/interest-certificates")
     @Operation(summary = "관심 자격증 수정")
     public Response<Void> updateInterestCertificates(@RequestBody List<InterestCertificateUpdateRequest> requests,
-                                                     @AuthenticationPrincipal UserDTO user) {
-        certificateUpdateUseCase.updateInterestCertificates(requests, user.getId());
+                                                     @AuthenticationPrincipal UserDTO currentUser) {
+        certificateUpdateUseCase.updateInterestCertificates(requests, currentUser.getId());
         return Response.success("관심 자격증 수정 성공");
     }
 

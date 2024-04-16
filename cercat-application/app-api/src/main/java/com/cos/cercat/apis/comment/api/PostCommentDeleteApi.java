@@ -23,8 +23,8 @@ public class PostCommentDeleteApi {
     @DeleteMapping("/post-comments/{commentId}")
     @Operation(summary = "댓글 삭제")
     public Response<Void> deletePostComment(@PathVariable Long commentId,
-                                            @AuthenticationPrincipal UserDTO user) {
-        postCommentDeleteUseCase.deletePostComment(commentId, user.getId());
+                                            @AuthenticationPrincipal UserDTO currentUser) {
+        postCommentDeleteUseCase.deletePostComment(commentId, currentUser.getId());
         return Response.success("댓글 삭제 성공");
     }
 }

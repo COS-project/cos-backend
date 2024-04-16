@@ -29,8 +29,8 @@ public class PostCreateApi {
                                      @PathVariable PostType postType,
                                      @RequestPart PostCreateRequest request,
                                      @RequestPart(required = false) List<MultipartFile> images,
-                                     @AuthenticationPrincipal UserDTO user) {
-        postCreateUseCase.createPost(certificateId, postType, request, images, user.getId());
+                                     @AuthenticationPrincipal UserDTO currentUser) {
+        postCreateUseCase.createPost(certificateId, postType, request, images, currentUser.getId());
         return Response.success("게시글 생성 완료");
     }
 }

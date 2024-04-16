@@ -30,11 +30,11 @@ public class MockExamFetchApi {
     @Operation(summary = "년도별 모의고사 가져오기")
     public Response<List<MockExamWithResultResponse>> getMockExamList(@PathVariable Long certificateId,
                                                                       Integer examYear,
-                                                                      @AuthenticationPrincipal UserDTO user) {
+                                                                      @AuthenticationPrincipal UserDTO currentUser) {
         List<MockExamWithResultResponse> responses = mockExamFetchUseCase.getMockExamList(
                 certificateId,
                 examYear,
-                user.getId()
+                currentUser.getId()
         );
 
         return Response.success(responses);

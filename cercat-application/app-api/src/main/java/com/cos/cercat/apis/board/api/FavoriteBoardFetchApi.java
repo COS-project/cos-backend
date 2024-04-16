@@ -24,7 +24,7 @@ public class FavoriteBoardFetchApi {
 
     @GetMapping("/boards")
     @Operation(summary = "게시판 목록 조회")
-    public Response<List<BoardResponse>> getBoards(@AuthenticationPrincipal UserDTO user) {
-        return Response.success(favoriteBoardFetchUseCase.getBoards(user.getId()));
+    public Response<List<BoardResponse>> getBoards(@AuthenticationPrincipal UserDTO currentUser) {
+        return Response.success(favoriteBoardFetchUseCase.getBoards(currentUser.getId()));
     }
 }

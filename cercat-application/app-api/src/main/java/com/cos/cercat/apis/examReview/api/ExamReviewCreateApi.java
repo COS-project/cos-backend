@@ -22,8 +22,8 @@ public class ExamReviewCreateApi {
     @Operation(summary = "따끈후기 작성")
     public Response<Void> createExamReview(@PathVariable Long certificateId,
                                            @RequestBody ExamReviewCreateRequest request,
-                                           @AuthenticationPrincipal UserDTO userDTO) {
-        examReviewCreateUseCase.createExamReview(request, certificateId, userDTO.getId());
+                                           @AuthenticationPrincipal UserDTO currentUser) {
+        examReviewCreateUseCase.createExamReview(request, certificateId, currentUser.getId());
         return Response.success("따끈 후기 생성 성공");
     }
 }

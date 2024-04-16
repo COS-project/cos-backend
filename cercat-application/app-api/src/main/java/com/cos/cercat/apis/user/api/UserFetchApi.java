@@ -2,7 +2,7 @@ package com.cos.cercat.apis.user.api;
 
 import com.cos.cercat.apis.user.dto.response.UserResponse;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.dto.UserDTO;;
+import com.cos.cercat.dto.UserDTO;
 import com.cos.cercat.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,7 +22,7 @@ public class UserFetchApi {
 
     @GetMapping("/users/me")
     @Operation(summary = "회원 정보 가져오기")
-    public Response<UserResponse> getMemberInfo(@AuthenticationPrincipal UserDTO user) {
-        return Response.success(UserResponse.fromDTO(user));
+    public Response<UserResponse> getMemberInfo(@AuthenticationPrincipal UserDTO currentUser) {
+        return Response.success(UserResponse.fromDTO(currentUser));
     }
 }

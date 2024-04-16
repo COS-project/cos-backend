@@ -29,9 +29,9 @@ public class PostUpdateApi {
                                                @PathVariable PostType postType,
                                                @RequestPart PostUpdateRequest request,
                                                @RequestPart(required = false) List<MultipartFile> images,
-                                               @AuthenticationPrincipal UserDTO user) {
+                                               @AuthenticationPrincipal UserDTO currentUser) {
 
-        postUpdateUseCase.updatePost(certificateId, postType, request, images, user.getId());
+        postUpdateUseCase.updatePost(certificateId, postType, request, images, currentUser.getId());
 
         return Response.success("게시글 수정 완료");
     }

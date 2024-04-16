@@ -23,8 +23,8 @@ public class FavoriteBoardFlipApi {
     @PostMapping("/favorite-boards/{certificateId}")
     @Operation(summary = "게시판 즐겨찾기 및 해제")
     public Response<Void> flipFavoriteBoard(@PathVariable Long certificateId,
-                                            @AuthenticationPrincipal UserDTO user) {
-        favoriteBoardFlipUseCase.flipFavoriteBoard(user.getId(), certificateId);
+                                            @AuthenticationPrincipal UserDTO currentUser) {
+        favoriteBoardFlipUseCase.flipFavoriteBoard(currentUser.getId(), certificateId);
         return Response.success("게시판 즐겨찾기/해제 성공");
     }
 

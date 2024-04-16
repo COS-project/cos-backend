@@ -28,28 +28,29 @@ public class LearningFetchApi {
     @GetMapping("/certificates/{certificateId}/goals")
     @Operation(summary = "유저의 현재까지의 모든 목표 조회")
     public Response<List<GoalResponse>> getAllGoal(@PathVariable Long certificateId,
-                                                   @AuthenticationPrincipal UserDTO user) {
-        return Response.success(learningFetchUseCase.getAllGoals(certificateId, user.getId()));
+                                                   @AuthenticationPrincipal UserDTO currentUser) {
+        return Response.success(learningFetchUseCase.getAllGoals(certificateId, currentUser.getId()));
     }
 
     @GetMapping("/goals/{goalId}")
     @Operation(summary = "목표 상세 조회")
     public Response<GoalDetailResponse> getGoalDetail(@PathVariable Long goalId,
-                                                      @AuthenticationPrincipal UserDTO user) {
-        return Response.success(learningFetchUseCase.getGoal(goalId, user));
+                                                      @AuthenticationPrincipal UserDTO currentUser) {
+        return Response.success(learningFetchUseCase.getGoal(goalId, currentUser));
     }
+
     @GetMapping("/certificates/{certificateId}/goals/achievement")
     @Operation(summary = "목표 달성도 조회")
     public Response<GoalAchievementResponse> getGoalAchievement(@PathVariable Long certificateId,
-                                                                @AuthenticationPrincipal UserDTO user) {
-        return Response.success(learningFetchUseCase.getGoalAchievement(certificateId, user.getId()));
+                                                                @AuthenticationPrincipal UserDTO currentUser) {
+        return Response.success(learningFetchUseCase.getGoalAchievement(certificateId, currentUser.getId()));
     }
 
     @GetMapping("/certificates/{certificateId}/goal-status")
     @Operation(summary = "유저 목표 설정 여부 조회")
     public Response<Boolean> existsGoal(@PathVariable Long certificateId,
-                                        @AuthenticationPrincipal UserDTO user) {
-        return Response.success(learningFetchUseCase.existsGoal(certificateId, user.getId()));
+                                        @AuthenticationPrincipal UserDTO currentUser) {
+        return Response.success(learningFetchUseCase.existsGoal(certificateId, currentUser.getId()));
     }
 
 }

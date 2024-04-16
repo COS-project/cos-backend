@@ -24,14 +24,14 @@ public class AlarmFetchApi {
 
     @GetMapping("/alarms")
     @Operation(summary = "읽지 않은 알림 조회", description = "API 요청 시 읽음 처리")
-    public Response<List<AlarmResponse>> getAlarmList(@AuthenticationPrincipal UserDTO userDTO) {
-        return Response.success(alarmFetchUseCase.getAlarms(userDTO.getId()));
+    public Response<List<AlarmResponse>> getAlarmList(@AuthenticationPrincipal UserDTO currentUser) {
+        return Response.success(alarmFetchUseCase.getAlarms(currentUser.getId()));
     }
 
     @GetMapping("/alarms/unread")
     @Operation(summary = "읽지 않은 알림 수 조회")
-    public Response<Long> countUnreadAlarm(@AuthenticationPrincipal UserDTO user) {
-        return Response.success(alarmFetchUseCase.countUnreadAlarm(user.getId()));
+    public Response<Long> countUnreadAlarm(@AuthenticationPrincipal UserDTO currentUser) {
+        return Response.success(alarmFetchUseCase.countUnreadAlarm(currentUser.getId()));
     }
 
 }

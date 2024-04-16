@@ -22,8 +22,8 @@ public class PostCommentCreateApi {
     @Operation(summary = "댓글 생성")
     public Response<Void> createPostComment(@PathVariable Long postId,
                                             @RequestBody PostCommentCreateRequest request,
-                                            @AuthenticationPrincipal UserDTO user) {
-        postCommentCreateUseCase.createPostComment(postId, request, user.getId());
+                                            @AuthenticationPrincipal UserDTO currentUser) {
+        postCommentCreateUseCase.createPostComment(postId, request, currentUser.getId());
         return Response.success("댓글 생성 성공");
     }
 }

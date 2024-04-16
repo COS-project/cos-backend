@@ -21,7 +21,7 @@ public class AlarmConnectApi {
 
     @GetMapping("/alarms/subscribe")
     @Operation(summary = "SSE 연결 엔드포인트")
-    public SseEmitter subscribeAlarm(@AuthenticationPrincipal UserDTO user) {
-        return sseEmitterService.connect(user.getId());
+    public SseEmitter subscribeAlarm(@AuthenticationPrincipal UserDTO currentUser) {
+        return sseEmitterService.connect(currentUser.getId());
     }
 }

@@ -22,8 +22,8 @@ public class MockExamResultCreateApi {
     @Operation(summary = "성적 리포트 생성 및 반환")
     public Response<Long> createMockExamResult(@PathVariable Long mockExamId,
                                                                              @RequestBody MockExamResultRequest request,
-                                                                             @AuthenticationPrincipal UserDTO user) {
+                                                                             @AuthenticationPrincipal UserDTO currentUser) {
 
-        return Response.success(mockExamResultCreateUseCase.createMockExamResult(mockExamId, request, user.getId()));
+        return Response.success(mockExamResultCreateUseCase.createMockExamResult(mockExamId, request, currentUser.getId()));
     }
 }

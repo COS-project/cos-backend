@@ -7,6 +7,7 @@ spring:
   cloud:
     gcp:
       storage:
+
         url: https://storage.googleapis.com/${BUCKET_NAME}/
         credentials:
           encoded-key: ${GCS_KEY}

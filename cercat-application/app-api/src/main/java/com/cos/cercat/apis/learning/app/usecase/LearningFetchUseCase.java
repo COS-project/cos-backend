@@ -37,10 +37,10 @@ public class LearningFetchUseCase {
      * @param goalId 목표 ID
      * @return 목표 상세 정보를 반환합니다.
      */
-    public GoalDetailResponse getGoal(Long goalId, UserDTO user) {
+    public GoalDetailResponse getGoal(Long goalId, UserDTO currentUser) {
         Goal goal = goalService.getGoalById(goalId);
 
-        log.info("user - {}, goalId - {} 목표 조회", user.getEmail(), goalId);
+        log.info("currentUser - {}, goalId - {} 목표 조회", currentUser.getEmail(), goalId);
         return GoalDetailResponse.from(goal);
     }
 

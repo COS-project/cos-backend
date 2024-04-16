@@ -32,36 +32,36 @@ public class PostFetchApi {
     public Response<Slice<PostResponse>> searchCommentaryPosts(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
                                                                @PathVariable Long certificateId,
                                                                CommentaryPostSearchCond cond,
-                                                               @AuthenticationPrincipal UserDTO user) {
-        return Response.success(postFetchUseCase.searchCommentaryPosts(pageable, certificateId, cond, user.getId()));
+                                                               @AuthenticationPrincipal UserDTO currentUser) {
+        return Response.success(postFetchUseCase.searchCommentaryPosts(pageable, certificateId, cond, currentUser.getId()));
     }
 
     @GetMapping("/posts/{postId}")
     @Operation(summary = "게시글 상세 조회")
     public Response<PostWithCommentsResponse> getPostDetail(@PathVariable Long postId,
-                                                            @AuthenticationPrincipal UserDTO user) {
-        return Response.success(postFetchUseCase.getPostDetail(postId, user.getId()));
+                                                            @AuthenticationPrincipal UserDTO currentUser) {
+        return Response.success(postFetchUseCase.getPostDetail(postId, currentUser.getId()));
     }
 
     @GetMapping("/certificates/{certificateId}/tip-posts/best")
     @Operation(summary = "베스트 꿀팁 TOP3 조회")
     public Response<List<PostResponse>> getTop3TipPosts(@PathVariable Long certificateId,
-                                                        @AuthenticationPrincipal UserDTO user) {
-        return Response.success(postFetchUseCase.getTop3TipPosts(certificateId, user.getId()));
+                                                        @AuthenticationPrincipal UserDTO currentUser) {
+        return Response.success(postFetchUseCase.getTop3TipPosts(certificateId, currentUser.getId()));
     }
 
     @GetMapping("/{postType}/posts/my-posts")
     @Operation(summary = "내가 쓴 글 조회")
     public Response<Slice<PostResponse>> getMyPosts(@PathVariable PostType postType,
-                                                    @AuthenticationPrincipal UserDTO user,
+                                                    @AuthenticationPrincipal UserDTO currentUser,
                                                     @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-        return Response.success(postFetchUseCase.getMyPosts(postType, user.getId(), pageable));
+        return Response.success(postFetchUseCase.getMyPosts(postType, currentUser.getId(), pageable));
     }
 
     @GetMapping("/comment-posts/my-comment-posts")
     @Operation(summary = "내가 댓글 쓴 게시글 조회")
-    public Response<Slice<PostResponse>> getMyCommentPosts(@AuthenticationPrincipal UserDTO user,
+    public Response<Slice<PostResponse>> getMyCommentPosts(@AuthenticationPrincipal UserDTO currentUser,
                                                            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-        return Response.success(postFetchUseCase.getMyCommentPosts(user.getId(), pageable));
+        return Response.success(postFetchUseCase.getMyCommentPosts(currentUser.getId(), pageable));
     }
 }

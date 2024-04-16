@@ -25,15 +25,15 @@ public class UserUpdateApi {
     @Operation(summary = "회원 정보 추가")
     public Response<Void> updateUserInfo(@RequestPart UserCreateRequest request,
                                          @RequestPart MultipartFile file,
-                                         @AuthenticationPrincipal UserDTO user) {
-        userUpdateUseCase.updateUserInfo(request, file, user.getId());
+                                         @AuthenticationPrincipal UserDTO currentUser) {
+        userUpdateUseCase.updateUserInfo(request, file, currentUser.getId());
         return Response.success("회원 정보 추가 성공");
     }
 
     @PatchMapping("/logout")
     @Operation(summary = "회원 로그아웃")
-    public Response<Void> logout(HttpServletRequest request, @AuthenticationPrincipal UserDTO user) {
-        userUpdateUseCase.logout(request.getHeader("Access-Token"), user.getEmail());
+    public Response<Void> logout(HttpServletRequest request, @AuthenticationPrincipal UserDTO currentUser) {
+        userUpdateUseCase.logout(request.getHeader("Access-Token"), currentUser.getEmail());
         return Response.success("로그아웃 성공");
     }
 }

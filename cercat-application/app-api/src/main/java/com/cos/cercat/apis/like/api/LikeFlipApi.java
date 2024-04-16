@@ -25,8 +25,8 @@ public class LikeFlipApi {
     @Operation(summary = "좋아요 생성 및 취소")
     public Response<Void> flipPostLike(@PathVariable LikeType likeType,
                                        @PathVariable Long id,
-                                       @AuthenticationPrincipal UserDTO user) {
-        likeFlipUseCase.flipLike(likeType, id, user.getId());
+                                       @AuthenticationPrincipal UserDTO currentUser) {
+        likeFlipUseCase.flipLike(likeType, id, currentUser.getId());
         return Response.success("게시글 좋아요/취소 성공");
     }
 

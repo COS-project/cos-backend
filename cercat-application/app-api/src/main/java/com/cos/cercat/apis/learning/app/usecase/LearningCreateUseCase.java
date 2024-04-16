@@ -41,12 +41,12 @@ public class LearningCreateUseCase {
      * 유저가 공부시간을 누적한다.
      * @param goalId 목표 ID
      * @param studyTime 공부 시간
-     * @param user 유저 정보
+     * @param currentUser 유저 정보
      */
-    public void createStudyTimeLog(Long goalId, Long studyTime, UserDTO user) {
+    public void createStudyTimeLog(Long goalId, Long studyTime, UserDTO currentUser) {
         Goal goal = goalService.getGoalById(goalId);
 
-        log.info("user - {}, goalId - {}, studyTime - {} 공부 시간 누적", user.getEmail(), goal.getId(), studyTime);
+        log.info("user - {}, goalId - {}, studyTime - {} 공부 시간 누적", currentUser.getEmail(), goal.getId(), studyTime);
         studyTimeLogService.createStudyTimeLog(goal, studyTime);
     }
 }

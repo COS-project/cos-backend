@@ -22,8 +22,8 @@ public class LearningCreateApi {
     @Operation(summary = "목표 생성")
     public Response<Void> createGoal(@PathVariable Long certificateId,
                                      @RequestBody GoalCreateRequest request,
-                                     @AuthenticationPrincipal UserDTO user) {
-        learningCreateUseCase.createGoal(request, certificateId, user.getId());
+                                     @AuthenticationPrincipal UserDTO currentUser) {
+        learningCreateUseCase.createGoal(request, certificateId, currentUser.getId());
 
         return Response.success("목표 생성 성공");
     }
@@ -32,8 +32,8 @@ public class LearningCreateApi {
     @Operation(summary = "공부 시간 생성(누적)")
     public Response<Void> createStudyTimeLog(@PathVariable Long goalId,
                                              Long studyTime,
-                                             @AuthenticationPrincipal UserDTO user) {
-        learningCreateUseCase.createStudyTimeLog(goalId, studyTime, user);
+                                             @AuthenticationPrincipal UserDTO currentUser) {
+        learningCreateUseCase.createStudyTimeLog(goalId, studyTime, currentUser);
         return Response.success("공부 시간 생성(누적) 성공");
     }
 

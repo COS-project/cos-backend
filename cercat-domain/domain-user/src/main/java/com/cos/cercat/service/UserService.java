@@ -8,7 +8,7 @@ import com.cos.cercat.common.util.JwtTokenUtil;
 import com.cos.cercat.domain.User;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
-import com.cos.cercat.dto.UserDTO;;
+import com.cos.cercat.dto.UserDTO;
 import com.cos.cercat.repository.UserRepository;
 import com.nimbusds.jose.util.Pair;
 import lombok.RequiredArgsConstructor;

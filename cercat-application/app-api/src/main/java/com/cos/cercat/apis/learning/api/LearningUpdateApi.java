@@ -20,9 +20,9 @@ public class LearningUpdateApi {
     @PutMapping("/goals/{goalId}")
     public Response<Void> updateGoal(@PathVariable Long goalId,
                                      @RequestBody GoalUpdateRequest request,
-                                     @AuthenticationPrincipal UserDTO user) {
+                                     @AuthenticationPrincipal UserDTO currentUser) {
 
-        learningUpdateUseCase.updateGoal(goalId, request, user.getId());
+        learningUpdateUseCase.updateGoal(goalId, request, currentUser.getId());
         return Response.success("목표 수정 성공");
     }
 

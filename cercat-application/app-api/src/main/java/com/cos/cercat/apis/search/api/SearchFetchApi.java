@@ -5,7 +5,7 @@ import com.cos.cercat.common.domain.Response;
 import com.cos.cercat.apis.post.dto.response.PostResponse;
 import com.cos.cercat.cache.SearchLog;
 import com.cos.cercat.dto.SearchCond;
-import com.cos.cercat.dto.UserDTO;;
+import com.cos.cercat.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

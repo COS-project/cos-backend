@@ -23,8 +23,8 @@ public class MockExamResultUpdateApi {
     @PatchMapping("/user-answers/{userAnswerId}/review")
     @Operation(summary = "틀린 문제 더이상 보지 않기")
     public Response<Void> reviewUserAnswers(@PathVariable Long userAnswerId,
-                                            @AuthenticationPrincipal UserDTO user) {
-        mockExamResultUpdateUseCase.reviewUserAnswers(userAnswerId, user.getId());
+                                            @AuthenticationPrincipal UserDTO currentUser) {
+        mockExamResultUpdateUseCase.reviewUserAnswers(userAnswerId, currentUser.getId());
         return Response.success("틀린 문제 리뷰 성공");
     }
 }

@@ -6,7 +6,7 @@ import com.cos.cercat.apis.post.dto.response.PostResponse;
 import com.cos.cercat.domain.EmbeddedId.PostLikePK;
 import com.cos.cercat.domain.PostDocument;
 import com.cos.cercat.dto.SearchCond;
-import com.cos.cercat.dto.UserDTO;;
+import com.cos.cercat.dto.UserDTO;
 import com.cos.cercat.service.PostLikeService;
 import com.cos.cercat.service.PostSearchService;
 import com.cos.cercat.service.SearchLogService;
@@ -36,22 +36,20 @@ public class SearchFetchUseCase {
      * @return Slice 형태의 게시글 Response DTO를 반환합니다.
      */
     public Slice<PostResponse> search(SearchCond cond,
-                                      UserDTO user,
+                                      UserDTO currentUser,
                                       Long certificateId,
                                       Pageable pageable) {
+        saveSearchLog(cond.keyword(), currentUser);
         Slice<PostDocument> documents = postSearchService.search(cond, certificateId, pageable);
-
-        if (StringUtils.hasText(cond.keyword())) {
-            searchLogService.saveSearchLog(user, cond.keyword());
-        }
-
-        return documents.map(PostDocument::getId)
+        
+        return documents
+                .map(PostDocument::getId)
                 .map(postService::getPost)
-                .map(post -> PostResponse.of(post, isLiked(user.getId(), post.getId())));
+                .map(post -> PostResponse.of(post, isLiked(currentUser.getId(), post.getId())));
     }
 
-    public List<SearchLog> getSearchLogs(UserDTO userDTO) {
-        return searchLogService.getSearchLogs(userDTO);
+    public List<SearchLog> getSearchLogs(UserDTO currentUser) {
+        return searchLogService.getSearchLogs(currentUser);
     }
 
     public List<String> getAutoCompleteKeywords(Long certificateId, String keyword) {
@@ -66,4 +64,9 @@ public class SearchFetchUseCase {
         return postLikeService.existsLike(PostLikePK.of(userId, postId));
     }
 
+    private void saveSearchLog(String keyword, UserDTO currentUser) {
+        if (StringUtils.hasText(keyword)) {
+            searchLogService.saveSearchLog(currentUser, keyword);
+        }
+    }
 }
