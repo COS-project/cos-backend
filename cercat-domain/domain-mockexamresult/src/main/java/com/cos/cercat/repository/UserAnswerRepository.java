@@ -15,20 +15,20 @@ public interface UserAnswerRepository extends JpaRepository<UserAnswer, Long> {
               JOIN ua.subjectResult sr
               JOIN sr.mockExamResult mr
               JOIN mr.mockExam m
-              JOIN m.certificate c
+              JOIN m.certificateEntity c
               WHERE c.id = :certificateId
                 AND (m.id, mr.round) IN (
                   SELECT m2.id, MAX(mr2.round)
                   FROM MockExamResult mr2
                   JOIN mr2.mockExam m2
-                  WHERE mr2.user.id = :userId
+                  WHERE mr2.userEntity.id = :userId
                   GROUP BY m2.id
                 )
                 AND ua.isCorrect = false
                 AND ua.isReviewed = false
-                AND ua.user.id = :userId
+                AND ua.userEntity.id = :userId
               """)
-    Slice<UserAnswer> getWrongUserAnswersByUserAndCertificate(Pageable pageable,
+    Slice<UserAnswer> getWrongUserAnswersByUserEntityAndCertificateEntity(Pageable pageable,
                                                               @Param("userId") Long userId,
                                                               @Param("certificateId") Long certificateId);
 

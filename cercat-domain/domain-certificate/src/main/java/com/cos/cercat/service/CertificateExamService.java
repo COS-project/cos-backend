@@ -1,6 +1,6 @@
 package com.cos.cercat.service;
 
-import com.cos.cercat.domain.Certificate;
+import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.domain.CertificateExam;
 import com.cos.cercat.repository.CertificateExamRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +18,12 @@ public class CertificateExamService {
         certificateExamRepository.save(certificateExam);
     }
 
-    public CertificateExam getRecentCertificateExam(Certificate certificate) {
-        return certificateExamRepository.findRecentCertificateExam(certificate.getId());
+    public CertificateExam getRecentCertificateExam(CertificateEntity certificateEntity) {
+        return certificateExamRepository.findRecentCertificateExam(certificateEntity.getId());
     }
 
-    public boolean isExamDatePassed(Certificate certificate) {
-        CertificateExam recentCertificateExam = getRecentCertificateExam(certificate);
+    public boolean isExamDatePassed(CertificateEntity certificateEntity) {
+        CertificateExam recentCertificateExam = getRecentCertificateExam(certificateEntity);
 
         if (recentCertificateExam == null) {
             return false;

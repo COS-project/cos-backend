@@ -15,14 +15,14 @@ public class BoardAlarm extends Alarm {
 
     @ManyToOne
     @JoinColumn(name = "from_user_id")
-    private User fromUser;
+    private UserEntity fromUserEntity;
 
     private Long postId;
 
     @Builder
-    public BoardAlarm(User receiveUser, AlarmType alarmType, Boolean isRead, User fromUser, Long postId) {
-        super(receiveUser, alarmType, isRead);
-        this.fromUser = fromUser;
+    public BoardAlarm(UserEntity receiveUserEntity, AlarmType alarmType, Boolean isRead, UserEntity fromUserEntity, Long postId) {
+        super(receiveUserEntity, alarmType, isRead);
+        this.fromUserEntity = fromUserEntity;
         this.postId = postId;
     }
 }

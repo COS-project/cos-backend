@@ -49,7 +49,7 @@ public class SwaggerConfig {
     public GroupedOpenApi certificate() {
         return GroupedOpenApi.builder()
                 .group("자격증")
-                .packagesToScan("com.cos.cercat.apis.certificate.api")
+                .packagesToScan("com.cos.cercat.apis.certificateEntity.api")
                 .build();
     }
 
@@ -105,7 +105,7 @@ public class SwaggerConfig {
     public GroupedOpenApi user() {
         return GroupedOpenApi.builder()
                 .group("유저")
-                .packagesToScan("com.cos.cercat.apis.user.api")
+                .packagesToScan("com.cos.cercat.apis.userEntity.api")
                 .build();
     }
 

@@ -12,13 +12,13 @@ import java.util.List;
 public interface SubjectResultRepository extends JpaRepository<SubjectResult, Long> {
 
     @Query("""
-            SELECT new com.cos.cercat.dto.SubjectResultsAVG(sr.subject, AVG(sr.correctRate), AVG(sr.totalTakenTime))
+            SELECT new com.cos.cercat.dto.SubjectResultsAVG(sr.subjectEntity, AVG(sr.correctRate), AVG(sr.totalTakenTime))
             FROM SubjectResult sr
-            JOIN sr.subject.certificate c
-            JOIN sr.mockExamResult.user u
+            JOIN sr.subjectEntity.certificateEntity c
+            JOIN sr.mockExamResult.userEntity u
             WHERE c.id = :certificateId AND u.id = :userId
             AND :goalStartDateTime < sr.mockExamResult.createdAt
-            GROUP BY sr.subject
+            GROUP BY sr.subjectEntity
             """)
     List<SubjectResultsAVG> getSubjectResultsAVG(@Param("certificateId") Long certificateId,
                                                  @Param("userId") Long userId,

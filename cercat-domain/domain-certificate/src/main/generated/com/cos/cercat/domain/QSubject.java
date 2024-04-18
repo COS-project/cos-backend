@@ -11,7 +11,7 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QSubject is a Querydsl query type for Subject
+ * QSubject is a Querydsl query type for SubjectEntity
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QSubject extends EntityPathBase<Subject> {

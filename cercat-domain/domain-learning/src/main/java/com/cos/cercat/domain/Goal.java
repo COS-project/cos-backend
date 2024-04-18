@@ -24,11 +24,11 @@ public class Goal {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "certificate_id")
-    private Certificate certificate;
+    private CertificateEntity certificateEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserEntity userEntity;
 
     @Embedded
     private RepeatDays repeatDays = new RepeatDays();
@@ -49,8 +49,8 @@ public class Goal {
 
     private Long goalStudyTime;
 
-    public Goal(Certificate certificate,
-                User user,
+    public Goal(CertificateEntity certificateEntity,
+                UserEntity userEntity,
                 Integer goalScore,
                 LocalDateTime prepareStartDateTime,
                 LocalDateTime prepareFinishDateTime,
@@ -62,8 +62,8 @@ public class Goal {
                 List<Integer> mockExamRepeatDays,
                 List<Integer> studyRepeatDays) {
 
-        this.certificate = certificate;
-        this.user = user;
+        this.certificateEntity = certificateEntity;
+        this.userEntity = userEntity;
         this.goalScore = goalScore;
         this.prepareStartDateTime = prepareStartDateTime;
         this.prepareFinishDateTime = prepareFinishDateTime;
@@ -112,8 +112,8 @@ public class Goal {
         return (int) diffInDays;
     }
 
-    public boolean isAuthorized(User user) {
-        return this.user.equals(user);
+    public boolean isAuthorized(UserEntity userEntity) {
+        return this.userEntity.equals(userEntity);
     }
 
     private List<RepeatDay> convertRepeatDay(List<Integer> mockExamRepeatDays, List<Integer> studyRepeatDays) {

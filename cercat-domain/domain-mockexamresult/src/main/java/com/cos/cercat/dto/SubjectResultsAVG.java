@@ -1,9 +1,9 @@
 package com.cos.cercat.dto;
 
-import com.cos.cercat.domain.Subject;
+import com.cos.cercat.domain.SubjectEntity;
 
 public record SubjectResultsAVG(
-        Subject subject,
+        SubjectEntity subjectEntity,
         Double correctRate,
         Double totalTakenTime
 ) {

@@ -25,7 +25,7 @@ public record GoalDetailResponse(
     public static GoalDetailResponse from(Goal entity) {
         return new GoalDetailResponse(
                 entity.getId(),
-                CertificateResponse.from(entity.getCertificate()),
+                CertificateResponse.from(entity.getCertificateEntity()),
                 entity.getGoalScore(),
                 entity.getPrepareStartDateTime(),
                 entity.getPrepareFinishDateTime(),

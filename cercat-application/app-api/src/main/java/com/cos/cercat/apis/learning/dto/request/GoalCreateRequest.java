@@ -1,8 +1,8 @@
 package com.cos.cercat.apis.learning.dto.request;
 
-import com.cos.cercat.domain.Certificate;
+import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.domain.Goal;
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.UserEntity;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,10 +20,10 @@ public record GoalCreateRequest(
         List<Integer> studyRepeatDays
 ) {
 
-    public Goal toEntity(Certificate certificate, User user) {
+    public Goal toEntity(CertificateEntity certificateEntity, UserEntity userEntity) {
         return new Goal(
-                certificate,
-                user,
+                certificateEntity,
+                userEntity,
                 goalScore,
                 prepareStartDateTime,
                 prepareFinishDateTime,

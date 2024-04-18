@@ -1,7 +1,7 @@
 package com.cos.cercat.dto;
 
-import com.cos.cercat.domain.Role;
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.UserEntity;
+import com.cos.cercat.domain.user.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -49,7 +49,7 @@ public class UserDTO implements UserDetails {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime removedAt;
 
-    public static UserDTO fromEntity(User entity) {
+    public static UserDTO fromEntity(UserEntity entity) {
 
         String entityNickname = entity.getNickname();
         String mainProfileImage = entity.getMainProfileImageUrl();

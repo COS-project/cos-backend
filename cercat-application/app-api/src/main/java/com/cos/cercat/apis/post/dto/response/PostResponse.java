@@ -4,7 +4,6 @@ import com.cos.cercat.apis.mockExam.dto.response.MockExamResponse;
 import com.cos.cercat.apis.user.dto.response.UserResponse;
 import com.cos.cercat.domain.post.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Builder;
 
 import java.time.LocalDateTime;
 
@@ -42,7 +41,7 @@ public record PostResponse(
                 post.getPostType(),
                 post.getTitle(),
                 post.getContent(),
-                UserResponse.fromEntity(post.getUser()),
+                UserResponse.fromEntity(post.getUserEntity()),
                 post.getPostImages().getThumbnailImageUrl(),
                 post.getLikeCount(),
                 isLiked,

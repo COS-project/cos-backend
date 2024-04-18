@@ -37,44 +37,44 @@ public class MockExamResultCreateUseCase {
      * */
     @Transactional
     public long createMockExamResult(Long mockExamId, MockExamResultRequest request, Long userId) {
-        User user = userService.getUser(userId);
+        UserEntity userEntity = userService.getUser(userId);
         MockExam mockExam = mockExamService.getMockExam(mockExamId);
 
         questionService.getQuestionListByMockExam(mockExam);// 문제정보 JPA 1차 캐싱
-        int beforeRound = mockExamResultService.getMockExamResultsCount(mockExam, user);
-        SubjectResults subjectResults = toSubjectResults(request, user);
+        int beforeRound = mockExamResultService.getMockExamResultsCount(mockExam, userEntity);
+        SubjectResults subjectResults = toSubjectResults(request, userEntity);
         int totalScore = subjectResults.getSubjectResults().stream().mapToInt(SubjectResult::getScore).sum();
 
 
-        MockExamResult mockExamResult = MockExamResult.of(mockExam, user, beforeRound + 1, subjectResults, totalScore);
-        log.info("user - {}, mockExamId - {}, round - {}번째 모의고사 성적리포트 생성", user.getEmail(), mockExamId, beforeRound + 1);
+        MockExamResult mockExamResult = MockExamResult.of(mockExam, userEntity, beforeRound + 1, subjectResults, totalScore);
+        log.info("userEntity - {}, mockExamId - {}, round - {}번째 모의고사 성적리포트 생성", userEntity.getEmail(), mockExamId, beforeRound + 1);
         return mockExamResultService.batchInsert(mockExamResult);
     }
 
-    private SubjectResults toSubjectResults(MockExamResultRequest request, User user) {
+    private SubjectResults toSubjectResults(MockExamResultRequest request, UserEntity userEntity) {
 
         return SubjectResults.from(request.subjectResultRequests().stream()
-                .map(subjectResultRequest -> toSubjectResult(user, subjectResultRequest))
+                .map(subjectResultRequest -> toSubjectResult(userEntity, subjectResultRequest))
                 .toList());
     }
 
-    private SubjectResult toSubjectResult(User user, SubjectResultRequest subjectResultRequest) {
-        Subject subject = subjectService.getSubject(subjectResultRequest.subjectId());
-        UserAnswers userAnswers = toUserAnswers(user, subjectResultRequest.userAnswerRequests());
+    private SubjectResult toSubjectResult(UserEntity userEntity, SubjectResultRequest subjectResultRequest) {
+        SubjectEntity subjectEntity = subjectService.getSubject(subjectResultRequest.subjectId());
+        UserAnswers userAnswers = toUserAnswers(userEntity, subjectResultRequest.userAnswerRequests());
 
-        return subjectResultRequest.toEntity(subject, userAnswers);
+        return subjectResultRequest.toEntity(subjectEntity, userAnswers);
     }
 
-    private UserAnswers toUserAnswers(User user, List<UserAnswerRequest> requests) {
+    private UserAnswers toUserAnswers(UserEntity userEntity, List<UserAnswerRequest> requests) {
 
         return UserAnswers.from(requests.stream()
-                .map(userAnswerRequest -> toUserAnswer(user, userAnswerRequest))
+                .map(userAnswerRequest -> toUserAnswer(userEntity, userAnswerRequest))
                 .toList());
     }
 
-    private UserAnswer toUserAnswer(User user, UserAnswerRequest userAnswerRequest) {
+    private UserAnswer toUserAnswer(UserEntity userEntity, UserAnswerRequest userAnswerRequest) {
         Question question = questionService.getQuestion(userAnswerRequest.questionId());
-        return userAnswerRequest.toEntity(question, user);
+        return userAnswerRequest.toEntity(question, userEntity);
     }
 
 

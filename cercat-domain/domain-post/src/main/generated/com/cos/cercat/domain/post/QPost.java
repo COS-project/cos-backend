@@ -66,10 +66,10 @@ public class QPost extends EntityPathBase<Post> {
 
     public QPost(Class<? extends Post> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.certificate = inits.isInitialized("certificate") ? new com.cos.cercat.domain.QCertificate(forProperty("certificate"), inits.get("certificate")) : null;
+        this.certificate = inits.isInitialized("certificateEntity") ? new com.cos.cercat.domain.QCertificate(forProperty("certificateEntity"), inits.get("certificateEntity")) : null;
         this.postComments = inits.isInitialized("postComments") ? new com.cos.cercat.domain.comment.QPostComments(forProperty("postComments")) : null;
         this.postImages = inits.isInitialized("postImages") ? new QPostImages(forProperty("postImages")) : null;
-        this.user = inits.isInitialized("user") ? new com.cos.cercat.domain.QUser(forProperty("user"), inits.get("user")) : null;
+        this.user = inits.isInitialized("userEntity") ? new com.cos.cercat.domain.QUser(forProperty("userEntity"), inits.get("userEntity")) : null;
     }
 
 }

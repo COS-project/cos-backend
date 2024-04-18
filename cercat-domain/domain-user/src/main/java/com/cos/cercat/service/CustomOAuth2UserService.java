@@ -1,12 +1,12 @@
-package com.cos.cercat.domain.user.service;
+package com.cos.cercat.service;
 
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.domain.OAuth2CustomUser;
 import com.cos.cercat.domain.OAuthAttributes;
-import com.cos.cercat.domain.Role;
-import com.cos.cercat.domain.User;
-import com.cos.cercat.repository.UserRepository;
+import com.cos.cercat.domain.UserEntity;
+import com.cos.cercat.domain.user.Role;
+import com.cos.cercat.repository.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,7 +26,7 @@ import java.util.Map;
 @Slf4j
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
-    private final UserRepository userRepository;
+    private final UserJpaRepository userJpaRepository;
 
     private final List<GrantedAuthority> USER_ROLES = AuthorityUtils.createAuthorityList("ROLE_USER");
     private final List<GrantedAuthority> GUEST_ROLES = AuthorityUtils.createAuthorityList("ROLE_GUEST");
@@ -49,25 +49,25 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         // OAuthAttributes: OAuth2User의 attribute를 서비스 유형에 맞게 담아줄 클래스
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, originAttributes);
         assert attributes != null;
-        User user = saveOrUpdate(attributes);
+        UserEntity userEntity = saveOrUpdate(attributes);
         log.info("소셜 로그인 유저 정보 또는 업데이트");
-        String email = user.getEmail();
+        String email = userEntity.getEmail();
         List<GrantedAuthority> authorities = createAuthorities(email); //Role 정보 가져오기
 
         return new OAuth2CustomUser(registrationId, originAttributes, authorities, email);
     }
 
-    private User saveOrUpdate(OAuthAttributes authAttributes) {
-        User member = userRepository.findByEmail(authAttributes.getEmail())
+    private UserEntity saveOrUpdate(OAuthAttributes authAttributes) {
+        UserEntity member = userJpaRepository.findByEmail(authAttributes.getEmail())
                 .map(entity -> entity.oauthUpdate(authAttributes.getEmail(), authAttributes.getProfileImageUrl())) //이메일 및 프로필이미지 업데이트
                 .orElse(authAttributes.toEntity());
 
-        return userRepository.save(member);
+        return userJpaRepository.save(member);
     }
 
     private List<GrantedAuthority> createAuthorities(String email) {
 
-        return userRepository.findByEmail(email)
+        return userJpaRepository.findByEmail(email)
                 .map(user -> {
                     if (user.getRole().equals(Role.ROLE_GUEST)) {
                         return GUEST_ROLES;

@@ -1,7 +1,7 @@
 package com.cos.cercat.service;
 
-import com.cos.cercat.domain.Certificate;
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.CertificateEntity;
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.repository.SubjectResultRepository;
 import com.cos.cercat.dto.SubjectResultsAVG;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +16,8 @@ public class SubjectResultService {
 
     private final SubjectResultRepository subjectResultRepository;
 
-    public List<SubjectResultsAVG> getSubjectResultsAVG(Certificate certificate, User user, LocalDateTime goalStartDateTime) {
-        return subjectResultRepository.getSubjectResultsAVG(certificate.getId(), user.getId(), goalStartDateTime);
+    public List<SubjectResultsAVG> getSubjectResultsAVG(CertificateEntity certificateEntity, UserEntity userEntity, LocalDateTime goalStartDateTime) {
+        return subjectResultRepository.getSubjectResultsAVG(certificateEntity.getId(), userEntity.getId(), goalStartDateTime);
     }
 
 }

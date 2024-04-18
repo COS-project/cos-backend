@@ -14,9 +14,9 @@ public record CertificateExamCreateRequest(
         String examFormat,
         String examEligibility
 ) {
-    public CertificateExam toEntity(Certificate certificate) {
+    public CertificateExam toEntity(CertificateEntity certificateEntity) {
         return CertificateExam.of(
-                certificate,
+                certificateEntity,
                 ExamInfo.of(
                         examSchedule,
                         examFee,

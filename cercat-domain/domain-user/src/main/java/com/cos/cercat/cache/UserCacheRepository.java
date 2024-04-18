@@ -20,14 +20,14 @@ public class UserCacheRepository {
 
     public void setUser(UserDTO user) {
         String key = getKey(user.getEmail());
-        log.info("Set User from {} : {}", key, user);
+        log.info("Set UserEntity from {} : {}", key, user);
         redisTemplate.opsForValue().setIfAbsent(key, user, USER_CACHE_TTL);
     }
 
     public Optional<UserDTO> getUser(String email) {
         String key = getKey(email);
         UserDTO user = redisTemplate.opsForValue().get(key);
-        log.info("Get User from {} : {}", key, user);
+        log.info("Get UserEntity from {} : {}", key, user);
         return Optional.ofNullable(user);
     }
 

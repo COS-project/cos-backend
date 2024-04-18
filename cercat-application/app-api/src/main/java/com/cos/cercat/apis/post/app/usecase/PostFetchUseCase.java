@@ -4,6 +4,7 @@ import com.cos.cercat.apis.post.dto.response.PostResponse;
 import com.cos.cercat.apis.post.dto.response.PostWithCommentsResponse;
 import com.cos.cercat.common.annotation.UseCase;
 import com.cos.cercat.apis.comment.dto.response.PostCommentResponse;
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.comment.PostComment;
 import com.cos.cercat.domain.post.Post;
 import com.cos.cercat.domain.post.PostType;
@@ -14,8 +15,7 @@ import com.cos.cercat.domain.EmbeddedId.PostLikePK;
 import com.cos.cercat.apis.like.dto.request.LikeType;
 import com.cos.cercat.dto.CommentaryPostSearchCond;
 import com.cos.cercat.service.CertificateService;
-import com.cos.cercat.domain.Certificate;
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.service.UserService;
 import com.cos.cercat.service.comment.PostCommentService;
 import com.cos.cercat.service.post.CommentaryPostService;
@@ -61,10 +61,10 @@ public class PostFetchUseCase {
                                                      Long certificateId,
                                                      CommentaryPostSearchCond cond,
                                                      Long userId) {
-        Certificate certificate = certificateService.getCertificate(certificateId);
+        CertificateEntity certificateEntity = certificateService.getCertificate(certificateId);
 
-        log.info("certificate - {}, cond - {} 해설게시글 검색", certificate.getCertificateName(), cond);
-        return commentaryPostService.searchCommentaryPosts(pageable, certificate, cond)
+        log.info("certificateEntity - {}, cond - {} 해설게시글 검색", certificateEntity.getCertificateName(), cond);
+        return commentaryPostService.searchCommentaryPosts(pageable, certificateEntity, cond)
                 .map(post -> PostResponse.of(post, isLiked(LikeType.POST, userId, post.getId())));
     }
 
@@ -94,10 +94,10 @@ public class PostFetchUseCase {
      * @return 리스트 형태의 게시글 정보
      */
     public List<PostResponse> getTop3TipPosts(Long certificateId, Long userId) {
-        Certificate certificate = certificateService.getCertificate(certificateId);
+        CertificateEntity certificateEntity = certificateService.getCertificate(certificateId);
 
-        log.info("certificate - {} 자격증 Best TOP3 게시글 조회", certificate.getCertificateName());
-        return tipPostService.getTop3TipPosts(certificate).stream()
+        log.info("certificateEntity - {} 자격증 Best TOP3 게시글 조회", certificateEntity.getCertificateName());
+        return tipPostService.getTop3TipPosts(certificateEntity).stream()
                 .map(post -> PostResponse.of(post, isLiked(LikeType.POST, userId, post.getId())))
                 .toList();
     }
@@ -110,13 +110,13 @@ public class PostFetchUseCase {
      * @return 내가 쓴 게시글들을 반환합니다.
      */
     public Slice<PostResponse> getMyPosts(PostType postType, Long userId, Pageable pageable) {
-        User user = userService.getUser(userId);
+        UserEntity userEntity = userService.getUser(userId);
 
-        log.info("user - {} 가 쓴 게시글 조회", user.getEmail());
+        log.info("userEntity - {} 가 쓴 게시글 조회", userEntity.getEmail());
         return switch (postType) {
-            case COMMENTARY -> commentaryPostService.getMyCommentaryPosts(user, pageable).map(post -> PostResponse.of(post, isLiked(LikeType.POST, userId, post.getId())));
-            case TIP -> tipPostService.getMyTipPosts(user, pageable).map(post -> PostResponse.of(post, isLiked(LikeType.POST, userId, post.getId())));
-            case NORMAL -> normalPostService.getMyNormalPosts(user, pageable).map(post -> PostResponse.of(post, isLiked(LikeType.POST, userId, post.getId())));
+            case COMMENTARY -> commentaryPostService.getMyCommentaryPosts(userEntity, pageable).map(post -> PostResponse.of(post, isLiked(LikeType.POST, userId, post.getId())));
+            case TIP -> tipPostService.getMyTipPosts(userEntity, pageable).map(post -> PostResponse.of(post, isLiked(LikeType.POST, userId, post.getId())));
+            case NORMAL -> normalPostService.getMyNormalPosts(userEntity, pageable).map(post -> PostResponse.of(post, isLiked(LikeType.POST, userId, post.getId())));
         };
     }
 
@@ -127,10 +127,10 @@ public class PostFetchUseCase {
      * @return 유저 본인이 댓글을 쓴 게시글들을 반환한다.
      */
     public Slice<PostResponse> getMyCommentPosts(Long userId, Pageable pageable) {
-        User user = userService.getUser(userId);
+        UserEntity userEntity = userService.getUser(userId);
 
-        log.info("user - {} 가 댓글을 쓴 게시글 조회", user.getEmail());
-        return postCommentService.getMyPostComments(user, pageable)
+        log.info("userEntity - {} 가 댓글을 쓴 게시글 조회", userEntity.getEmail());
+        return postCommentService.getMyPostComments(userEntity, pageable)
                 .map(PostComment::getPost)
                 .map(post -> PostResponse.of(post, isLiked(LikeType.POST, userId, post.getId())));
     }

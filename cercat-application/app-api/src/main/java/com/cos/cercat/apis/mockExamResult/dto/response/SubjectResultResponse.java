@@ -13,7 +13,7 @@ public record SubjectResultResponse(
 
     public static SubjectResultResponse from(SubjectResult entity) {
         return new SubjectResultResponse(
-                SubjectResponse.from(entity.getSubject()),
+                SubjectResponse.from(entity.getSubjectEntity()),
                 entity.getScore(),
                 entity.getNumberOfCorrect(),
                 entity.getTotalTakenTime(),

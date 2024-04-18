@@ -4,13 +4,13 @@ import com.cos.cercat.common.annotation.UseCase;
 import com.cos.cercat.service.CertificateExamService;
 import com.cos.cercat.service.CertificateService;
 import com.cos.cercat.service.InterestCertificateService;
-import com.cos.cercat.domain.Certificate;
+import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.domain.CertificateExam;
 import com.cos.cercat.apis.certificate.dto.response.CertificateExamResponse;
 import com.cos.cercat.apis.certificate.dto.response.CertificateResponse;
 import com.cos.cercat.apis.certificate.dto.response.InterestCertificateResponse;
 import com.cos.cercat.service.UserService;
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,10 +35,10 @@ public class CertificateFetchUseCase {
      * @return 자격증 상세 정보
      */
     public CertificateExamResponse getCertificateExam(Long certificateId) {
-        Certificate certificate = certificateService.getCertificate(certificateId);
-        CertificateExam recentCertificateExam = certificateExamService.getRecentCertificateExam(certificate);
+        CertificateEntity certificateEntity = certificateService.getCertificate(certificateId);
+        CertificateExam recentCertificateExam = certificateExamService.getRecentCertificateExam(certificateEntity);
 
-        log.info("certificate - {} 자격증 시험 정보 조회", certificate.getCertificateName());
+        log.info("certificateEntity - {} 자격증 시험 정보 조회", certificateEntity.getCertificateName());
         return CertificateExamResponse.from(recentCertificateExam);
     }
 
@@ -54,8 +54,8 @@ public class CertificateFetchUseCase {
     }
 
     public List<InterestCertificateResponse> getInterestCertificate(Long userId) {
-        User user = userService.getUser(userId);
-        return interestCertificateService.getInterestCertificates(user).stream()
+        UserEntity userEntity = userService.getUser(userId);
+        return interestCertificateService.getInterestCertificates(userEntity).stream()
                 .map(InterestCertificateResponse::from)
                 .toList();
     }

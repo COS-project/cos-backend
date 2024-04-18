@@ -1,7 +1,7 @@
 package com.cos.cercat.service;
 
-import com.cos.cercat.domain.Certificate;
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.CertificateEntity;
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.repository.UserAnswerRepository;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
@@ -20,8 +20,8 @@ public class UserAnswerService {
 
     private final UserAnswerRepository userAnswerRepository;
 
-    public Slice<UserAnswer> getAllWrongUserAnswers(Pageable pageable, User user, Certificate certificate) {
-        return userAnswerRepository.getWrongUserAnswersByUserAndCertificate(pageable, user.getId(), certificate.getId());
+    public Slice<UserAnswer> getAllWrongUserAnswers(Pageable pageable, UserEntity userEntity, CertificateEntity certificateEntity) {
+        return userAnswerRepository.getWrongUserAnswersByUserEntityAndCertificateEntity(pageable, userEntity.getId(), certificateEntity.getId());
     }
 
     public Slice<UserAnswer> getWrongUserAnswers(Pageable pageable, MockExamResult mockExamResult) {

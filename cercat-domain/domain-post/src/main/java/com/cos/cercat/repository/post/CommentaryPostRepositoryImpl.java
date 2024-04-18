@@ -25,23 +25,23 @@ public class CommentaryPostRepositoryImpl implements PostRepositoryCustom<Commen
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Slice<CommentaryPost> searchPosts(Pageable pageable, Certificate certificate, CommentaryPostSearchCond cond) {
+    public Slice<CommentaryPost> searchPosts(Pageable pageable, CertificateEntity certificateEntity, CommentaryPostSearchCond cond) {
 
         List<CommentaryPost> contents = queryFactory
                 .selectFrom(QCommentaryPost.commentaryPost)
-                .leftJoin(QCommentaryPost.commentaryPost.user, QUser.user)
+                .leftJoin(QCommentaryPost.commentaryPost.userEntity, QUserEntity.userEntity)
                 .fetchJoin()
                 .leftJoin(QCommentaryPost.commentaryPost.question, QQuestion.question)
                 .fetchJoin()
                 .leftJoin(QCommentaryPost.commentaryPost.question.mockExam, QMockExam.mockExam)
                 .fetchJoin()
-                .leftJoin(QCommentaryPost.commentaryPost.certificate, QCertificate.certificate)
+                .leftJoin(QCommentaryPost.commentaryPost.certificateEntity, QCertificateEntity.certificateEntity)
                 .fetchJoin()
                 .where(
                         eqExamYear(cond.examYear()),
                         eqRound(cond.round()),
                         eqQuestionSequence(cond.questionSequence()),
-                        QCommentaryPost.commentaryPost.certificate.eq(certificate)
+                        QCommentaryPost.commentaryPost.certificateEntity.eq(certificateEntity)
                 )
                 .orderBy(postSort(pageable))
                 .offset(pageable.getOffset())

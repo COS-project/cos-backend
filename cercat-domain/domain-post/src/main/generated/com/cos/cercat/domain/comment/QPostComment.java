@@ -64,7 +64,7 @@ public class QPostComment extends EntityPathBase<PostComment> {
         super(type, metadata, inits);
         this.childPostComments = inits.isInitialized("childPostComments") ? new QChildPostComments(forProperty("childPostComments")) : null;
         this.post = inits.isInitialized("post") ? new com.cos.cercat.domain.post.QPost(forProperty("post"), inits.get("post")) : null;
-        this.user = inits.isInitialized("user") ? new com.cos.cercat.domain.QUser(forProperty("user"), inits.get("user")) : null;
+        this.user = inits.isInitialized("userEntity") ? new com.cos.cercat.domain.QUser(forProperty("userEntity"), inits.get("userEntity")) : null;
     }
 
 }

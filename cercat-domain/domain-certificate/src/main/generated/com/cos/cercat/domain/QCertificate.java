@@ -11,7 +11,7 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QCertificate is a Querydsl query type for Certificate
+ * QCertificate is a Querydsl query type for CertificateEntity
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QCertificate extends EntityPathBase<Certificate> {

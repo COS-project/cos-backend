@@ -2,11 +2,11 @@ package com.cos.cercat.apis.examReview.app.usecase;
 
 import com.cos.cercat.apis.examReview.dto.request.ExamReviewCreateRequest;
 import com.cos.cercat.common.annotation.UseCase;
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.service.*;
-import com.cos.cercat.domain.Certificate;
+import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.domain.CertificateExam;
 import com.cos.cercat.domain.Goal;
-import com.cos.cercat.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,18 +33,18 @@ public class ExamReviewCreateUseCase {
      */
     @Transactional
     public void createExamReview(ExamReviewCreateRequest request, Long certificateId , Long userId) {
-        User user = userService.getUser(userId);
-        Certificate certificate = certificateService.getCertificate(certificateId);
+        UserEntity userEntity = userService.getUser(userId);
+        CertificateEntity certificateEntity = certificateService.getCertificate(certificateId);
 
-        Goal goal = goalService.getRecentGoal(user, certificate);
-        CertificateExam recentCertificateExam = certificateExamService.getRecentCertificateExam(certificate);
+        Goal goal = goalService.getRecentGoal(userEntity, certificateEntity);
+        CertificateExam recentCertificateExam = certificateExamService.getRecentCertificateExam(certificateEntity);
 
         LocalDate prepareStartDate = goal.getPrepareStartDateTime().toLocalDate();
         LocalDate prepareFinishDate = goal.getPrepareFinishDateTime().toLocalDate();
 
         Period preparePeriod = Period.between(prepareStartDate, prepareFinishDate);
-        log.info("user - {}, certificate - {} 따끈 후기 생성", user.getEmail(), certificate.getCertificateName());
-        examReviewService.createExamReview(request.toEntity(user, recentCertificateExam, periodToMonths(preparePeriod)));
+        log.info("userEntity - {}, certificateEntity - {} 따끈 후기 생성", userEntity.getEmail(), certificateEntity.getCertificateName());
+        examReviewService.createExamReview(request.toEntity(userEntity, recentCertificateExam, periodToMonths(preparePeriod)));
     }
 
     private int periodToMonths(Period preparePeriod) {

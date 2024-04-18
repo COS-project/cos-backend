@@ -46,7 +46,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                     .filter(existingToken -> existingToken.getRefreshToken().equals(refreshToken))
                     .orElseThrow(() -> new CustomException(ErrorCode.INVALID_REFRESH_TOKEN));
 
-            log.info("user - {} 리프레시 토큰 재발급", email);
+            log.info("userEntity - {} 리프레시 토큰 재발급", email);
             sendAccessTokenAndRefreshToken(validRefreshToken.getEmail(), response);
             throw new CustomException(ErrorCode.REFRESH_TOKEN_REISSUE); //리프레시토큰 재발급 시 401 에러 발생을 방지
         }

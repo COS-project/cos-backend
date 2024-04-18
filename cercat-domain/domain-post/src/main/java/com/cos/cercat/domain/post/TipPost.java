@@ -1,8 +1,8 @@
 package com.cos.cercat.domain.post;
 
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.entity.Image;
-import com.cos.cercat.domain.Certificate;
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.CertificateEntity;
 import jakarta.persistence.Entity;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -21,8 +21,8 @@ public class TipPost extends Post{
 
     private RecommendTags recommendTags = new RecommendTags();
 
-    public TipPost(String title, String content, User user, Certificate certificate, PostType postType, List<Image> images, Set<RecommendTag> recommendTags) {
-        super(title, content, user, certificate, postType, images);
+    public TipPost(String title, String content, UserEntity userEntity, CertificateEntity certificateEntity, PostType postType, List<Image> images, Set<RecommendTag> recommendTags) {
+        super(title, content, userEntity, certificateEntity, postType, images);
         addRecommendTags(recommendTags);
     }
 

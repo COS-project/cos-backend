@@ -1,9 +1,9 @@
 package com.cos.cercat.apis.post.dto.request;
 
-import com.cos.cercat.domain.Certificate;
+import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.domain.Question;
 import com.cos.cercat.apis.post.dto.RecommendTagDTO;
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.post.CommentaryPost;
 import com.cos.cercat.domain.post.NormalPost;
 import com.cos.cercat.domain.post.PostType;
@@ -23,14 +23,14 @@ public record PostCreateRequest(
         Integer questionSequence
 ) {
     public CommentaryPost toCommentaryPost(List<Image> images,
-                                           Certificate certificate,
-                                           User user,
+                                           CertificateEntity certificateEntity,
+                                           UserEntity userEntity,
                                            Question question) {
         return new CommentaryPost(
                 title,
                 content,
-                user,
-                certificate,
+                userEntity,
+                certificateEntity,
                 PostType.COMMENTARY,
                 images,
                 question
@@ -38,13 +38,13 @@ public record PostCreateRequest(
     }
 
     public TipPost toTipPost(List<Image> images,
-                             Certificate certificate,
-                             User user) {
+                             CertificateEntity certificateEntity,
+                             UserEntity userEntity) {
         return new TipPost(
                 title,
                 content,
-                user,
-                certificate,
+                userEntity,
+                certificateEntity,
                 PostType.TIP,
                 images,
                 tags.stream()
@@ -54,13 +54,13 @@ public record PostCreateRequest(
     }
 
     public NormalPost toNormalPost(List<Image> images,
-                                   Certificate certificate,
-                                   User user) {
+                                   CertificateEntity certificateEntity,
+                                   UserEntity userEntity) {
         return new NormalPost(
                 title,
                 content,
-                user,
-                certificate,
+                userEntity,
+                certificateEntity,
                 PostType.NORMAL,
                 images
         );

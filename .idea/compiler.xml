@@ -27,6 +27,7 @@
         <module name="cercat.cercat-application.app-api.test" />
         <module name="cercat.cercat-application.app-batch.test" />
         <module name="cercat.cercat-domain.test" />
+        <module name="cercat.cercat-application.core-domain.test" />
         <module name="cercat.cercat-domain.domain-board.test" />
         <module name="cercat.cercat-external.test" />
         <module name="cercat.cercat-domain.domain-mockexamresult.test" />
@@ -38,6 +39,7 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-configuration-processor/3.2.1/9d6ac9a2fa98598d1a38e9f06d6f0aab250cae2f/spring-boot-configuration-processor-3.2.1.jar" />
         </processorPath>
         <module name="cercat.cercat-application.app-api.main" />
+        <module name="cercat.cercat-application.core-domain.main" />
         <module name="cercat.cercat-application.app-batch.main" />
         <module name="cercat.cercat-domain.main" />
         <module name="cercat.cercat-domain.domain-alarm.main" />

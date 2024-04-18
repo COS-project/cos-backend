@@ -1,7 +1,7 @@
 package com.cos.cercat.service.post;
 
 import com.cos.cercat.entity.Image;
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.post.NormalPost;
 import com.cos.cercat.repository.post.NormalPostRepository;
 import com.cos.cercat.common.exception.CustomException;
@@ -22,8 +22,8 @@ public class NormalPostService {
     private final NormalPostRepository normalPostRepository;
 
     public void createNormalPost(NormalPost normalPost) {
-        log.info("user - {}, certificate - {} 자유 게시글 생성",
-                normalPost.getUser().getEmail(), normalPost.getCertificate().getCertificateName());
+        log.info("userEntity - {}, certificateEntity - {} 자유 게시글 생성",
+                normalPost.getUserEntity().getEmail(), normalPost.getCertificateEntity().getCertificateName());
         normalPostRepository.save(normalPost);
 
     }
@@ -33,19 +33,19 @@ public class NormalPostService {
                 new CustomException(ErrorCode.POST_NOT_FOUND));
     }
 
-    public Slice<NormalPost> getMyNormalPosts(User user, Pageable pageable) {
-        return normalPostRepository.findNormalPostsByUser(user, pageable);
+    public Slice<NormalPost> getMyNormalPosts(UserEntity userEntity, Pageable pageable) {
+        return normalPostRepository.findNormalPostsByUserEntity(userEntity, pageable);
     }
 
     public void updateNormalPost(Long postId,
                                  String title,
                                  String content,
                                  List<Image> images,
-                                 User user
+                                 UserEntity userEntity
     ) {
         NormalPost normalPost = getNormalPost(postId);
 
-        if (normalPost.isAuthorized(user)) {
+        if (normalPost.isAuthorized(userEntity)) {
             normalPost.updatePostInfo(title, content, images);
             return;
         }

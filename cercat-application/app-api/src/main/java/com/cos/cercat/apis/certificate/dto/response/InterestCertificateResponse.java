@@ -10,7 +10,7 @@ public record InterestCertificateResponse(
 
     public static InterestCertificateResponse from(InterestCertificate entity) {
         return new InterestCertificateResponse(
-                CertificateResponse.from(entity.getCertificate()),
+                CertificateResponse.from(entity.getCertificateEntity()),
                 entity.getPriority()
         );
     }

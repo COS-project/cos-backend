@@ -1,6 +1,6 @@
 package com.cos.cercat.apis.certificate.dto.request;
 
-import com.cos.cercat.domain.Subject;
+import com.cos.cercat.domain.SubjectEntity;
 
 public record SubjectCreateRequest(
         String subjectName,
@@ -8,8 +8,8 @@ public record SubjectCreateRequest(
         Integer totalScore
 ) {
 
-    public Subject toEntity() {
-        return new Subject(
+    public SubjectEntity toEntity() {
+        return new SubjectEntity(
                 subjectName,
                 numberOfQuestion,
                 totalScore

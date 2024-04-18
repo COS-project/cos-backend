@@ -1,8 +1,8 @@
 package com.cos.cercat.service.post;
 
+import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.entity.Image;
-import com.cos.cercat.domain.Certificate;
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.post.RecommendTag;
 import com.cos.cercat.domain.post.TipPost;
 import com.cos.cercat.repository.post.TipPostRepository;
@@ -25,8 +25,8 @@ public class TipPostService {
     private final TipPostRepository tipPostRepository;
 
     public void createTipPost(TipPost tipPost) {
-        log.info("user - {}, certificate - {} 꿀팁 게시글 생성",
-                tipPost.getUser().getEmail(), tipPost.getCertificate().getCertificateName());
+        log.info("userEntity - {}, certificateEntity - {} 꿀팁 게시글 생성",
+                tipPost.getUserEntity().getEmail(), tipPost.getCertificateEntity().getCertificateName());
         tipPostRepository.save(tipPost);
     }
 
@@ -35,12 +35,12 @@ public class TipPostService {
                 new CustomException(ErrorCode.POST_NOT_FOUND));
     }
 
-    public Slice<TipPost> getMyTipPosts(User user, Pageable pageable) {
-        return tipPostRepository.findTipPostsByUser(user, pageable);
+    public Slice<TipPost> getMyTipPosts(UserEntity userEntity, Pageable pageable) {
+        return tipPostRepository.findTipPostsByUserEntity(userEntity, pageable);
     }
 
-    public List<TipPost> getTop3TipPosts(Certificate certificate) {
-        return tipPostRepository.findTop3ByCertificateOrderByLikeCountDesc(certificate);
+    public List<TipPost> getTop3TipPosts(CertificateEntity certificateEntity) {
+        return tipPostRepository.findTop3ByCertificateEntityOrderByLikeCountDesc(certificateEntity);
     }
 
     public void updateTipPost(Long postId,
@@ -48,11 +48,11 @@ public class TipPostService {
                               String content,
                               Set<RecommendTag> newTags,
                               List<Image> images,
-                              User user
+                              UserEntity userEntity
     ) {
         TipPost tipPost = getTipPost(postId);
 
-        if (tipPost.isAuthorized(user)) {
+        if (tipPost.isAuthorized(userEntity)) {
             tipPost.updatePostInfo(title, content, images);
             tipPost.updateRecommendTags(newTags);
             return;

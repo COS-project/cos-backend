@@ -1,8 +1,8 @@
 package com.cos.cercat.service;
 
-import com.cos.cercat.domain.Subject;
+import com.cos.cercat.domain.CertificateEntity;
+import com.cos.cercat.domain.SubjectEntity;
 import com.cos.cercat.dto.MockExamInfoDTO;
-import com.cos.cercat.domain.Certificate;
 import com.cos.cercat.domain.MockExam;
 import com.cos.cercat.domain.Question;
 import com.cos.cercat.repository.MockExamRepository;
@@ -31,13 +31,13 @@ public class QuestionConvertService {
     public static final String CORRECT_ANSWER = "정답";
 
     @Transactional
-    public void saveQuestionMap(Certificate certificate, File json) {
+    public void saveQuestionMap(CertificateEntity certificateEntity, File json) {
 
         List<Question> questions = new ArrayList<>();
 
-        MockExamInfoDTO mockExamInfoDTO = questionMapperService.jsonToQuestionMap(certificate, json);
+        MockExamInfoDTO mockExamInfoDTO = questionMapperService.jsonToQuestionMap(certificateEntity, json);
         MockExam mockExam = mockExamRepository.save(MockExam.of(mockExamInfoDTO.mockExamDTO(), 1000000L));
-        List<Subject> subjectList = subjectService.getSubjectList(certificate);
+        List<SubjectEntity> subjectEntityList = subjectService.getSubjectList(certificateEntity);
 
         mockExamInfoDTO.questions().forEach((title, content) -> {
 
@@ -49,11 +49,11 @@ public class QuestionConvertService {
                 question.setSeqAndTitle(matcher);
 
                 if (question.getQuestionSeq() <= 20) {
-                    question.setSubject(subjectList.get(0));
+                    question.setSubjectEntity(subjectEntityList.get(0));
                 } else if (question.getQuestionSeq() <= 40) {
-                    question.setSubject(subjectList.get(1));
+                    question.setSubjectEntity(subjectEntityList.get(1));
                 } else {
-                    question.setSubject(subjectList.get(2));
+                    question.setSubjectEntity(subjectEntityList.get(2));
                 }
 
                 question.setContent(content);

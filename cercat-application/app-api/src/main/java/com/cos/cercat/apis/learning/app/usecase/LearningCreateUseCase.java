@@ -2,13 +2,13 @@ package com.cos.cercat.apis.learning.app.usecase;
 
 import com.cos.cercat.apis.learning.dto.request.GoalCreateRequest;
 import com.cos.cercat.common.annotation.UseCase;
+import com.cos.cercat.domain.CertificateEntity;
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.service.CertificateService;
-import com.cos.cercat.domain.Certificate;
 import com.cos.cercat.service.GoalService;
 import com.cos.cercat.service.StudyTimeLogService;
 import com.cos.cercat.domain.Goal;
 import com.cos.cercat.service.UserService;
-import com.cos.cercat.domain.User;
 import com.cos.cercat.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,11 +30,11 @@ public class LearningCreateUseCase {
      * @param userId 유저 ID
      */
     public void createGoal(GoalCreateRequest request, Long certificateId, Long userId) {
-        Certificate certificate = certificateService.getCertificate(certificateId);
-        User user = userService.getUser(userId);
+        CertificateEntity certificateEntity = certificateService.getCertificate(certificateId);
+        UserEntity userEntity = userService.getUser(userId);
 
-        log.info("user - {}, certificate - {} 목표 생성.", user.getEmail(), certificate.getCertificateName());
-        goalService.createGoal(request.toEntity(certificate, user));
+        log.info("userEntity - {}, certificateEntity - {} 목표 생성.", userEntity.getEmail(), certificateEntity.getCertificateName());
+        goalService.createGoal(request.toEntity(certificateEntity, userEntity));
     }
 
     /***
@@ -46,7 +46,7 @@ public class LearningCreateUseCase {
     public void createStudyTimeLog(Long goalId, Long studyTime, UserDTO currentUser) {
         Goal goal = goalService.getGoalById(goalId);
 
-        log.info("user - {}, goalId - {}, studyTime - {} 공부 시간 누적", currentUser.getEmail(), goal.getId(), studyTime);
+        log.info("userEntity - {}, goalId - {}, studyTime - {} 공부 시간 누적", currentUser.getEmail(), goal.getId(), studyTime);
         studyTimeLogService.createStudyTimeLog(goal, studyTime);
     }
 }

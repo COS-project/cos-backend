@@ -20,7 +20,7 @@ public class CommentLike {
     @MapsId("userId")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserEntity userEntity;
 
     @MapsId("commentId")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -28,14 +28,14 @@ public class CommentLike {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private PostComment comment;
 
-    private CommentLike(User user, PostComment comment) {
-        this.user = user;
+    private CommentLike(UserEntity userEntity, PostComment comment) {
+        this.userEntity = userEntity;
         this.comment = comment;
     }
 
-    public static CommentLike of(User user, PostComment comment) {
+    public static CommentLike of(UserEntity userEntity, PostComment comment) {
         return new CommentLike(
-                user,
+                userEntity,
                 comment
         );
     }

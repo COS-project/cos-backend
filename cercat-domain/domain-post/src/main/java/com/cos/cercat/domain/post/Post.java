@@ -1,8 +1,8 @@
 package com.cos.cercat.domain.post;
 
 import com.cos.cercat.entity.Image;
-import com.cos.cercat.domain.Certificate;
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.CertificateEntity;
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.comment.PostComment;
 import com.cos.cercat.domain.comment.PostComments;
 import com.cos.cercat.entity.BaseTimeEntity;
@@ -32,11 +32,11 @@ public class Post extends BaseTimeEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    protected User user;
+    protected UserEntity userEntity;
 
     @ManyToOne
     @JoinColumn(name = "certificate_id")
-    protected Certificate certificate;
+    protected CertificateEntity certificateEntity;
 
     @Embedded
     protected PostImages postImages = new PostImages();
@@ -50,11 +50,11 @@ public class Post extends BaseTimeEntity {
     @ColumnDefault("0")
     protected Integer likeCount = 0;
 
-    public Post(String title, String content, User user, Certificate certificate, PostType postType, List<Image> images) {
+    public Post(String title, String content, UserEntity userEntity, CertificateEntity certificateEntity, PostType postType, List<Image> images) {
         this.title = title;
         this.content = content;
-        this.user = user;
-        this.certificate = certificate;
+        this.userEntity = userEntity;
+        this.certificateEntity = certificateEntity;
         this.postType = postType;
         addAllPostImages(images);
     }
@@ -78,8 +78,8 @@ public class Post extends BaseTimeEntity {
         addAllPostImages(images);
     }
 
-    public boolean isAuthorized(User user) {
-        return this.user.equals(user);
+    public boolean isAuthorized(UserEntity userEntity) {
+        return this.userEntity.equals(userEntity);
     }
 
     private void addAllPostImages(List<Image> images) {

@@ -1,10 +1,11 @@
 package com.cos.cercat.service;
 
-import com.cos.cercat.domain.Certificate;
-import com.cos.cercat.domain.FavoriteBoard;
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.CertificateEntity;
+import com.cos.cercat.domain.FavoriteBoardEntity;
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.embededId.FavoriteBoardPK;
-import com.cos.cercat.repository.FavoriteBoardRepository;
+import com.cos.cercat.repository.FavoriteBoardJpaRepository;
+import jakarta.persistence.Table;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,24 +13,21 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+
 public class FavoriteBoardService {
 
-    private final FavoriteBoardRepository favoriteBoardRepository;
+    private final FavoriteBoardJpaRepository favoriteBoardJpaRepository;
 
-    public boolean existFavoriteBoard(User user, Certificate certificate) {
-        return favoriteBoardRepository.existsFavoriteBoardByFavoriteBoardPK(FavoriteBoardPK.of(user.getId(), certificate.getId()));
+    public boolean existFavoriteBoard(UserEntity userEntity, CertificateEntity certificateEntity) {
+        return favoriteBoardJpaRepository.existsFavoriteBoardByFavoriteBoardPK(FavoriteBoardPK.of(userEntity.getId(), certificateEntity.getId()));
     }
 
-    public void createFavoriteBoard(User user, Certificate certificate) {
-        favoriteBoardRepository.save(FavoriteBoard.of(user, certificate));
+    public void createFavoriteBoard(UserEntity userEntity, CertificateEntity certificateEntity) {
+        favoriteBoardJpaRepository.save(FavoriteBoardEntity.of(userEntity, certificateEntity));
     }
 
-    public void deleteFavoriteBoard(User user, Certificate certificate) {
-        favoriteBoardRepository.deleteById(FavoriteBoardPK.of(user.getId(), certificate.getId()));
-    }
-
-    public List<FavoriteBoard> getFavoriteBoard(User user) {
-        return favoriteBoardRepository.findFavoriteBoardsByUser(user);
+    public void deleteFavoriteBoard(UserEntity userEntity, CertificateEntity certificateEntity) {
+        favoriteBoardJpaRepository.deleteById(FavoriteBoardPK.of(userEntity.getId(), certificateEntity.getId()));
     }
 
 }

@@ -20,7 +20,6 @@ public class UserUpdateUseCase {
     private final UserService userService;
     private final FileUploader fileUploader;
 
-    @Transactional
     public void updateUserInfo(UserCreateRequest request,
                                MultipartFile file,
                                Long userId) {
@@ -33,7 +32,7 @@ public class UserUpdateUseCase {
     @Transactional
     public void logout(String accessToken, String email) {
         userService.logout(accessToken, email);
-        log.info("user - {} 로그아웃", email);
+        log.info("userEntity - {} 로그아웃", email);
     }
 
 }

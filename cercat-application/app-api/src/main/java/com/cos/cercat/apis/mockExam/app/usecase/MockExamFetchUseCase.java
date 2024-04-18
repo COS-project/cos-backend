@@ -5,15 +5,15 @@ import com.cos.cercat.apis.mockExam.dto.response.MockExamWithResultResponse;
 import com.cos.cercat.apis.mockExam.dto.response.QuestionListResponse;
 import com.cos.cercat.apis.mockExam.dto.response.QuestionResponse;
 import com.cos.cercat.common.annotation.UseCase;
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.service.CertificateService;
-import com.cos.cercat.domain.Certificate;
+import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.service.MockExamService;
 import com.cos.cercat.service.QuestionService;
 import com.cos.cercat.domain.MockExam;
 import com.cos.cercat.service.MockExamResultService;
 import com.cos.cercat.domain.MockExamResult;
 import com.cos.cercat.service.UserService;
-import com.cos.cercat.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
@@ -47,18 +47,18 @@ public class MockExamFetchUseCase {
      * */
     public List<MockExamWithResultResponse> getMockExamList(Long certificateId, Integer examYear, Long userId) {
         List<MockExamWithResultResponse> resultResponses = new ArrayList<>();
-        Certificate certificate = certificateService.getCertificate(certificateId);
+        CertificateEntity certificateEntity = certificateService.getCertificate(certificateId);
 
-        List<MockExam> mockExamList = mockExamService.getMockExamList(certificate, examYear);
-        User user = userService.getUser(userId);
+        List<MockExam> mockExamList = mockExamService.getMockExamList(certificateEntity, examYear);
+        UserEntity userEntity = userService.getUser(userId);
 
         for (MockExam mockExam : mockExamList) {
-            List<MockExamResult> userMockExamResults = mockExamResultService.getMockExamResults(mockExam, user);
+            List<MockExamResult> userMockExamResults = mockExamResultService.getMockExamResults(mockExam, userEntity);
             resultResponses.add(MockExamWithResultResponse.from(mockExam, userMockExamResults));
         }
         resultResponses.sort(Comparator.comparing(MockExamWithResultResponse::round));
 
-        log.info("user - {}, certificate - {}, {}년도 모의고사 리스트 조회", user.getEmail(), certificate.getCertificateName(), examYear);
+        log.info("userEntity - {}, certificateEntity - {}, {}년도 모의고사 리스트 조회", userEntity.getEmail(), certificateEntity.getCertificateName(), examYear);
         return resultResponses;
     }
 
@@ -84,15 +84,15 @@ public class MockExamFetchUseCase {
      * @return 시험년도가 Key이고 List형태의 회차정보를 Value로 가지는 Map을 반환합니다.
      */
     public ExamYearWithRoundsResponse getMockExamInfoList(Long certificateId) {
-        Certificate certificate = certificateService.getCertificate(certificateId);
-        List<Integer> mockExamYears = mockExamService.getMockExamYears(certificate);
+        CertificateEntity certificateEntity = certificateService.getCertificate(certificateId);
+        List<Integer> mockExamYears = mockExamService.getMockExamYears(certificateEntity);
 
-        log.info("certificate - {} 자격증의 모의고사 시험년도 및 회차정보 조회", certificate.getCertificateName());
+        log.info("certificateEntity - {} 자격증의 모의고사 시험년도 및 회차정보 조회", certificateEntity.getCertificateName());
         return ExamYearWithRoundsResponse.from(
                 mockExamYears.stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        mockExamYear -> mockExamService.getMockExamRounds(certificate, mockExamYear)
+                        mockExamYear -> mockExamService.getMockExamRounds(certificateEntity, mockExamYear)
                 )));
     }
 

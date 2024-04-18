@@ -1,5 +1,6 @@
 package com.cos.cercat.domain;
 
+import com.cos.cercat.domain.certificate.Subject;
 import com.cos.cercat.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -8,7 +9,8 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Subject extends BaseTimeEntity {
+@Table(name = "subject")
+public class SubjectEntity extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +20,7 @@ public class Subject extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "certificate_id")
     @Setter
-    private Certificate certificate;
+    private CertificateEntity certificateEntity;
 
     private String subjectName;
 
@@ -26,9 +28,20 @@ public class Subject extends BaseTimeEntity {
 
     private Integer totalScore;
 
-    public Subject(String subjectName, Integer numberOfQuestions, Integer totalScore) {
+    @Builder
+    public SubjectEntity(String subjectName, Integer numberOfQuestions, Integer totalScore) {
         this.subjectName = subjectName;
         this.numberOfQuestions = numberOfQuestions;
         this.totalScore = totalScore;
+    }
+
+    public Subject toSubject() {
+        return new Subject(
+                this.id,
+                this.certificateEntity.getId(),
+                this.subjectName,
+                this.numberOfQuestions,
+                this.totalScore
+        );
     }
 }

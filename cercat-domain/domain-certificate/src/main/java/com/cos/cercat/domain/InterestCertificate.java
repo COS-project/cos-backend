@@ -18,19 +18,19 @@ public class InterestCertificate extends BaseTimeEntity implements Persistable<I
     @MapsId("certificateId")
     @ManyToOne
     @JoinColumn(name = "certificate_id")
-    private Certificate certificate;
+    private CertificateEntity certificateEntity;
 
     @MapsId("userId")
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserEntity userEntity;
 
     @Enumerated(EnumType.STRING)
     private InterestPriority priority;
 
-    public InterestCertificate(Certificate certificate, User user, InterestPriority priority) {
-        this.certificate = certificate;
-        this.user = user;
+    public InterestCertificate(CertificateEntity certificateEntity, UserEntity userEntity, InterestPriority priority) {
+        this.certificateEntity = certificateEntity;
+        this.userEntity = userEntity;
         this.priority = priority;
     }
 

@@ -27,12 +27,12 @@ public class MockExam extends BaseTimeEntity {
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "certificate_id")
-    private Certificate certificate;
+    private CertificateEntity certificateEntity;
 
-    private MockExam(Integer examYear, Integer round, Certificate certificate, Long timeLimit) {
+    private MockExam(Integer examYear, Integer round, CertificateEntity certificateEntity, Long timeLimit) {
         this.examYear = examYear;
         this.round = round;
-        this.certificate = certificate;
+        this.certificateEntity = certificateEntity;
         this.timeLimit = timeLimit;
     }
 

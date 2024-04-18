@@ -1,7 +1,7 @@
 package com.cos.cercat.domain.post;
 
-import com.cos.cercat.domain.Certificate;
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.CertificateEntity;
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.entity.Image;
 import jakarta.persistence.Entity;
 import lombok.AccessLevel;
@@ -18,8 +18,8 @@ import java.util.List;
 @OnDelete(action = OnDeleteAction.CASCADE)
 public class NormalPost extends Post {
 
-    public NormalPost(String title, String content, User user, Certificate certificate, PostType postType, List<Image> images) {
-        super(title, content, user, certificate, postType, images);
+    public NormalPost(String title, String content, UserEntity userEntity, CertificateEntity certificateEntity, PostType postType, List<Image> images) {
+        super(title, content, userEntity, certificateEntity, postType, images);
     }
 
 }

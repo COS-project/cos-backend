@@ -22,7 +22,7 @@ public class QGoal extends EntityPathBase<Goal> {
 
     public static final QGoal goal = new QGoal("goal");
 
-    public final QCertificate certificate;
+    public final QCertificateEntity certificateEntity;
 
     public final NumberPath<Integer> goalMockExams = createNumber("goalMockExams", Integer.class);
 
@@ -44,7 +44,7 @@ public class QGoal extends EntityPathBase<Goal> {
 
     public final NumberPath<Long> studyTimePerDay = createNumber("studyTimePerDay", Long.class);
 
-    public final QUser user;
+    public final QUserEntity userEntity;
 
     public QGoal(String variable) {
         this(Goal.class, forVariable(variable), INITS);
@@ -64,9 +64,9 @@ public class QGoal extends EntityPathBase<Goal> {
 
     public QGoal(Class<? extends Goal> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.certificate = inits.isInitialized("certificate") ? new QCertificate(forProperty("certificate"), inits.get("certificate")) : null;
+        this.certificateEntity = inits.isInitialized("certificateEntity") ? new QCertificateEntity(forProperty("certificateEntity")) : null;
         this.repeatDays = inits.isInitialized("repeatDays") ? new QRepeatDays(forProperty("repeatDays")) : null;
-        this.user = inits.isInitialized("user") ? new QUser(forProperty("user"), inits.get("user")) : null;
+        this.userEntity = inits.isInitialized("userEntity") ? new QUserEntity(forProperty("userEntity"), inits.get("userEntity")) : null;
     }
 
 }

@@ -7,7 +7,7 @@ import com.cos.cercat.dto.AlarmArg;
 import com.cos.cercat.dto.AlarmEvent;
 import com.cos.cercat.service.PostLikeService;
 import com.cos.cercat.domain.EmbeddedId.PostLikePK;
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -21,18 +21,18 @@ public class PostLikeStrategy implements LikeStrategy<Post> {
     private final AlarmProducer alarmProducer;
 
     @Override
-    public void flipLike(Post post, User user) {
-        PostLikePK postLikePK = PostLikePK.of(user.getId(), post.getId());
+    public void flipLike(Post post, UserEntity userEntity) {
+        PostLikePK postLikePK = PostLikePK.of(userEntity.getId(), post.getId());
 
         if (postLikeService.existsLike(postLikePK)) {
             postLikeService.deleteLike(post, postLikePK);
-            log.info("user - {}, postId - {} 게시글 좋아요 취소", user.getEmail(), post.getId());
+            log.info("userEntity - {}, postId - {} 게시글 좋아요 취소", userEntity.getEmail(), post.getId());
             return;
         }
 
-        log.info("user - {}, postId - {} 게시글 좋아요 생성", user.getEmail(), post.getId());
-        postLikeService.createLike(post, user);
-        alarmProducer.send(AlarmEvent.of(post.getUser(), AlarmArg.of(user, post.getId()), AlarmType.NEW_LIKE_ON_POST));
+        log.info("userEntity - {}, postId - {} 게시글 좋아요 생성", userEntity.getEmail(), post.getId());
+        postLikeService.createLike(post, userEntity);
+        alarmProducer.send(AlarmEvent.of(post.getUserEntity(), AlarmArg.of(userEntity, post.getId()), AlarmType.NEW_LIKE_ON_POST));
     }
 
     @Override

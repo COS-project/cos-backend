@@ -22,15 +22,15 @@ public class Alarm extends BaseTimeEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private User receiveUser;
+    private UserEntity receiveUserEntity;
 
     @Enumerated(EnumType.STRING)
     private AlarmType alarmType;
 
     private Boolean isRead;
 
-    public Alarm(User receiveUser, AlarmType alarmType, Boolean isRead) {
-        this.receiveUser = receiveUser;
+    public Alarm(UserEntity receiveUserEntity, AlarmType alarmType, Boolean isRead) {
+        this.receiveUserEntity = receiveUserEntity;
         this.alarmType = alarmType;
         this.isRead = isRead;
     }

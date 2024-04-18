@@ -5,10 +5,10 @@ import com.cos.cercat.common.annotation.UseCase;
 import com.cos.cercat.apis.like.app.strategy.LikeStrategyFactory;
 import com.cos.cercat.apis.like.app.strategy.StrategyName;
 import com.cos.cercat.apis.like.dto.request.LikeType;
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.comment.PostComment;
 import com.cos.cercat.domain.post.Post;
 import com.cos.cercat.service.UserService;
-import com.cos.cercat.domain.User;
 import com.cos.cercat.service.comment.PostCommentService;
 import com.cos.cercat.service.post.PostService;
 import lombok.RequiredArgsConstructor;
@@ -34,18 +34,18 @@ public class LikeFlipUseCase {
     @Transactional
     public void flipLike(LikeType likeType, Long id, Long userId) {
 
-        User user = userService.getUser(userId);
+        UserEntity userEntity = userService.getUser(userId);
 
         switch (likeType) {
             case POST -> {
                 Post post = postService.getPostWithLock(id);
                 LikeStrategy<Post> strategy = likeStrategyFactory.findStrategy(StrategyName.POST_LIKE_STRATEGY, Post.class);
-                strategy.flipLike(post, user);
+                strategy.flipLike(post, userEntity);
             }
             case COMMENT -> {
                 PostComment postComment = postCommentService.getPostCommentWithLock(id);
                 LikeStrategy<PostComment> strategy = likeStrategyFactory.findStrategy(StrategyName.COMMENT_LIKE_STRATEGY, PostComment.class);
-                strategy.flipLike(postComment, user);
+                strategy.flipLike(postComment, userEntity);
             }
         }
     }

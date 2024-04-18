@@ -20,7 +20,7 @@ public record QuestionResponse(
         return new QuestionResponse(
                 entity.getId(),
                 MockExamResponse.from(entity.getMockExam()),
-                SubjectResponse.from(entity.getSubject()),
+                SubjectResponse.from(entity.getSubjectEntity()),
                 entity.getQuestionSeq(),
                 entity.getQuestionText(),
                 entity.getImageUrl(),

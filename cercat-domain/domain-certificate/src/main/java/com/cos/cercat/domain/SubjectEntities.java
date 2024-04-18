@@ -8,16 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Embeddable
-public class Subjects {
+public class SubjectEntities {
 
     @OneToMany(mappedBy = "certificate", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Subject> subjects = new ArrayList<>();
+    private List<SubjectEntity> subjectEntities = new ArrayList<>();
 
-    public void addAll(List<Subject> subjects) {
-        this.subjects.addAll(subjects);
+    public void addAll(List<SubjectEntity> subjectEntities) {
+        this.subjectEntities.addAll(subjectEntities);
     }
 
-    public List<Subject> getAll() {
-        return this.subjects;
+    public List<SubjectEntity> getAll() {
+        return this.subjectEntities;
     }
 }

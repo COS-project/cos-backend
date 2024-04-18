@@ -4,14 +4,14 @@ import com.cos.cercat.apis.learning.dto.response.GoalAchievementResponse;
 import com.cos.cercat.apis.learning.dto.response.GoalDetailResponse;
 import com.cos.cercat.apis.learning.dto.response.GoalResponse;
 import com.cos.cercat.common.annotation.UseCase;
+import com.cos.cercat.domain.CertificateEntity;
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.service.CertificateService;
-import com.cos.cercat.domain.Certificate;
 import com.cos.cercat.service.GoalService;
 import com.cos.cercat.service.StudyTimeLogService;
 import com.cos.cercat.domain.Goal;
 import com.cos.cercat.service.MockExamResultService;
 import com.cos.cercat.service.UserService;
-import com.cos.cercat.domain.User;
 import com.cos.cercat.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -51,11 +51,11 @@ public class LearningFetchUseCase {
      * @return 목표를 설정했다면 true, 목표를 아직 설정하지않았다면 false를 반환합니다.
      */
     public Boolean existsGoal(Long certificateId, Long userId) {
-        Certificate certificate = certificateService.getCertificate(certificateId);
-        User user = userService.getUser(userId);
+        CertificateEntity certificateEntity = certificateService.getCertificate(certificateId);
+        UserEntity userEntity = userService.getUser(userId);
 
-        log.info("user - {}, certificate - {} 목표 설정 여부 조회", user.getEmail(), certificate.getCertificateName());
-        return goalService.isGoalAlreadyExists(user, certificate);
+        log.info("userEntity - {}, certificateEntity - {} 목표 설정 여부 조회", userEntity.getEmail(), certificateEntity.getCertificateName());
+        return goalService.isGoalAlreadyExists(userEntity, certificateEntity);
     }
 
     /***
@@ -65,12 +65,12 @@ public class LearningFetchUseCase {
      * @return 유저의 목표 리스트를 반환합니다.
      */
     public List<GoalResponse> getAllGoals(Long certificateId, Long userId) {
-        Certificate certificate = certificateService.getCertificate(certificateId);
-        User user = userService.getUser(userId);
+        CertificateEntity certificateEntity = certificateService.getCertificate(certificateId);
+        UserEntity userEntity = userService.getUser(userId);
 
-        log.info("user - {} 목표 리스트 조회", user.getEmail());
+        log.info("userEntity - {} 목표 리스트 조회", userEntity.getEmail());
 
-        return goalService.getAllGoals(certificate, user).stream()
+        return goalService.getAllGoals(certificateEntity, userEntity).stream()
                 .map(GoalResponse::from)
                 .sorted(Comparator.comparing(GoalResponse::prepareStartDateTime).reversed())
                 .toList();
@@ -83,17 +83,17 @@ public class LearningFetchUseCase {
      * @return 목표 달성도 Response DTO를 조회합니다.
      */
     public GoalAchievementResponse getGoalAchievement(Long certificateId, Long userId) {
-        Certificate certificate = certificateService.getCertificate(certificateId);
-        User user = userService.getUser(userId);
-        Goal goal = goalService.getRecentGoal(user, certificate);
+        CertificateEntity certificateEntity = certificateService.getCertificate(certificateId);
+        UserEntity userEntity = userService.getUser(userId);
+        Goal goal = goalService.getRecentGoal(userEntity, certificateEntity);
 
-        int currentMaxScore = mockExamResultService.getCurrentMaxScore(certificate, user, goal.getPrepareStartDateTime());
+        int currentMaxScore = mockExamResultService.getCurrentMaxScore(certificateEntity, userEntity, goal.getPrepareStartDateTime());
         long todayTotalStudyTime = studyTimeLogService.getTodayTotalStudyTime(goal);
         Long totalStudyTime = studyTimeLogService.getTotalStudyTime(goal);
-        int todayMockExamResults = mockExamResultService.countTodayMockExamResults(certificate, user);
-        int totalMockExamResults = mockExamResultService.countTotalMockExamResults(certificate, user, goal.getPrepareStartDateTime());
+        int todayMockExamResults = mockExamResultService.countTodayMockExamResults(certificateEntity, userEntity);
+        int totalMockExamResults = mockExamResultService.countTotalMockExamResults(certificateEntity, userEntity, goal.getPrepareStartDateTime());
 
-        log.info("user - {}, goalId - {} 목표 달성도 조회", user.getEmail(), goal.getId());
+        log.info("userEntity - {}, goalId - {} 목표 달성도 조회", userEntity.getEmail(), goal.getId());
         return GoalAchievementResponse.of(
                 goal,
                 currentMaxScore,

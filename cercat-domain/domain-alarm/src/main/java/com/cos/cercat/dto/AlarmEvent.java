@@ -2,17 +2,17 @@ package com.cos.cercat.dto;
 
 import com.cos.cercat.domain.AlarmType;
 import com.cos.cercat.domain.BoardAlarm;
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.UserEntity;
 
 public record AlarmEvent(
-        User receiveUser,
+        UserEntity receiveUserEntity,
         AlarmArg alarmArg,
         AlarmType alarmType
 ) {
 
-    public static AlarmEvent of(User receiveUser, AlarmArg alarmArg, AlarmType alarmType) {
+    public static AlarmEvent of(UserEntity receiveUserEntity, AlarmArg alarmArg, AlarmType alarmType) {
         return new AlarmEvent(
-                receiveUser,
+                receiveUserEntity,
                 alarmArg,
                 alarmType
         );
@@ -20,10 +20,10 @@ public record AlarmEvent(
 
     public BoardAlarm toEntity() {
         return new BoardAlarm(
-                receiveUser,
+                receiveUserEntity,
                 alarmType,
                 false,
-                alarmArg.fromUser(),
+                alarmArg.fromUserEntity(),
                 alarmArg.postId()
         );
     }

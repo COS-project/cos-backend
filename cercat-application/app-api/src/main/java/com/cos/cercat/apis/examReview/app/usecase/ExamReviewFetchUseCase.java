@@ -2,16 +2,16 @@ package com.cos.cercat.apis.examReview.app.usecase;
 
 import com.cos.cercat.apis.examReview.dto.response.ExamReviewResponse;
 import com.cos.cercat.common.annotation.UseCase;
+import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.service.CertificateExamService;
 import com.cos.cercat.service.CertificateService;
 import com.cos.cercat.service.InterestCertificateService;
-import com.cos.cercat.domain.Certificate;
 import com.cos.cercat.domain.CertificateExam;
 import com.cos.cercat.domain.InterestCertificate;
 import com.cos.cercat.dto.ExamReviewSearchCond;
 import com.cos.cercat.service.ExamReviewService;
 import com.cos.cercat.service.UserService;
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -40,11 +40,11 @@ public class ExamReviewFetchUseCase {
      * @return 슬라이스 형태의 따끈후기 Response DTO
      */
     public Slice<ExamReviewResponse> getExamReviews(Long certificateId, ExamReviewSearchCond cond, Pageable pageable) {
-        Certificate certificate = certificateService.getCertificate(certificateId);
-        CertificateExam recentCertificateExam = certificateExamService.getRecentCertificateExam(certificate);
+        CertificateEntity certificateEntity = certificateService.getCertificate(certificateId);
+        CertificateExam recentCertificateExam = certificateExamService.getRecentCertificateExam(certificateEntity);
 
-        log.info("certificate - {}, examYear - {}, round - {} 따끈 후기 조회",
-                certificate.getCertificateName(), recentCertificateExam.getExamYear(), recentCertificateExam.getRound());
+        log.info("certificateEntity - {}, examYear - {}, round - {} 따끈 후기 조회",
+                certificateEntity.getCertificateName(), recentCertificateExam.getExamYear(), recentCertificateExam.getRound());
         return examReviewService.getExamReviews(recentCertificateExam, cond, pageable).map(ExamReviewResponse::from);
     }
 
@@ -55,19 +55,19 @@ public class ExamReviewFetchUseCase {
      * @return 아직 따끈후기를 작성하지않았다면 true를 반환, 이미 작성했다면 false를반환한다.
      */
     public boolean checkReviewDateAfterExamDate(Long certificateId, Long userId) {
-        Certificate certificate = certificateService.getCertificate(certificateId);
-        User user = userService.getUser(userId);
-        List<Certificate> certificates = interestCertificateService.getInterestCertificates(user).stream()
-                .map(InterestCertificate::getCertificate)
+        CertificateEntity certificateEntity = certificateService.getCertificate(certificateId);
+        UserEntity userEntity = userService.getUser(userId);
+        List<CertificateEntity> certificateEntities = interestCertificateService.getInterestCertificates(userEntity).stream()
+                .map(InterestCertificate::getCertificateEntity)
                 .toList();
-        boolean interest = certificates.contains(certificate);
+        boolean interest = certificateEntities.contains(certificateEntity);
 
-        CertificateExam recentCertificateExam = certificateExamService.getRecentCertificateExam(certificate);
+        CertificateExam recentCertificateExam = certificateExamService.getRecentCertificateExam(certificateEntity);
 
-        boolean examDatePassed = certificateExamService.isExamDatePassed(certificate);
-        boolean existsExamReview = examReviewService.existsExamReview(user, recentCertificateExam);
+        boolean examDatePassed = certificateExamService.isExamDatePassed(certificateEntity);
+        boolean existsExamReview = examReviewService.existsExamReview(userEntity, recentCertificateExam);
 
-        log.info("user - {}, certificate - {} 따끈후기 작성 여부 조회", user.getEmail(), certificate.getCertificateName());
+        log.info("userEntity - {}, certificateEntity - {} 따끈후기 작성 여부 조회", userEntity.getEmail(), certificateEntity.getCertificateName());
         return examDatePassed && !existsExamReview && interest;
     }
 

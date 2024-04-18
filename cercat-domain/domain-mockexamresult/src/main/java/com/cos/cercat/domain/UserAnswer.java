@@ -19,7 +19,7 @@ public class UserAnswer {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserEntity userEntity;
 
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
@@ -40,8 +40,8 @@ public class UserAnswer {
     private boolean isReviewed;
 
     @Builder
-    public UserAnswer(User user, Question question, int selectOptionSeq, long takenTime, boolean isCorrect, boolean isReviewed) {
-        this.user = user;
+    public UserAnswer(UserEntity userEntity, Question question, int selectOptionSeq, long takenTime, boolean isCorrect, boolean isReviewed) {
+        this.userEntity = userEntity;
         this.question = question;
         this.selectOptionSeq = selectOptionSeq;
         this.takenTime = takenTime;
@@ -53,7 +53,7 @@ public class UserAnswer {
         this.isReviewed = true;
     }
 
-    public boolean isAuthorized(User user) {
-        return this.user.equals(user);
+    public boolean isAuthorized(UserEntity userEntity) {
+        return this.userEntity.equals(userEntity);
     }
 }

@@ -1,6 +1,6 @@
 package com.cos.cercat.domain.comment;
 
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.post.Post;
 import com.cos.cercat.entity.BaseTimeEntity;
 import jakarta.persistence.*;
@@ -22,7 +22,7 @@ public class PostComment extends BaseTimeEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserEntity userEntity;
 
     @ManyToOne
     @Setter
@@ -43,15 +43,15 @@ public class PostComment extends BaseTimeEntity {
     @Column(length = 500)
     private String content;
 
-    private PostComment(User user, Post post, Long parentCommentId, String content) {
-        this.user = user;
+    private PostComment(UserEntity userEntity, Post post, Long parentCommentId, String content) {
+        this.userEntity = userEntity;
         this.post = post;
         this.parentCommentId = parentCommentId;
         this.content = content;
     }
 
-    public static PostComment of(User user, Post post, String content) {
-        return new PostComment(user, post, null, content);
+    public static PostComment of(UserEntity userEntity, Post post, String content) {
+        return new PostComment(userEntity, post, null, content);
     }
 
     public void increaseLikeCount() {
@@ -67,7 +67,7 @@ public class PostComment extends BaseTimeEntity {
         this.getChildPostComments().addChildComment(child);
     }
 
-    public boolean isAuthorized(User user) {
-        return this.user.equals(user);
+    public boolean isAuthorized(UserEntity userEntity) {
+        return this.userEntity.equals(userEntity);
     }
 }

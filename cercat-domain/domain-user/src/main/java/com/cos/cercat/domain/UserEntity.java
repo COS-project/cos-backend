@@ -1,5 +1,8 @@
 package com.cos.cercat.domain;
 
+import com.cos.cercat.domain.user.Role;
+import com.cos.cercat.domain.user.User;
+import com.cos.cercat.domain.user.UserProfileImage;
 import com.cos.cercat.entity.Image;
 import com.cos.cercat.entity.BaseTimeEntity;
 import jakarta.persistence.*;
@@ -17,7 +20,7 @@ import java.util.Objects;
 @Builder
 @Table(name = "Users")
 @SQLDelete(sql = "UPDATE users SET removed_at = NOW() WHERE user_id = ?")
-public class User extends BaseTimeEntity {
+public class UserEntity extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,7 +56,7 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public User oauthUpdate(String email, String kakaoProfileImageUrl) {
+    public UserEntity oauthUpdate(String email, String kakaoProfileImageUrl) {
         this.email = email;
         this.kakaoProfileImage = kakaoProfileImageUrl;
         return this;
@@ -63,11 +66,24 @@ public class User extends BaseTimeEntity {
         this.role = Role.ROLE_USER;
     }
 
+    public User toUser() {
+        return new User(
+                this.id,
+                this.nickname,
+                this.email,
+                this.username,
+                UserProfileImage.of(
+                        mainProfileImage.getImageUrl(),
+                        kakaoProfileImage
+                ),
+                this.role
+        );
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof User that)) return false;
+        if (!(o instanceof UserEntity that)) return false;
         return this.getId() != null && this.getId().equals(that.getId());
     }
 }

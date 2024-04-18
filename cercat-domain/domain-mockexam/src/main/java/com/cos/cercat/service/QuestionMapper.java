@@ -1,7 +1,7 @@
 package com.cos.cercat.service;
 
 
-import com.cos.cercat.domain.Certificate;
+import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.dto.CertificateDTO;
@@ -26,10 +26,10 @@ public class QuestionMapper {
 
     private final ObjectMapper objectMapper;
 
-    public MockExamInfoDTO jsonToQuestionMap(Certificate certificate, File json) {
+    public MockExamInfoDTO jsonToQuestionMap(CertificateEntity certificateEntity, File json) {
         try {
             return MockExamInfoDTO.of(
-                    extractInformation(certificate, json.getName().split("\\.")[0]),
+                    extractInformation(certificateEntity, json.getName().split("\\.")[0]),
                     objectMapper.readValue(json, new TypeReference<>() {}));
         } catch (IOException e) {
             log.error("Exception [Err_Location] : {}", e.getStackTrace()[0]);
@@ -37,7 +37,7 @@ public class QuestionMapper {
         }
     }
 
-    private MockExamDTO extractInformation(Certificate certificate, String fileName) {
+    private MockExamDTO extractInformation(CertificateEntity certificateEntity, String fileName) {
         // 정규 표현식 패턴 설정
         String pattern = "(.+?) +(\\d{4}) +(\\d+)회";
         Pattern regex = Pattern.compile(pattern);
@@ -49,7 +49,7 @@ public class QuestionMapper {
             String year = matcher.group(2);
             String round = matcher.group(3);
 
-            return MockExamDTO.of(Integer.parseInt(year), Integer.parseInt(round), CertificateDTO.from(certificate));
+            return MockExamDTO.of(Integer.parseInt(year), Integer.parseInt(round), CertificateDTO.from(certificateEntity));
         }
 
         throw new CustomException(ErrorCode.INCORRECT_FILE_FORMAT);// 매칭되는 부분이 없을 경우

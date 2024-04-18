@@ -7,7 +7,7 @@ import com.cos.cercat.domain.comment.PostComment;
 import com.cos.cercat.dto.AlarmArg;
 import com.cos.cercat.dto.AlarmEvent;
 import com.cos.cercat.service.CommentLikeService;
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -21,18 +21,18 @@ public class CommentLikeStrategy implements LikeStrategy<PostComment>{
     private final AlarmProducer alarmProducer;
 
     @Override
-    public void flipLike(PostComment postComment, User user) {
-        CommentLikePK commentLikePK = CommentLikePK.of(user.getId(), postComment.getId());
+    public void flipLike(PostComment postComment, UserEntity userEntity) {
+        CommentLikePK commentLikePK = CommentLikePK.of(userEntity.getId(), postComment.getId());
 
         if (commentLikeService.existsLike(commentLikePK)) {
             commentLikeService.deleteLike(postComment, commentLikePK);
-            log.info("user - {}, postCommentId - {} 댓글 좋아요 취소", user.getEmail(), postComment.getId());
+            log.info("userEntity - {}, postCommentId - {} 댓글 좋아요 취소", userEntity.getEmail(), postComment.getId());
             return;
         }
 
-        log.info("user - {}, postCommentId - {} 댓글 좋아요 생성", user.getEmail(), postComment.getId());
-        commentLikeService.createLike(postComment, user);
-        alarmProducer.send(AlarmEvent.of(postComment.getUser(), AlarmArg.of(user, postComment.getPost().getId()), AlarmType.NEW_LIKE_ON_COMMENT));
+        log.info("userEntity - {}, postCommentId - {} 댓글 좋아요 생성", userEntity.getEmail(), postComment.getId());
+        commentLikeService.createLike(postComment, userEntity);
+        alarmProducer.send(AlarmEvent.of(postComment.getUserEntity(), AlarmArg.of(userEntity, postComment.getPost().getId()), AlarmType.NEW_LIKE_ON_COMMENT));
     }
 
     @Override

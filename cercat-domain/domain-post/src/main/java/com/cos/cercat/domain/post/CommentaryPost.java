@@ -1,8 +1,8 @@
 package com.cos.cercat.domain.post;
 
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.entity.Image;
-import com.cos.cercat.domain.Certificate;
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.domain.Question;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,8 +23,8 @@ public class CommentaryPost extends Post {
     @JoinColumn(name = "question_id")
     private Question question;
 
-    public CommentaryPost(String title, String content, User user, Certificate certificate, PostType postType, List<Image> images, Question question) {
-        super(title, content, user, certificate, postType, images);
+    public CommentaryPost(String title, String content, UserEntity userEntity, CertificateEntity certificateEntity, PostType postType, List<Image> images, Question question) {
+        super(title, content, userEntity, certificateEntity, postType, images);
         this.question = question;
     }
 

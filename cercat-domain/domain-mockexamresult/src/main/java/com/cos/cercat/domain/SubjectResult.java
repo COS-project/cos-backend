@@ -1,6 +1,5 @@
 package com.cos.cercat.domain;
 
-import com.cos.cercat.domain.Subject;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -26,7 +25,7 @@ public class SubjectResult {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id")
-    private Subject subject;
+    private SubjectEntity subjectEntity;
 
     private UserAnswers userAnswers = new UserAnswers();
 
@@ -39,8 +38,8 @@ public class SubjectResult {
     private Integer correctRate;
 
     @Builder
-    public SubjectResult(Subject subject, Integer score, Integer numberOfCorrect, Long totalTakenTime, Integer correctRate, UserAnswers userAnswers) {
-        this.subject = subject;
+    public SubjectResult(SubjectEntity subjectEntity, Integer score, Integer numberOfCorrect, Long totalTakenTime, Integer correctRate, UserAnswers userAnswers) {
+        this.subjectEntity = subjectEntity;
         this.score = score;
         this.numberOfCorrect = numberOfCorrect;
         this.totalTakenTime = totalTakenTime;

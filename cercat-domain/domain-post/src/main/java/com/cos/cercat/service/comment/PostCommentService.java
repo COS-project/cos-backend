@@ -2,7 +2,7 @@ package com.cos.cercat.service.comment;
 
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.comment.PostComment;
 import com.cos.cercat.repository.comment.PostCommentRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,14 +23,14 @@ public class PostCommentService {
                 new CustomException(ErrorCode.COMMENT_NOT_FOUND));
     }
 
-    public Slice<PostComment> getMyPostComments(User user, Pageable pageable) {
-        return postCommentRepository.findPostCommentsByUser(user, pageable);
+    public Slice<PostComment> getMyPostComments(UserEntity userEntity, Pageable pageable) {
+        return postCommentRepository.findPostCommentsByUserEntity(userEntity, pageable);
     }
 
-    public void deletePostComment(Long commentId, User user) {
+    public void deletePostComment(Long commentId, UserEntity userEntity) {
         PostComment postComment = getPostComment(commentId);
 
-        if (postComment.isAuthorized(user)) {
+        if (postComment.isAuthorized(userEntity)) {
             postCommentRepository.delete(postComment);
             return;
         }

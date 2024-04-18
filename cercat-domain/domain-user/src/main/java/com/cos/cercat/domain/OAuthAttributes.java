@@ -1,5 +1,6 @@
 package com.cos.cercat.domain;
 
+import com.cos.cercat.domain.user.Role;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -54,8 +55,8 @@ public class OAuthAttributes {
                 .build();
     }
 
-    public User toEntity() {
-        return User.builder()
+    public UserEntity toEntity() {
+        return UserEntity.builder()
                 .username(name)
                 .kakaoProfileImage(profileImageUrl)
                 .email(email)

@@ -2,16 +2,16 @@ package com.cos.cercat.apis.post.app.usecase;
 
 import com.cos.cercat.apis.post.dto.request.PostCreateRequest;
 import com.cos.cercat.common.annotation.UseCase;
+import com.cos.cercat.domain.CertificateEntity;
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.infra.client.gcs.FileUploader;
 import com.cos.cercat.entity.Image;
 import com.cos.cercat.domain.post.PostType;
 import com.cos.cercat.service.CertificateService;
-import com.cos.cercat.domain.Certificate;
 import com.cos.cercat.service.MockExamService;
 import com.cos.cercat.service.QuestionService;
 import com.cos.cercat.domain.MockExam;
 import com.cos.cercat.domain.Question;
-import com.cos.cercat.domain.User;
 import com.cos.cercat.service.UserService;
 import com.cos.cercat.service.post.CommentaryPostService;
 import com.cos.cercat.service.post.NormalPostService;
@@ -54,26 +54,26 @@ public class PostCreateUseCase {
                            List<MultipartFile> files,
                            Long userId) {
 
-        Certificate certificate = certificateService.getCertificate(certificateId);
+        CertificateEntity certificateEntity = certificateService.getCertificate(certificateId);
         List<Image> images = fileUploader.uploadFileInStorage(files);
-        User user = userService.getUser(userId);
+        UserEntity userEntity = userService.getUser(userId);
 
         switch (postType) {
-            case COMMENTARY -> createCommentaryPost(request, certificate, images, user);
-            case TIP -> tipPostService.createTipPost(request.toTipPost(images, certificate, user));
-            case NORMAL -> normalPostService.createNormalPost(request.toNormalPost(images, certificate, user));
+            case COMMENTARY -> createCommentaryPost(request, certificateEntity, images, userEntity);
+            case TIP -> tipPostService.createTipPost(request.toTipPost(images, certificateEntity, userEntity));
+            case NORMAL -> normalPostService.createNormalPost(request.toNormalPost(images, certificateEntity, userEntity));
         }
     }
 
-    private void createCommentaryPost(PostCreateRequest request, Certificate certificate, List<Image> images, User user) {
-        Question question = getQuestion(certificate, request.examYear(), request.round(), request.questionSequence());
-        commentaryPostService.createCommentaryPost(request.toCommentaryPost(images, certificate, user, question));
-        log.info("user - {}, certificate - {}, questionId - {} 해설 게시글 생성", user.getEmail(), certificate.getCertificateName(), question.getId());
+    private void createCommentaryPost(PostCreateRequest request, CertificateEntity certificateEntity, List<Image> images, UserEntity userEntity) {
+        Question question = getQuestion(certificateEntity, request.examYear(), request.round(), request.questionSequence());
+        commentaryPostService.createCommentaryPost(request.toCommentaryPost(images, certificateEntity, userEntity, question));
+        log.info("userEntity - {}, certificateEntity - {}, questionId - {} 해설 게시글 생성", userEntity.getEmail(), certificateEntity.getCertificateName(), question.getId());
     }
 
 
-    private Question getQuestion(Certificate certificate, Integer examYear, Integer round, Integer questionSeq) {
-        MockExam mockExam = mockExamService.getMockExam(certificate, examYear, round);
+    private Question getQuestion(CertificateEntity certificateEntity, Integer examYear, Integer round, Integer questionSeq) {
+        MockExam mockExam = mockExamService.getMockExam(certificateEntity, examYear, round);
         return questionService.getQuestion(mockExam, questionSeq);
     }
 }

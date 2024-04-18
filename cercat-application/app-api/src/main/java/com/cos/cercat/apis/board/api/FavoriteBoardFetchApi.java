@@ -1,8 +1,9 @@
 package com.cos.cercat.apis.board.api;
 
-import com.cos.cercat.apis.board.app.usecase.FavoriteBoardFetchUseCase;
 import com.cos.cercat.apis.board.dto.response.BoardResponse;
 import com.cos.cercat.common.domain.Response;
+import com.cos.cercat.domain.board.BoardService;
+import com.cos.cercat.domain.board.TargetBoard;
 import com.cos.cercat.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,11 +21,18 @@ import java.util.List;
 @Tag(name = "게시판 목록 조회 API")
 public class FavoriteBoardFetchApi {
 
-    private final FavoriteBoardFetchUseCase favoriteBoardFetchUseCase;
+    private final BoardService boardService;
 
     @GetMapping("/boards")
     @Operation(summary = "게시판 목록 조회")
-    public Response<List<BoardResponse>> getBoards(@AuthenticationPrincipal UserDTO currentUser) {
-        return Response.success(favoriteBoardFetchUseCase.getBoards(currentUser.getId()));
+    public Response<List<BoardResponse>> readBoards(@AuthenticationPrincipal UserDTO currentUser) {
+        return Response.success(boardService.read().stream()
+                .map(board -> {
+                    boolean isFavorite = boardService.isFavorite(TargetBoard.from(board.certificateId(), currentUser.getId()));
+                    return BoardResponse.of(board, isFavorite);
+                })
+                .toList());
     }
+
+
 }

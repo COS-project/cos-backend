@@ -1,6 +1,6 @@
 package com.cos.cercat.service;
 
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.comment.PostComment;
 import com.cos.cercat.domain.CommentLike;
 import com.cos.cercat.domain.EmbeddedId.CommentLikePK;
@@ -21,8 +21,8 @@ public class CommentLikeService {
         return commentLikeRepository.existsCommentLikeByCommentLikePK(commentLikePK);
     }
 
-    public void createLike(PostComment postComment, User user) {
-        commentLikeRepository.save(CommentLike.of(user, postComment));
+    public void createLike(PostComment postComment, UserEntity userEntity) {
+        commentLikeRepository.save(CommentLike.of(userEntity, postComment));
         postComment.increaseLikeCount();
     }
 

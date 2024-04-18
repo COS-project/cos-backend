@@ -22,7 +22,7 @@ public class MockExamResult extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserEntity userEntity;
 
     @Embedded
     private SubjectResults subjectResults = new SubjectResults();
@@ -31,26 +31,26 @@ public class MockExamResult extends BaseTimeEntity {
 
     private Integer round; //유저가 모의고사를 푼 횟수
 
-    private MockExamResult(MockExam mockExam, User user, Integer round, SubjectResults subjectResults, Integer totalScore) {
+    private MockExamResult(MockExam mockExam, UserEntity userEntity, Integer round, SubjectResults subjectResults, Integer totalScore) {
         this.mockExam = mockExam;
-        this.user = user;
+        this.userEntity = userEntity;
         this.round = round;
         setSubjectResults(subjectResults);
         this.totalScore = totalScore;
     }
 
-    public static MockExamResult of(MockExam mockExam, User user, Integer round, SubjectResults subjectResults, Integer totalScore) {
+    public static MockExamResult of(MockExam mockExam, UserEntity userEntity, Integer round, SubjectResults subjectResults, Integer totalScore) {
         return new MockExamResult(
                 mockExam,
-                user,
+                userEntity,
                 round,
                 subjectResults,
                 totalScore
         );
     }
 
-    public boolean isAuthorized(User user) {
-        return this.user.equals(user);
+    public boolean isAuthorized(UserEntity userEntity) {
+        return this.userEntity.equals(userEntity);
     }
     private void setSubjectResults(SubjectResults subjectResults) {
         for (SubjectResult subjectResult : subjectResults.getSubjectResults()) {

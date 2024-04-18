@@ -29,7 +29,7 @@ public class MockExamResultBatchRepositoryImpl implements MockExamResultBatchRep
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(mockExamResultSql, Statement.RETURN_GENERATED_KEYS);
             ps.setLong(1, mockExamResult.getMockExam().getId());
-            ps.setLong(2, mockExamResult.getUser().getId());
+            ps.setLong(2, mockExamResult.getUserEntity().getId());
             ps.setInt(3, mockExamResult.getRound());
             ps.setInt(4, mockExamResult.getTotalScore());
             ps.setTimestamp(5, now);
@@ -45,7 +45,7 @@ public class MockExamResultBatchRepositoryImpl implements MockExamResultBatchRep
             jdbcTemplate.update(connection -> {
                 PreparedStatement ps = connection.prepareStatement(subjectResultSql, Statement.RETURN_GENERATED_KEYS);
                 ps.setLong(1, mockExamResultId);
-                ps.setLong(2, subjectResult.getSubject().getId());
+                ps.setLong(2, subjectResult.getSubjectEntity().getId());
                 ps.setInt(3, subjectResult.getScore());
                 ps.setInt(4, subjectResult.getNumberOfCorrect());
                 ps.setLong(5, subjectResult.getTotalTakenTime());
@@ -60,7 +60,7 @@ public class MockExamResultBatchRepositoryImpl implements MockExamResultBatchRep
                 jdbcTemplate.update(userAnswerSql,
                         subjectResultId,
                         userAnswer.getQuestion().getId(),
-                        userAnswer.getUser().getId(),
+                        userAnswer.getUserEntity().getId(),
                         userAnswer.getSelectOptionSeq(),
                         userAnswer.getTakenTime(),
                         userAnswer.isCorrect(),

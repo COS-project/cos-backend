@@ -26,13 +26,13 @@ public class AlarmCreateUseCase {
 
     public void createAndSendAlarm(AlarmEvent event) {
         Alarm alarm = alarmService.save(event);
-        log.info("receive user : {}, alarm type : {} 알람 생성", event.receiveUser(), event.alarmType());
-        sseEmitterService.getEmitter(event.receiveUser().getId()).ifPresentOrElse(emitter -> {
+        log.info("receive userEntity : {}, alarm type : {} 알람 생성", event.receiveUserEntity(), event.alarmType());
+        sseEmitterService.getEmitter(event.receiveUserEntity().getId()).ifPresentOrElse(emitter -> {
             try {
                 emitter.send(SseEmitter.event().id(alarm.getId().toString()).name(EVENT_NAME).data("new alarm"));
                 log.info("emitter 전송 완료");
             } catch (IOException e) {
-                sseEmitterService.delete(event.receiveUser().getId());
+                sseEmitterService.delete(event.receiveUserEntity().getId());
                 throw new CustomException(ErrorCode.ALARM_CONNECT_ERROR);
             }
         },

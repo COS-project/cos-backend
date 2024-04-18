@@ -2,6 +2,7 @@ dependencies {
 
     //domain modules
     implementation project(':cercat-common')
+    implementation project(':cercat-application:core-domain')
     implementation project(':cercat-domain:domain-alarm')
     implementation project(':cercat-domain:domain-board')
     implementation project(':cercat-domain:domain-certificate')

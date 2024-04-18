@@ -19,7 +19,7 @@ public record ExamReviewResponse(
                 entity.getExamDifficulty(),
                 entity.getPrepareMonths(),
                 entity.getContent(),
-                UserResponse.fromEntity(entity.getUser()),
+                UserResponse.fromEntity(entity.getUserEntity()),
                 entity.getCreatedAt()
         );
     }

@@ -1,8 +1,8 @@
 package com.cos.cercat.service;
 
 
-import com.cos.cercat.domain.Certificate;
-import com.cos.cercat.repository.CertificateRepository;
+import com.cos.cercat.domain.CertificateEntity;
+import com.cos.cercat.repository.CertificateJpaRepository;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -16,18 +16,18 @@ import java.util.List;
 @Slf4j
 public class CertificateService {
 
-    private final CertificateRepository certificateRepository;
+    private final CertificateJpaRepository certificateJpaRepository;
 
-    public Certificate getCertificate(Long certificateId) {
-        return certificateRepository.findById(certificateId).orElseThrow(() ->
+    public CertificateEntity getCertificate(Long certificateId) {
+        return certificateJpaRepository.findById(certificateId).orElseThrow(() ->
                 new CustomException(ErrorCode.CERTIFICATE_NOT_FOUND));
     }
 
-    public void createCertificate(Certificate certificate) {
-        certificateRepository.save(certificate);
+    public void createCertificate(CertificateEntity certificateEntity) {
+        certificateJpaRepository.save(certificateEntity);
     }
 
-    public List<Certificate> getCertificates() {
-        return certificateRepository.findAll();
+    public List<CertificateEntity> getCertificates() {
+        return certificateJpaRepository.findAll();
     }
 }

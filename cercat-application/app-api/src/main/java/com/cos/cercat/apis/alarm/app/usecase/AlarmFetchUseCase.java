@@ -2,9 +2,9 @@ package com.cos.cercat.apis.alarm.app.usecase;
 
 import com.cos.cercat.apis.alarm.dto.Response.AlarmResponse;
 import com.cos.cercat.common.annotation.UseCase;
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.service.AlarmService;
 import com.cos.cercat.service.UserService;
-import com.cos.cercat.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,18 +22,18 @@ public class AlarmFetchUseCase {
 
     @Transactional
     public List<AlarmResponse> getAlarms(Long userId) {
-        User user = userService.getUser(userId);
-        List<AlarmResponse> alarmResponses = alarmService.getAlarms(user).stream().map(AlarmResponse::from).toList();
-        alarmService.markAllAsRead(user); //안읽은 모든 알림을 읽음으로 업데이트
-        log.info("user - {} 읽지 않은 알림 조회 ", user.getEmail());
+        UserEntity userEntity = userService.getUser(userId);
+        List<AlarmResponse> alarmResponses = alarmService.getAlarms(userEntity).stream().map(AlarmResponse::from).toList();
+        alarmService.markAllAsRead(userEntity); //안읽은 모든 알림을 읽음으로 업데이트
+        log.info("userEntity - {} 읽지 않은 알림 조회 ", userEntity.getEmail());
 
         return alarmResponses;
     }
 
     public Long countUnreadAlarm(Long userId) {
-        User user = userService.getUser(userId);
-        log.info("user - {} 읽지 않은 알림 수 조회", user.getEmail());
-        return alarmService.countUnreadAlarm(user);
+        UserEntity userEntity = userService.getUser(userId);
+        log.info("userEntity - {} 읽지 않은 알림 수 조회", userEntity.getEmail());
+        return alarmService.countUnreadAlarm(userEntity);
     }
 
 }

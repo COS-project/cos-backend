@@ -1,6 +1,6 @@
 package com.cos.cercat.apis.certificate.dto.response;
 
-import com.cos.cercat.domain.Subject;
+import com.cos.cercat.domain.SubjectEntity;
 
 public record SubjectResponse(
         Long subjectId,
@@ -8,7 +8,7 @@ public record SubjectResponse(
         int numberOfQuestions,
         int totalScore
 ) {
-    public static SubjectResponse from(Subject entity) {
+    public static SubjectResponse from(SubjectEntity entity) {
         return new SubjectResponse(
                 entity.getId(),
                 entity.getSubjectName(),

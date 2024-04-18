@@ -22,7 +22,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepositoryCus
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<DailyScoreAverage> getDailyScoreAverages(Certificate certificate, User user, DateCond dateCond) {
+    public List<DailyScoreAverage> getDailyScoreAverages(CertificateEntity certificateEntity, UserEntity userEntity, DateCond dateCond) {
 
         LocalDate firstDayOfMonth = LocalDate.of(dateCond.year(), dateCond.month(), 1);
 
@@ -41,11 +41,11 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepositoryCus
                                 date)
                 )
                 .from(QMockExamResult.mockExamResult)
-                .leftJoin(QMockExamResult.mockExamResult.mockExam.certificate, QCertificate.certificate)
-                .leftJoin(QMockExamResult.mockExamResult.user, QUser.user)
+                .leftJoin(QMockExamResult.mockExamResult.mockExam.certificateEntity, QCertificateEntity.certificateEntity)
+                .leftJoin(QMockExamResult.mockExamResult.userEntity, QUserEntity.userEntity)
                 .where(
-                        QCertificate.certificate.eq(certificate),
-                        QUser.user.eq(user),
+                        QCertificateEntity.certificateEntity.eq(certificateEntity),
+                        QUserEntity.userEntity.eq(userEntity),
                         betweenStartDateAndEndDate(thisSunday, thisSaturday)
                 )
                 .groupBy(date, QMockExamResult.mockExamResult.createdAt.dayOfWeek())
@@ -53,7 +53,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepositoryCus
     }
 
     @Override
-    public List<WeeklyScoreAverage> getWeeklyScoreAverages(Certificate certificate, User user, DateCond dateCond) {
+    public List<WeeklyScoreAverage> getWeeklyScoreAverages(CertificateEntity certificateEntity, UserEntity userEntity, DateCond dateCond) {
 
         LocalDate month = LocalDate.of(dateCond.year(), dateCond.month(), 1);
 
@@ -68,11 +68,11 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepositoryCus
                         QMockExamResult.mockExamResult.totalScore.avg(),
                         weekOfMonth))
                 .from(QMockExamResult.mockExamResult)
-                .leftJoin(QMockExamResult.mockExamResult.mockExam.certificate, QCertificate.certificate)
-                .leftJoin(QMockExamResult.mockExamResult.user, QUser.user)
+                .leftJoin(QMockExamResult.mockExamResult.mockExam.certificateEntity, QCertificateEntity.certificateEntity)
+                .leftJoin(QMockExamResult.mockExamResult.userEntity, QUserEntity.userEntity)
                 .where(
-                        QCertificate.certificate.eq(certificate),
-                        QUser.user.eq(user),
+                        QCertificateEntity.certificateEntity.eq(certificateEntity),
+                        QUserEntity.userEntity.eq(userEntity),
                         betweenStartDateAndEndDate(firstDayOfMonth, lastDayOfMonth)
                 )
                 .groupBy(weekOfMonth)
@@ -80,7 +80,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepositoryCus
     }
 
     @Override
-    public List<MonthlyScoreAverage> getMonthlyScoreAverages(Certificate certificate, User user, DateCond dateCond) {
+    public List<MonthlyScoreAverage> getMonthlyScoreAverages(CertificateEntity certificateEntity, UserEntity userEntity, DateCond dateCond) {
 
         LocalDate year = LocalDate.of(dateCond.year(), 1, 1);
 
@@ -93,11 +93,11 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepositoryCus
                         QMockExamResult.mockExamResult.createdAt.month())
                 )
                 .from(QMockExamResult.mockExamResult)
-                .leftJoin(QMockExamResult.mockExamResult.mockExam.certificate, QCertificate.certificate)
-                .leftJoin(QMockExamResult.mockExamResult.user, QUser.user)
+                .leftJoin(QMockExamResult.mockExamResult.mockExam.certificateEntity, QCertificateEntity.certificateEntity)
+                .leftJoin(QMockExamResult.mockExamResult.userEntity, QUserEntity.userEntity)
                 .where(
-                        QCertificate.certificate.eq(certificate),
-                        QUser.user.eq(user),
+                        QCertificateEntity.certificateEntity.eq(certificateEntity),
+                        QUserEntity.userEntity.eq(userEntity),
                         betweenStartDateAndEndDate(firstDayOfYear, lastDayOfYear)
                 )
                 .groupBy(QMockExamResult.mockExamResult.createdAt.month())

@@ -4,7 +4,7 @@ import com.cos.cercat.apis.alarm.app.kafka.producer.AlarmProducer;
 import com.cos.cercat.apis.comment.dto.request.PostCommentCreateRequest;
 import com.cos.cercat.common.annotation.UseCase;
 import com.cos.cercat.domain.AlarmType;
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.comment.PostComment;
 import com.cos.cercat.domain.post.Post;
 import com.cos.cercat.dto.AlarmArg;
@@ -36,28 +36,28 @@ public class PostCommentCreateUseCase {
     @Transactional
     public void createPostComment(Long postId, PostCommentCreateRequest request, Long userId) {
         Post post = postService.getPost(postId);
-        User user = userService.getUser(userId);
+        UserEntity userEntity = userService.getUser(userId);
 
-        PostComment postComment = request.toEntity(post, user);
+        PostComment postComment = request.toEntity(post, userEntity);
 
         if (request.parentCommentId() != null) {
             PostComment parentComment = postCommentService.getPostComment(request.parentCommentId());
             parentComment.addChildComment(postComment);
-            alarmProducer.send(createAlarmEvent(post.getUser(), post.getId(), user, AlarmType.NEW_COMMENT_ON_POST));
-            alarmProducer.send(createAlarmEvent(parentComment.getUser(), post.getId(), user, AlarmType.NEW_COMMENT_ON_COMMENT));
-            log.info("parentCommentId - {}  user - {} 대댓글 생성", request.parentCommentId(), user.getEmail());
+            alarmProducer.send(createAlarmEvent(post.getUserEntity(), post.getId(), userEntity, AlarmType.NEW_COMMENT_ON_POST));
+            alarmProducer.send(createAlarmEvent(parentComment.getUserEntity(), post.getId(), userEntity, AlarmType.NEW_COMMENT_ON_COMMENT));
+            log.info("parentCommentId - {}  userEntity - {} 대댓글 생성", request.parentCommentId(), userEntity.getEmail());
             return;
         }
 
         post.addComment(postComment);
-        alarmProducer.send(createAlarmEvent(post.getUser(), postId, user, AlarmType.NEW_COMMENT_ON_POST));
-        log.info("user - {} 댓글 생성", user.getEmail());
+        alarmProducer.send(createAlarmEvent(post.getUserEntity(), postId, userEntity, AlarmType.NEW_COMMENT_ON_POST));
+        log.info("userEntity - {} 댓글 생성", userEntity.getEmail());
     }
 
-    private AlarmEvent createAlarmEvent(User toUser, Long postId, User fromUser, AlarmType alarmType) {
+    private AlarmEvent createAlarmEvent(UserEntity toUserEntity, Long postId, UserEntity fromUserEntity, AlarmType alarmType) {
         return AlarmEvent.of(
-                toUser,
-                AlarmArg.of(fromUser, postId),
+                toUserEntity,
+                AlarmArg.of(fromUserEntity, postId),
                 alarmType
         );
     }

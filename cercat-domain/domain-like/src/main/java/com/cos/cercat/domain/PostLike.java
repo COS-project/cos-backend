@@ -20,21 +20,21 @@ public class PostLike {
     @MapsId("userId")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserEntity userEntity;
 
     @MapsId("postId")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
 
-    private PostLike(User user, Post post) {
-        this.user = user;
+    private PostLike(UserEntity userEntity, Post post) {
+        this.userEntity = userEntity;
         this.post = post;
     }
 
-    public static PostLike of(User user, Post post) {
+    public static PostLike of(UserEntity userEntity, Post post) {
         return new PostLike(
-                user,
+                userEntity,
                 post
         );
     }

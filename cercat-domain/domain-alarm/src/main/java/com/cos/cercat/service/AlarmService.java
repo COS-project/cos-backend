@@ -1,7 +1,7 @@
 package com.cos.cercat.service;
 
 import com.cos.cercat.domain.Alarm;
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.dto.AlarmEvent;
 import com.cos.cercat.repository.AlarmRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,16 +21,16 @@ public class AlarmService {
         return alarmRepository.save(event.toEntity());
     }
 
-    public List<Alarm> getAlarms(User user) {
-        return alarmRepository.findAlarmsByReceiveUserAndIsReadFalse(user);
+    public List<Alarm> getAlarms(UserEntity userEntity) {
+        return alarmRepository.findAlarmsByReceiveUserEntityAndIsReadFalse(userEntity);
     }
 
-    public void markAllAsRead(User user) {
-        alarmRepository.markAllAsReadByUser(user.getId());
+    public void markAllAsRead(UserEntity userEntity) {
+        alarmRepository.markAllAsReadByUserEntity(userEntity.getId());
     }
 
-    public Long countUnreadAlarm(User user) {
-        return alarmRepository.countAlarmsByReceiveUserAndIsReadFalse(user);
+    public Long countUnreadAlarm(UserEntity userEntity) {
+        return alarmRepository.countAlarmsByReceiveUserEntityAndIsReadFalse(userEntity);
     }
 
 

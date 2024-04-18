@@ -20,7 +20,7 @@ public class CertificateExam {
 
     @ManyToOne
     @JoinColumn(name = "certificate_id")
-    private Certificate certificate;
+    private CertificateEntity certificateEntity;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "exam_info_id")
@@ -30,16 +30,16 @@ public class CertificateExam {
 
     private Integer round;
 
-    private CertificateExam(Certificate certificate, ExamInfo examInfo, Integer examYear, Integer round) {
-        this.certificate = certificate;
+    private CertificateExam(CertificateEntity certificateEntity, ExamInfo examInfo, Integer examYear, Integer round) {
+        this.certificateEntity = certificateEntity;
         this.examInfo = examInfo;
         this.examYear = examYear;
         this.round = round;
     }
 
-    public static CertificateExam of(Certificate certificate, ExamInfo examInfo, Integer examYear, Integer round) {
+    public static CertificateExam of(CertificateEntity certificateEntity, ExamInfo examInfo, Integer examYear, Integer round) {
         return new CertificateExam(
-                certificate,
+                certificateEntity,
                 examInfo,
                 examYear,
                 round

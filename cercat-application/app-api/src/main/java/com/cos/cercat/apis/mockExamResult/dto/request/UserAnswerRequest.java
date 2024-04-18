@@ -1,6 +1,6 @@
 package com.cos.cercat.apis.mockExamResult.dto.request;
 
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.Question;
 import com.cos.cercat.domain.UserAnswer;
 
@@ -12,13 +12,13 @@ public record UserAnswerRequest(
         Long takenTime,
         boolean isCorrect
 ) {
-    public UserAnswer toEntity(Question question, User user) {
+    public UserAnswer toEntity(Question question, UserEntity userEntity) {
 
         Objects.requireNonNull(selectOptionSeq, "Selected option must not be null");
         Objects.requireNonNull(takenTime, "Taken time must not be null");
 
         return UserAnswer.builder()
-                .user(user)
+                .userEntity(userEntity)
                 .question(question)
                 .selectOptionSeq(selectOptionSeq)
                 .takenTime(takenTime)

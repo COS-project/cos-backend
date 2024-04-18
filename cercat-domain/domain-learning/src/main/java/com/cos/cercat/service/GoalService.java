@@ -1,7 +1,7 @@
 package com.cos.cercat.service;
 
-import com.cos.cercat.domain.Certificate;
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.CertificateEntity;
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.repository.GoalRepository;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
@@ -26,13 +26,13 @@ public class GoalService {
         goalRepository.save(goal);
     }
 
-    public Goal getRecentGoal(User user, Certificate certificate) {
-        return goalRepository.findRecentGoalByUserAndCertificate(user, certificate).orElseThrow(() ->
+    public Goal getRecentGoal(UserEntity userEntity, CertificateEntity certificateEntity) {
+        return goalRepository.findRecentGoalByUserEntityAndCertificateEntity(userEntity, certificateEntity).orElseThrow(() ->
                 new CustomException(ErrorCode.GOAL_NOT_FOUND));
     }
 
-    public List<Goal> getAllGoals(Certificate certificate, User user) {
-        return goalRepository.findGoalsByUserAndCertificate(user, certificate);
+    public List<Goal> getAllGoals(CertificateEntity certificateEntity, UserEntity userEntity) {
+        return goalRepository.findGoalsByUserEntityAndCertificateEntity(userEntity, certificateEntity);
     }
 
     public Goal getGoalById(Long goalId) {
@@ -40,8 +40,8 @@ public class GoalService {
                 new CustomException(ErrorCode.GOAL_NOT_FOUND));
     }
 
-    public Boolean isGoalAlreadyExists(User user, Certificate certificate) {
-        return goalRepository.existsGoalByUserAndCertificate(user, certificate);
+    public Boolean isGoalAlreadyExists(UserEntity userEntity, CertificateEntity certificateEntity) {
+        return goalRepository.existsGoalByUserEntityAndCertificateEntity(userEntity, certificateEntity);
     }
 
     @Builder(builderMethodName = "updateGoalBuilder")
@@ -56,10 +56,10 @@ public class GoalService {
                            Long studyTimePerDay,
                            Long goalStudyTime,
                            List<Integer> studyRepeatDays,
-                           User user) {
+                           UserEntity userEntity) {
         Goal goal = getGoalById(goalId);
 
-        if (goal.isAuthorized(user)) {
+        if (goal.isAuthorized(userEntity)) {
             goal.updateGoalInfo(
                     goalScore,
                     prepareStartDateTime,

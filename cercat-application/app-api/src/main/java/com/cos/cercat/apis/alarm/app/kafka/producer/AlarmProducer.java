@@ -17,7 +17,7 @@ public class AlarmProducer {
     private final KafkaTemplate<Long, AlarmEvent> kafkaTemplate;
 
     public void send(AlarmEvent event) {
-        kafkaTemplate.send(topic, event.receiveUser().getId(), event);
+        kafkaTemplate.send(topic, event.receiveUserEntity().getId(), event);
         log.info("Kafka alarm send complete");
     }
 

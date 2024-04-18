@@ -13,7 +13,7 @@ public interface CertificateExamRepository extends JpaRepository<CertificateExam
     @Query("""
             SELECT ce FROM CertificateExam ce
             JOIN FETCH ce.examInfo ei
-            WHERE ce.certificate.id = :certificateId
+            WHERE ce.certificateEntity.id = :certificateId
             ORDER BY ei.examSchedule.examDateTime DESC
             LIMIT 1
             """)

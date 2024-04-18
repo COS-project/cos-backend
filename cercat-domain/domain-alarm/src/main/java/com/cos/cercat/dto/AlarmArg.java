@@ -1,15 +1,15 @@
 package com.cos.cercat.dto;
 
 
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.UserEntity;
 
 public record AlarmArg(
-        User fromUser,
+        UserEntity fromUserEntity,
         Long postId
 ) {
-    public static AlarmArg of(User fromUser, Long postId) {
+    public static AlarmArg of(UserEntity fromUserEntity, Long postId) {
         return new AlarmArg(
-                fromUser,
+                fromUserEntity,
                 postId
         );
     }

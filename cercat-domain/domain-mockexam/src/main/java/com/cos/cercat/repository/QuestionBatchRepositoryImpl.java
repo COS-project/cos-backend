@@ -30,7 +30,7 @@ public class QuestionBatchRepositoryImpl implements QuestionBatchRepository {
                         "INSERT INTO question (mock_exam_id, subject_id, question_seq, question_text, correct_option, score) VALUES (?, ?, ?, ?, ?, ?)",
                         Statement.RETURN_GENERATED_KEYS);
                 ps.setLong(1, question.getMockExam().getId());
-                ps.setLong(2, question.getSubject().getId());
+                ps.setLong(2, question.getSubjectEntity().getId());
                 ps.setInt(3, question.getQuestionSeq());
                 ps.setString(4, question.getQuestionText());
                 ps.setInt(5, question.getCorrectOption());

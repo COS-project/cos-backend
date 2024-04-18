@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/cercat-application" />
             <option value="$PROJECT_DIR$/cercat-application/app-api" />
             <option value="$PROJECT_DIR$/cercat-application/app-batch" />
+            <option value="$PROJECT_DIR$/cercat-application/core-domain" />
             <option value="$PROJECT_DIR$/cercat-common" />
             <option value="$PROJECT_DIR$/cercat-domain" />
             <option value="$PROJECT_DIR$/cercat-domain/domain-alarm" />

@@ -4,21 +4,18 @@ import com.cos.cercat.apis.mockExamResult.dto.request.DateType;
 import com.cos.cercat.apis.mockExamResult.dto.request.ReportType;
 import com.cos.cercat.apis.mockExamResult.dto.response.*;
 import com.cos.cercat.common.annotation.UseCase;
+import com.cos.cercat.domain.*;
 import com.cos.cercat.service.CertificateService;
-import com.cos.cercat.domain.Certificate;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.service.GoalService;
-import com.cos.cercat.domain.Goal;
 import com.cos.cercat.service.MockExamService;
-import com.cos.cercat.domain.MockExam;
 import com.cos.cercat.service.MockExamResultService;
 import com.cos.cercat.service.SubjectResultService;
 import com.cos.cercat.service.UserAnswerService;
-import com.cos.cercat.domain.MockExamResult;
 import com.cos.cercat.dto.DateCond;
 import com.cos.cercat.service.UserService;
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -50,10 +47,10 @@ public class MockExamResultFetchUseCase {
      */
     public List<MockExamResultWithSubjectsResponse> getMockExamResults(Long mockExamId, Long userId) {
         MockExam mockExam = mockExamService.getMockExam(mockExamId);
-        User user = userService.getUser(userId);
+        UserEntity userEntity = userService.getUser(userId);
 
-        List<MockExamResult> mockExamResults = mockExamResultService.getMockExamResults(mockExam, user);
-        log.info("user - {}, mockExamId - {} 성적리포트 리스트 조회", user.getEmail(), mockExamId);
+        List<MockExamResult> mockExamResults = mockExamResultService.getMockExamResults(mockExam, userEntity);
+        log.info("userEntity - {}, mockExamId - {} 성적리포트 리스트 조회", userEntity.getEmail(), mockExamId);
         return mockExamResults.stream()
                 .map(MockExamResultWithSubjectsResponse::from)
                 .toList();
@@ -67,11 +64,11 @@ public class MockExamResultFetchUseCase {
      * @return 슬라이스 형태로 문제 정보를 포함하여 유저가 제출한 답을 반환한다.
      */
     public Slice<UserAnswerResponse> getAllWrongUserAnswers(Pageable pageable, Long certificateId, Long userId) {
-        Certificate certificate = certificateService.getCertificate(certificateId);
-        User user = userService.getUser(userId);
+        CertificateEntity certificateEntity = certificateService.getCertificate(certificateId);
+        UserEntity userEntity = userService.getUser(userId);
 
-        log.info("user - {}, certificate - {} 모든 오답 조회", user.getEmail(), certificate.getCertificateName());
-        return userAnswerService.getAllWrongUserAnswers(pageable, user, certificate).map(UserAnswerResponse::from);
+        log.info("userEntity - {}, certificateEntity - {} 모든 오답 조회", userEntity.getEmail(), certificateEntity.getCertificateName());
+        return userAnswerService.getAllWrongUserAnswers(pageable, userEntity, certificateEntity).map(UserAnswerResponse::from);
     }
 
     /***
@@ -81,10 +78,10 @@ public class MockExamResultFetchUseCase {
      * @return 슬라이스 형태로 문제 정보를 포함하여 유저가 제출한 답을 반환한다.
      */
     public Slice<UserAnswerResponse> getWrongUserAnswers(Pageable pageable, Long mockExamResultId, Long userId) {
-        User user = userService.getUser(userId);
+        UserEntity userEntity = userService.getUser(userId);
         MockExamResult mockExamResult = mockExamResultService.getMockExamResult(mockExamResultId);
 
-        if (!mockExamResult.isAuthorized(user)) {
+        if (!mockExamResult.isAuthorized(userEntity)) {
             throw new CustomException(ErrorCode.NO_PERMISSION_ERROR);
         }
 
@@ -99,24 +96,24 @@ public class MockExamResultFetchUseCase {
      * @return 과목 정답률 평균 및 머문시간 평균을 리스트 형태로 반환한다.
      */
     public List<SubjectResultsAVGResponse> getSubjectResultsAVG(Long certificateId, Long userId) {
-        Certificate certificate = certificateService.getCertificate(certificateId);
-        User user = userService.getUser(userId);
-        Goal recentGoal = goalService.getRecentGoal(user, certificate);
+        CertificateEntity certificateEntity = certificateService.getCertificate(certificateId);
+        UserEntity userEntity = userService.getUser(userId);
+        Goal recentGoal = goalService.getRecentGoal(userEntity, certificateEntity);
 
-        log.info("user - {}, certificate - {} 과목별 정답률 및 머문시간 평균 조회", user.getEmail(), certificate.getCertificateName());
-        return subjectResultService.getSubjectResultsAVG(certificate, user, recentGoal.getPrepareStartDateTime()).stream()
+        log.info("userEntity - {}, certificateEntity - {} 과목별 정답률 및 머문시간 평균 조회", userEntity.getEmail(), certificateEntity.getCertificateName());
+        return subjectResultService.getSubjectResultsAVG(certificateEntity, userEntity, recentGoal.getPrepareStartDateTime()).stream()
                 .map(SubjectResultsAVGResponse::from)
                 .toList();
     }
 
     public Report getReport(Long certificateId, ReportType reportType, DateCond dateCond, Long userId) {
-        Certificate certificate = certificateService.getCertificate(certificateId);
-        User user = userService.getUser(userId);
+        CertificateEntity certificateEntity = certificateService.getCertificate(certificateId);
+        UserEntity userEntity = userService.getUser(userId);
 
         return switch (reportType) {
-            case WEEK -> Report.from(mockExamResultService.getWeeklyReport(certificate, user, dateCond));
-            case MONTH -> Report.from(mockExamResultService.getMonthlyReport(certificate, user, dateCond));
-            case YEAR -> Report.from(mockExamResultService.getYearlyReport(certificate, user, dateCond));
+            case WEEK -> Report.from(mockExamResultService.getWeeklyReport(certificateEntity, userEntity, dateCond));
+            case MONTH -> Report.from(mockExamResultService.getMonthlyReport(certificateEntity, userEntity, dateCond));
+            case YEAR -> Report.from(mockExamResultService.getYearlyReport(certificateEntity, userEntity, dateCond));
         };
     }
 
@@ -125,15 +122,15 @@ public class MockExamResultFetchUseCase {
                                                                  DateType dateType,
                                                                  DateCond dateCond,
                                                                  Pageable pageable) {
-        Certificate certificate = certificateService.getCertificate(certificateId);
-        User user = userService.getUser(userId);
+        CertificateEntity certificateEntity = certificateService.getCertificate(certificateId);
+        UserEntity userEntity = userService.getUser(userId);
 
         return switch (dateType) {
-            case DATE -> mockExamResultService.getMockExamResultsByDate(certificate, user, dateCond.date(), pageable)
+            case DATE -> mockExamResultService.getMockExamResultsByDate(certificateEntity, userEntity, dateCond.date(), pageable)
                     .map(MockExamResultResponse::from);
-            case WEEK_OF_MONTH -> mockExamResultService.getMockExamResultsByWeekOfMonth(certificate, user, dateCond, pageable)
+            case WEEK_OF_MONTH -> mockExamResultService.getMockExamResultsByWeekOfMonth(certificateEntity, userEntity, dateCond, pageable)
                     .map(MockExamResultResponse::from);
-            case MONTH -> mockExamResultService.getMockExamResultsByMonth(certificate, user, dateCond.month(), pageable)
+            case MONTH -> mockExamResultService.getMockExamResultsByMonth(certificateEntity, userEntity, dateCond.month(), pageable)
                     .map(MockExamResultResponse::from);
         };
     }

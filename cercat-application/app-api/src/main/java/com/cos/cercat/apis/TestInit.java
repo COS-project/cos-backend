@@ -9,14 +9,14 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TestInit {
 
-//    private final SubjectRepository subjectRepository;
-//    private final CertificateRepository certificateRepository;
+//    private final SubjectJpaRepository subjectRepository;
+//    private final CertificateJpaRepository certificateRepository;
 //    private final QuestionConvertService questionMapper;
 //    private final CertificateExamRepository certificateExamRepository;
 //
 //    @PostConstruct
 //    public void init() {
-//        Certificate testCertificate = certificateRepository.save(new Certificate(1L, "컴퓨터활용능력1급"));
+//        CertificateEntity testCertificate = certificateRepository.save(new CertificateEntity(1L, "컴퓨터활용능력1급"));
 //        ExamInfo testExamInfo = ExamInfo.of(
 //                new ExamSchedule(LocalDateTime.now().plusDays(1), LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now()),
 //                new ExamFee(20000, 30000),
@@ -29,9 +29,9 @@ public class TestInit {
 //        );
 //        certificateExamRepository.save(CertificateExam.of(testCertificate, testExamInfo, 2023, 3));
 //
-//        Subject subject1 = subjectRepository.save(new Subject(1L, testCertificate, "컴퓨터 일반", 20, 100));
-//        Subject subject2 = subjectRepository.save(new Subject(2L, testCertificate, "스프레드시트", 20, 100));
-//        Subject subject3 = subjectRepository.save(new Subject(3L, testCertificate, "데이터 베이스", 20, 100));
+//        SubjectEntity subject1 = subjectRepository.save(new SubjectEntity(1L, testCertificate, "컴퓨터 일반", 20, 100));
+//        SubjectEntity subject2 = subjectRepository.save(new SubjectEntity(2L, testCertificate, "스프레드시트", 20, 100));
+//        SubjectEntity subject3 = subjectRepository.save(new SubjectEntity(3L, testCertificate, "데이터 베이스", 20, 100));
 //
 //        log.info("TestCertificate = {}", testCertificate);
 //        log.info("TestSubject 1 - {}", subject1);

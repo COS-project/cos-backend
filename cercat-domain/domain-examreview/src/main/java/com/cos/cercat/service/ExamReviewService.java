@@ -1,7 +1,7 @@
 package com.cos.cercat.service;
 
 import com.cos.cercat.domain.CertificateExam;
-import com.cos.cercat.domain.User;
+import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.repository.ExamReviewRepository;
 import com.cos.cercat.domain.ExamReview;
 import com.cos.cercat.dto.ExamReviewSearchCond;
@@ -19,7 +19,7 @@ public class ExamReviewService {
     private final ExamReviewRepository examReviewRepository;
 
     public void createExamReview(ExamReview examReview) {
-        if (existsExamReview(examReview.getUser(), examReview.getCertificateExam())) {
+        if (existsExamReview(examReview.getUserEntity(), examReview.getCertificateExam())) {
             throw new CustomException(ErrorCode.DUPLICATE_EXAM_REVIEW);
         }
         examReviewRepository.save(examReview);
@@ -29,8 +29,8 @@ public class ExamReviewService {
         return examReviewRepository.searchExamReview(certificateExam, cond, pageable);
     }
 
-    public boolean existsExamReview(User user, CertificateExam certificateExam) {
-        return examReviewRepository.existsExamReviewByUserAndCertificateExam(user, certificateExam);
+    public boolean existsExamReview(UserEntity userEntity, CertificateExam certificateExam) {
+        return examReviewRepository.existsExamReviewByUserEntityAndCertificateExam(userEntity, certificateExam);
     }
 
 }

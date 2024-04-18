@@ -1,21 +1,21 @@
 package com.cos.cercat.dto;
 
-import com.cos.cercat.domain.Certificate;
+import com.cos.cercat.domain.CertificateEntity;
 
 public record CertificateDTO(
         Long certificateId,
         String certificateName
 ) {
 
-    public static CertificateDTO from(Certificate entity) {
+    public static CertificateDTO from(CertificateEntity entity) {
         return new CertificateDTO(
                 entity.getId(),
                 entity.getCertificateName()
         );
     }
 
-    public Certificate toEntity() {
-        return new Certificate(
+    public CertificateEntity toEntity() {
+        return new CertificateEntity(
                 certificateId,
                 certificateName
         );

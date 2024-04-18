@@ -1,16 +1,19 @@
 package com.cos.cercat.apis.board.dto.response;
 
-import com.cos.cercat.domain.Certificate;
+import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.apis.certificate.dto.response.CertificateResponse;
+import com.cos.cercat.domain.board.Board;
 
 public record BoardResponse(
-        CertificateResponse certificate,
+        Long certificateId,
+        String boardName,
         boolean isFavorite
 ) {
 
-    public static BoardResponse of(Certificate certificate, boolean isFavorite) {
+    public static BoardResponse of(Board board, boolean isFavorite) {
         return new BoardResponse(
-                CertificateResponse.from(certificate),
+                board.certificateId(),
+                board.boardName(),
                 isFavorite
         );
     }

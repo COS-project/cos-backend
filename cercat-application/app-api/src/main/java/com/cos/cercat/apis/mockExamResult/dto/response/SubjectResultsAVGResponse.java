@@ -13,7 +13,7 @@ public record SubjectResultsAVGResponse(
     public static SubjectResultsAVGResponse from(SubjectResultsAVG dto) {
 
         return new SubjectResultsAVGResponse(
-                SubjectResponse.from(dto.subject()),
+                SubjectResponse.from(dto.subjectEntity()),
                 dto.correctRate().intValue(),
                 dto.totalTakenTime().longValue()
         );

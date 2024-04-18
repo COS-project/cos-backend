@@ -1,6 +1,5 @@
 package com.cos.cercat.domain;
 
-import com.cos.cercat.domain.CertificateExam;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -19,8 +18,8 @@ public class ExamAlarm extends Alarm {
     private CertificateExam certificateExam;
 
     @Builder
-    public ExamAlarm(User receiveUser, AlarmType alarmType, Boolean isRead, CertificateExam certificateExam) {
-        super(receiveUser, alarmType, isRead);
+    public ExamAlarm(UserEntity receiveUserEntity, AlarmType alarmType, Boolean isRead, CertificateExam certificateExam) {
+        super(receiveUserEntity, alarmType, isRead);
         this.certificateExam = certificateExam;
     }
 }

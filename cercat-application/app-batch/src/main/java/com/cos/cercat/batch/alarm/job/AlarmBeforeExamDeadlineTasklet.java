@@ -35,19 +35,19 @@ public class AlarmBeforeExamDeadlineTasklet implements Tasklet {
         List<CertificateExam> certificateExams = certificateExamRepository.findTomorrowDeadlineCertificateExams(oneDayAfter);
 
         for (CertificateExam certificateExam : certificateExams) {
-            Certificate certificate = certificateExam.getCertificate();
-            List<InterestCertificate> interestCertificates = interestCertificateRepository.findInterestCertificatesByCertificate(certificate);
+            CertificateEntity certificateEntity = certificateExam.getCertificateEntity();
+            List<InterestCertificate> interestCertificates = interestCertificateRepository.findInterestCertificatesByCertificateEntity(certificateEntity);
 
-            List<User> users = interestCertificates.stream().map(InterestCertificate::getUser).toList();
+            List<UserEntity> userEntities = interestCertificates.stream().map(InterestCertificate::getUserEntity).toList();
 
-            count += sendDeadlineAlarm(users, certificateExam);
+            count += sendDeadlineAlarm(userEntities, certificateExam);
         }
         log.info("AlarmBeforeExamDeadlineTasklet - execute: 자격증 시험 마감 기간 알람 {}건 전송 완료, DeadlineDate : {}년 {}월 {}일", count, oneDayAfter.getYear(), oneDayAfter.getMonthValue(), oneDayAfter.getDayOfMonth());
         return RepeatStatus.FINISHED;
     }
 
-    private int sendDeadlineAlarm(List<User> users, CertificateExam certificateExam) {
-        List<ExamAlarm> alarmList = users.stream()
+    private int sendDeadlineAlarm(List<UserEntity> userEntities, CertificateExam certificateExam) {
+        List<ExamAlarm> alarmList = userEntities.stream()
                 .map(user -> ExamAlarm.builder()
                         .receiveUser(user)
                         .alarmType(AlarmType.DEADLINE)

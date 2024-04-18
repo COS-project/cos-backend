@@ -21,7 +21,7 @@ public class ExamReview extends BaseTimeEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private User user;
+    private UserEntity userEntity;
 
     @ManyToOne
     @JoinColumn(name = "exam_info_id")
@@ -34,8 +34,8 @@ public class ExamReview extends BaseTimeEntity {
 
     private String content;
 
-    public ExamReview(User user, CertificateExam certificateExam, ExamDifficulty examDifficulty, Integer prepareMonths, String content) {
-        this.user = user;
+    public ExamReview(UserEntity userEntity, CertificateExam certificateExam, ExamDifficulty examDifficulty, Integer prepareMonths, String content) {
+        this.userEntity = userEntity;
         this.certificateExam = certificateExam;
         this.examDifficulty = examDifficulty;
         this.prepareMonths = prepareMonths;

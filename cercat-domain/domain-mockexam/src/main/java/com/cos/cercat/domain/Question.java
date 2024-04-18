@@ -33,7 +33,7 @@ public class Question {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Subject subject;
+    private SubjectEntity subjectEntity;
 
     @OneToOne
     @JoinColumn(name = "image_id")

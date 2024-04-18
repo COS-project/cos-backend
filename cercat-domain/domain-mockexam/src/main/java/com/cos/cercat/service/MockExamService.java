@@ -1,6 +1,6 @@
 package com.cos.cercat.service;
 
-import com.cos.cercat.domain.Certificate;
+import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.domain.MockExam;
@@ -23,20 +23,20 @@ public class MockExamService {
                 new CustomException(ErrorCode.MOCK_EXAM_NOT_FOUND));
     }
 
-    public MockExam getMockExam(Certificate certificate, Integer year, Integer round) {
-        return mockExamRepository.findMockExamByCertificateAndExamYearAndRound(certificate, year, round);
+    public MockExam getMockExam(CertificateEntity certificateEntity, Integer year, Integer round) {
+        return mockExamRepository.findMockExamByCertificateEntityAndExamYearAndRound(certificateEntity, year, round);
     }
 
-    public List<MockExam> getMockExamList(Certificate certificate, Integer year) {
-        return mockExamRepository.findMockExamByCertificateAndExamYear(certificate, year);
+    public List<MockExam> getMockExamList(CertificateEntity certificateEntity, Integer year) {
+        return mockExamRepository.findMockExamByCertificateEntityAndExamYear(certificateEntity, year);
     }
 
-    public List<Integer> getMockExamYears(Certificate certificate) {
-        return mockExamRepository.findMockExamYearsByCertificate(certificate.getId());
+    public List<Integer> getMockExamYears(CertificateEntity certificateEntity) {
+        return mockExamRepository.findMockExamYearsByCertificate(certificateEntity.getId());
     }
 
-    public List<Integer> getMockExamRounds(Certificate certificate, Integer examYear) {
-        return mockExamRepository.findMockExamRoundsByCertificateAndExamYear(certificate.getId(), examYear);
+    public List<Integer> getMockExamRounds(CertificateEntity certificateEntity, Integer examYear) {
+        return mockExamRepository.findMockExamRoundsByCertificateEntityAndExamYear(certificateEntity.getId(), examYear);
     }
 
 }
