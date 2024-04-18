@@ -49,7 +49,7 @@ public class AlarmBeforeExamDeadlineTasklet implements Tasklet {
     private int sendDeadlineAlarm(List<UserEntity> userEntities, CertificateExam certificateExam) {
         List<ExamAlarm> alarmList = userEntities.stream()
                 .map(user -> ExamAlarm.builder()
-                        .receiveUser(user)
+                        .receiveUserEntity(user)
                         .alarmType(AlarmType.DEADLINE)
                         .isRead(false)
                         .certificateExam(certificateExam)

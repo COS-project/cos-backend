@@ -18,7 +18,7 @@ public class BoardReader {
 
 
 
-    public boolean isFavorite(TargetBoard targetBoard) {
+    public boolean readFavorite(TargetBoard targetBoard) {
         return favoriteBoardRepository.isFavorite(targetBoard);
     }
 

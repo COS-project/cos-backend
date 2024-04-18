@@ -17,6 +17,6 @@ public class BoardService {
     }
 
     public boolean isFavorite(TargetBoard targetBoard) {
-        return boardReader.isFavorite(targetBoard);
+        return boardReader.readFavorite(targetBoard);
     }
 }
