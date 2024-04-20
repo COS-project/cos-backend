@@ -1,5 +1,6 @@
 package com.cos.cercat.apis.user.api;
 
+import com.cos.cercat.apis.global.util.JwtTokenUtil;
 import com.cos.cercat.apis.user.app.usecase.UserUpdateUseCase;
 import com.cos.cercat.apis.user.dto.request.UserCreateRequest;
 import com.cos.cercat.common.domain.Response;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserUpdateApi {
 
     private final UserUpdateUseCase userUpdateUseCase;
+    private final JwtTokenUtil jwtTokenUtil;
 
     @PatchMapping(path = "/users/me", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "회원 정보 추가")
@@ -33,7 +35,11 @@ public class UserUpdateApi {
     @PatchMapping("/logout")
     @Operation(summary = "회원 로그아웃")
     public Response<Void> logout(HttpServletRequest request, @AuthenticationPrincipal UserDTO currentUser) {
-        userUpdateUseCase.logout(request.getHeader("Access-Token"), currentUser.getEmail());
+        userUpdateUseCase.logout(
+                request.getHeader("Access-Token"),
+                currentUser.getEmail(),
+                jwtTokenUtil.getAccessTokenExpirationMillis(request.getHeader("Access-Token"))
+        );
         return Response.success("로그아웃 성공");
     }
 }

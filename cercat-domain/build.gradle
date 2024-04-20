@@ -1,7 +1,6 @@
-bootJar {
-    enabled = false
-}
+bootJar { enabled = false }
 
-jar {
-    enabled = false
+dependencies {
+    implementation 'org.springframework:spring-context'
+    implementation 'org.springframework:spring-tx'
 }

@@ -1,8 +1,10 @@
 package com.cos.cercat.apis.certificate.dto.response;
 
-import com.cos.cercat.domain.*;
+import com.cos.cercat.domain.certificate.*;
 
 public record ExamInfoResponse(
+        Integer examYear,
+        Integer round,
         ExamSchedule examSchedule, //시험 일정
         ExamFee examFee, //응시료
         ExamTimeLimit examTimeLimit, //제한 시간
@@ -13,16 +15,18 @@ public record ExamInfoResponse(
         String examEligibility //응시 자격
 ) {
 
-    public static ExamInfoResponse from(ExamInfo entity) {
+    public static ExamInfoResponse from(ExamInformation examInfo) {
         return new ExamInfoResponse(
-                entity.getExamSchedule(),
-                entity.getExamFee(),
-                entity.getExamTimeLimit(),
-                entity.getPassingCriteria(),
-                entity.getSubjectsInfo(),
-                entity.getDescription(),
-                entity.getExamFormat(),
-                entity.getExamEligibility()
+                examInfo.examYear(),
+                examInfo.round(),
+                examInfo.examSchedule(),
+                examInfo.examFee(),
+                examInfo.examTimeLimit(),
+                examInfo.passingCriteria(),
+                examInfo.subjectsInfo(),
+                examInfo.description(),
+                examInfo.examFormat(),
+                examInfo.examEligibility()
         );
     }
 }

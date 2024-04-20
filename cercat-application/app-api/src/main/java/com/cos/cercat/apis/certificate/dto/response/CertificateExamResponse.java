@@ -1,17 +1,15 @@
 package com.cos.cercat.apis.certificate.dto.response;
 
-import com.cos.cercat.domain.CertificateExam;
+import com.cos.cercat.domain.certificate.CertificateExam;
 
 public record CertificateExamResponse(
-        Integer examYear,
-        Integer round,
+        CertificateResponse certificate,
         ExamInfoResponse examInfo
 ) {
-    public static CertificateExamResponse from(CertificateExam entity) {
+    public static CertificateExamResponse from(CertificateExam certificateExam) {
         return new CertificateExamResponse(
-                entity.getExamYear(),
-                entity.getRound(),
-                ExamInfoResponse.from(entity.getExamInfo())
+                CertificateResponse.from(certificateExam.certificate()),
+                ExamInfoResponse.from(certificateExam.examInformation())
         );
     }
 }

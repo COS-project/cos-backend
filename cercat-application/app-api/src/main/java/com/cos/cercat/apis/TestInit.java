@@ -12,12 +12,12 @@ public class TestInit {
 //    private final SubjectJpaRepository subjectRepository;
 //    private final CertificateJpaRepository certificateRepository;
 //    private final QuestionConvertService questionMapper;
-//    private final CertificateExamRepository certificateExamRepository;
+//    private final CertificateExamJpaRepository certificateExamRepository;
 //
 //    @PostConstruct
 //    public void init() {
 //        CertificateEntity testCertificate = certificateRepository.save(new CertificateEntity(1L, "컴퓨터활용능력1급"));
-//        ExamInfo testExamInfo = ExamInfo.of(
+//        ExamInfoEntity testExamInfo = ExamInfoEntity.of(
 //                new ExamSchedule(LocalDateTime.now().plusDays(1), LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now()),
 //                new ExamFee(20000, 30000),
 //                new ExamTimeLimit(1000000L, 2000000L),
@@ -27,7 +27,7 @@ public class TestInit {
 //                "대면시험",
 //                "응시자격에 제한은 없지만 실기 시험은 필기합격 훟 2년 이내 실기 시험응시 가능"
 //        );
-//        certificateExamRepository.save(CertificateExam.of(testCertificate, testExamInfo, 2023, 3));
+//        certificateExamRepository.save(CertificateExamEntity.of(testCertificate, testExamInfo, 2023, 3));
 //
 //        SubjectEntity subject1 = subjectRepository.save(new SubjectEntity(1L, testCertificate, "컴퓨터 일반", 20, 100));
 //        SubjectEntity subject2 = subjectRepository.save(new SubjectEntity(2L, testCertificate, "스프레드시트", 20, 100));

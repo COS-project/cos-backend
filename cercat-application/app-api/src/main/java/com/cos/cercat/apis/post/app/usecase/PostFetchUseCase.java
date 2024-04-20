@@ -6,7 +6,7 @@ import com.cos.cercat.common.annotation.UseCase;
 import com.cos.cercat.apis.comment.dto.response.PostCommentResponse;
 import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.comment.PostComment;
-import com.cos.cercat.domain.post.Post;
+import com.cos.cercat.domain.post.PostEntity;
 import com.cos.cercat.domain.post.PostType;
 import com.cos.cercat.service.CommentLikeService;
 import com.cos.cercat.service.PostLikeService;
@@ -76,10 +76,10 @@ public class PostFetchUseCase {
     public PostWithCommentsResponse getPostDetail(Long postId, Long userId) {
         log.info("postId - {} 게시글 상세정보 조회", postId);
 
-        Post post = postService.getPost(postId);
+        PostEntity postEntity = postService.getPost(postId);
 
         List<PostCommentResponse> postCommentResponses = organizeChildComments( // 대댓글을 댓글의 children으로 정리
-                post.getPostComments().getAll()
+                postEntity.getPostComments().getAll()
                         .stream()
                         .map(postComment -> PostCommentResponse.of(postComment, isLiked(LikeType.COMMENT, userId, postComment.getId())))
                         .toList()
@@ -131,7 +131,7 @@ public class PostFetchUseCase {
 
         log.info("userEntity - {} 가 댓글을 쓴 게시글 조회", userEntity.getEmail());
         return postCommentService.getMyPostComments(userEntity, pageable)
-                .map(PostComment::getPost)
+                .map(PostComment::getPostEntity)
                 .map(post -> PostResponse.of(post, isLiked(LikeType.POST, userId, post.getId())));
     }
 

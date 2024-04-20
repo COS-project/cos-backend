@@ -5,7 +5,7 @@ import com.cos.cercat.common.annotation.UseCase;
 import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.service.*;
 import com.cos.cercat.domain.CertificateEntity;
-import com.cos.cercat.domain.CertificateExam;
+import com.cos.cercat.domain.CertificateExamEntity;
 import com.cos.cercat.domain.Goal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,14 +37,14 @@ public class ExamReviewCreateUseCase {
         CertificateEntity certificateEntity = certificateService.getCertificate(certificateId);
 
         Goal goal = goalService.getRecentGoal(userEntity, certificateEntity);
-        CertificateExam recentCertificateExam = certificateExamService.getRecentCertificateExam(certificateEntity);
+        CertificateExamEntity recentCertificateExamEntity = certificateExamService.getRecentCertificateExam(certificateEntity);
 
         LocalDate prepareStartDate = goal.getPrepareStartDateTime().toLocalDate();
         LocalDate prepareFinishDate = goal.getPrepareFinishDateTime().toLocalDate();
 
         Period preparePeriod = Period.between(prepareStartDate, prepareFinishDate);
         log.info("userEntity - {}, certificateEntity - {} 따끈 후기 생성", userEntity.getEmail(), certificateEntity.getCertificateName());
-        examReviewService.createExamReview(request.toEntity(userEntity, recentCertificateExam, periodToMonths(preparePeriod)));
+        examReviewService.createExamReview(request.toEntity(userEntity, recentCertificateExamEntity, periodToMonths(preparePeriod)));
     }
 
     private int periodToMonths(Period preparePeriod) {

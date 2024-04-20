@@ -11,24 +11,24 @@
             <option value="$PROJECT_DIR$/cercat-application" />
             <option value="$PROJECT_DIR$/cercat-application/app-api" />
             <option value="$PROJECT_DIR$/cercat-application/app-batch" />
-            <option value="$PROJECT_DIR$/cercat-application/core-domain" />
+            <option value="$PROJECT_DIR$/cercat-client" />
             <option value="$PROJECT_DIR$/cercat-common" />
             <option value="$PROJECT_DIR$/cercat-domain" />
-            <option value="$PROJECT_DIR$/cercat-domain/domain-alarm" />
-            <option value="$PROJECT_DIR$/cercat-domain/domain-board" />
-            <option value="$PROJECT_DIR$/cercat-domain/domain-certificate" />
-            <option value="$PROJECT_DIR$/cercat-domain/domain-elasticsearch" />
-            <option value="$PROJECT_DIR$/cercat-domain/domain-examreview" />
-            <option value="$PROJECT_DIR$/cercat-domain/domain-jpa" />
-            <option value="$PROJECT_DIR$/cercat-domain/domain-learning" />
-            <option value="$PROJECT_DIR$/cercat-domain/domain-like" />
-            <option value="$PROJECT_DIR$/cercat-domain/domain-mockexam" />
-            <option value="$PROJECT_DIR$/cercat-domain/domain-mockexamresult" />
-            <option value="$PROJECT_DIR$/cercat-domain/domain-post" />
-            <option value="$PROJECT_DIR$/cercat-domain/domain-redis" />
-            <option value="$PROJECT_DIR$/cercat-domain/domain-search" />
-            <option value="$PROJECT_DIR$/cercat-domain/domain-user" />
-            <option value="$PROJECT_DIR$/cercat-external" />
+            <option value="$PROJECT_DIR$/cercat-storage" />
+            <option value="$PROJECT_DIR$/cercat-storage/domain-alarm" />
+            <option value="$PROJECT_DIR$/cercat-storage/domain-board" />
+            <option value="$PROJECT_DIR$/cercat-storage/domain-certificate" />
+            <option value="$PROJECT_DIR$/cercat-storage/domain-elasticsearch" />
+            <option value="$PROJECT_DIR$/cercat-storage/domain-examreview" />
+            <option value="$PROJECT_DIR$/cercat-storage/domain-jpa" />
+            <option value="$PROJECT_DIR$/cercat-storage/domain-learning" />
+            <option value="$PROJECT_DIR$/cercat-storage/domain-like" />
+            <option value="$PROJECT_DIR$/cercat-storage/domain-mockexam" />
+            <option value="$PROJECT_DIR$/cercat-storage/domain-mockexamresult" />
+            <option value="$PROJECT_DIR$/cercat-storage/domain-post" />
+            <option value="$PROJECT_DIR$/cercat-storage/domain-redis" />
+            <option value="$PROJECT_DIR$/cercat-storage/domain-search" />
+            <option value="$PROJECT_DIR$/cercat-storage/domain-user" />
           </set>
         </option>
       </GradleProjectSettings>

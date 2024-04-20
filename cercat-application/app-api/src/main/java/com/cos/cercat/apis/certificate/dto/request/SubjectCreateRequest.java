@@ -1,15 +1,15 @@
 package com.cos.cercat.apis.certificate.dto.request;
 
-import com.cos.cercat.domain.SubjectEntity;
+
+import com.cos.cercat.domain.certificate.SubjectInfo;
 
 public record SubjectCreateRequest(
         String subjectName,
         Integer numberOfQuestion,
         Integer totalScore
 ) {
-
-    public SubjectEntity toEntity() {
-        return new SubjectEntity(
+    public SubjectInfo toNewSubject() {
+        return new SubjectInfo(
                 subjectName,
                 numberOfQuestion,
                 totalScore

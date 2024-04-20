@@ -1,15 +1,15 @@
 package com.cos.cercat.apis.certificate.dto.response;
 
-import com.cos.cercat.domain.CertificateEntity;
+import com.cos.cercat.domain.certificate.Certificate;
 
 public record CertificateResponse(
         Long certificateId,
         String certificateName
 ) {
-    public static CertificateResponse from(CertificateEntity entity) {
+    public static CertificateResponse from(Certificate certificate) {
         return new CertificateResponse(
-                entity.getId(),
-                entity.getCertificateName()
+                certificate.id(),
+                certificate.certificateName()
         );
     }
 }

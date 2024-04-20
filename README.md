@@ -56,7 +56,7 @@
 com
  ㄴ cos
     ㄴ cercat
-        ㄴ post
+        ㄴ postEntity
         ㄴ user
         ...
         ㄴ common

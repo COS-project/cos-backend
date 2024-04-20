@@ -1,8 +1,8 @@
 dependencies {
     implementation project(':cercat-common')
-    implementation project(':cercat-domain:domain-user')
-    implementation project(':cercat-domain:domain-alarm')
-    implementation project(':cercat-domain:domain-certificate')
+    implementation project(':cercat-storage:domain-user')
+    implementation project(':cercat-storage:domain-alarm')
+    implementation project(':cercat-storage:domain-certificate')
 
     implementation 'org.springframework.boot:spring-boot-starter-batch'
     runtimeOnly 'com.mysql:mysql-connector-j'

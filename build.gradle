@@ -60,7 +60,7 @@ subprojects {
 
 }
 
-project(':cercat-domain') {
+project(':cercat-storage') {
 	bootJar {
 		enabled = false
 	}

@@ -32,7 +32,7 @@ public class CommentLikeStrategy implements LikeStrategy<PostComment>{
 
         log.info("userEntity - {}, postCommentId - {} 댓글 좋아요 생성", userEntity.getEmail(), postComment.getId());
         commentLikeService.createLike(postComment, userEntity);
-        alarmProducer.send(AlarmEvent.of(postComment.getUserEntity(), AlarmArg.of(userEntity, postComment.getPost().getId()), AlarmType.NEW_LIKE_ON_COMMENT));
+        alarmProducer.send(AlarmEvent.of(postComment.getUserEntity(), AlarmArg.of(userEntity, postComment.getPostEntity().getId()), AlarmType.NEW_LIKE_ON_COMMENT));
     }
 
     @Override

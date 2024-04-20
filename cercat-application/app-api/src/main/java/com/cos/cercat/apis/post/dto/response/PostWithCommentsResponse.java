@@ -5,10 +5,9 @@ import com.cos.cercat.apis.user.dto.response.UserResponse;
 import com.cos.cercat.apis.comment.dto.response.PostCommentResponse;
 import com.cos.cercat.apis.mockExam.dto.response.QuestionResponse;
 import com.cos.cercat.apis.post.dto.RecommendTagDTO;
-import com.cos.cercat.domain.post.CommentaryPost;
-import com.cos.cercat.domain.post.NormalPost;
-import com.cos.cercat.domain.post.Post;
-import com.cos.cercat.domain.post.TipPost;
+import com.cos.cercat.domain.post.*;
+import com.cos.cercat.domain.post.NormalPostEntity;
+import com.cos.cercat.domain.post.PostEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.time.LocalDateTime;
@@ -33,15 +32,15 @@ public record PostWithCommentsResponse(
         List<PostCommentResponse> postComments
 ) {
 
-    public static PostWithCommentsResponse of(Post post, List<PostCommentResponse> postComments, boolean isLiked) {
-        return switch (post.getPostType()) {
-            case COMMENTARY -> of((CommentaryPost) post, postComments, isLiked);
-            case TIP -> of((TipPost) post, postComments, isLiked);
-            case NORMAL -> of((NormalPost) post, postComments, isLiked);
+    public static PostWithCommentsResponse of(PostEntity postEntity, List<PostCommentResponse> postComments, boolean isLiked) {
+        return switch (postEntity.getPostType()) {
+            case COMMENTARY -> of((CommentaryPostEntity) postEntity, postComments, isLiked);
+            case TIP -> of((TipPostEntity) postEntity, postComments, isLiked);
+            case NORMAL -> of((NormalPostEntity) postEntity, postComments, isLiked);
         };
     }
 
-    private static PostWithCommentsResponse of(CommentaryPost commentaryPost, List<PostCommentResponse> postComments, boolean isLiked) {
+    private static PostWithCommentsResponse of(CommentaryPostEntity commentaryPost, List<PostCommentResponse> postComments, boolean isLiked) {
         return new PostWithCommentsResponse(
                 commentaryPost.getId(),
                 commentaryPost.getTitle(),
@@ -59,7 +58,7 @@ public record PostWithCommentsResponse(
         );
     }
 
-    private static PostWithCommentsResponse of(TipPost tipPost, List<PostCommentResponse> postComments, boolean isLiked) {
+    private static PostWithCommentsResponse of(TipPostEntity tipPost, List<PostCommentResponse> postComments, boolean isLiked) {
         return new PostWithCommentsResponse(
                 tipPost.getId(),
                 tipPost.getTitle(),
@@ -79,7 +78,7 @@ public record PostWithCommentsResponse(
         );
     }
 
-    private static PostWithCommentsResponse of(NormalPost normalPost, List<PostCommentResponse> postComments, boolean isLiked) {
+    private static PostWithCommentsResponse of(NormalPostEntity normalPost, List<PostCommentResponse> postComments, boolean isLiked) {
         return new PostWithCommentsResponse(
                 normalPost.getId(),
                 normalPost.getTitle(),

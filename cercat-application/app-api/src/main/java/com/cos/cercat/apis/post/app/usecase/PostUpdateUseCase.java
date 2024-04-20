@@ -6,7 +6,7 @@ import com.cos.cercat.common.annotation.UseCase;
 import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.post.PostType;
 import com.cos.cercat.entity.Image;
-import com.cos.cercat.infra.client.gcs.FileUploader;
+import com.cos.cercat.gcs.FileUploader;
 import com.cos.cercat.service.CertificateService;
 import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.service.MockExamService;

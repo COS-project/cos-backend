@@ -6,7 +6,7 @@ import com.cos.cercat.common.annotation.UseCase;
 import com.cos.cercat.domain.AlarmType;
 import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.comment.PostComment;
-import com.cos.cercat.domain.post.Post;
+import com.cos.cercat.domain.post.PostEntity;
 import com.cos.cercat.dto.AlarmArg;
 import com.cos.cercat.dto.AlarmEvent;
 import com.cos.cercat.service.UserService;
@@ -35,22 +35,22 @@ public class PostCommentCreateUseCase {
      */
     @Transactional
     public void createPostComment(Long postId, PostCommentCreateRequest request, Long userId) {
-        Post post = postService.getPost(postId);
+        PostEntity postEntity = postService.getPost(postId);
         UserEntity userEntity = userService.getUser(userId);
 
-        PostComment postComment = request.toEntity(post, userEntity);
+        PostComment postComment = request.toEntity(postEntity, userEntity);
 
         if (request.parentCommentId() != null) {
             PostComment parentComment = postCommentService.getPostComment(request.parentCommentId());
             parentComment.addChildComment(postComment);
-            alarmProducer.send(createAlarmEvent(post.getUserEntity(), post.getId(), userEntity, AlarmType.NEW_COMMENT_ON_POST));
-            alarmProducer.send(createAlarmEvent(parentComment.getUserEntity(), post.getId(), userEntity, AlarmType.NEW_COMMENT_ON_COMMENT));
+            alarmProducer.send(createAlarmEvent(postEntity.getUserEntity(), postEntity.getId(), userEntity, AlarmType.NEW_COMMENT_ON_POST));
+            alarmProducer.send(createAlarmEvent(parentComment.getUserEntity(), postEntity.getId(), userEntity, AlarmType.NEW_COMMENT_ON_COMMENT));
             log.info("parentCommentId - {}  userEntity - {} 대댓글 생성", request.parentCommentId(), userEntity.getEmail());
             return;
         }
 
-        post.addComment(postComment);
-        alarmProducer.send(createAlarmEvent(post.getUserEntity(), postId, userEntity, AlarmType.NEW_COMMENT_ON_POST));
+        postEntity.addComment(postComment);
+        alarmProducer.send(createAlarmEvent(postEntity.getUserEntity(), postId, userEntity, AlarmType.NEW_COMMENT_ON_POST));
         log.info("userEntity - {} 댓글 생성", userEntity.getEmail());
     }
 

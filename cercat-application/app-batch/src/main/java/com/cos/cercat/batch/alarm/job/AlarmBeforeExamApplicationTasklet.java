@@ -2,8 +2,8 @@ package com.cos.cercat.batch.alarm.job;
 
 import com.cos.cercat.domain.*;
 import com.cos.cercat.repository.AlarmRepository;
-import com.cos.cercat.repository.CertificateExamRepository;
-import com.cos.cercat.repository.InterestCertificateRepository;
+import com.cos.cercat.repository.CertificateExamJpaRepository;
+import com.cos.cercat.repository.InterestCertificateJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.StepContribution;
@@ -20,8 +20,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AlarmBeforeExamApplicationTasklet implements Tasklet {
 
-    private final CertificateExamRepository certificateExamRepository;
-    private final InterestCertificateRepository interestCertificateRepository;
+    private final CertificateExamJpaRepository certificateExamJpaRepository;
+    private final InterestCertificateJpaRepository interestCertificateJpaRepository;
     private final AlarmRepository alarmRepository;
 
 
@@ -34,28 +34,28 @@ public class AlarmBeforeExamApplicationTasklet implements Tasklet {
 
 
 
-        List<CertificateExam> certificateExams = certificateExamRepository.findTomorrowApplicationCertificateExams(oneDayAfter);
+        List<CertificateExamEntity> certificateExamEntities = certificateExamJpaRepository.findTomorrowApplicationCertificateExams(oneDayAfter);
 
-        for (CertificateExam certificateExam : certificateExams) {
-            CertificateEntity certificateEntity = certificateExam.getCertificateEntity();
-            List<InterestCertificate> interestCertificates = interestCertificateRepository.findInterestCertificatesByCertificateEntity(certificateEntity);
+        for (CertificateExamEntity certificateExamEntity : certificateExamEntities) {
+            CertificateEntity certificateEntity = certificateExamEntity.getCertificateEntity();
+            List<InterestCertificateEntity> interestCertificateEntities = interestCertificateJpaRepository.findInterestCertificatesByCertificateEntity(certificateEntity);
 
-            List<UserEntity> userEntities = interestCertificates.stream().map(InterestCertificate::getUserEntity).toList();
+            List<UserEntity> userEntities = interestCertificateEntities.stream().map(InterestCertificateEntity::getUserEntity).toList();
 
-            count += sendApplicationAlarm(userEntities, certificateExam);
+            count += sendApplicationAlarm(userEntities, certificateExamEntity);
         }
 
         log.info("AlarmBeforeExamApplicationTasklet - execute: 자격증 시험 신청 기간 알람 {}건 전송 완료, DeadlineDate : {}년 {}월 {}일", count, oneDayAfter.getYear(), oneDayAfter.getMonthValue(), oneDayAfter.getDayOfMonth());
         return RepeatStatus.FINISHED;
     }
 
-    public int sendApplicationAlarm(List<UserEntity> userEntities, CertificateExam certificateExam) {
+    public int sendApplicationAlarm(List<UserEntity> userEntities, CertificateExamEntity certificateExamEntity) {
         List<ExamAlarm> alarmList = userEntities.stream()
                 .map(user -> ExamAlarm.builder()
-                        .receiveUser(user)
+                        .receiveUserEntity(user)
                         .alarmType(AlarmType.BEFORE_APPLICATION)
                         .isRead(false)
-                        .certificateExam(certificateExam)
+                        .certificateExamEntity(certificateExamEntity)
                         .build())
                 .toList();
 

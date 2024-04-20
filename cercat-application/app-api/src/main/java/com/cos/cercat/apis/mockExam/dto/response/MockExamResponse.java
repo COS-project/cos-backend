@@ -17,7 +17,7 @@ public record MockExamResponse(
                 entity.getExamYear(),
                 entity.getRound(),
                 entity.getTimeLimit(),
-                CertificateResponse.from(entity.getCertificateEntity())
+                CertificateResponse.from(entity.getCertificateEntity().toDomain())
         );
     }
 }

@@ -7,7 +7,7 @@ import com.cos.cercat.apis.like.app.strategy.StrategyName;
 import com.cos.cercat.apis.like.dto.request.LikeType;
 import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.comment.PostComment;
-import com.cos.cercat.domain.post.Post;
+import com.cos.cercat.domain.post.PostEntity;
 import com.cos.cercat.service.UserService;
 import com.cos.cercat.service.comment.PostCommentService;
 import com.cos.cercat.service.post.PostService;
@@ -38,9 +38,9 @@ public class LikeFlipUseCase {
 
         switch (likeType) {
             case POST -> {
-                Post post = postService.getPostWithLock(id);
-                LikeStrategy<Post> strategy = likeStrategyFactory.findStrategy(StrategyName.POST_LIKE_STRATEGY, Post.class);
-                strategy.flipLike(post, userEntity);
+                PostEntity postEntity = postService.getPostWithLock(id);
+                LikeStrategy<PostEntity> strategy = likeStrategyFactory.findStrategy(StrategyName.POST_LIKE_STRATEGY, PostEntity.class);
+                strategy.flipLike(postEntity, userEntity);
             }
             case COMMENT -> {
                 PostComment postComment = postCommentService.getPostCommentWithLock(id);

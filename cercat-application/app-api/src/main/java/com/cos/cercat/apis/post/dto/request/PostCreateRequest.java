@@ -4,10 +4,9 @@ import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.domain.Question;
 import com.cos.cercat.apis.post.dto.RecommendTagDTO;
 import com.cos.cercat.domain.UserEntity;
-import com.cos.cercat.domain.post.CommentaryPost;
-import com.cos.cercat.domain.post.NormalPost;
-import com.cos.cercat.domain.post.PostType;
-import com.cos.cercat.domain.post.TipPost;
+import com.cos.cercat.domain.post.*;
+import com.cos.cercat.domain.post.CommentaryPostEntity;
+import com.cos.cercat.domain.post.NormalPostEntity;
 import com.cos.cercat.entity.Image;
 
 import java.util.List;
@@ -22,11 +21,11 @@ public record PostCreateRequest(
         Integer round,
         Integer questionSequence
 ) {
-    public CommentaryPost toCommentaryPost(List<Image> images,
-                                           CertificateEntity certificateEntity,
-                                           UserEntity userEntity,
-                                           Question question) {
-        return new CommentaryPost(
+    public CommentaryPostEntity toCommentaryPost(List<Image> images,
+                                                 CertificateEntity certificateEntity,
+                                                 UserEntity userEntity,
+                                                 Question question) {
+        return new CommentaryPostEntity(
                 title,
                 content,
                 userEntity,
@@ -37,10 +36,10 @@ public record PostCreateRequest(
         );
     }
 
-    public TipPost toTipPost(List<Image> images,
-                             CertificateEntity certificateEntity,
-                             UserEntity userEntity) {
-        return new TipPost(
+    public TipPostEntity toTipPost(List<Image> images,
+                                   CertificateEntity certificateEntity,
+                                   UserEntity userEntity) {
+        return new TipPostEntity(
                 title,
                 content,
                 userEntity,
@@ -53,10 +52,10 @@ public record PostCreateRequest(
         );
     }
 
-    public NormalPost toNormalPost(List<Image> images,
-                                   CertificateEntity certificateEntity,
-                                   UserEntity userEntity) {
-        return new NormalPost(
+    public NormalPostEntity toNormalPost(List<Image> images,
+                                         CertificateEntity certificateEntity,
+                                         UserEntity userEntity) {
+        return new NormalPostEntity(
                 title,
                 content,
                 userEntity,

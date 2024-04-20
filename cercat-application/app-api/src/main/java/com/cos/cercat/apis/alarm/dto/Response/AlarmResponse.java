@@ -35,7 +35,7 @@ public record AlarmResponse(
                 examAlarm.getId(),
                 null,
                 examAlarm.getAlarmType(),
-                makeExamAlarmText(examAlarm.getAlarmType(), examAlarm.getCertificateExam())
+                makeExamAlarmText(examAlarm.getAlarmType(), examAlarm.getCertificateExamEntity())
         );
     }
 
@@ -49,11 +49,11 @@ public record AlarmResponse(
         };
     }
 
-    private static String makeExamAlarmText(AlarmType alarmType, CertificateExam certificateExam) {
+    private static String makeExamAlarmText(AlarmType alarmType, CertificateExamEntity certificateExamEntity) {
         return switch (alarmType) {
-            case BEFORE_APPLICATION -> "회원님의 관심자격증 " + certificateExam.getCertificateEntity().getCertificateName() + " 접수 하루 남았어요!";
-            case DEADLINE -> "회원님의 관심자격증 " + certificateExam.getCertificateEntity().getCertificateName() + " 마감 하루 남았어요!";
-            case START_APPLICATION -> "회원님의 관심자격증 " + certificateExam.getCertificateEntity().getCertificateName() + " 접수를 시작했어요!";
+            case BEFORE_APPLICATION -> "회원님의 관심자격증 " + certificateExamEntity.getCertificateEntity().getCertificateName() + " 접수 하루 남았어요!";
+            case DEADLINE -> "회원님의 관심자격증 " + certificateExamEntity.getCertificateEntity().getCertificateName() + " 마감 하루 남았어요!";
+            case START_APPLICATION -> "회원님의 관심자격증 " + certificateExamEntity.getCertificateEntity().getCertificateName() + " 접수를 시작했어요!";
             default -> null;
         };
     }

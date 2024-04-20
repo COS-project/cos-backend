@@ -2,7 +2,7 @@ package com.cos.cercat.apis.user.app.usecase;
 
 import com.cos.cercat.apis.user.dto.request.UserCreateRequest;
 import com.cos.cercat.common.annotation.UseCase;
-import com.cos.cercat.infra.client.gcs.FileUploader;
+import com.cos.cercat.gcs.FileUploader;
 import com.cos.cercat.entity.Image;
 import com.cos.cercat.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +30,9 @@ public class UserUpdateUseCase {
     }
 
     @Transactional
-    public void logout(String accessToken, String email) {
-        userService.logout(accessToken, email);
+    public void logout(String accessToken, String email, long accessTokenExpirationMillis) {
+
+        userService.logout(accessToken, email, accessTokenExpirationMillis);
         log.info("userEntity - {} 로그아웃", email);
     }
 

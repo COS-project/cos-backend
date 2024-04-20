@@ -1,6 +1,6 @@
 package com.cos.cercat.apis.examReview.dto.request;
 
-import com.cos.cercat.domain.CertificateExam;
+import com.cos.cercat.domain.CertificateExamEntity;
 import com.cos.cercat.domain.ExamDifficulty;
 import com.cos.cercat.domain.ExamReview;
 import com.cos.cercat.domain.UserEntity;
@@ -10,10 +10,10 @@ public record ExamReviewCreateRequest(
         String content
 ) {
 
-    public ExamReview toEntity(UserEntity userEntity, CertificateExam certificateExam, int prepareMonths) {
+    public ExamReview toEntity(UserEntity userEntity, CertificateExamEntity certificateExamEntity, int prepareMonths) {
         return new ExamReview(
                 userEntity,
-                certificateExam,
+                certificateExamEntity,
                 examDifficulty,
                 prepareMonths,
                 content
