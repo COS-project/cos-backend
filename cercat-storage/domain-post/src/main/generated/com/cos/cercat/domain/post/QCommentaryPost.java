@@ -87,7 +87,7 @@ public class QCommentaryPost extends EntityPathBase<CommentaryPost> {
         this.postComments = _super.postComments;
         this.postImages = _super.postImages;
         this.postType = _super.postType;
-        this.question = inits.isInitialized("question") ? new com.cos.cercat.domain.QQuestion(forProperty("question"), inits.get("question")) : null;
+        this.question = inits.isInitialized("questionEntity") ? new com.cos.cercat.domain.QQuestion(forProperty("questionEntity"), inits.get("questionEntity")) : null;
         this.title = _super.title;
         this.user = _super.user;
     }

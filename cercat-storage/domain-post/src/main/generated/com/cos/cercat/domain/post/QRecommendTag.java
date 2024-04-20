@@ -11,7 +11,7 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QRecommendTag is a Querydsl query type for RecommendTag
+ * QRecommendTag is a Querydsl query type for RecommendTagEntity
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QRecommendTag extends EntityPathBase<RecommendTag> {

@@ -1,12 +1,12 @@
 package com.cos.cercat.service;
 
 import com.cos.cercat.domain.CertificateEntity;
+import com.cos.cercat.domain.MockExamEntity;
 import com.cos.cercat.domain.SubjectEntity;
 import com.cos.cercat.dto.MockExamInfoDTO;
-import com.cos.cercat.domain.MockExam;
-import com.cos.cercat.domain.Question;
-import com.cos.cercat.repository.MockExamRepository;
-import com.cos.cercat.repository.QuestionRepository;
+import com.cos.cercat.domain.QuestionEntity;
+import com.cos.cercat.repository.MockExamJpaRepository;
+import com.cos.cercat.repository.QuestionJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,8 +24,8 @@ import java.util.regex.Pattern;
 public class QuestionConvertService {
 
     private final QuestionMapper questionMapperService;
-    private final QuestionRepository questionRepository;
-    private final MockExamRepository mockExamRepository;
+    private final QuestionJpaRepository questionJpaRepository;
+    private final MockExamJpaRepository mockExamJpaRepository;
     private final SubjectService subjectService;
 
     public static final String CORRECT_ANSWER = "정답";
@@ -33,38 +33,38 @@ public class QuestionConvertService {
     @Transactional
     public void saveQuestionMap(CertificateEntity certificateEntity, File json) {
 
-        List<Question> questions = new ArrayList<>();
+        List<QuestionEntity> questionEntities = new ArrayList<>();
 
         MockExamInfoDTO mockExamInfoDTO = questionMapperService.jsonToQuestionMap(certificateEntity, json);
-        MockExam mockExam = mockExamRepository.save(MockExam.of(mockExamInfoDTO.mockExamDTO(), 1000000L));
+        MockExamEntity mockExamEntity = mockExamJpaRepository.save(MockExamEntity.of(mockExamInfoDTO.mockExamDTO(), 1000000L));
         List<SubjectEntity> subjectEntityList = subjectService.getSubjectList(certificateEntity);
 
         mockExamInfoDTO.questions().forEach((title, content) -> {
 
-            Question question = Question.from(mockExam);
+            QuestionEntity questionEntity = QuestionEntity.from(mockExamEntity);
             Matcher matcher = matchingQuestionPattern(title);
 
             if (matcher.find()) {
 
-                question.setSeqAndTitle(matcher);
+                questionEntity.setSeqAndTitle(matcher);
 
-                if (question.getQuestionSeq() <= 20) {
-                    question.setSubjectEntity(subjectEntityList.get(0));
-                } else if (question.getQuestionSeq() <= 40) {
-                    question.setSubjectEntity(subjectEntityList.get(1));
+                if (questionEntity.getQuestionSeq() <= 20) {
+                    questionEntity.setSubjectEntity(subjectEntityList.get(0));
+                } else if (questionEntity.getQuestionSeq() <= 40) {
+                    questionEntity.setSubjectEntity(subjectEntityList.get(1));
                 } else {
-                    question.setSubjectEntity(subjectEntityList.get(2));
+                    questionEntity.setSubjectEntity(subjectEntityList.get(2));
                 }
 
-                question.setContent(content);
+                questionEntity.setContent(content);
 
-                String answer = mockExamInfoDTO.getCorrectAnswerViaSeq(question.getQuestionSeq());
-                question.setCorrectOption(answer);
-                questions.add(question);
+                String answer = mockExamInfoDTO.getCorrectAnswerViaSeq(questionEntity.getQuestionSeq());
+                questionEntity.setCorrectOption(answer);
+                questionEntities.add(questionEntity);
             }
         });
 
-        questionRepository.batchInsert(questions);
+        questionJpaRepository.batchInsert(questionEntities);
     }
 
 

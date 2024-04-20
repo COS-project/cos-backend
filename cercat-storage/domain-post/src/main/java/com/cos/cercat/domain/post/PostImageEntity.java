@@ -10,6 +10,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
+@Table(name = "post_image")
 public class PostImageEntity {
 
     @Id

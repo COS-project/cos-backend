@@ -1,13 +1,13 @@
 package com.cos.cercat.apis.mockExam.dto.response;
 
-import com.cos.cercat.domain.QuestionOption;
+import com.cos.cercat.domain.QuestionOptionEntity;
 
 public record QuestionOptionResponse(
         Integer optionSequence,
         String optionContent,
         String optionImage
 ) {
-    public static QuestionOptionResponse from(QuestionOption entity) {
+    public static QuestionOptionResponse from(QuestionOptionEntity entity) {
         return new QuestionOptionResponse(
                 entity.getOptionSequence(),
                 entity.getOptionContent(),

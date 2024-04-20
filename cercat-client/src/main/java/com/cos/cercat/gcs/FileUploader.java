@@ -31,7 +31,36 @@ public class FileUploader {
     @Value("${spring.cloud.gcp.storage.url}")
     private String storagePath;
 
-    public List<Image> uploadFileInStorage(List<MultipartFile> files) {
+    public List<String> uploadFileInStorage2(List<MultipartFile> files) {
+        List<String> imageUrls = new ArrayList<>();
+
+        if (files == null) {
+            return imageUrls;
+        }
+
+        for (MultipartFile file : files) {
+            String ext = file.getContentType();
+            String uuid = UUID.randomUUID().toString();
+
+            BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, uuid)
+                    .setContentType(ext)
+                    .build();
+
+            try (var writer = storage.writer(blobInfo)) {
+                try (var input = file.getInputStream()) {
+                    ByteStreams.copy(input, Channels.newOutputStream(writer));
+                }
+                imageUrls.add(storagePath + uuid);
+                log.info("이미지 업로드 성공 - {}", storagePath + uuid);
+            } catch (IOException e) {
+                log.warn("Image upload failed", e);
+                throw new CustomException(ErrorCode.IMAGE_UPLOAD_FAIL_ERROR);
+            }
+        }
+        return imageUrls;
+    }
+
+    public List<Image> uploadFileInStorage1(List<MultipartFile> files) {
         List<Image> images = new ArrayList<>();
 
         if (files == null) {

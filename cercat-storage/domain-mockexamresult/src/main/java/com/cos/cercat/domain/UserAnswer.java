@@ -29,7 +29,7 @@ public class UserAnswer {
 
     @ManyToOne
     @JoinColumn(name = "question_id")
-    private Question question;
+    private QuestionEntity questionEntity;
 
     private int selectOptionSeq;
 
@@ -40,9 +40,9 @@ public class UserAnswer {
     private boolean isReviewed;
 
     @Builder
-    public UserAnswer(UserEntity userEntity, Question question, int selectOptionSeq, long takenTime, boolean isCorrect, boolean isReviewed) {
+    public UserAnswer(UserEntity userEntity, QuestionEntity questionEntity, int selectOptionSeq, long takenTime, boolean isCorrect, boolean isReviewed) {
         this.userEntity = userEntity;
-        this.question = question;
+        this.questionEntity = questionEntity;
         this.selectOptionSeq = selectOptionSeq;
         this.takenTime = takenTime;
         this.isCorrect = isCorrect;

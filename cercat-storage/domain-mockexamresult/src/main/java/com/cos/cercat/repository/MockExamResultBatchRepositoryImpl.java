@@ -28,7 +28,7 @@ public class MockExamResultBatchRepositoryImpl implements MockExamResultBatchRep
         KeyHolder mockExamResultKeyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(mockExamResultSql, Statement.RETURN_GENERATED_KEYS);
-            ps.setLong(1, mockExamResult.getMockExam().getId());
+            ps.setLong(1, mockExamResult.getMockExamEntity().getId());
             ps.setLong(2, mockExamResult.getUserEntity().getId());
             ps.setInt(3, mockExamResult.getRound());
             ps.setInt(4, mockExamResult.getTotalScore());
@@ -59,7 +59,7 @@ public class MockExamResultBatchRepositoryImpl implements MockExamResultBatchRep
             for (UserAnswer userAnswer : subjectResult.getUserAnswers().getUserAnswers()) {
                 jdbcTemplate.update(userAnswerSql,
                         subjectResultId,
-                        userAnswer.getQuestion().getId(),
+                        userAnswer.getQuestionEntity().getId(),
                         userAnswer.getUserEntity().getId(),
                         userAnswer.getSelectOptionSeq(),
                         userAnswer.getTakenTime(),

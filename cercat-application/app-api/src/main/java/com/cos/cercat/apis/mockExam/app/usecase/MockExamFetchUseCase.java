@@ -10,7 +10,7 @@ import com.cos.cercat.service.CertificateService;
 import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.service.MockExamService;
 import com.cos.cercat.service.QuestionService;
-import com.cos.cercat.domain.MockExam;
+import com.cos.cercat.domain.MockExamEntity;
 import com.cos.cercat.service.MockExamResultService;
 import com.cos.cercat.domain.MockExamResult;
 import com.cos.cercat.service.UserService;
@@ -49,12 +49,12 @@ public class MockExamFetchUseCase {
         List<MockExamWithResultResponse> resultResponses = new ArrayList<>();
         CertificateEntity certificateEntity = certificateService.getCertificate(certificateId);
 
-        List<MockExam> mockExamList = mockExamService.getMockExamList(certificateEntity, examYear);
+        List<MockExamEntity> mockExamEntityList = mockExamService.getMockExamList(certificateEntity, examYear);
         UserEntity userEntity = userService.getUser(userId);
 
-        for (MockExam mockExam : mockExamList) {
-            List<MockExamResult> userMockExamResults = mockExamResultService.getMockExamResults(mockExam, userEntity);
-            resultResponses.add(MockExamWithResultResponse.from(mockExam, userMockExamResults));
+        for (MockExamEntity mockExamEntity : mockExamEntityList) {
+            List<MockExamResult> userMockExamResults = mockExamResultService.getMockExamResults(mockExamEntity, userEntity);
+            resultResponses.add(MockExamWithResultResponse.from(mockExamEntity, userMockExamResults));
         }
         resultResponses.sort(Comparator.comparing(MockExamWithResultResponse::round));
 
@@ -69,10 +69,10 @@ public class MockExamFetchUseCase {
      * */
     @Cacheable(cacheNames = "QUESTIONS", key = "#mockExamId")
     public QuestionListResponse getQuestionList(Long mockExamId) {
-        MockExam mockExam = mockExamService.getMockExam(mockExamId);
+        MockExamEntity mockExamEntity = mockExamService.getMockExam(mockExamId);
 
-        log.info("{}년도 {}회차 모의고사 문제리스트 조회", mockExam.getExamYear(), mockExam.getRound());
-        return QuestionListResponse.from(questionService.getQuestionListByMockExam(mockExam).stream()
+        log.info("{}년도 {}회차 모의고사 문제리스트 조회", mockExamEntity.getExamYear(), mockExamEntity.getRound());
+        return QuestionListResponse.from(questionService.getQuestionListByMockExam(mockExamEntity).stream()
                 .map(QuestionResponse::from)
                 .toList());
     }

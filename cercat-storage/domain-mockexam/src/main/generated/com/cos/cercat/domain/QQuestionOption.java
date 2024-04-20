@@ -11,7 +11,7 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QQuestionOption is a Querydsl query type for QuestionOption
+ * QQuestionOption is a Querydsl query type for QuestionOptionEntity
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QQuestionOption extends EntityPathBase<QuestionOption> {
@@ -49,7 +49,7 @@ public class QQuestionOption extends EntityPathBase<QuestionOption> {
     public QQuestionOption(Class<? extends QuestionOption> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.optionImage = inits.isInitialized("optionImage") ? new com.cos.cercat.entity.QImage(forProperty("optionImage")) : null;
-        this.question = inits.isInitialized("question") ? new QQuestion(forProperty("question"), inits.get("question")) : null;
+        this.question = inits.isInitialized("questionEntity") ? new QQuestion(forProperty("questionEntity"), inits.get("questionEntity")) : null;
         this.questionOptionPK = inits.isInitialized("questionOptionPK") ? new com.cos.cercat.domain.embededId.QQuestionOptionPK(forProperty("questionOptionPK")) : null;
     }
 

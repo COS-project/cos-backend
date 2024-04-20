@@ -11,19 +11,19 @@ import java.util.Set;
 public class RecommendTags {
 
     @OneToMany(mappedBy = "tipPost", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<RecommendTag> recommendTags = new HashSet<>();
+    private Set<RecommendTagEntity> recommendTagEntities = new HashSet<>();
 
-    public Set<RecommendTag> getAll() {
-        return recommendTags;
+    public Set<RecommendTagEntity> getAll() {
+        return recommendTagEntities;
     }
 
-    public void addAll(Set<RecommendTag> recommendTags) {
-        this.recommendTags.addAll(recommendTags);
+    public void addAll(Set<RecommendTagEntity> recommendTagEntities) {
+        this.recommendTagEntities.addAll(recommendTagEntities);
     }
 
-    public void updateTags(Set<RecommendTag> newTags) {
-        this.recommendTags.clear();
-        this.recommendTags.addAll(newTags);
+    public void updateTags(Set<RecommendTagEntity> newTags) {
+        this.recommendTagEntities.clear();
+        this.recommendTagEntities.addAll(newTags);
     }
 
 }

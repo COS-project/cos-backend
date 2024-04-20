@@ -1,9 +1,9 @@
 package com.cos.cercat.domain.post;
 
+import com.cos.cercat.domain.QuestionEntity;
 import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.entity.Image;
 import com.cos.cercat.domain.CertificateEntity;
-import com.cos.cercat.domain.Question;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -17,18 +17,35 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @OnDelete(action = OnDeleteAction.CASCADE)
+@Table(name = "commentary_post")
 public class CommentaryPostEntity extends PostEntity {
 
     @ManyToOne
     @JoinColumn(name = "question_id")
-    private Question question;
+    private QuestionEntity questionEntity;
 
-    public CommentaryPostEntity(String title, String content, UserEntity userEntity, CertificateEntity certificateEntity, PostType postType, List<Image> images, Question question) {
+    public CommentaryPostEntity(String title,
+                                String content,
+                                UserEntity userEntity,
+                                CertificateEntity certificateEntity,
+                                PostType postType,
+                                List<Image> images,
+                                QuestionEntity questionEntity) {
         super(title, content, userEntity, certificateEntity, postType, images);
-        this.question = question;
+        this.questionEntity = questionEntity;
     }
 
-    public void updateQuestion(Question question) {
-        this.question = question;
+    public CommentaryPostEntity(String title,
+                                String content,
+                                UserEntity userEntity,
+                                CertificateEntity certificateEntity,
+                                PostType postType,
+                                QuestionEntity questionEntity) {
+        super(title, content, userEntity, certificateEntity, postType);
+        this.questionEntity = questionEntity;
+    }
+
+    public void updateQuestion(QuestionEntity questionEntity) {
+        this.questionEntity = questionEntity;
     }
 }

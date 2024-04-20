@@ -1,9 +1,10 @@
 package com.cos.cercat.apis.post.dto.request;
 
 import com.cos.cercat.domain.CertificateEntity;
-import com.cos.cercat.domain.Question;
+import com.cos.cercat.domain.QuestionEntity;
 import com.cos.cercat.apis.post.dto.RecommendTagDTO;
 import com.cos.cercat.domain.UserEntity;
+import com.cos.cercat.domain.mockexam.MockExamSession;
 import com.cos.cercat.domain.post.*;
 import com.cos.cercat.domain.post.CommentaryPostEntity;
 import com.cos.cercat.domain.post.NormalPostEntity;
@@ -21,10 +22,19 @@ public record PostCreateRequest(
         Integer round,
         Integer questionSequence
 ) {
+
+    public PostContent toContent(PostType postType, List<String> imageUrls) {
+        return new PostContent(title, content, postType, imageUrls);
+    }
+
+    public MockExamSession toMockExamSession() {
+        return new MockExamSession(examYear, round);
+    }
+
     public CommentaryPostEntity toCommentaryPost(List<Image> images,
                                                  CertificateEntity certificateEntity,
                                                  UserEntity userEntity,
-                                                 Question question) {
+                                                 QuestionEntity questionEntity) {
         return new CommentaryPostEntity(
                 title,
                 content,
@@ -32,7 +42,7 @@ public record PostCreateRequest(
                 certificateEntity,
                 PostType.COMMENTARY,
                 images,
-                question
+                questionEntity
         );
     }
 

@@ -46,10 +46,10 @@ public class MockExamResultFetchUseCase {
      * @return 리스트 형태의 성적리포트 Reponse DTO를 반환합니다.
      */
     public List<MockExamResultWithSubjectsResponse> getMockExamResults(Long mockExamId, Long userId) {
-        MockExam mockExam = mockExamService.getMockExam(mockExamId);
+        MockExamEntity mockExamEntity = mockExamService.getMockExam(mockExamId);
         UserEntity userEntity = userService.getUser(userId);
 
-        List<MockExamResult> mockExamResults = mockExamResultService.getMockExamResults(mockExam, userEntity);
+        List<MockExamResult> mockExamResults = mockExamResultService.getMockExamResults(mockExamEntity, userEntity);
         log.info("userEntity - {}, mockExamId - {} 성적리포트 리스트 조회", userEntity.getEmail(), mockExamId);
         return mockExamResults.stream()
                 .map(MockExamResultWithSubjectsResponse::from)

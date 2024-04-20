@@ -38,15 +38,15 @@ public class MockExamResultCreateUseCase {
     @Transactional
     public long createMockExamResult(Long mockExamId, MockExamResultRequest request, Long userId) {
         UserEntity userEntity = userService.getUser(userId);
-        MockExam mockExam = mockExamService.getMockExam(mockExamId);
+        MockExamEntity mockExamEntity = mockExamService.getMockExam(mockExamId);
 
-        questionService.getQuestionListByMockExam(mockExam);// 문제정보 JPA 1차 캐싱
-        int beforeRound = mockExamResultService.getMockExamResultsCount(mockExam, userEntity);
+        questionService.getQuestionListByMockExam(mockExamEntity);// 문제정보 JPA 1차 캐싱
+        int beforeRound = mockExamResultService.getMockExamResultsCount(mockExamEntity, userEntity);
         SubjectResults subjectResults = toSubjectResults(request, userEntity);
         int totalScore = subjectResults.getSubjectResults().stream().mapToInt(SubjectResult::getScore).sum();
 
 
-        MockExamResult mockExamResult = MockExamResult.of(mockExam, userEntity, beforeRound + 1, subjectResults, totalScore);
+        MockExamResult mockExamResult = MockExamResult.of(mockExamEntity, userEntity, beforeRound + 1, subjectResults, totalScore);
         log.info("userEntity - {}, mockExamId - {}, round - {}번째 모의고사 성적리포트 생성", userEntity.getEmail(), mockExamId, beforeRound + 1);
         return mockExamResultService.batchInsert(mockExamResult);
     }
@@ -73,8 +73,8 @@ public class MockExamResultCreateUseCase {
     }
 
     private UserAnswer toUserAnswer(UserEntity userEntity, UserAnswerRequest userAnswerRequest) {
-        Question question = questionService.getQuestion(userAnswerRequest.questionId());
-        return userAnswerRequest.toEntity(question, userEntity);
+        QuestionEntity questionEntity = questionService.getQuestion(userAnswerRequest.questionId());
+        return userAnswerRequest.toEntity(questionEntity, userEntity);
     }
 
 

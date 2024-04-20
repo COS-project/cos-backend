@@ -41,7 +41,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepositoryCus
                                 date)
                 )
                 .from(QMockExamResult.mockExamResult)
-                .leftJoin(QMockExamResult.mockExamResult.mockExam.certificateEntity, QCertificateEntity.certificateEntity)
+                .leftJoin(QMockExamResult.mockExamResult.mockExamEntity.certificateEntity, QCertificateEntity.certificateEntity)
                 .leftJoin(QMockExamResult.mockExamResult.userEntity, QUserEntity.userEntity)
                 .where(
                         QCertificateEntity.certificateEntity.eq(certificateEntity),
@@ -68,7 +68,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepositoryCus
                         QMockExamResult.mockExamResult.totalScore.avg(),
                         weekOfMonth))
                 .from(QMockExamResult.mockExamResult)
-                .leftJoin(QMockExamResult.mockExamResult.mockExam.certificateEntity, QCertificateEntity.certificateEntity)
+                .leftJoin(QMockExamResult.mockExamResult.mockExamEntity.certificateEntity, QCertificateEntity.certificateEntity)
                 .leftJoin(QMockExamResult.mockExamResult.userEntity, QUserEntity.userEntity)
                 .where(
                         QCertificateEntity.certificateEntity.eq(certificateEntity),
@@ -93,7 +93,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepositoryCus
                         QMockExamResult.mockExamResult.createdAt.month())
                 )
                 .from(QMockExamResult.mockExamResult)
-                .leftJoin(QMockExamResult.mockExamResult.mockExam.certificateEntity, QCertificateEntity.certificateEntity)
+                .leftJoin(QMockExamResult.mockExamResult.mockExamEntity.certificateEntity, QCertificateEntity.certificateEntity)
                 .leftJoin(QMockExamResult.mockExamResult.userEntity, QUserEntity.userEntity)
                 .where(
                         QCertificateEntity.certificateEntity.eq(certificateEntity),

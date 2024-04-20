@@ -12,7 +12,7 @@ public record UserAnswerResponse(
 ) {
     public static UserAnswerResponse from(UserAnswer entity) {
         return new UserAnswerResponse(
-                QuestionResponse.from(entity.getQuestion()),
+                QuestionResponse.from(entity.getQuestionEntity()),
                 entity.getId(),
                 entity.getSelectOptionSeq(),
                 entity.getTakenTime(),

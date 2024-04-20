@@ -20,6 +20,7 @@ import java.util.Objects;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @DiscriminatorColumn
+@Table(name = "post")
 public class PostEntity extends BaseTimeEntity {
 
     @Id
@@ -38,6 +39,12 @@ public class PostEntity extends BaseTimeEntity {
     @JoinColumn(name = "certificate_id")
     protected CertificateEntity certificateEntity;
 
+    @Embedded
+    protected PostImages postImages = new PostImages();
+
+    @Embedded
+    protected PostComments postComments = new PostComments();
+
     @Enumerated(EnumType.STRING)
     protected PostType postType;
 
@@ -51,6 +58,14 @@ public class PostEntity extends BaseTimeEntity {
         this.certificateEntity = certificateEntity;
         this.postType = postType;
         addAllPostImages(images);
+    }
+
+    public PostEntity(String title, String content, UserEntity userEntity, CertificateEntity certificateEntity, PostType postType) {
+        this.title = title;
+        this.content = content;
+        this.userEntity = userEntity;
+        this.certificateEntity = certificateEntity;
+        this.postType = postType;
     }
 
     public void increaseLikeCount() {

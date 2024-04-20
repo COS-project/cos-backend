@@ -46,8 +46,8 @@ public record PostResponse(
                 postEntity.getLikeCount(),
                 isLiked,
                 postEntity.getPostComments().countComments(),
-                postEntity instanceof CommentaryPostEntity commentaryPost? commentaryPost.getQuestion().getQuestionSeq() : null,
-                postEntity instanceof CommentaryPostEntity commentaryPost? MockExamResponse.from(commentaryPost.getQuestion().getMockExam()) : null,
+                postEntity instanceof CommentaryPostEntity commentaryPost? commentaryPost.getQuestionEntity().getQuestionSeq() : null,
+                postEntity instanceof CommentaryPostEntity commentaryPost? MockExamResponse.from(commentaryPost.getQuestionEntity().getMockExamEntity()) : null,
                 postEntity.getCreatedAt()
         );
     }

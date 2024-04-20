@@ -5,7 +5,7 @@ import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.repository.MockExamResultRepository;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
-import com.cos.cercat.domain.MockExam;
+import com.cos.cercat.domain.MockExamEntity;
 import com.cos.cercat.domain.MockExamResult;
 import com.cos.cercat.dto.DateCond;
 import com.cos.cercat.dto.DailyScoreAverage;
@@ -32,9 +32,9 @@ public class MockExamResultService {
 
     private final MockExamResultRepository mockExamResultRepository;
 
-    public List<MockExamResult> getMockExamResults(MockExam mockExam, UserEntity userEntity) {
+    public List<MockExamResult> getMockExamResults(MockExamEntity mockExamEntity, UserEntity userEntity) {
 
-        return mockExamResultRepository.findMockExamResultByMockExamAndUserEntity(mockExam, userEntity).stream()
+        return mockExamResultRepository.findMockExamResultByMockExamEntityAndUserEntity(mockExamEntity, userEntity).stream()
                 .sorted(Comparator.comparing(MockExamResult::getCreatedAt).reversed())
                 .toList();
     }
@@ -48,8 +48,8 @@ public class MockExamResultService {
         return mockExamResultRepository.batchInsert(mockExamResult);
     }
 
-    public int getMockExamResultsCount(MockExam mockExam, UserEntity userEntity) {
-        return mockExamResultRepository.countMockExamResultsByMockExamAndUserEntity(mockExam, userEntity);
+    public int getMockExamResultsCount(MockExamEntity mockExamEntity, UserEntity userEntity) {
+        return mockExamResultRepository.countMockExamResultsByMockExamEntityAndUserEntity(mockExamEntity, userEntity);
     }
 
     public MockExamResult getMockExamResult(Long mockExamResultId) {

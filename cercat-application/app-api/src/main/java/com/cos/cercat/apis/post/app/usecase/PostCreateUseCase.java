@@ -3,6 +3,7 @@ package com.cos.cercat.apis.post.app.usecase;
 import com.cos.cercat.apis.post.dto.request.PostCreateRequest;
 import com.cos.cercat.common.annotation.UseCase;
 import com.cos.cercat.domain.CertificateEntity;
+import com.cos.cercat.domain.MockExamEntity;
 import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.gcs.FileUploader;
 import com.cos.cercat.entity.Image;
@@ -10,8 +11,7 @@ import com.cos.cercat.domain.post.PostType;
 import com.cos.cercat.service.CertificateService;
 import com.cos.cercat.service.MockExamService;
 import com.cos.cercat.service.QuestionService;
-import com.cos.cercat.domain.MockExam;
-import com.cos.cercat.domain.Question;
+import com.cos.cercat.domain.QuestionEntity;
 import com.cos.cercat.service.UserService;
 import com.cos.cercat.service.post.CommentaryPostService;
 import com.cos.cercat.service.post.NormalPostService;
@@ -55,7 +55,7 @@ public class PostCreateUseCase {
                            Long userId) {
 
         CertificateEntity certificateEntity = certificateService.getCertificate(certificateId);
-        List<Image> images = fileUploader.uploadFileInStorage(files);
+        List<Image> images = fileUploader.uploadFileInStorage1(files);
         UserEntity userEntity = userService.getUser(userId);
 
         switch (postType) {
@@ -66,14 +66,14 @@ public class PostCreateUseCase {
     }
 
     private void createCommentaryPost(PostCreateRequest request, CertificateEntity certificateEntity, List<Image> images, UserEntity userEntity) {
-        Question question = getQuestion(certificateEntity, request.examYear(), request.round(), request.questionSequence());
-        commentaryPostService.createCommentaryPost(request.toCommentaryPost(images, certificateEntity, userEntity, question));
-        log.info("userEntity - {}, certificateEntity - {}, questionId - {} 해설 게시글 생성", userEntity.getEmail(), certificateEntity.getCertificateName(), question.getId());
+        QuestionEntity questionEntity = getQuestion(certificateEntity, request.examYear(), request.round(), request.questionSequence());
+        commentaryPostService.createCommentaryPost(request.toCommentaryPost(images, certificateEntity, userEntity, questionEntity));
+        log.info("userEntity - {}, certificateEntity - {}, questionId - {} 해설 게시글 생성", userEntity.getEmail(), certificateEntity.getCertificateName(), questionEntity.getId());
     }
 
 
-    private Question getQuestion(CertificateEntity certificateEntity, Integer examYear, Integer round, Integer questionSeq) {
-        MockExam mockExam = mockExamService.getMockExam(certificateEntity, examYear, round);
-        return questionService.getQuestion(mockExam, questionSeq);
+    private QuestionEntity getQuestion(CertificateEntity certificateEntity, Integer examYear, Integer round, Integer questionSeq) {
+        MockExamEntity mockExamEntity = mockExamService.getMockExam(certificateEntity, examYear, round);
+        return questionService.getQuestion(mockExamEntity, questionSeq);
     }
 }

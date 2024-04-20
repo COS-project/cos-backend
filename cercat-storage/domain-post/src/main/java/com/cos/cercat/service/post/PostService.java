@@ -3,7 +3,7 @@ package com.cos.cercat.service.post;
 import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.post.PostEntity;
 import com.cos.cercat.repository.UserJpaRepository;
-import com.cos.cercat.repository.post.PostRepository;
+import com.cos.cercat.repository.post.PostJpaRepository;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -17,15 +17,15 @@ import java.util.List;
 @Slf4j
 public class PostService {
 
-    private final PostRepository postRepository;
+    private final PostJpaRepository postJpaRepository;
     private final UserJpaRepository userJpaRepository;
 
     public PostEntity getPost(Long postId) {
-        return postRepository.findById(postId).orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
+        return postJpaRepository.findById(postId).orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
     }
 
     public PostEntity getPostWithLock(Long postId) {
-        return postRepository.findByIdWithPessimisticLock(postId).orElseThrow(() ->
+        return postJpaRepository.findByIdWithPessimisticLock(postId).orElseThrow(() ->
                 new CustomException(ErrorCode.POST_NOT_FOUND));
     }
 
@@ -35,12 +35,12 @@ public class PostService {
 
         if (!postEntity.isAuthorized(requestUserEntity)) throw new CustomException(ErrorCode.NO_PERMISSION_ERROR);
 
-        postRepository.delete(postEntity);
+        postJpaRepository.delete(postEntity);
         log.info("postId - {} 게시글 삭제", postId);
     }
 
     public void deletePostImages(List<String> imagesUrls) {
-        postRepository.deleteAllByImageUrl(imagesUrls);
+        postJpaRepository.deleteAllByImageUrl(imagesUrls);
     }
 
     private UserEntity getUser(Long userId) {

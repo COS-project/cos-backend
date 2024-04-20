@@ -36,12 +36,30 @@ public class SubjectEntity extends BaseTimeEntity {
         this.totalScore = totalScore;
     }
 
+    public static SubjectEntity from(Subject subject) {
+        return new SubjectEntity(
+                subject.subjectId(),
+                CertificateEntity.from(subject.certificate()),
+                subject.subjectInfo().subjectName(),
+                subject.subjectInfo().numberOfQuestions(),
+                subject.subjectInfo().totalScore()
+        );
+    }
+
     public static SubjectEntity from(SubjectInfo subjectInfo) {
         return SubjectEntity.builder()
                 .subjectName(subjectInfo.subjectName())
                 .numberOfQuestions(subjectInfo.numberOfQuestions())
                 .totalScore(subjectInfo.totalScore())
                 .build();
+    }
+
+    public Subject toDomain() {
+        return new Subject(
+                id,
+                certificateEntity.toDomain(),
+                new SubjectInfo(subjectName, numberOfQuestions, totalScore)
+        );
     }
 
 

@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.post.dto;
 
 
-import com.cos.cercat.domain.post.RecommendTag;
+import com.cos.cercat.domain.post.RecommendTagEntity;
 import com.cos.cercat.domain.post.TagType;
 
 public record RecommendTagDTO(
@@ -9,14 +9,14 @@ public record RecommendTagDTO(
         String tagName
 ) {
 
-    public RecommendTag toEntity() {
-        return new RecommendTag(
+    public RecommendTagEntity toEntity() {
+        return new RecommendTagEntity(
                 tagType,
                 tagName
         );
     }
 
-    public static RecommendTagDTO from(RecommendTag entity) {
+    public static RecommendTagDTO from(RecommendTagEntity entity) {
         return new RecommendTagDTO(
                 entity.getTagType(),
                 entity.getTagName()

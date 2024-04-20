@@ -17,7 +17,7 @@ public record MockExamResultWithSubjectsResponse(
         return new MockExamResultWithSubjectsResponse(
                 entity.getId(),
                 entity.getRound(),
-                MockExamResponse.from(entity.getMockExam()),
+                MockExamResponse.from(entity.getMockExamEntity()),
                 entity.getSubjectResults().getSubjectResults().stream()
                         .map(SubjectResultResponse::from)
                         .toList(),

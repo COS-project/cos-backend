@@ -7,5 +7,4 @@ public enum PostType {
     COMMENTARY,
     TIP,
     NORMAL;
-
 }

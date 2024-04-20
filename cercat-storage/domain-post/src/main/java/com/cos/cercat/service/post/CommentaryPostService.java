@@ -1,12 +1,12 @@
 package com.cos.cercat.service.post;
 
 import com.cos.cercat.domain.CertificateEntity;
+import com.cos.cercat.domain.QuestionEntity;
 import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.post.CommentaryPostEntity;
 import com.cos.cercat.entity.Image;
-import com.cos.cercat.domain.Question;
 import com.cos.cercat.dto.CommentaryPostSearchCond;
-import com.cos.cercat.repository.post.CommentaryPostRepository;
+import com.cos.cercat.repository.post.CommentaryPostJpaRepository;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -23,37 +23,37 @@ import java.util.List;
 @Slf4j
 public class CommentaryPostService {
 
-    private final CommentaryPostRepository commentaryPostRepository;
+    private final CommentaryPostJpaRepository commentaryPostJpaRepository;
 
     public void createCommentaryPost(CommentaryPostEntity commentaryPost) {
 
-        commentaryPostRepository.save(commentaryPost);
+        commentaryPostJpaRepository.save(commentaryPost);
     }
 
     public Slice<CommentaryPostEntity> searchCommentaryPosts(Pageable pageable, CertificateEntity certificateEntity, CommentaryPostSearchCond cond) {
-        return commentaryPostRepository.searchPosts(pageable, certificateEntity, cond);
+        return commentaryPostJpaRepository.searchPosts(pageable, certificateEntity, cond);
     }
 
     public CommentaryPostEntity getCommentaryPost(Long postId) {
-        return commentaryPostRepository.findById(postId).orElseThrow(() ->
+        return commentaryPostJpaRepository.findById(postId).orElseThrow(() ->
                 new CustomException(ErrorCode.POST_NOT_FOUND));
     }
 
     public Slice<CommentaryPostEntity> getMyCommentaryPosts(UserEntity userEntity, Pageable pageable) {
-        return commentaryPostRepository.findCommentaryPostsByUserEntity(userEntity, pageable);
+        return commentaryPostJpaRepository.findCommentaryPostsByUserEntity(userEntity, pageable);
     }
 
     public void updateCommentaryPost(Long postId,
                                      String title,
                                      String content,
-                                     Question question,
+                                     QuestionEntity questionEntity,
                                      List<Image> images,
                                      UserEntity userEntity) {
         CommentaryPostEntity commentaryPost = getCommentaryPost(postId);
 
         if (commentaryPost.isAuthorized(userEntity)) {
             commentaryPost.updatePostInfo(title, content, images);
-            commentaryPost.updateQuestion(question);
+            commentaryPost.updateQuestion(questionEntity);
             return;
         }
 

@@ -3,6 +3,7 @@ package com.cos.cercat.apis.post.app.usecase;
 import com.cos.cercat.apis.post.dto.RecommendTagDTO;
 import com.cos.cercat.apis.post.dto.request.PostUpdateRequest;
 import com.cos.cercat.common.annotation.UseCase;
+import com.cos.cercat.domain.QuestionEntity;
 import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.post.PostType;
 import com.cos.cercat.entity.Image;
@@ -11,8 +12,7 @@ import com.cos.cercat.service.CertificateService;
 import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.service.MockExamService;
 import com.cos.cercat.service.QuestionService;
-import com.cos.cercat.domain.MockExam;
-import com.cos.cercat.domain.Question;
+import com.cos.cercat.domain.MockExamEntity;
 import com.cos.cercat.service.UserService;
 import com.cos.cercat.service.post.CommentaryPostService;
 import com.cos.cercat.service.post.NormalPostService;
@@ -54,13 +54,13 @@ public class PostUpdateUseCase {
 
         switch (postType) {
             case COMMENTARY -> {
-                Question question = getQuestion(certificateEntity, request.examYear(), request.round(), request.questionSequence());
+                QuestionEntity questionEntity = getQuestion(certificateEntity, request.examYear(), request.round(), request.questionSequence());
 
                 commentaryPostService.updateCommentaryPost(
                         request.postId(),
                         request.title(),
                         request.content(),
-                        question,
+                        questionEntity,
                         images,
                         userEntity
                 );
@@ -91,11 +91,11 @@ public class PostUpdateUseCase {
 
     private List<Image> updateImages(List<String> removeImageUrls, List<MultipartFile> files) {
         postService.deletePostImages(removeImageUrls); // 유저가 삭제요청한 이미지들 삭제
-        return fileUploader.uploadFileInStorage(files);
+        return fileUploader.uploadFileInStorage1(files);
     }
 
-    private Question getQuestion(CertificateEntity certificateEntity, Integer examYear, Integer round, Integer questionSeq) {
-        MockExam mockExam = mockExamService.getMockExam(certificateEntity, examYear, round);
-        return questionService.getQuestion(mockExam, questionSeq);
+    private QuestionEntity getQuestion(CertificateEntity certificateEntity, Integer examYear, Integer round, Integer questionSeq) {
+        MockExamEntity mockExamEntity = mockExamService.getMockExam(certificateEntity, examYear, round);
+        return questionService.getQuestion(mockExamEntity, questionSeq);
     }
 }

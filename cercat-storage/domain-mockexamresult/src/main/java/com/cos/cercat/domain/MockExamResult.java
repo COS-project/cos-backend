@@ -18,7 +18,7 @@ public class MockExamResult extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mock_exam_id")
-    private MockExam mockExam;
+    private MockExamEntity mockExamEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -31,17 +31,17 @@ public class MockExamResult extends BaseTimeEntity {
 
     private Integer round; //유저가 모의고사를 푼 횟수
 
-    private MockExamResult(MockExam mockExam, UserEntity userEntity, Integer round, SubjectResults subjectResults, Integer totalScore) {
-        this.mockExam = mockExam;
+    private MockExamResult(MockExamEntity mockExamEntity, UserEntity userEntity, Integer round, SubjectResults subjectResults, Integer totalScore) {
+        this.mockExamEntity = mockExamEntity;
         this.userEntity = userEntity;
         this.round = round;
         setSubjectResults(subjectResults);
         this.totalScore = totalScore;
     }
 
-    public static MockExamResult of(MockExam mockExam, UserEntity userEntity, Integer round, SubjectResults subjectResults, Integer totalScore) {
+    public static MockExamResult of(MockExamEntity mockExamEntity, UserEntity userEntity, Integer round, SubjectResults subjectResults, Integer totalScore) {
         return new MockExamResult(
-                mockExam,
+                mockExamEntity,
                 userEntity,
                 round,
                 subjectResults,

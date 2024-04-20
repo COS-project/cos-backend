@@ -23,7 +23,7 @@ public class UserUpdateUseCase {
     public void updateUserInfo(UserCreateRequest request,
                                MultipartFile file,
                                Long userId) {
-        List<Image> images = fileUploader.uploadFileInStorage(List.of(file));
+        List<Image> images = fileUploader.uploadFileInStorage1(List.of(file));
         Image userImage = images.isEmpty() ? null : images.get(0);
 
         userService.updateUser(userId, request.nickname(), userImage);

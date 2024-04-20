@@ -1,10 +1,10 @@
 package com.cos.cercat.repository;
 
-import com.cos.cercat.domain.Question;
+import com.cos.cercat.domain.QuestionEntity;
 
 import java.util.List;
 
 public interface QuestionBatchRepository {
 
-    void batchInsert(List<Question> questions);
+    void batchInsert(List<QuestionEntity> questionEntities);
 }

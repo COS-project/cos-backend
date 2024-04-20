@@ -1,6 +1,6 @@
 package com.cos.cercat.repository;
 
-import com.cos.cercat.domain.MockExam;
+import com.cos.cercat.domain.MockExamEntity;
 import com.cos.cercat.domain.MockExamResult;
 import com.cos.cercat.domain.UserEntity;
 import org.springframework.data.domain.Page;
@@ -15,13 +15,13 @@ import java.util.List;
 
 public interface MockExamResultRepository extends JpaRepository<MockExamResult, Long>, MockExamResultRepositoryCustom, MockExamResultBatchRepository {
 
-    List<MockExamResult> findMockExamResultByMockExamAndUserEntity(MockExam mockExam, UserEntity userEntity);
+    List<MockExamResult> findMockExamResultByMockExamEntityAndUserEntity(MockExamEntity mockExamEntity, UserEntity userEntity);
 
-    int countMockExamResultsByMockExamAndUserEntity(MockExam mockExam, UserEntity userEntity);
+    int countMockExamResultsByMockExamEntityAndUserEntity(MockExamEntity mockExamEntity, UserEntity userEntity);
 
     @Query("""
             SELECT COUNT(mer) FROM MockExamResult mer
-            WHERE mer.mockExam.certificateEntity.id = :certificateId
+            WHERE mer.mockExamEntity.certificateEntity.id = :certificateId
             AND mer.userEntity.id = :userId
             AND :goalStartDateTime < mer.createdAt
             """)
@@ -32,7 +32,7 @@ public interface MockExamResultRepository extends JpaRepository<MockExamResult, 
     @Query("""
             SELECT MAX(mer.totalScore)
             FROM MockExamResult mer
-            WHERE mer.mockExam.certificateEntity.id = :certificateId
+            WHERE mer.mockExamEntity.certificateEntity.id = :certificateId
             AND mer.userEntity.id = :userId
             AND :goalStartDateTime < mer.createdAt
             """)
@@ -42,7 +42,7 @@ public interface MockExamResultRepository extends JpaRepository<MockExamResult, 
 
     @Query("""
             SELECT COUNT(mr) FROM MockExamResult mr
-            JOIN mr.mockExam.certificateEntity c
+            JOIN mr.mockExamEntity.certificateEntity c
             WHERE FUNCTION('DATE_FORMAT', mr.createdAt, '%Y-%m-%d') = CURRENT_DATE
             AND mr.userEntity.id = :userId
             AND c.id = :certificateId
@@ -53,7 +53,7 @@ public interface MockExamResultRepository extends JpaRepository<MockExamResult, 
 
     @Query("""
             SELECT mr from MockExamResult mr
-            JOIN FETCH mr.mockExam me
+            JOIN FETCH mr.mockExamEntity me
             LEFT JOIN me.certificateEntity c
             WHERE FUNCTION('DATE_FORMAT', mr.createdAt, '%Y-%m-%d') = FUNCTION('DATE_FORMAT', :date, '%Y-%m-%d')
             AND mr.userEntity.id = :userId
@@ -66,7 +66,7 @@ public interface MockExamResultRepository extends JpaRepository<MockExamResult, 
 
     @Query("""
             SELECT mr from MockExamResult mr
-            JOIN FETCH mr.mockExam me
+            JOIN FETCH mr.mockExamEntity me
             LEFT JOIN me.certificateEntity c
             WHERE FUNCTION('WEEK', mr.createdAt) - FUNCTION('WEEK', :firstDayOfMonth) + 1 = :weekOfMonth
             AND FUNCTION('MONTH', mr.createdAt) = :month
@@ -82,7 +82,7 @@ public interface MockExamResultRepository extends JpaRepository<MockExamResult, 
 
     @Query("""
             SELECT mr from MockExamResult mr
-            JOIN FETCH mr.mockExam me
+            JOIN FETCH mr.mockExamEntity me
             LEFT JOIN me.certificateEntity c
             WHERE FUNCTION('MONTH', mr.createdAt) = :month
             AND mr.userEntity.id = :userId

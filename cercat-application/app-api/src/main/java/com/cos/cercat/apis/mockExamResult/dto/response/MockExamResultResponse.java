@@ -17,7 +17,7 @@ public record MockExamResultResponse(
         return new MockExamResultResponse(
                 entity.getId(),
                 entity.getRound(),
-                MockExamResponse.from(entity.getMockExam()),
+                MockExamResponse.from(entity.getMockExamEntity()),
                 entity.getTotalScore(),
                 entity.getCreatedAt()
         );

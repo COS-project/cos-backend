@@ -3,8 +3,8 @@ package com.cos.cercat.service;
 import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
-import com.cos.cercat.domain.MockExam;
-import com.cos.cercat.repository.MockExamRepository;
+import com.cos.cercat.domain.MockExamEntity;
+import com.cos.cercat.repository.MockExamJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,27 +16,28 @@ import java.util.List;
 @Slf4j
 public class MockExamService {
 
-    private final MockExamRepository mockExamRepository;
+    private final MockExamJpaRepository mockExamJpaRepository;
 
-    public MockExam getMockExam(Long mockExamId) {
-        return mockExamRepository.findById(mockExamId).orElseThrow(() ->
+    public MockExamEntity getMockExam(Long mockExamId) {
+        return mockExamJpaRepository.findById(mockExamId).orElseThrow(() ->
                 new CustomException(ErrorCode.MOCK_EXAM_NOT_FOUND));
     }
 
-    public MockExam getMockExam(CertificateEntity certificateEntity, Integer year, Integer round) {
-        return mockExamRepository.findMockExamByCertificateEntityAndExamYearAndRound(certificateEntity, year, round);
+    public MockExamEntity getMockExam(CertificateEntity certificateEntity, Integer year, Integer round) {
+        return mockExamJpaRepository.findMockExamByCertificateIdAndExamYearAndRound(certificateEntity.getId(), year, round)
+                .orElseThrow(() -> new CustomException(ErrorCode.MOCK_EXAM_NOT_FOUND));
     }
 
-    public List<MockExam> getMockExamList(CertificateEntity certificateEntity, Integer year) {
-        return mockExamRepository.findMockExamByCertificateEntityAndExamYear(certificateEntity, year);
+    public List<MockExamEntity> getMockExamList(CertificateEntity certificateEntity, Integer year) {
+        return mockExamJpaRepository.findMockExamByCertificateEntityAndExamYear(certificateEntity, year);
     }
 
     public List<Integer> getMockExamYears(CertificateEntity certificateEntity) {
-        return mockExamRepository.findMockExamYearsByCertificate(certificateEntity.getId());
+        return mockExamJpaRepository.findMockExamYearsByCertificate(certificateEntity.getId());
     }
 
     public List<Integer> getMockExamRounds(CertificateEntity certificateEntity, Integer examYear) {
-        return mockExamRepository.findMockExamRoundsByCertificateEntityAndExamYear(certificateEntity.getId(), examYear);
+        return mockExamJpaRepository.findMockExamRoundsByCertificateEntityAndExamYear(certificateEntity.getId(), examYear);
     }
 
 }

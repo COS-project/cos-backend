@@ -11,7 +11,7 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QMockExam is a Querydsl query type for MockExam
+ * QMockExam is a Querydsl query type for MockExamEntity
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QMockExam extends EntityPathBase<MockExam> {

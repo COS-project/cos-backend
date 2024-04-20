@@ -51,8 +51,8 @@ public record PostWithCommentsResponse(
                 isLiked,
                 commentaryPost.getPostComments().countComments(),
                 null,
-                QuestionResponse.from(commentaryPost.getQuestion()),
-                MockExamResponse.from(commentaryPost.getQuestion().getMockExam()),
+                QuestionResponse.from(commentaryPost.getQuestionEntity()),
+                MockExamResponse.from(commentaryPost.getQuestionEntity().getMockExamEntity()),
                 commentaryPost.getCreatedAt(),
                 postComments
         );

@@ -4,8 +4,8 @@ import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.domain.post.TipPostEntity;
 import com.cos.cercat.entity.Image;
 import com.cos.cercat.domain.UserEntity;
-import com.cos.cercat.domain.post.RecommendTag;
-import com.cos.cercat.repository.post.TipPostRepository;
+import com.cos.cercat.domain.post.RecommendTagEntity;
+import com.cos.cercat.repository.post.TipPostJpaRepository;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -22,31 +22,31 @@ import java.util.Set;
 @Slf4j
 public class TipPostService {
 
-    private final TipPostRepository tipPostRepository;
+    private final TipPostJpaRepository tipPostJpaRepository;
 
     public void createTipPost(TipPostEntity tipPost) {
         log.info("userEntity - {}, certificateEntity - {} 꿀팁 게시글 생성",
                 tipPost.getUserEntity().getEmail(), tipPost.getCertificateEntity().getCertificateName());
-        tipPostRepository.save(tipPost);
+        tipPostJpaRepository.save(tipPost);
     }
 
     public TipPostEntity getTipPost(Long postId) {
-        return tipPostRepository.findById(postId).orElseThrow(() ->
+        return tipPostJpaRepository.findById(postId).orElseThrow(() ->
                 new CustomException(ErrorCode.POST_NOT_FOUND));
     }
 
     public Slice<TipPostEntity> getMyTipPosts(UserEntity userEntity, Pageable pageable) {
-        return tipPostRepository.findTipPostsByUserEntity(userEntity, pageable);
+        return tipPostJpaRepository.findTipPostsByUserEntity(userEntity, pageable);
     }
 
     public List<TipPostEntity> getTop3TipPosts(CertificateEntity certificateEntity) {
-        return tipPostRepository.findTop3ByCertificateEntityOrderByLikeCountDesc(certificateEntity);
+        return tipPostJpaRepository.findTop3ByCertificateEntityOrderByLikeCountDesc(certificateEntity);
     }
 
     public void updateTipPost(Long postId,
                               String title,
                               String content,
-                              Set<RecommendTag> newTags,
+                              Set<RecommendTagEntity> newTags,
                               List<Image> images,
                               UserEntity userEntity
     ) {

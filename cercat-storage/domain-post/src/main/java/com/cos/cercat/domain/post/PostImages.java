@@ -11,7 +11,7 @@ import java.util.List;
 @Embeddable
 public class PostImages {
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "postEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PostImageEntity> postImageEntities = new ArrayList<>();
 
     public void addAll(List<PostImageEntity> postImageEntities) {

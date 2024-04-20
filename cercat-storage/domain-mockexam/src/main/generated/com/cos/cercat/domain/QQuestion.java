@@ -11,7 +11,7 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QQuestion is a Querydsl query type for Question
+ * QQuestion is a Querydsl query type for QuestionContent
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QQuestion extends EntityPathBase<Question> {
@@ -20,7 +20,7 @@ public class QQuestion extends EntityPathBase<Question> {
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QQuestion question = new QQuestion("question");
+    public static final QQuestion question = new QQuestion("questionEntity");
 
     public final NumberPath<Integer> correctOption = createNumber("correctOption", Integer.class);
 
