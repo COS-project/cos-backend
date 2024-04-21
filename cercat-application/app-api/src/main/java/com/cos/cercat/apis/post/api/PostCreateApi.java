@@ -26,7 +26,7 @@ import java.util.List;
 public class PostCreateApi {
 
     private final PostCreateUseCase postCreateUseCase;
-    
+
 
     @PostMapping(path = "/certificates/{certificateId}/{postType}/posts", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "게시글 생성")
