@@ -2,13 +2,9 @@ package com.cos.cercat.apis.post.api;
 
 import com.cos.cercat.apis.post.app.usecase.PostCreateUseCase;
 import com.cos.cercat.apis.post.dto.request.PostCreateRequest;
-import com.cos.cercat.domain.certificate.TargetCertificate;
-import com.cos.cercat.domain.post.CreatePostService;
 import com.cos.cercat.domain.post.PostType;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.domain.user.TargetUser;
 import com.cos.cercat.dto.UserDTO;
-import com.cos.cercat.gcs.FileUploader;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

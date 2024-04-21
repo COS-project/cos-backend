@@ -24,4 +24,8 @@ public class NormalPostEntity extends PostEntity {
         super(title, content, userEntity, certificateEntity, postType, images);
     }
 
+    public NormalPostEntity(String title, String content, UserEntity userEntity, CertificateEntity certificateEntity, PostType postType) {
+        super(title, content, userEntity, certificateEntity, postType);
+    }
+
 }

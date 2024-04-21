@@ -28,6 +28,10 @@ public class TipPostEntity extends PostEntity {
         addRecommendTags(recommendTagEntities);
     }
 
+    public TipPostEntity(String title, String content, UserEntity userEntity, CertificateEntity certificateEntity, PostType postType) {
+        super(title, content, userEntity, certificateEntity, postType);
+    }
+
     private void addRecommendTags(Set<RecommendTagEntity> recommendTagEntities) {
         recommendTagEntities.forEach(recommendTag -> recommendTag.setTipPost(this));
         this.recommendTags.addAll(recommendTagEntities);

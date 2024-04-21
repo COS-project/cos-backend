@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public record PostCreateRequest(
         String title,
         String content,
-        Set<RecommendTagDTO> tags,
+        Set<RecommendTag> tags,
         Integer examYear,
         Integer round,
         Integer questionSequence
@@ -57,7 +57,7 @@ public record PostCreateRequest(
                 PostType.TIP,
                 images,
                 tags.stream()
-                        .map(RecommendTagDTO::toEntity)
+                        .map(recommendTag -> new RecommendTagDTO(recommendTag.tagType(), recommendTag.tagName()).toEntity())
                         .collect(Collectors.toSet())
         );
     }

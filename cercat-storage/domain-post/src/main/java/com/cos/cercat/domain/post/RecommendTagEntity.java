@@ -28,4 +28,18 @@ public class RecommendTagEntity {
         this.tagType = tagType;
         this.tagName = tagName;
     }
+
+    public RecommendTagEntity(TipPostEntity tipPost, TagType tagType, String tagName) {
+        this.tagType = tagType;
+        this.tagName = tagName;
+        this.tipPost = tipPost;
+    }
+
+    public static RecommendTagEntity of(TipPostEntity tipPost, RecommendTag recommendTag) {
+        return new RecommendTagEntity(
+                tipPost,
+                recommendTag.tagType(),
+                recommendTag.tagName()
+        );
+    }
 }
