@@ -1,9 +1,9 @@
 package com.cos.cercat.domain.post;
 
+import com.cos.cercat.domain.comment.PostCommentEntity;
 import com.cos.cercat.entity.Image;
 import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.domain.UserEntity;
-import com.cos.cercat.domain.comment.PostComment;
 import com.cos.cercat.domain.comment.PostComments;
 import com.cos.cercat.entity.BaseTimeEntity;
 import jakarta.persistence.*;
@@ -14,6 +14,7 @@ import org.hibernate.annotations.ColumnDefault;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -68,6 +69,35 @@ public class PostEntity extends BaseTimeEntity {
         this.postType = postType;
     }
 
+    public Post toDomain(List<String> postImageUrls, int commentCount, Set<RecommendTag> recommendTags) {
+        return switch (postType) {
+            case COMMENTARY ->
+                new CommentaryPost(
+                    id,
+                    userEntity.toDomain(),
+                    new PostContent(title, content, postType, postImageUrls),
+                    new PostStatus(likeCount, commentCount),
+                    ((CommentaryPostEntity) this).getQuestionEntity().toDomain(),
+                    new DateTime(createdAt, modifiedAt)
+                );
+            case TIP -> new TipPost(
+                    id,
+                    userEntity.toDomain(),
+                    new PostContent(title, content, postType, postImageUrls),
+                    new PostStatus(likeCount, commentCount),
+                    new DateTime(createdAt, modifiedAt),
+                    recommendTags
+            );
+            default -> new Post(
+                    id,
+                    userEntity.toDomain(),
+                    new PostContent(title, content, postType, postImageUrls),
+                    new PostStatus(likeCount, commentCount),
+                    new DateTime(createdAt, modifiedAt)
+            );
+        };
+    }
+
     public void increaseLikeCount() {
         this.likeCount++;
     }
@@ -76,7 +106,7 @@ public class PostEntity extends BaseTimeEntity {
         this.likeCount--;
     }
 
-    public void addComment(PostComment comment) {
+    public void addComment(PostCommentEntity comment) {
         comment.setPostEntity(this);
         this.getPostComments().addComment(comment);
     }

@@ -1,7 +1,7 @@
 package com.cos.cercat.domain;
 
 import com.cos.cercat.domain.EmbeddedId.CommentLikePK;
-import com.cos.cercat.domain.comment.PostComment;
+import com.cos.cercat.domain.comment.PostCommentEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -12,7 +12,8 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class CommentLike {
+@Table(name = "comment_like")
+public class CommentLikeEntity {
 
     @EmbeddedId
     private CommentLikePK commentLikePK = new CommentLikePK();
@@ -26,15 +27,15 @@ public class CommentLike {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private PostComment comment;
+    private PostCommentEntity comment;
 
-    private CommentLike(UserEntity userEntity, PostComment comment) {
+    private CommentLikeEntity(UserEntity userEntity, PostCommentEntity comment) {
         this.userEntity = userEntity;
         this.comment = comment;
     }
 
-    public static CommentLike of(UserEntity userEntity, PostComment comment) {
-        return new CommentLike(
+    public static CommentLikeEntity of(UserEntity userEntity, PostCommentEntity comment) {
+        return new CommentLikeEntity(
                 userEntity,
                 comment
         );

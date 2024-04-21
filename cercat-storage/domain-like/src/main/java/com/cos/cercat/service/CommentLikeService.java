@@ -1,10 +1,10 @@
 package com.cos.cercat.service;
 
 import com.cos.cercat.domain.UserEntity;
-import com.cos.cercat.domain.comment.PostComment;
-import com.cos.cercat.domain.CommentLike;
+import com.cos.cercat.domain.comment.PostCommentEntity;
+import com.cos.cercat.domain.CommentLikeEntity;
 import com.cos.cercat.domain.EmbeddedId.CommentLikePK;
-import com.cos.cercat.repository.CommentLikeRepository;
+import com.cos.cercat.repository.CommentLikeJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,19 +15,19 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CommentLikeService {
 
-    private final CommentLikeRepository commentLikeRepository;
+    private final CommentLikeJpaRepository commentLikeJpaRepository;
 
     public boolean existsLike(CommentLikePK commentLikePK) {
-        return commentLikeRepository.existsCommentLikeByCommentLikePK(commentLikePK);
+        return commentLikeJpaRepository.existsCommentLikeByCommentLikePK(commentLikePK.getCommentId(), commentLikePK.getUserId());
     }
 
-    public void createLike(PostComment postComment, UserEntity userEntity) {
-        commentLikeRepository.save(CommentLike.of(userEntity, postComment));
-        postComment.increaseLikeCount();
+    public void createLike(PostCommentEntity postCommentEntity, UserEntity userEntity) {
+        commentLikeJpaRepository.save(CommentLikeEntity.of(userEntity, postCommentEntity));
+        postCommentEntity.increaseLikeCount();
     }
 
-    public void deleteLike(PostComment postComment, CommentLikePK commentLikePK) {
-        commentLikeRepository.deleteById(commentLikePK);
-        postComment.decreaseLikeCount();
+    public void deleteLike(PostCommentEntity postCommentEntity, CommentLikePK commentLikePK) {
+        commentLikeJpaRepository.deleteById(commentLikePK);
+        postCommentEntity.decreaseLikeCount();
     }
 }

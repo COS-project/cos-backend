@@ -2,9 +2,9 @@ package com.cos.cercat.service;
 
 import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.post.PostEntity;
-import com.cos.cercat.repository.PostLikeRepository;
+import com.cos.cercat.repository.PostLikeJpaRepository;
 import com.cos.cercat.domain.EmbeddedId.PostLikePK;
-import com.cos.cercat.domain.PostLike;
+import com.cos.cercat.domain.PostLikeEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,19 +14,19 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PostLikeService {
 
-    private final PostLikeRepository postLikeRepository;
+    private final PostLikeJpaRepository postLikeJpaRepository;
 
     public boolean existsLike(PostLikePK postLikePK) {
-        return postLikeRepository.existsPostLikeByPostLikePK(postLikePK);
+        return postLikeJpaRepository.existsPostLikeByPostLikePK(postLikePK.getPostId(), postLikePK.getUserId());
     }
 
     public void createLike(PostEntity postEntity, UserEntity userEntity) {
-        postLikeRepository.save(PostLike.of(userEntity, postEntity));
+        postLikeJpaRepository.save(PostLikeEntity.of(userEntity, postEntity));
         postEntity.increaseLikeCount();
     }
 
     public void deleteLike(PostEntity postEntity, PostLikePK postLikePK) {
-        postLikeRepository.deleteById(postLikePK);
+        postLikeJpaRepository.deleteById(postLikePK);
         postEntity.decreaseLikeCount();
     }
 

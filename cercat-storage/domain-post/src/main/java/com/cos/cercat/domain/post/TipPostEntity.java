@@ -3,6 +3,7 @@ package com.cos.cercat.domain.post;
 import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.entity.Image;
 import com.cos.cercat.domain.CertificateEntity;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -19,6 +20,7 @@ import java.util.Set;
 @Getter
 @OnDelete(action = OnDeleteAction.CASCADE)
 @Table(name = "tip_post")
+@DiscriminatorValue("TipPost")
 public class TipPostEntity extends PostEntity {
 
     private RecommendTags recommendTags = new RecommendTags();

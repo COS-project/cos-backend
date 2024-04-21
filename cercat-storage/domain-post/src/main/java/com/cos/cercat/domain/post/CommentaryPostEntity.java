@@ -18,6 +18,7 @@ import java.util.List;
 @Getter
 @OnDelete(action = OnDeleteAction.CASCADE)
 @Table(name = "commentary_post")
+@DiscriminatorValue("CommentaryPost")
 public class CommentaryPostEntity extends PostEntity {
 
     @ManyToOne
@@ -47,5 +48,16 @@ public class CommentaryPostEntity extends PostEntity {
 
     public void updateQuestion(QuestionEntity questionEntity) {
         this.questionEntity = questionEntity;
+    }
+
+    public Post toDomain(List<String> postImageUrls, int commentCount) {
+        return new CommentaryPost(
+                id,
+                userEntity.toDomain(),
+                new PostContent(title, content, postType, postImageUrls),
+                new PostStatus(likeCount, commentCount),
+                ((CommentaryPostEntity) this).getQuestionEntity().toDomain(),
+                new DateTime(createdAt, modifiedAt)
+        );
     }
 }

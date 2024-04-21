@@ -8,4 +8,11 @@ public record PostContent(
         PostType postType,
         List<String> imageUrls
 ) {
+
+    public String getThumbnail() {
+        if (imageUrls.isEmpty()) {
+            return "";
+        }
+        return imageUrls.get(0);
+    }
 }

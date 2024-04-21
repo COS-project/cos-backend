@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.like.api;
 
 import com.cos.cercat.apis.like.app.usecase.LikeFlipUseCase;
-import com.cos.cercat.apis.like.dto.request.LikeType;
+import com.cos.cercat.domain.like.LikeTargetType;
 import com.cos.cercat.common.domain.Response;
 import com.cos.cercat.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,12 +21,12 @@ public class LikeFlipApi {
 
     private final LikeFlipUseCase likeFlipUseCase;
 
-    @PostMapping("/{likeType}/likes/{id}")
+    @PostMapping("/{likeTargetType}/likes/{id}")
     @Operation(summary = "좋아요 생성 및 취소")
-    public Response<Void> flipPostLike(@PathVariable LikeType likeType,
+    public Response<Void> flipPostLike(@PathVariable LikeTargetType likeTargetType,
                                        @PathVariable Long id,
                                        @AuthenticationPrincipal UserDTO currentUser) {
-        likeFlipUseCase.flipLike(likeType, id, currentUser.getId());
+        likeFlipUseCase.flipLike(likeTargetType, id, currentUser.getId());
         return Response.success("게시글 좋아요/취소 성공");
     }
 

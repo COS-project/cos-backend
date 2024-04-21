@@ -1,4 +1,4 @@
-package com.cos.cercat.dto;
+package com.cos.cercat.domain.post;
 
 public record CommentaryPostSearchCond(
         Integer examYear,

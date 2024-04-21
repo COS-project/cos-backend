@@ -3,8 +3,8 @@ package com.cos.cercat.service.comment;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.domain.UserEntity;
-import com.cos.cercat.domain.comment.PostComment;
-import com.cos.cercat.repository.comment.PostCommentRepository;
+import com.cos.cercat.domain.comment.PostCommentEntity;
+import com.cos.cercat.repository.comment.PostCommentJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -16,29 +16,29 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PostCommentService {
 
-    private final PostCommentRepository postCommentRepository;
+    private final PostCommentJpaRepository postCommentJpaRepository;
 
-    public PostComment getPostComment(Long commentId) {
-        return postCommentRepository.findById(commentId).orElseThrow(() ->
+    public PostCommentEntity getPostComment(Long commentId) {
+        return postCommentJpaRepository.findById(commentId).orElseThrow(() ->
                 new CustomException(ErrorCode.COMMENT_NOT_FOUND));
     }
 
-    public Slice<PostComment> getMyPostComments(UserEntity userEntity, Pageable pageable) {
-        return postCommentRepository.findPostCommentsByUserEntity(userEntity, pageable);
+    public Slice<PostCommentEntity> getMyPostComments(UserEntity userEntity, Pageable pageable) {
+        return postCommentJpaRepository.findPostCommentsByUserEntity(userEntity, pageable);
     }
 
     public void deletePostComment(Long commentId, UserEntity userEntity) {
-        PostComment postComment = getPostComment(commentId);
+        PostCommentEntity postCommentEntity = getPostComment(commentId);
 
-        if (postComment.isAuthorized(userEntity)) {
-            postCommentRepository.delete(postComment);
+        if (postCommentEntity.isAuthorized(userEntity)) {
+            postCommentJpaRepository.delete(postCommentEntity);
             return;
         }
         throw new CustomException(ErrorCode.NO_PERMISSION_ERROR);
     }
 
-    public PostComment getPostCommentWithLock(Long commentId) {
-        return postCommentRepository.findByIdWithPessimisticLock(commentId).orElseThrow(() ->
+    public PostCommentEntity getPostCommentWithLock(Long commentId) {
+        return postCommentJpaRepository.findByIdWithPessimisticLock(commentId).orElseThrow(() ->
                 new CustomException(ErrorCode.COMMENT_NOT_FOUND));
     }
 

@@ -3,6 +3,7 @@ package com.cos.cercat.domain.post;
 import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.entity.Image;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -18,6 +19,7 @@ import java.util.List;
 @Getter
 @OnDelete(action = OnDeleteAction.CASCADE)
 @Table(name = "normal_post")
+@DiscriminatorValue("NormalPost")
 public class NormalPostEntity extends PostEntity {
 
     public NormalPostEntity(String title, String content, UserEntity userEntity, CertificateEntity certificateEntity, PostType postType, List<Image> images) {

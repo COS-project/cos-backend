@@ -1,6 +1,9 @@
 package com.cos.cercat.domain.comment;
 
 import com.cos.cercat.domain.UserEntity;
+import com.cos.cercat.domain.post.DateTime;
+import com.cos.cercat.domain.post.PostComment;
+import com.cos.cercat.domain.post.PostCommentWithChild;
 import com.cos.cercat.domain.post.PostEntity;
 import com.cos.cercat.entity.BaseTimeEntity;
 import jakarta.persistence.*;
@@ -9,12 +12,16 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-public class PostComment extends BaseTimeEntity {
+@Table(name = "post_comment")
+public class PostCommentEntity extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,15 +50,27 @@ public class PostComment extends BaseTimeEntity {
     @Column(length = 500)
     private String content;
 
-    private PostComment(UserEntity userEntity, PostEntity postEntity, Long parentCommentId, String content) {
+    private PostCommentEntity(UserEntity userEntity, PostEntity postEntity, Long parentCommentId, String content) {
         this.userEntity = userEntity;
         this.postEntity = postEntity;
         this.parentCommentId = parentCommentId;
         this.content = content;
     }
 
-    public static PostComment of(UserEntity userEntity, PostEntity postEntity, String content) {
-        return new PostComment(userEntity, postEntity, null, content);
+    public PostComment toDomain() {
+        return new PostComment(
+                this.id,
+                this.userEntity.toDomain(),
+                this.content,
+                this.parentCommentId,
+                this.likeCount,
+                new DateTime(createdAt, modifiedAt),
+                new ArrayList<>()
+        );
+    }
+
+    public static PostCommentEntity of(UserEntity userEntity, PostEntity postEntity, String content) {
+        return new PostCommentEntity(userEntity, postEntity, null, content);
     }
 
     public void increaseLikeCount() {
@@ -62,7 +81,7 @@ public class PostComment extends BaseTimeEntity {
         this.likeCount--;
     }
 
-    public void addChildComment(PostComment child) {
+    public void addChildComment(PostCommentEntity child) {
         child.setParentCommentId(this.getId());
         this.getChildPostComments().addChildComment(child);
     }

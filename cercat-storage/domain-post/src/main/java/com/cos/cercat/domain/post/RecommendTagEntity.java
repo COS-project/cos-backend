@@ -42,4 +42,11 @@ public class RecommendTagEntity {
                 recommendTag.tagName()
         );
     }
+
+    public RecommendTag toDomain() {
+        return new RecommendTag(
+                tagType,
+                tagName
+        );
+    }
 }

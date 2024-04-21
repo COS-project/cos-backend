@@ -6,7 +6,7 @@ public record QuestionContent(
         int questionSequence,
         String questionText,
         int correctOption,
-        String imageUrl,
+        String questionImageUrl,
         List<QuestionOption> questionOptions,
         int score
 ) {

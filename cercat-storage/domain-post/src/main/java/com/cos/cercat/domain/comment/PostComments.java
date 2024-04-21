@@ -10,19 +10,19 @@ public class PostComments {
 
     @OrderBy("createdAt ASC")
     @OneToMany(mappedBy = "postEntity",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PostComment> postComments = new ArrayList<>();
+    private List<PostCommentEntity> postCommentEntities = new ArrayList<>();
 
-    public void addComment(PostComment comment) {
-        this.postComments.add(comment);
+    public void addComment(PostCommentEntity comment) {
+        this.postCommentEntities.add(comment);
     }
 
-    public List<PostComment> getAll() {
-        return this.postComments;
+    public List<PostCommentEntity> getAll() {
+        return this.postCommentEntities;
     }
 
 
     public int countComments() {
-        return this.postComments.size();
+        return this.postCommentEntities.size();
     }
 
 }

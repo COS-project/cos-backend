@@ -15,9 +15,9 @@ public class ChildPostComments {
 
     @OrderBy("createdAt ASC")
     @OneToMany(mappedBy = "parentCommentId", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PostComment> childPostComments = new ArrayList<>();
+    private List<PostCommentEntity> childPostCommentEntities = new ArrayList<>();
 
-    public void addChildComment(PostComment child) {
-        this.getChildPostComments().add(child);
+    public void addChildComment(PostCommentEntity child) {
+        this.getChildPostCommentEntities().add(child);
     }
 }

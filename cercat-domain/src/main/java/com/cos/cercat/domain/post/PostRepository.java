@@ -1,5 +1,7 @@
 package com.cos.cercat.domain.post;
 
+import com.cos.cercat.common.domain.Cursor;
+import com.cos.cercat.common.domain.SliceResult;
 import com.cos.cercat.domain.certificate.TargetCertificate;
 import com.cos.cercat.domain.mockexam.Question;
 import com.cos.cercat.domain.user.TargetUser;
@@ -21,4 +23,10 @@ public interface PostRepository {
                      TargetCertificate targetCertificate,
                      PostContent postContent,
                      Set<RecommendTag> recommendTags);
+
+    SliceResult<Post> find(TargetCertificate targetCertificate,
+                           CommentaryPostSearchCond commentaryPostSearchCond,
+                           Cursor cursor);
+
+    PostWithComments findDetail(TargetPost targetPost);
 }

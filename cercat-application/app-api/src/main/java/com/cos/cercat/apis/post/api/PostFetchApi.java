@@ -4,7 +4,7 @@ import com.cos.cercat.apis.post.app.usecase.PostFetchUseCase;
 import com.cos.cercat.apis.post.dto.response.PostResponse;
 import com.cos.cercat.apis.post.dto.response.PostWithCommentsResponse;
 import com.cos.cercat.domain.post.PostType;
-import com.cos.cercat.dto.CommentaryPostSearchCond;
+import com.cos.cercat.domain.post.CommentaryPostSearchCond;
 import com.cos.cercat.common.domain.Response;
 import com.cos.cercat.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;

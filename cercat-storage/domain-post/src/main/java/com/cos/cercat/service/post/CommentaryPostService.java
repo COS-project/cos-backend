@@ -5,7 +5,7 @@ import com.cos.cercat.domain.QuestionEntity;
 import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.post.CommentaryPostEntity;
 import com.cos.cercat.entity.Image;
-import com.cos.cercat.dto.CommentaryPostSearchCond;
+import com.cos.cercat.domain.post.CommentaryPostSearchCond;
 import com.cos.cercat.repository.post.CommentaryPostJpaRepository;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;

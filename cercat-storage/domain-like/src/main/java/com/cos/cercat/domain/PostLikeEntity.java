@@ -12,7 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(staticName = "from")
 @Getter
-public class PostLike {
+@Table(name = "post_like")
+public class PostLikeEntity {
 
     @EmbeddedId
     private PostLikePK postLikePK = new PostLikePK();
@@ -27,13 +28,13 @@ public class PostLike {
     @JoinColumn(name = "post_id")
     private PostEntity postEntity;
 
-    private PostLike(UserEntity userEntity, PostEntity postEntity) {
+    private PostLikeEntity(UserEntity userEntity, PostEntity postEntity) {
         this.userEntity = userEntity;
         this.postEntity = postEntity;
     }
 
-    public static PostLike of(UserEntity userEntity, PostEntity postEntity) {
-        return new PostLike(
+    public static PostLikeEntity of(UserEntity userEntity, PostEntity postEntity) {
+        return new PostLikeEntity(
                 userEntity,
                 postEntity
         );
