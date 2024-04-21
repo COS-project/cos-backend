@@ -1,4 +1,4 @@
-# Storage Module
+# Storage Module
 
 Cercat 어플리케이션의 Storage 모듈입니다.
 
