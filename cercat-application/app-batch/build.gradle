@@ -1,5 +1,9 @@
 dependencies {
     implementation project(':cercat-common')
+    implementation project(':cercat-domain')
+    implementation project(':cercat-storage:domain-post')
+    implementation project(':cercat-storage:domain-board')
+    implementation project(':cercat-storage:domain-mockexam')
     implementation project(':cercat-storage:domain-user')
     implementation project(':cercat-storage:domain-alarm')
     implementation project(':cercat-storage:domain-certificate')

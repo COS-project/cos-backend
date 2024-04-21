@@ -17,8 +17,6 @@ public class CreatePostService {
     private final PostAppender postAppender;
     private final QuestionReader questionReader;
 
-
-
     public void createCommentaryPost(TargetUser targetUser,
                                      TargetCertificate targetCertificate,
                                      PostContent postContent,
