@@ -1,5 +1,5 @@
 ---
-name: feature
+name: Feature
 about: 새로운 기능 구현하기
 title: "[FEATURE] view_feature 내용"
 labels: enhancement

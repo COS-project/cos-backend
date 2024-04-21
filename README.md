@@ -41,14 +41,16 @@
 
 # 멀티모듈 구조
 ```
-📁 cercat-application # Controller, UseCase(facade)
-📁 cercat-common # 공통 기능
-📁 cercat-domain # Entity, Service, Repository
-📁 cercat-infrastructure # 외부 API 기능(GCP Cloud Storage)
+📁 cercat-application # Controller, Request, Response
+📁 cercat-common # 공통
+📁 cercat-domain # Service, Implementation
+📁 cercat-storage # Entity, Repository
+📁 cercat-client # 외부 API 기능(GCP Cloud Storage)
 ```
 - [cercat-application](https://github.com/COS-project/cos-backend/blob/main/cercat-application/README.md)
 - [cercat-common](https://github.com/COS-project/cos-backend/blob/main/cercat-common/README.md)
 - [cercat-domain](https://github.com/COS-project/cos-backend/blob/main/cercat-domain/README.md)
+- [cercat-storage](https://github.com/COS-project/cos-backend/blob/main/cercat-storage/README.md)
 - [cercat-external](https://github.com/COS-project/cos-backend/blob/main/cercat-external/README.md)
 
 # 패키지 구조

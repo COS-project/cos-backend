@@ -1,5 +1,5 @@
 ---
-name: hotfix
+name: Hotfix
 about: 빠르게 수정하기
 title: "[HOTFIX] hotfix 내용"
 labels: bug
