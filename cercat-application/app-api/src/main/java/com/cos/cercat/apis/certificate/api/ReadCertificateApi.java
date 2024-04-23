@@ -23,7 +23,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v2")
 @Tag(name = "자격증 조회 API")
 public class ReadCertificateApi {
 

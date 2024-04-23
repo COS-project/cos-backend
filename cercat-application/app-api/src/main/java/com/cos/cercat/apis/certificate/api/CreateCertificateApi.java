@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v2")
 @Tag(name = "자격증 생성 API")
 public class CreateCertificateApi {
 

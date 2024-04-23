@@ -24,7 +24,7 @@ import static com.cos.cercat.apis.global.util.CursorConvertor.toCursor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v2")
 @Tag(name = "통합 검색 API")
 public class SearchPostApi {
 

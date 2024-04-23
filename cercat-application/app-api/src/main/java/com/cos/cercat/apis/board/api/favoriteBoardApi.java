@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v2")
 @Tag(name = "게시판 즐겨찾기 생성/취소 API")
 public class favoriteBoardApi {
 
