@@ -1,16 +1,13 @@
 package com.cos.cercat.domain;
 
 import com.cos.cercat.domain.EmbeddedId.PostLikePK;
-import com.cos.cercat.domain.post.PostEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(staticName = "from")
 @Getter
 @Table(name = "post_like")
 public class PostLikeEntity {

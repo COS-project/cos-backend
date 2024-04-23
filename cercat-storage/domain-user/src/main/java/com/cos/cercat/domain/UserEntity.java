@@ -1,9 +1,10 @@
 package com.cos.cercat.domain;
 
+import com.cos.cercat.common.domain.Image;
 import com.cos.cercat.domain.user.Role;
 import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserProfileImage;
-import com.cos.cercat.entity.Image;
+import com.cos.cercat.entity.ImageEntity;
 import com.cos.cercat.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,7 +19,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @ToString
 @Builder
-@Table(name = "Users")
+@Table(name = "users")
 @SQLDelete(sql = "UPDATE users SET removed_at = NOW() WHERE user_id = ?")
 public class UserEntity extends BaseTimeEntity {
 
@@ -39,18 +40,11 @@ public class UserEntity extends BaseTimeEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "image_id")
-    private Image mainProfileImage;
+    private ImageEntity mainProfileImageEntity;
 
-    public void createUserInfo(String nickname, Image profileImage) {
+    public void createUserInfo(String nickname, ImageEntity profileImageEntity) {
         this.nickname = nickname;
-        this.mainProfileImage = profileImage;
-    }
-
-    public String getMainProfileImageUrl() {
-        if (Objects.nonNull(mainProfileImage)) {
-            return mainProfileImage.getImageUrl();
-        }
-        return "";
+        this.mainProfileImageEntity = profileImageEntity;
     }
 
     @Enumerated(EnumType.STRING)
@@ -62,8 +56,10 @@ public class UserEntity extends BaseTimeEntity {
         return this;
     }
 
-    public void updateRole() {
-        this.role = Role.ROLE_USER;
+    public Image getMainProfileImage() {
+        return mainProfileImageEntity != null ?
+                mainProfileImageEntity.toImage()
+                : Image.notAssigned();
     }
 
     public User toDomain() {
@@ -73,7 +69,9 @@ public class UserEntity extends BaseTimeEntity {
                 this.email,
                 this.username,
                 UserProfileImage.of(
-                        getMainProfileImageUrl(),
+                        mainProfileImageEntity != null ?
+                                mainProfileImageEntity.toImage()
+                                : Image.notAssigned(),
                         kakaoProfileImage
                 ),
                 this.role
@@ -81,13 +79,17 @@ public class UserEntity extends BaseTimeEntity {
     }
 
     public static UserEntity from(User user) {
+        Image mainProfileImage = user.userProfileImage().getMainProfileImage();
         return UserEntity.builder()
                 .id(user.id())
                 .nickname(user.nickname())
                 .email(user.email())
                 .username(user.username())
-                .kakaoProfileImage(user.userProfileImage().kakaoProfileImageUrl())
-                .mainProfileImage(Image.from(user.userProfileImage().mainProfileImageUrl()))
+                .kakaoProfileImage(user.userProfileImage().getKakaoProfileImageUrl())
+                .mainProfileImageEntity(
+                        mainProfileImage != null ?
+                        ImageEntity.from(mainProfileImage)
+                        : null)
                 .role(user.userRole())
                 .build();
     }

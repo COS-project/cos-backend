@@ -1,7 +1,7 @@
 package com.cos.cercat.batch.alarm.job;
 
 import com.cos.cercat.domain.*;
-import com.cos.cercat.repository.AlarmRepository;
+import com.cos.cercat.repository.AlarmJpaRepository;
 import com.cos.cercat.repository.CertificateExamJpaRepository;
 import com.cos.cercat.repository.InterestCertificateJpaRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class AlarmBeforeExamApplicationTasklet implements Tasklet {
 
     private final CertificateExamJpaRepository certificateExamJpaRepository;
     private final InterestCertificateJpaRepository interestCertificateJpaRepository;
-    private final AlarmRepository alarmRepository;
+    private final AlarmJpaRepository alarmJpaRepository;
 
 
     @Override
@@ -50,8 +50,8 @@ public class AlarmBeforeExamApplicationTasklet implements Tasklet {
     }
 
     public int sendApplicationAlarm(List<UserEntity> userEntities, CertificateExamEntity certificateExamEntity) {
-        List<ExamAlarm> alarmList = userEntities.stream()
-                .map(user -> ExamAlarm.builder()
+        List<ExamAlarmEntity> alarmList = userEntities.stream()
+                .map(user -> ExamAlarmEntity.builder()
                         .receiveUserEntity(user)
                         .alarmType(AlarmType.BEFORE_APPLICATION)
                         .isRead(false)
@@ -59,6 +59,6 @@ public class AlarmBeforeExamApplicationTasklet implements Tasklet {
                         .build())
                 .toList();
 
-        return alarmRepository.saveAll(alarmList).size();
+        return alarmJpaRepository.saveAll(alarmList).size();
     }
 }

@@ -1,6 +1,5 @@
 package com.cos.cercat.domain.like;
 
-import com.cos.cercat.domain.post.TargetPost;
 import com.cos.cercat.domain.user.TargetUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -9,14 +8,19 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class LikeService {
 
-    private final PostLikeReader postLikeReader;
-    private final CommentLikeReader commentLikeReader;
+    private final LikeReader postLikeReader;
+    private final LikeManager likeManager;
 
-    public boolean isLiked(LikeTargetType likeTargetType, TargetUser targetUser, Long targetId) {
-        if (likeTargetType == LikeTargetType.POST) {
-            return postLikeReader.isLiked(targetUser, TargetPost.from(targetId));
-        } else {
-            return commentLikeReader.isLiked(targetUser, TargetComment.from(targetId));
+    //TODO: alarmSender 추가
+
+    public void flipLike(TargetUser targetUser, Like like) {
+        if (isLiked(targetUser, like)) {
+            likeManager.unLike(targetUser, like);
         }
+        likeManager.like(targetUser, like);
+    }
+
+    public boolean isLiked(TargetUser targetUser, Like like) {
+        return postLikeReader.isLiked(targetUser, like);
     }
 }

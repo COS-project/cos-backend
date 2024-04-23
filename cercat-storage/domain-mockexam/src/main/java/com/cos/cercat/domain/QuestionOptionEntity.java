@@ -1,8 +1,7 @@
 package com.cos.cercat.domain;
 
-import com.cos.cercat.domain.mockexam.Question;
 import com.cos.cercat.domain.mockexam.QuestionOption;
-import com.cos.cercat.entity.Image;
+import com.cos.cercat.entity.ImageEntity;
 import com.cos.cercat.domain.embededId.QuestionOptionPK;
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,7 +13,10 @@ import org.hibernate.annotations.OnDeleteAction;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-@Table(indexes = {@Index(columnList = "optionSequence", name = "idx_option_sequence")})
+@Table(
+        name = "question_option",
+        indexes = {@Index(columnList = "optionSequence", name = "idx_option_sequence")}
+)
 public class QuestionOptionEntity {
 
     @EmbeddedId
@@ -30,12 +32,12 @@ public class QuestionOptionEntity {
     @OneToOne
     @JoinColumn(name = "image_id")
     @Setter
-    private Image optionImage;
+    private ImageEntity optionImageEntity;
 
     private String optionContent;
 
     public String getImageUrl() {
-        return (this.optionImage != null) ? optionImage.getImageUrl() : "";
+        return (this.optionImageEntity != null) ? optionImageEntity.getImageUrl() : "";
     }
 
     public Integer getOptionSequence() {
@@ -46,7 +48,7 @@ public class QuestionOptionEntity {
         return new QuestionOption(
                 questionOptionPK.getOptionSequence(),
                 optionContent,
-                (optionImage != null) ? optionImage.getImageUrl() : ""
+                (optionImageEntity != null) ? optionImageEntity.getImageUrl() : ""
         );
     }
 

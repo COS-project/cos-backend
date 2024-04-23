@@ -8,7 +8,7 @@ import org.springframework.data.domain.Sort;
 
 public class CursorConvertor {
 
-    public static Cursor convertCursorToPage(Pageable pageable) {
+    public static Cursor toCursor(Pageable pageable) {
         return new Cursor(
                 pageable.getPageNumber(),
                 pageable.getOffset(),

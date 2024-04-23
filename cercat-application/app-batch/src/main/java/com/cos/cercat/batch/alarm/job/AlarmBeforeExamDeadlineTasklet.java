@@ -2,7 +2,7 @@ package com.cos.cercat.batch.alarm.job;
 
 
 import com.cos.cercat.domain.*;
-import com.cos.cercat.repository.AlarmRepository;
+import com.cos.cercat.repository.AlarmJpaRepository;
 import com.cos.cercat.repository.CertificateExamJpaRepository;
 import com.cos.cercat.repository.InterestCertificateJpaRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class AlarmBeforeExamDeadlineTasklet implements Tasklet {
 
     private final CertificateExamJpaRepository certificateExamJpaRepository;
     private final InterestCertificateJpaRepository interestCertificateJpaRepository;
-    private final AlarmRepository alarmRepository;
+    private final AlarmJpaRepository alarmJpaRepository;
 
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
@@ -47,8 +47,8 @@ public class AlarmBeforeExamDeadlineTasklet implements Tasklet {
     }
 
     private int sendDeadlineAlarm(List<UserEntity> userEntities, CertificateExamEntity certificateExamEntity) {
-        List<ExamAlarm> alarmList = userEntities.stream()
-                .map(user -> ExamAlarm.builder()
+        List<ExamAlarmEntity> alarmList = userEntities.stream()
+                .map(user -> ExamAlarmEntity.builder()
                         .receiveUserEntity(user)
                         .alarmType(AlarmType.DEADLINE)
                         .isRead(false)
@@ -56,6 +56,6 @@ public class AlarmBeforeExamDeadlineTasklet implements Tasklet {
                         .build())
                 .toList();
 
-        return alarmRepository.saveAll(alarmList).size();
+        return alarmJpaRepository.saveAll(alarmList).size();
     }
 }

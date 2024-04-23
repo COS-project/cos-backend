@@ -1,18 +1,21 @@
 package com.cos.cercat.apis.mockExam.dto.response;
 
 import com.cos.cercat.apis.certificate.dto.response.SubjectResponse;
+import com.cos.cercat.common.domain.Image;
 import com.cos.cercat.domain.QuestionEntity;
 import com.cos.cercat.domain.mockexam.Question;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public record QuestionResponse(
         Long questionId,
         MockExamResponse mockExam,
         SubjectResponse subject,
         int questionSeq,
         String questionText,
-        String questionImage,
+        Image questionImage,
         List<QuestionOptionResponse> questionOptions,
         int correctOption,
         int score
@@ -24,7 +27,7 @@ public record QuestionResponse(
                 SubjectResponse.from(entity.getSubjectEntity()),
                 entity.getQuestionSeq(),
                 entity.getQuestionText(),
-                entity.getImageUrl(),
+                entity.getQuestionImageEntity().toImage(),
                 entity.getQuestionOptions().stream()
                         .map(QuestionOptionResponse::from)
                         .toList(),
@@ -40,7 +43,7 @@ public record QuestionResponse(
                 SubjectResponse.from(question.subject()),
                 question.questionContent().questionSequence(),
                 question.questionContent().questionText(),
-                question.questionContent().questionImageUrl(),
+                question.questionContent().questionImage(),
                 question.questionContent().questionOptions().stream()
                         .map(QuestionOptionResponse::from)
                         .toList(),

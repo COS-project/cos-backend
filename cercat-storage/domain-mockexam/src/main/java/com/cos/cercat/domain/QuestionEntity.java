@@ -1,9 +1,8 @@
 package com.cos.cercat.domain;
 
-import com.cos.cercat.domain.mockexam.MockExam;
 import com.cos.cercat.domain.mockexam.Question;
 import com.cos.cercat.domain.mockexam.QuestionContent;
-import com.cos.cercat.entity.Image;
+import com.cos.cercat.entity.ImageEntity;
 import com.cos.cercat.domain.embededId.QuestionOptionPK;
 import jakarta.persistence.*;
 import lombok.*;
@@ -44,7 +43,7 @@ public class QuestionEntity {
     @OneToOne
     @JoinColumn(name = "image_id")
     @Setter
-    private Image questionImage;
+    private ImageEntity questionImageEntity;
 
     private int questionSeq;
 
@@ -57,6 +56,24 @@ public class QuestionEntity {
 
     private int score;
 
+    public QuestionEntity(Long id,
+                          MockExamEntity mockExamEntity,
+                          SubjectEntity subjectEntity,
+                          ImageEntity questionImageEntity,
+                          int questionSeq,
+                          String questionText,
+                          int correctOption,
+                          int score) {
+        this.id = id;
+        this.mockExamEntity = mockExamEntity;
+        this.subjectEntity = subjectEntity;
+        this.questionImageEntity = questionImageEntity;
+        this.questionSeq = questionSeq;
+        this.questionText = questionText;
+        this.correctOption = correctOption;
+        this.score = score;
+    }
+
     private QuestionEntity(MockExamEntity mockExamEntity) {
         this.mockExamEntity = mockExamEntity;
     }
@@ -64,6 +81,19 @@ public class QuestionEntity {
     public static QuestionEntity from(MockExamEntity mockExamEntity) {
         return new QuestionEntity(
                 mockExamEntity
+        );
+    }
+
+    public static QuestionEntity from(Question question) {
+        return new QuestionEntity(
+                question.id(),
+                MockExamEntity.from(question.mockExam()),
+                SubjectEntity.from(question.subject()),
+                ImageEntity.from(question.questionContent().questionImage()),
+                question.questionContent().questionSequence(),
+                question.questionContent().questionText(),
+                question.questionContent().correctOption(),
+                question.questionContent().score()
         );
     }
 
@@ -76,7 +106,7 @@ public class QuestionEntity {
                         questionSeq,
                         questionText,
                         correctOption,
-                        getImageUrl(),
+                        questionImageEntity != null ? questionImageEntity.toImage() : null,
                         questionOptions.stream()
                                 .map(QuestionOptionEntity::toDomain)
                                 .toList(),
@@ -103,7 +133,7 @@ public class QuestionEntity {
                         .questionOptionPK(QuestionOptionPK.from(1))
                         .questionEntity(this)
                         .optionContent(option.substring(1))
-                        .optionImage(null)
+                        .optionImageEntity(null)
                         .build();
                 questionOptions.add(questionOptionEntity);
             }
@@ -112,7 +142,7 @@ public class QuestionEntity {
                         .questionOptionPK(QuestionOptionPK.from(2))
                         .questionEntity(this)
                         .optionContent(option.substring(1))
-                        .optionImage(null)
+                        .optionImageEntity(null)
                         .build();
                 questionOptions.add(questionOptionEntity);
             }
@@ -121,7 +151,7 @@ public class QuestionEntity {
                         .questionOptionPK(QuestionOptionPK.from(3))
                         .questionEntity(this)
                         .optionContent(option.substring(1))
-                        .optionImage(null)
+                        .optionImageEntity(null)
                         .build();
                 questionOptions.add(questionOptionEntity);
             }
@@ -130,7 +160,7 @@ public class QuestionEntity {
                         .questionOptionPK(QuestionOptionPK.from(4))
                         .questionEntity(this)
                         .optionContent(option.substring(1))
-                        .optionImage(null)
+                        .optionImageEntity(null)
                         .build();
                 questionOptions.add(questionOptionEntity);
             }
@@ -139,8 +169,8 @@ public class QuestionEntity {
     }
 
     public String getImageUrl() {
-        if (Objects.nonNull(questionImage)) {
-            return questionImage.getImageUrl();
+        if (Objects.nonNull(questionImageEntity)) {
+            return questionImageEntity.getImageUrl();
         }
         return "";
     }

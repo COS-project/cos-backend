@@ -15,9 +15,12 @@ public record UserResponse(
     }
 
     public static UserResponse from(User user) {
+
         return new UserResponse(
                 user.id(),
-                user.nickname(),
+                user.nickname() != null ?
+                        user.nickname()
+                        : user.username(),
                 user.email(),
                 user.getUserProfileImage()
         );

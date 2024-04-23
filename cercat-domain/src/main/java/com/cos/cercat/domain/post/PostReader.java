@@ -3,54 +3,56 @@ package com.cos.cercat.domain.post;
 import com.cos.cercat.common.domain.Cursor;
 import com.cos.cercat.common.domain.SliceResult;
 import com.cos.cercat.domain.certificate.TargetCertificate;
+import com.cos.cercat.domain.user.TargetUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class PostReader {
 
-    private final PostRepository postRepository;
+    private final ReadPostRepository postRepository;
 
-    public SliceResult<Post> read(TargetCertificate targetCertificate,
-                                  CommentaryPostSearchCond commentaryPostSearchCond,
-                                  Cursor cursor) {
-        return postRepository.find(targetCertificate, commentaryPostSearchCond, cursor);
+    public Post readToLike(TargetPost targetPost) {
+        return postRepository.findWithLock(targetPost);
+    }
+
+    public Post read(TargetPost targetPost) {
+        return postRepository.find(targetPost);
     }
 
     public PostWithComments readDetail(TargetPost targetPost) {
         PostWithComments postWithComments = postRepository.findDetail(targetPost);
-        List<PostComment> organizedComments = organizeChildComments(postWithComments.postComments());
+        List<PostComment> organizedComments = postWithComments.organizeChildComments();
         return PostWithComments.of(postWithComments.post(), organizedComments);
 
     }
 
-    private List<PostComment> organizeChildComments(List<PostComment> postComments) {
-        Map<Long, PostComment> map = postComments.stream()
-                .collect(Collectors.toMap(PostComment::id, Function.identity()));
-
-        map.values().stream()
-                .filter(PostComment::hasParent)
-                .forEach(postComment -> {
-                    Long parentId = postComment.parentId();
-                    PostComment parentComment = map.get(parentId);
-                    if (parentComment != null) {
-                        parentComment.addChildren(postComment);
-                    }
-                });
-
-        return map.values().stream()
-                .filter(PostComment::hasParent)
-                .sorted(Comparator
-                        .comparing(PostComment::dateTime, Comparator.comparing(DateTime::createdAt).reversed())
-                        .thenComparing(PostComment::id))
-                .collect(Collectors.toList());
+    public PostComment readComment(TargetComment targetComment) {
+        return postRepository.find(targetComment);
     }
 
+    public PostComment readCommentToLike(TargetComment targetComment) {
+        return postRepository.findCommentWithLock(targetComment);
+    }
+
+    public SliceResult<PostComment> readComment(TargetUser targetUser, Cursor cursor) {
+        return postRepository.findComment(targetUser, cursor);
+    }
+
+    public List<Post> readTop3TipPosts(TargetCertificate targetCertificate) {
+        return postRepository.findTop3TipPosts(targetCertificate);
+    }
+
+    public SliceResult<Post> readMyPosts(TargetUser targetUser, PostType postType, Cursor cursor) {
+        return switch (postType) {
+            case COMMENTARY -> postRepository.findMyCommentaryPosts(targetUser, cursor);
+            case NORMAL -> postRepository.findMyNormalPosts(targetUser, cursor);
+            case TIP -> postRepository.findMyTipPosts(targetUser, cursor);
+        };
+    }
 }

@@ -4,6 +4,7 @@ package com.cos.cercat.repository;
 import com.cos.cercat.domain.EmbeddedId.PostLikePK;
 import com.cos.cercat.domain.PostLikeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 public interface PostLikeJpaRepository extends JpaRepository<PostLikeEntity, PostLikePK> {
@@ -13,5 +14,13 @@ public interface PostLikeJpaRepository extends JpaRepository<PostLikeEntity, Pos
             where pl.postLikePK.postId = :postId
             and pl.postLikePK.userId = :userId)
             """)
-    boolean existsPostLikeByPostLikePK(Long postId, Long userId);
+    boolean existsPostLikeByPostLikePK(Long userId, Long postId);
+
+    @Modifying
+    @Query("""
+            DELETE FROM PostLikeEntity pl
+            WHERE pl.postLikePK.userId = :userId
+            AND pl.postLikePK.postId = :postId
+            """)
+    void deleteByPostIdAndUserId(Long userId, Long postId);
 }

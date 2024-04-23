@@ -12,8 +12,8 @@ public record User(
 ) {
 
     public String getUserProfileImage() {
-        return (StringUtils.hasText(userProfileImage().mainProfileImageUrl()) ?
-                userProfileImage().mainProfileImageUrl() :
-                userProfileImage().kakaoProfileImageUrl());
+        return (StringUtils.hasText(userProfileImage.getMainProfileImage().getImageUrl()) ?
+                userProfileImage().getMainProfileImage().getImageUrl() :
+                userProfileImage().getKakaoProfileImageUrl());
     }
 }

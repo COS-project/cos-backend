@@ -23,13 +23,6 @@ spring:
   config:
     activate:
       on-profile: local
-
-  kafka:
-    bootstrap-servers: localhost:29092
-    topic:
-      alarm: alarm
-      debezium_post: cercat.cercat_test.post
-      debezium_comment: "cercat.cercat_test.post_comment"
   security:
     oauth2:
       client:
@@ -85,13 +78,6 @@ spring:
   config:
     activate:
       on-profile: prod
-
-  kafka:
-    bootstrap-servers: kafka:9092
-    topic:
-      alarm: alarm
-      debezium_post: cercat.cercat.post
-      debezium_comment: cercat.cercat.post_comment
   security:
     oauth2:
       client:

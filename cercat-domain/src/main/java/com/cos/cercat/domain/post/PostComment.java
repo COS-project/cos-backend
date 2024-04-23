@@ -1,23 +1,51 @@
 package com.cos.cercat.domain.post;
 
+import com.cos.cercat.domain.user.Ownable;
 import com.cos.cercat.domain.user.User;
+import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public record PostComment(
-        Long id,
-        User user,
-        String content,
-        Long parentId,
-        int likeCount,
-        DateTime dateTime,
-        List<PostComment> childComments
-) {
-    public void addChildren(PostComment children) {
-        childComments.add(children);
+@Getter
+public class PostComment implements Ownable {
+    private final Long id;
+    private final User user;
+    private final Long postId;
+    private final CommentContent content;
+    private final DateTime dateTime;
+    private final List<PostComment> childComments;
+
+    private int likeCount;
+
+    public PostComment(Long id, User user, CommentContent content, Long postId, int likeCount, DateTime dateTime) {
+        this.id = id;
+        this.user = user;
+        this.postId = postId;
+        this.content = content;
+        this.likeCount = likeCount;
+        this.dateTime = dateTime;
+        this.childComments = new ArrayList<>();
+    }
+
+    public void addChildren(PostComment child) {
+        childComments.add(child);
     }
 
     public boolean hasParent() {
-        return parentId != null;
+        return content.parentId() != null;
+    }
+
+    public void like() {
+        likeCount++;
+    }
+
+    public void unLike() {
+        likeCount--;
+    }
+
+    @Override
+    public boolean isOwner(User user) {
+        return this.user.id().equals(user.id());
     }
 }

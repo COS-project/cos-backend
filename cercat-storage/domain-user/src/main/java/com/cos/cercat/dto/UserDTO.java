@@ -1,5 +1,6 @@
 package com.cos.cercat.dto;
 
+import com.cos.cercat.common.domain.Image;
 import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.user.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -52,12 +53,12 @@ public class UserDTO implements UserDetails {
     public static UserDTO fromEntity(UserEntity entity) {
 
         String entityNickname = entity.getNickname();
-        String mainProfileImage = entity.getMainProfileImageUrl();
+        Image mainProfileImage = entity.getMainProfileImage();
 
         return new UserDTO(
                 entity.getId(),
                 (StringUtils.hasText(entityNickname)) ? entityNickname : entity.getUsername(),
-                (StringUtils.hasText(mainProfileImage) ? mainProfileImage : entity.getKakaoProfileImage()),
+                (StringUtils.hasText(mainProfileImage.getImageUrl()) ? mainProfileImage.getImageUrl() : entity.getKakaoProfileImage()),
                 entity.getEmail(),
                 entity.getRole(),
                 entity.getCreatedAt(),

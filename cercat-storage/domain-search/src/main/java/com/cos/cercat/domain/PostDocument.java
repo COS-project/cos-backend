@@ -1,13 +1,17 @@
 package com.cos.cercat.domain;
 
+import com.cos.cercat.domain.post.Post;
 import com.cos.cercat.domain.post.PostType;
+import com.cos.cercat.domain.search.PostForSearch;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Document(indexName = "post")
@@ -45,24 +49,34 @@ public class PostDocument implements Serializable {
 
     @Field(type = FieldType.Nested)
     @Builder.Default
-    private Set<PostCommentDocument> postComments = new HashSet<>();
+    private List<PostCommentDocument> postComments = new ArrayList<>();
 
-    public void addComment(PostCommentDocument postCommentDocument) {
-        this.postComments.add(postCommentDocument);
+    public static PostDocument from(PostForSearch post) {
+        return PostDocument.builder()
+                .id(post.getId())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .certificateId(post.getCertificateId())
+                .userId(post.getUserId())
+                .likeCount(post.getLikeCount())
+                .createdAt(post.getCreatedAt())
+                .postType(post.getPostType())
+                .postComments(post.getPostComments().stream().map(PostCommentDocument::from).toList())
+                .build();
     }
 
-    public void removeComment(PostCommentDocument postCommentDocument) {
-        this.postComments.remove(postCommentDocument);
-    }
-
-    public void update(PostDocument postDocument) {
-        this.title = postDocument.getTitle();
-        this.content = postDocument.getContent();
-        this.certificateId = postDocument.getCertificateId();
-        this.userId = postDocument.getUserId();
-        this.likeCount = postDocument.getLikeCount();
-        this.createdAt = postDocument.getCreatedAt();
-        this.postType = postDocument.getPostType();
+    public PostForSearch toDomain() {
+        return new PostForSearch(
+                id,
+                title,
+                content,
+                certificateId,
+                userId,
+                likeCount,
+                createdAt,
+                postType,
+                postComments.stream().map(PostCommentDocument::toDomain).toList()
+        );
     }
 
 }

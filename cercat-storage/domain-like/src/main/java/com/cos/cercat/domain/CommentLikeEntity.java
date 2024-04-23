@@ -1,7 +1,6 @@
 package com.cos.cercat.domain;
 
 import com.cos.cercat.domain.EmbeddedId.CommentLikePK;
-import com.cos.cercat.domain.comment.PostCommentEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

@@ -13,27 +13,25 @@ import static com.fasterxml.jackson.annotation.JsonInclude.*;
 public record PostResponse(
         Long postId,
         PostContent postContent,
-        Set<RecommendTag> recommendTags,
         PostStatus postStatus,
         UserResponse user,
         QuestionResponse question,
-        boolean isLiked,
+        Set<RecommendTag> recommendTags,
         DateTime dateTime
 ) {
 
-    public static PostResponse of(Post post, boolean isLiked) {
+    public static PostResponse from(Post post) {
         return new PostResponse(
                 post.getId(),
                 post.getPostContent(),
-                post instanceof TipPost tipPost?
-                        tipPost.getRecommendTags()
-                        : null,
                 post.getPostStatus(),
                 UserResponse.from(post.getUser()),
                 post instanceof CommentaryPost commentaryPost?
                         QuestionResponse.from(commentaryPost.getQuestion())
                         : null,
-                isLiked,
+                post instanceof TipPost tipPost?
+                        tipPost.getRecommendTags()
+                        : null,
                 post.getDateTime()
         );
     }

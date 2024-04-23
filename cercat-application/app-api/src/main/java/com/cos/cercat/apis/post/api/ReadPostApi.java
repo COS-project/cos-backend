@@ -1,14 +1,11 @@
 package com.cos.cercat.apis.post.api;
 
-import com.cos.cercat.apis.comment.dto.response.PostCommentResponse;
 import com.cos.cercat.apis.global.util.CursorConvertor;
 import com.cos.cercat.apis.post.dto.response.PostResponse;
 import com.cos.cercat.apis.post.dto.response.PostWithCommentsResponse;
 import com.cos.cercat.common.domain.Response;
 import com.cos.cercat.common.domain.SliceResult;
 import com.cos.cercat.domain.certificate.TargetCertificate;
-import com.cos.cercat.domain.like.LikeService;
-import com.cos.cercat.domain.like.LikeTargetType;
 import com.cos.cercat.domain.post.*;
 import com.cos.cercat.domain.user.TargetUser;
 import com.cos.cercat.dto.UserDTO;
@@ -33,44 +30,49 @@ import java.util.List;
 public class ReadPostApi {
 
     private final ReadPostService readPostService;
-    private final LikeService likeService;
 
     @GetMapping("/certificates/{certificateId}/posts")
     @Operation(summary = "해설 게시글 검색")
     public Response<SliceResult<PostResponse>> searchCommentaryPosts(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
                                                                      @PathVariable Long certificateId,
-                                                                     CommentaryPostSearchCond cond,
-                                                                     @AuthenticationPrincipal UserDTO currentUser) {
-        SliceResult<Post> posts = readPostService.searchCommentaryPost(TargetCertificate.from(certificateId), cond, CursorConvertor.convertCursorToPage(pageable));
+                                                                     CommentaryPostSearchCond cond) {
+        SliceResult<Post> posts = readPostService.searchCommentaryPost(TargetCertificate.from(certificateId), cond, CursorConvertor.toCursor(pageable));
 
-        List<PostResponse> responses = posts.content().stream()
-                .map(post -> getPostResponse(post.getId(), currentUser, post))
-                .toList();
-        return Response.success(SliceResult.of(responses, posts.hasNext()));
+        return Response.success(posts.map(PostResponse::from));
     }
 
     @GetMapping("/posts/{postId}")
     @Operation(summary = "게시글 상세 조회")
-    public Response<PostWithCommentsResponse> getPostDetail(@PathVariable Long postId,
-                                                            @AuthenticationPrincipal UserDTO currentUser) {
+    public Response<PostWithCommentsResponse> getPostDetail(@PathVariable Long postId) {
         PostWithComments postWithComments = readPostService.readDetail(TargetPost.from(postId));
-        PostResponse postResponse = getPostResponse(postId, currentUser, postWithComments.post());
-        List<PostCommentResponse> postCommentResponses = toPostCommentResponse(currentUser, postWithComments.postComments());
-
-        return Response.success(PostWithCommentsResponse.of(postResponse, postCommentResponses));
+        return Response.success(PostWithCommentsResponse.from(postWithComments));
     }
 
-    private PostResponse getPostResponse(Long postId, UserDTO currentUser, Post post) {
-        return PostResponse.of(post, likeService.isLiked(LikeTargetType.POST, TargetUser.from(currentUser.getId()), postId));
+    @GetMapping("/certificates/{certificateId}/tip-posts/best")
+    @Operation(summary = "베스트 꿀팁 TOP3 조회")
+    public Response<List<PostResponse>> getTop3TipPosts(@PathVariable Long certificateId) {
+        return Response.success(readPostService.readTop3TipPosts(TargetCertificate.from(certificateId)).stream()
+                .map(PostResponse::from)
+                .toList());
     }
 
-    private List<PostCommentResponse> toPostCommentResponse(UserDTO currentUser, List<PostComment> postComments) {
-        return postComments.stream()
-                .map(postComment -> PostCommentResponse.of(
-                        postComment,
-                        likeService.isLiked(LikeTargetType.COMMENT, TargetUser.from(currentUser.getId()), postComment.id()))
-                )
-                .toList();
+    @GetMapping("/{postType}/posts/my-posts")
+    @Operation(summary = "내가 쓴 글 조회")
+    public Response<SliceResult<PostResponse>> getMyPosts(@PathVariable PostType postType,
+                                                    @AuthenticationPrincipal UserDTO currentUser,
+                                                    @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        SliceResult<Post> posts = readPostService.readMyPosts(TargetUser.from(currentUser.getId()), postType, CursorConvertor.toCursor(pageable));
+        return Response.success(posts.map(PostResponse::from));
     }
+
+    @GetMapping("/comment-posts/my-comment-posts")
+    @Operation(summary = "내가 댓글 쓴 게시글 조회")
+    public Response<SliceResult<PostResponse>> getMyCommentPosts(@AuthenticationPrincipal UserDTO currentUser,
+                                                           @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        SliceResult<Post> posts = readPostService.readCommentingPosts(TargetUser.from(currentUser.getId()), CursorConvertor.toCursor(pageable));
+        return Response.success(posts.map(PostResponse::from));
+    }
+
 
 }
