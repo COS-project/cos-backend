@@ -51,7 +51,7 @@
 - [cercat-common](https://github.com/COS-project/cos-backend/blob/main/cercat-common/README.md)
 - [cercat-domain](https://github.com/COS-project/cos-backend/blob/main/cercat-domain/README.md)
 - [cercat-storage](https://github.com/COS-project/cos-backend/blob/main/cercat-storage/README.md)
-- [cercat-client](https://github.com/COS-project/cos-backend/blob/main/cercat-external/README.md)
+- [cercat-client](https://github.com/COS-project/cos-backend/blob/main/cercat-client/README.md)
 
 # 패키지 구조
 ```
