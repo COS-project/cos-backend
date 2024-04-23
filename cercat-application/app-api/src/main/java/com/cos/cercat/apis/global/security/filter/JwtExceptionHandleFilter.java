@@ -16,7 +16,7 @@ public class JwtExceptionHandleFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(request, response);
         } catch (Exception e) {
-            request.setAttribute("com/cos/cercat/exception", e);
+            request.setAttribute("exception", e);
             filterChain.doFilter(request, response);
         }
     }

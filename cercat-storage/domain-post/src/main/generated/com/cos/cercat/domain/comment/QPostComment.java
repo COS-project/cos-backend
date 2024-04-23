@@ -11,7 +11,7 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QPostComment is a Querydsl query type for PostComment
+ * QPostComment is a Querydsl query type for PostCommentEntity
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QPostComment extends EntityPathBase<PostComment> {

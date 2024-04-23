@@ -5,21 +5,41 @@ import com.cos.cercat.domain.mockexam.Question;
 import com.cos.cercat.domain.user.TargetUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
 public class PostAppender {
 
-    private final PostRepository postRepository;
+    private final CreatePostRepository postRepository;
 
-    public void append(TargetUser targetUser,
-                       TargetCertificate targetCertificate,
-                       PostContent postContent,
-                       Question question) {
+    @Transactional
+    public TargetPost appendCommentaryPost(TargetUser targetUser,
+                                     TargetCertificate targetCertificate,
+                                     PostContent postContent,
+                                     Question question) {
+        return postRepository.saveCommentaryPost(targetUser, targetCertificate, postContent, question);
 
-        postRepository.save(targetUser, targetCertificate, postContent, question);
+    }
 
+    @Transactional
+    public TargetPost appendNormalPost(TargetUser targetUser,
+                                 TargetCertificate targetCertificate,
+                                 PostContent postContent) {
+        return postRepository.saveNormalPost(targetUser, targetCertificate, postContent);
+    }
+
+    @Transactional
+    public TargetPost appendTipPost(TargetUser targetUser,
+                              TargetCertificate targetCertificate,
+                              PostContent postContent,
+                              Set<RecommendTag> recommendTags) {
+        return postRepository.saveTipPost(targetUser, targetCertificate, postContent, recommendTags);
+    }
+
+    public void appendComment(TargetUser targetUser, TargetPost targetPost, CommentContent content) {
+        postRepository.saveComment(targetUser, targetPost, content);
     }
 }

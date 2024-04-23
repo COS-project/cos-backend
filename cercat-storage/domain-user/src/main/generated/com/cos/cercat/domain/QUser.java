@@ -64,7 +64,7 @@ public class QUser extends EntityPathBase<User> {
 
     public QUser(Class<? extends User> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.mainProfileImage = inits.isInitialized("mainProfileImage") ? new com.cos.cercat.entity.QImage(forProperty("mainProfileImage")) : null;
+        this.mainProfileImage = inits.isInitialized("mainProfileImageEntity") ? new com.cos.cercat.entity.QImage(forProperty("mainProfileImageEntity")) : null;
     }
 
 }

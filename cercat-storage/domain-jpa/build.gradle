@@ -5,6 +5,7 @@ bootJar {
 dependencies {
 
     api 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation(project(':cercat-common'))
 
     //Database 관련
     runtimeOnly 'com.h2database:h2'

@@ -20,8 +20,8 @@ public class CertificateExamCoreRepository implements CertificateExamRepository 
 
         ExamInfoEntity examInfoEntity = ExamInfoEntity.builder()
 
-                .examYear(examInfo.examYear())
-                .round(examInfo.round())
+                .examYear(examInfo.mockExamSession().examYear())
+                .round(examInfo.mockExamSession().round())
                 .applicationStartDateTime(examInfo.examSchedule().applicationStartDateTime())
                 .applicationDeadlineDateTime(examInfo.examSchedule().applicationDeadlineDateTime())
                 .resultAnnouncementDateTime(examInfo.examSchedule().ResultAnnouncementDateTime())

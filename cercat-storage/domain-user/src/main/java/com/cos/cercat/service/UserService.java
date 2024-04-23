@@ -4,7 +4,7 @@ import com.cos.cercat.cache.LogoutTokenRepository;
 import com.cos.cercat.cache.TokenCacheRepository;
 import com.cos.cercat.cache.UserCacheRepository;
 import com.cos.cercat.domain.UserEntity;
-import com.cos.cercat.entity.Image;
+import com.cos.cercat.entity.ImageEntity;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.dto.UserDTO;
@@ -37,9 +37,9 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUser(Long userId, String nickName, Image image) {
+    public void updateUser(Long userId, String nickName, ImageEntity imageEntity) {
         UserEntity userEntity = getUser(userId);
-        userEntity.createUserInfo(nickName, image);
+        userEntity.createUserInfo(nickName, imageEntity);
         refreshUserCache(userEntity);
         log.info("userEntity - {} 프로필 수정", userEntity.getEmail());
     }

@@ -1,6 +1,6 @@
 package com.cos.cercat.config;
 
-import com.cos.cercat.cache.SearchLog;
+import com.cos.cercat.domain.search.SearchLog;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

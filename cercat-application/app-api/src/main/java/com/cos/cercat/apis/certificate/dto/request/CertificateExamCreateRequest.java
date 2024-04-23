@@ -2,10 +2,10 @@ package com.cos.cercat.apis.certificate.dto.request;
 
 import com.cos.cercat.domain.*;
 import com.cos.cercat.domain.certificate.*;
+import com.cos.cercat.domain.mockexam.MockExamSession;
 
 public record CertificateExamCreateRequest(
-        Integer examYear,
-        Integer round,
+        MockExamSession mockExamSession,
         ExamSchedule examSchedule,
         ExamFee examFee,
         ExamTimeLimit examTimeLimit,
@@ -17,8 +17,7 @@ public record CertificateExamCreateRequest(
 ) {
     public ExamInformation toExamInformation() {
         return ExamInformation.of(
-                        examYear,
-                        round,
+                        mockExamSession,
                         examSchedule,
                         examTimeLimit,
                         examFee,
