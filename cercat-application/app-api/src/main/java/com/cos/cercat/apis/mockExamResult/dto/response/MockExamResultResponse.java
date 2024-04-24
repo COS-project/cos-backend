@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.mockExamResult.dto.response;
 
-import com.cos.cercat.apis.mockExam.dto.response.MockExamResponse;
-import com.cos.cercat.domain.MockExamResult;
+import com.cos.cercat.apis.mockExam.response.MockExamResponse;
+import com.cos.cercat.domain.MockExamResultEntity;
 
 import java.time.LocalDateTime;
 
@@ -13,7 +13,7 @@ public record MockExamResultResponse(
         Integer totalScore,
         LocalDateTime createdAt
 ) {
-    public static MockExamResultResponse from(MockExamResult entity) {
+    public static MockExamResultResponse from(MockExamResultEntity entity) {
         return new MockExamResultResponse(
                 entity.getId(),
                 entity.getRound(),

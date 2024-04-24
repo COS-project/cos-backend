@@ -1,9 +1,9 @@
 package com.cos.cercat.apis.certificate.api;
 
 
-import com.cos.cercat.apis.certificate.dto.request.CertificateCreateRequest;
-import com.cos.cercat.apis.certificate.dto.request.CertificateExamCreateRequest;
-import com.cos.cercat.apis.certificate.dto.request.InterestCertificateCreateRequest;
+import com.cos.cercat.apis.certificate.request.CertificateCreateRequest;
+import com.cos.cercat.apis.certificate.request.CertificateExamCreateRequest;
+import com.cos.cercat.apis.certificate.request.InterestCertificateCreateRequest;
 import com.cos.cercat.common.domain.Response;
 import com.cos.cercat.domain.certificate.CreateCertificateService;
 import com.cos.cercat.domain.certificate.TargetCertificate;
@@ -18,20 +18,18 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v2")
-@Tag(name = "자격증 생성 API")
-public class CreateCertificateApi {
+public class CreateCertificateApi implements CreateCertificateApiDocs {
 
     private final CreateCertificateService createCertificateService;
 
     @PostMapping("/certificates")
-    @Operation(summary = "자격증 생성")
+
     public Response<Void> certificateAdd(@RequestBody CertificateCreateRequest request) {
         createCertificateService.createCertificate(request.certificateName(), request.subjectInfoList());
         return Response.success("자격증 생성 성공");
     }
 
     @PostMapping("/certificates/{certificateId}/certificate-exams")
-    @Operation(summary = "자격증 시험 정보 생성")
     public Response<Void> certificateExamAdd(@PathVariable Long certificateId,
                                             @RequestBody CertificateExamCreateRequest request) {
         createCertificateService.createCertificateExam(TargetCertificate.from(certificateId), request.toExamInformation());
@@ -39,7 +37,6 @@ public class CreateCertificateApi {
     }
 
     @PostMapping("/interest-certificates")
-    @Operation(summary = "관심 자격증 리스트 생성")
     public Response<Void> InterestCertificateAdd(@RequestBody InterestCertificateCreateRequest request,
                                                      @AuthenticationPrincipal UserDTO currentUser) {
         createCertificateService.addInterestCertificates(TargetUser.from(currentUser.getId()), request.toInterestTargets());

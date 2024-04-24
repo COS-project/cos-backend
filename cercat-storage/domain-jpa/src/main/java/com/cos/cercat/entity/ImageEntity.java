@@ -21,6 +21,11 @@ public class ImageEntity {
     private String imageUrl;
 
     public static ImageEntity from(Image image) {
+
+        if (image == null) {
+            return null;
+        }
+
         return new ImageEntity(
                 image.getId() != null ?
                         image.getId()

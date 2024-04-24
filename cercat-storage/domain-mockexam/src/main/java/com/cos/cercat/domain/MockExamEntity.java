@@ -49,6 +49,11 @@ public class MockExamEntity extends BaseTimeEntity {
     }
 
     public static MockExamEntity from(MockExam mockExam) {
+
+        if (mockExam == null) {
+            return null;
+        }
+
         return new MockExamEntity(
                 mockExam.mockExamSession().examYear(),
                 mockExam.mockExamSession().round(),

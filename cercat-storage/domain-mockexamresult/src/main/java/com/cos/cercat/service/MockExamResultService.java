@@ -1,12 +1,12 @@
 package com.cos.cercat.service;
 
 import com.cos.cercat.domain.CertificateEntity;
+import com.cos.cercat.domain.MockExamResultEntity;
 import com.cos.cercat.domain.UserEntity;
-import com.cos.cercat.repository.MockExamResultRepository;
+import com.cos.cercat.repository.MockExamResultJpaRepository;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.domain.MockExamEntity;
-import com.cos.cercat.domain.MockExamResult;
 import com.cos.cercat.dto.DateCond;
 import com.cos.cercat.dto.DailyScoreAverage;
 import com.cos.cercat.dto.MonthlyScoreAverage;
@@ -30,72 +30,72 @@ import java.util.Objects;
 @Slf4j
 public class MockExamResultService {
 
-    private final MockExamResultRepository mockExamResultRepository;
+    private final MockExamResultJpaRepository mockExamResultJpaRepository;
 
-    public List<MockExamResult> getMockExamResults(MockExamEntity mockExamEntity, UserEntity userEntity) {
+    public List<MockExamResultEntity> getMockExamResults(MockExamEntity mockExamEntity, UserEntity userEntity) {
 
-        return mockExamResultRepository.findMockExamResultByMockExamEntityAndUserEntity(mockExamEntity, userEntity).stream()
-                .sorted(Comparator.comparing(MockExamResult::getCreatedAt).reversed())
+        return mockExamResultJpaRepository.findMockExamResultByMockExamEntityAndUserEntity(mockExamEntity, userEntity).stream()
+                .sorted(Comparator.comparing(MockExamResultEntity::getCreatedAt).reversed())
                 .toList();
     }
 
-    public MockExamResult save(MockExamResult mockExamResult) {
-        return mockExamResultRepository.save(mockExamResult);
+    public MockExamResultEntity save(MockExamResultEntity mockExamResultEntity) {
+        return mockExamResultJpaRepository.save(mockExamResultEntity);
     }
 
-    public long batchInsert(MockExamResult mockExamResult) {
+//    public long batchInsert(MockExamResultEntity mockExamResultEntity) {
+//
+//        return mockExamResultJpaRepository.batchInsert(mockExamResultEntity);
+//    }
 
-        return mockExamResultRepository.batchInsert(mockExamResult);
-    }
+//    public int getMockExamResultsCount(MockExamEntity mockExamEntity, UserEntity userEntity) {
+//        return mockExamResultJpaRepository.countMockExamResults(mockExamEntity, userEntity);
+//    }
 
-    public int getMockExamResultsCount(MockExamEntity mockExamEntity, UserEntity userEntity) {
-        return mockExamResultRepository.countMockExamResultsByMockExamEntityAndUserEntity(mockExamEntity, userEntity);
-    }
-
-    public MockExamResult getMockExamResult(Long mockExamResultId) {
-        return mockExamResultRepository.findById(mockExamResultId).orElseThrow(() ->
+    public MockExamResultEntity getMockExamResult(Long mockExamResultId) {
+        return mockExamResultJpaRepository.findById(mockExamResultId).orElseThrow(() ->
                 new CustomException(ErrorCode.MOCK_EXAM_RESULT_NOT_FOUND));
     }
 
     public int countTotalMockExamResults(CertificateEntity certificateEntity, UserEntity userEntity, LocalDateTime goalStartDateTime) {
-        Integer countMockExamResults = mockExamResultRepository.countTotalMockExamResults(certificateEntity.getId(), userEntity.getId(), goalStartDateTime);
+        Integer countMockExamResults = mockExamResultJpaRepository.countTotalMockExamResults(certificateEntity.getId(), userEntity.getId(), goalStartDateTime);
 
         return Objects.requireNonNullElse(countMockExamResults, 0);
     }
 
     public int getCurrentMaxScore(CertificateEntity certificateEntity, UserEntity userEntity, LocalDateTime goalStartDateTime) {
-        Integer mockExamResultMaxScore = mockExamResultRepository.getMockExamResultMaxScore(certificateEntity.getId(), userEntity.getId(), goalStartDateTime);
+        Integer mockExamResultMaxScore = mockExamResultJpaRepository.getMockExamResultMaxScore(certificateEntity.getId(), userEntity.getId(), goalStartDateTime);
 
         return Objects.requireNonNullElse(mockExamResultMaxScore, 0);
     }
 
     public int countTodayMockExamResults(CertificateEntity certificateEntity, UserEntity userEntity) {
-        Integer countTodayMockExamResults = mockExamResultRepository.countTodayMockExamResults(certificateEntity.getId(), userEntity.getId());
+        Integer countTodayMockExamResults = mockExamResultJpaRepository.countTodayMockExamResults(certificateEntity.getId(), userEntity.getId());
 
         return Objects.requireNonNullElse(countTodayMockExamResults, 0);
     }
 
     public List<DailyScoreAverage> getWeeklyReport(CertificateEntity certificateEntity, UserEntity userEntity, DateCond dateCond) {
-        return mockExamResultRepository.getDailyScoreAverages(certificateEntity, userEntity, dateCond);
+        return mockExamResultJpaRepository.getDailyScoreAverages(certificateEntity, userEntity, dateCond);
     }
 
     public List<WeeklyScoreAverage> getMonthlyReport(CertificateEntity certificateEntity, UserEntity userEntity, DateCond dateCond) {
-        return mockExamResultRepository.getWeeklyScoreAverages(certificateEntity, userEntity, dateCond).stream()
+        return mockExamResultJpaRepository.getWeeklyScoreAverages(certificateEntity, userEntity, dateCond).stream()
                 .sorted(Comparator.comparing(WeeklyScoreAverage::getWeekOfMonth))
                 .toList();
     }
 
     public List<MonthlyScoreAverage> getYearlyReport(CertificateEntity certificateEntity, UserEntity userEntity, DateCond dateCond) {
-        return mockExamResultRepository.getMonthlyScoreAverages(certificateEntity, userEntity, dateCond).stream()
+        return mockExamResultJpaRepository.getMonthlyScoreAverages(certificateEntity, userEntity, dateCond).stream()
                 .sorted(Comparator.comparing(MonthlyScoreAverage::getMonth))
                 .toList();
     }
 
-    public Page<MockExamResult> getMockExamResultsByDate(CertificateEntity certificateEntity,
-                                                         UserEntity userEntity,
-                                                         Date date,
-                                                         Pageable pageable) {
-        return mockExamResultRepository.findMockExamResultsByDate(
+    public Page<MockExamResultEntity> getMockExamResultsByDate(CertificateEntity certificateEntity,
+                                                               UserEntity userEntity,
+                                                               Date date,
+                                                               Pageable pageable) {
+        return mockExamResultJpaRepository.findMockExamResultsByDate(
                 certificateEntity.getId(),
                 userEntity.getId(),
                 date,
@@ -103,12 +103,12 @@ public class MockExamResultService {
         );
     }
 
-    public Page<MockExamResult> getMockExamResultsByWeekOfMonth(CertificateEntity certificateEntity,
-                                                                UserEntity userEntity,
-                                                                DateCond dateCond,
-                                                                Pageable pageable) {
+    public Page<MockExamResultEntity> getMockExamResultsByWeekOfMonth(CertificateEntity certificateEntity,
+                                                                      UserEntity userEntity,
+                                                                      DateCond dateCond,
+                                                                      Pageable pageable) {
 
-        return mockExamResultRepository.findMockExamResultsByWeekOfMonth(
+        return mockExamResultJpaRepository.findMockExamResultsByWeekOfMonth(
                 certificateEntity.getId(),
                 userEntity.getId(),
                 DateUtils.getFirstDayOfMonth(LocalDate.of(dateCond.year(), dateCond.month(), 1)),
@@ -118,11 +118,11 @@ public class MockExamResultService {
         );
     }
 
-    public Page<MockExamResult> getMockExamResultsByMonth(CertificateEntity certificateEntity,
-                                                          UserEntity userEntity,
-                                                          int month,
-                                                          Pageable pageable) {
-        return mockExamResultRepository.findMockExamResultsByMonth(
+    public Page<MockExamResultEntity> getMockExamResultsByMonth(CertificateEntity certificateEntity,
+                                                                UserEntity userEntity,
+                                                                int month,
+                                                                Pageable pageable) {
+        return mockExamResultJpaRepository.findMockExamResultsByMonth(
                 certificateEntity.getId(),
                 userEntity.getId(),
                 month,

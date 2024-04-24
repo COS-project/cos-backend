@@ -1,6 +1,6 @@
 package com.cos.cercat.apis.learning.dto.response;
 
-import com.cos.cercat.apis.certificate.dto.response.CertificateResponse;
+import com.cos.cercat.apis.certificate.response.CertificateResponse;
 import com.cos.cercat.domain.Goal;
 import com.cos.cercat.domain.RepeatDay;
 

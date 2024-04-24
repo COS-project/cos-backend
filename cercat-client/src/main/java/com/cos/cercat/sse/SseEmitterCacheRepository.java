@@ -19,7 +19,6 @@ public class SseEmitterCacheRepository {
     public void save(Long userId, SseEmitter emitter) {
         String key = getKey(userId);
         log.info("save Emitter {} : {}", key, emitter);
-
         sseEmitterRedisTemplate.opsForValue().set(key, emitter, DEFAULT_TIMEOUT);
     }
 

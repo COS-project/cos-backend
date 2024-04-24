@@ -1,6 +1,6 @@
 package com.cos.cercat.apis.certificate.api;
 
-import com.cos.cercat.apis.certificate.dto.request.InterestCertificateUpdateRequest;
+import com.cos.cercat.apis.certificate.request.InterestCertificateUpdateRequest;
 import com.cos.cercat.common.domain.Response;
 import com.cos.cercat.domain.certificate.UpdateCertificateService;
 import com.cos.cercat.domain.user.TargetUser;
@@ -17,13 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v2")
-@Tag(name = "자격증 수정 API")
-public class UpdateCertificateApi {
+public class UpdateCertificateApi implements UpdateCertificateApiDocs{
 
     private final UpdateCertificateService updateCertificateService;
 
     @PutMapping("/interest-certificates")
-    @Operation(summary = "관심 자격증 수정")
     public Response<Void> updateInterestCertificates(@RequestBody InterestCertificateUpdateRequest request,
                                                      @AuthenticationPrincipal UserDTO currentUser) {
         updateCertificateService.updateCertificateExam(TargetUser.from(currentUser.getId()), request.toInterestTargets());

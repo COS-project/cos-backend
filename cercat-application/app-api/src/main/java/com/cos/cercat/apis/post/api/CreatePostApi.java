@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.post.api;
 
-import com.cos.cercat.apis.post.dto.request.PostCommentCreateRequest;
-import com.cos.cercat.apis.post.dto.request.PostCreateRequest;
+import com.cos.cercat.apis.post.request.PostCommentCreateRequest;
+import com.cos.cercat.apis.post.request.PostCreateRequest;
 import com.cos.cercat.common.domain.Response;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
@@ -11,8 +11,6 @@ import com.cos.cercat.domain.post.PostType;
 import com.cos.cercat.domain.post.TargetPost;
 import com.cos.cercat.domain.user.TargetUser;
 import com.cos.cercat.dto.UserDTO;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,13 +24,11 @@ import static com.cos.cercat.apis.global.util.FileMapper.toFiles;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v2")
-@Tag(name = "게시글/댓글 생성 API")
-public class CreatePostApi {
+public class CreatePostApi implements CreatePostApiDocs {
 
     private final CreatePostService createPostService;
 
     @PostMapping(path = "/certificates/{certificateId}/{postType}/posts", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @Operation(summary = "게시글 생성")
     public Response<TargetPost> createPost(@PathVariable Long certificateId,
                                            @PathVariable PostType postType,
                                            @RequestPart PostCreateRequest request,
@@ -70,7 +66,6 @@ public class CreatePostApi {
     }
 
     @PostMapping("/posts/{postId}/post-comments")
-    @Operation(summary = "댓글 생성")
     public Response<Void> createPostComment(@PathVariable Long postId,
                                             @RequestBody PostCommentCreateRequest request,
                                             @AuthenticationPrincipal UserDTO currentUser) {

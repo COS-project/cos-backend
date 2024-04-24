@@ -13,7 +13,11 @@ import java.util.Optional;
 @Repository
 public interface MockExamJpaRepository extends JpaRepository<MockExamEntity, Long> {
 
-    List<MockExamEntity> findMockExamByCertificateEntityAndExamYear(CertificateEntity certificateEntity, Integer year);
+    @Query("""
+            SELECT m FROM MockExamEntity m
+            WHERE m.certificateEntity.id = :certificateId AND m.examYear = :year
+            """)
+    List<MockExamEntity> findMockExamByCertificateIdAndExamYear(Long certificateId, Integer year);
 
     @Query("""
             SELECT m FROM MockExamEntity m
@@ -35,4 +39,11 @@ public interface MockExamJpaRepository extends JpaRepository<MockExamEntity, Lon
             ORDER BY m.round
             """)
     List<Integer> findMockExamRoundsByCertificateEntityAndExamYear(@Param("certificateId") Long certificateId, @Param("examYear") Integer examYear);
+
+    @Query("""
+            SELECT m.examYear FROM MockExamEntity m
+            WHERE m.certificateEntity.id = :certificateId
+            GROUP BY m.examYear
+            """)
+    List<Integer> findExamYearsByCertificateId(Long certificateId);
 }

@@ -1,111 +1,96 @@
 package com.cos.cercat.repository;
 
-import com.cos.cercat.common.util.DateUtils;
+
+import com.cos.cercat.common.exception.CustomException;
+import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.domain.*;
-import com.cos.cercat.dto.*;
-import com.querydsl.core.types.dsl.*;
-import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.cos.cercat.domain.mockexam.TargetMockExam;
+import com.cos.cercat.domain.mockexamresult.*;
+import com.cos.cercat.domain.user.TargetUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
-
-
 
 @Repository
 @RequiredArgsConstructor
-public class MockExamResultRepositoryImpl implements MockExamResultRepositoryCustom {
 
-    private final JPAQueryFactory queryFactory;
+public class MockExamResultRepositoryImpl implements MockExamResultRepository {
 
-    @Override
-    public List<DailyScoreAverage> getDailyScoreAverages(CertificateEntity certificateEntity, UserEntity userEntity, DateCond dateCond) {
-
-        LocalDate firstDayOfMonth = LocalDate.of(dateCond.year(), dateCond.month(), 1);
-
-        LocalDate sundayOfGivenWeek = DateUtils.getThisSunday(firstDayOfMonth)
-                .plusWeeks(dateCond.weekOfMonth() - 1).toLocalDate();
-
-        LocalDateTime thisSunday = DateUtils.getThisSunday(sundayOfGivenWeek);
-        LocalDateTime thisSaturday = DateUtils.getThisSATURDAY(sundayOfGivenWeek);
-
-        DateTemplate<Date> date = Expressions.dateTemplate(Date.class, "DATE({0})", QMockExamResult.mockExamResult.createdAt);
-
-        return queryFactory.select(
-                        new QDailyScoreAverage(
-                                QMockExamResult.mockExamResult.totalScore.avg(),
-                                QMockExamResult.mockExamResult.createdAt.dayOfWeek(),
-                                date)
-                )
-                .from(QMockExamResult.mockExamResult)
-                .leftJoin(QMockExamResult.mockExamResult.mockExamEntity.certificateEntity, QCertificateEntity.certificateEntity)
-                .leftJoin(QMockExamResult.mockExamResult.userEntity, QUserEntity.userEntity)
-                .where(
-                        QCertificateEntity.certificateEntity.eq(certificateEntity),
-                        QUserEntity.userEntity.eq(userEntity),
-                        betweenStartDateAndEndDate(thisSunday, thisSaturday)
-                )
-                .groupBy(date, QMockExamResult.mockExamResult.createdAt.dayOfWeek())
-                .fetch();
-    }
+    private final MockExamResultJpaRepository mockExamResultJpaRepository;
+    private final SubjectResultJpaRepository subjectResultJpaRepository;
+    private final QuestionJpaRepository questionJpaRepository;
+    private final UserAnswerJpaRepository userAnswerJpaRepository;
+    private final MockExamJpaRepository mockExamJpaRepository;
+    private final UserJpaRepository userJpaRepository;
+    private final SubjectJpaRepository subjectJpaRepository;
 
     @Override
-    public List<WeeklyScoreAverage> getWeeklyScoreAverages(CertificateEntity certificateEntity, UserEntity userEntity, DateCond dateCond) {
+    @Transactional
+    public TargetMockExamResult save(TargetUser targetUser, TargetMockExam targetMockExam, NewMockExamResult newMockExamResult) {
+        UserEntity userEntity = userJpaRepository.getReferenceById(targetUser.userId());
+        MockExamEntity mockExamEntity = mockExamJpaRepository.getReferenceById(targetMockExam.mockExamId());
 
-        LocalDate month = LocalDate.of(dateCond.year(), dateCond.month(), 1);
+        MockExamResultEntity mockExamResultEntity = MockExamResultEntity.builder()
+                .mockExamEntity(mockExamEntity)
+                .userEntity(userEntity)
+                .totalScore(newMockExamResult.totalScore())
+                .round(newMockExamResult.round())
+                .build();
 
-        LocalDateTime firstDayOfMonth = DateUtils.getFirstDayOfMonth(month);
-        LocalDateTime lastDayOfMonth = DateUtils.getLastDayOfMonth(month);
+        MockExamResultEntity savedResult = mockExamResultJpaRepository.save(mockExamResultEntity);
 
-        NumberTemplate<Integer> weekOfMonth = Expressions.numberTemplate(Integer.class,
-                "FUNCTION('WEEK', {0}) - FUNCTION('WEEK', {1}) + 1", QMockExamResult.mockExamResult.createdAt, firstDayOfMonth);
+        newMockExamResult.newSubjectResults().forEach(newSubjectResult -> {
+            SubjectResultEntity subjectResultEntity = saveSubjectResult(newSubjectResult, savedResult);
+            newSubjectResult.newUserAnswers().forEach(newUserAnswer -> saveUserAnswer(newUserAnswer, subjectResultEntity, userEntity));
+        });
 
-        return queryFactory.select(
-                new QWeeklyScoreAverage(
-                        QMockExamResult.mockExamResult.totalScore.avg(),
-                        weekOfMonth))
-                .from(QMockExamResult.mockExamResult)
-                .leftJoin(QMockExamResult.mockExamResult.mockExamEntity.certificateEntity, QCertificateEntity.certificateEntity)
-                .leftJoin(QMockExamResult.mockExamResult.userEntity, QUserEntity.userEntity)
-                .where(
-                        QCertificateEntity.certificateEntity.eq(certificateEntity),
-                        QUserEntity.userEntity.eq(userEntity),
-                        betweenStartDateAndEndDate(firstDayOfMonth, lastDayOfMonth)
-                )
-                .groupBy(weekOfMonth)
-                .fetch();
+        return TargetMockExamResult.from(savedResult.getId());
     }
 
     @Override
-    public List<MonthlyScoreAverage> getMonthlyScoreAverages(CertificateEntity certificateEntity, UserEntity userEntity, DateCond dateCond) {
-
-        LocalDate year = LocalDate.of(dateCond.year(), 1, 1);
-
-        LocalDateTime firstDayOfYear = DateUtils.getFirstDayOfYear(year);
-        LocalDateTime lastDayOfYear = DateUtils.getLastDayOfYear(year);
-
-        return queryFactory.select(
-                new QMonthlyScoreAverage(
-                        QMockExamResult.mockExamResult.totalScore.avg(),
-                        QMockExamResult.mockExamResult.createdAt.month())
-                )
-                .from(QMockExamResult.mockExamResult)
-                .leftJoin(QMockExamResult.mockExamResult.mockExamEntity.certificateEntity, QCertificateEntity.certificateEntity)
-                .leftJoin(QMockExamResult.mockExamResult.userEntity, QUserEntity.userEntity)
-                .where(
-                        QCertificateEntity.certificateEntity.eq(certificateEntity),
-                        QUserEntity.userEntity.eq(userEntity),
-                        betweenStartDateAndEndDate(firstDayOfYear, lastDayOfYear)
-                )
-                .groupBy(QMockExamResult.mockExamResult.createdAt.month())
-                .fetch();
+    public int countMockExamResult(TargetUser targetUser, TargetMockExam targetMockExam) {
+        return mockExamResultJpaRepository.countMockExamResults(targetUser.userId(), targetMockExam.mockExamId());
     }
 
-    private BooleanExpression betweenStartDateAndEndDate(LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        return QMockExamResult.mockExamResult.createdAt.between(startDateTime, endDateTime);
+    @Override
+    @Transactional(readOnly = true)
+    public UserAnswer find(TargetUserAnswer targetUserAnswer) {
+        UserAnswerEntity userAnswerEntity = userAnswerJpaRepository.findById(targetUserAnswer.userAnswerId()).orElseThrow(
+                () -> new CustomException(ErrorCode.USER_ANSWER_NOT_FOUND));
+        return userAnswerEntity.toDomain();
     }
 
+    @Override
+    public void updateUserAnswer(UserAnswer userAnswer) {
+        SubjectResultEntity subjectResultEntity = subjectResultJpaRepository.getReferenceById(userAnswer.getSubjectResultId());
+        userAnswerJpaRepository.save(UserAnswerEntity.from(userAnswer, subjectResultEntity));
+    }
+
+    private SubjectResultEntity saveSubjectResult(NewSubjectResult newSubjectResult, MockExamResultEntity savedResult) {
+        SubjectEntity subjectEntity = subjectJpaRepository.getReferenceById(newSubjectResult.subjectId());
+        SubjectResultEntity subjectResultEntity = SubjectResultEntity.builder()
+                .mockExamResultEntity(savedResult)
+                .numberOfCorrect(newSubjectResult.numberOfCorrect())
+                .totalTakenTime(newSubjectResult.totalTakenTime())
+                .correctRate((int) ((double) newSubjectResult.numberOfCorrect() / subjectEntity.getNumberOfQuestions() * 100))
+                .subjectEntity(subjectEntity)
+                .score(newSubjectResult.score())
+                .build();
+        subjectResultJpaRepository.save(subjectResultEntity);
+        return subjectResultEntity;
+    }
+
+    private void saveUserAnswer(NewUserAnswer newUserAnswer, SubjectResultEntity subjectResultEntity, UserEntity userEntity) {
+        UserAnswerEntity userAnswerEntity = UserAnswerEntity.builder()
+                .subjectResultEntity(subjectResultEntity)
+                .questionEntity(questionJpaRepository.getReferenceById(newUserAnswer.questionId()))
+                .userEntity(userEntity)
+                .isCorrect(newUserAnswer.isCorrect())
+                .selectOptionSeq(newUserAnswer.selectOptionSeq())
+                .takenTime(newUserAnswer.takenTime())
+                .build();
+        userAnswerJpaRepository.save(userAnswerEntity);
+    }
 }

@@ -37,6 +37,11 @@ public class SubjectEntity extends BaseTimeEntity {
     }
 
     public static SubjectEntity from(Subject subject) {
+
+        if (subject == null) {
+            return null;
+        }
+
         return new SubjectEntity(
                 subject.subjectId(),
                 CertificateEntity.from(subject.certificate()),

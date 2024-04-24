@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.mockExamResult.dto.response;
 
-import com.cos.cercat.apis.certificate.dto.response.SubjectResponse;
-import com.cos.cercat.domain.SubjectResult;
+import com.cos.cercat.apis.certificate.response.SubjectResponse;
+import com.cos.cercat.domain.SubjectResultEntity;
 
 public record SubjectResultResponse(
         SubjectResponse subject,
@@ -11,7 +11,7 @@ public record SubjectResultResponse(
         Integer correctRate
 ) {
 
-    public static SubjectResultResponse from(SubjectResult entity) {
+    public static SubjectResultResponse from(SubjectResultEntity entity) {
         return new SubjectResultResponse(
                 SubjectResponse.from(entity.getSubjectEntity()),
                 entity.getScore(),

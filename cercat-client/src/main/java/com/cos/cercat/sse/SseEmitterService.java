@@ -19,6 +19,7 @@ public class SseEmitterService {
 
     private final SseProcessorImpl sseProcessor;
 
+    //TODO: Redis Pub/Sub으로 구현필요
     public SseEmitter connect(Long userId) {
         SseEmitter emitter = new SseEmitter(DEFAULT_TIMEOUT);
         sseProcessor.save(userId, emitter);
@@ -30,7 +31,6 @@ public class SseEmitterService {
         } catch (IOException e) {
             throw new CustomException(ErrorCode.ALARM_CONNECT_ERROR);
         }
-
         return emitter;
     }
 }

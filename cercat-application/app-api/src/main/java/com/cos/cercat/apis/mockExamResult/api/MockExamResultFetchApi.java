@@ -29,20 +29,20 @@ public class MockExamResultFetchApi {
 
     private final MockExamResultFetchUseCase mockExamResultFetchUseCase;
 
-    @GetMapping("/mock-exams/{mockExamId}")
-    @Operation(summary = "성적 리포트 리스트 조회")
-    public Response<List<MockExamResultWithSubjectsResponse>> getMockExamResults(@PathVariable Long mockExamId,
-                                                                                 @AuthenticationPrincipal UserDTO user) {
-        return Response.success(mockExamResultFetchUseCase.getMockExamResults(mockExamId, user.getId()));
-    }
-
-    @GetMapping("/certificates/{certificateId}/user-answers/wrong-answers")
-    @Operation(summary = "전체 틀린문제 조회")
-    public Response<Slice<UserAnswerResponse>> getAllWrongUserAnswers(@PageableDefault Pageable pageable,
-                                                                      @PathVariable Long certificateId,
-                                                                      @AuthenticationPrincipal UserDTO currentUser) {
-        return Response.success(mockExamResultFetchUseCase.getAllWrongUserAnswers(pageable, certificateId, currentUser.getId()));
-    }
+//    @GetMapping("/mock-exams/{mockExamId}")
+//    @Operation(summary = "성적 리포트 리스트 조회")
+//    public Response<List<MockExamResultWithSubjectsResponse>> getMockExamResults(@PathVariable Long mockExamId,
+//                                                                                 @AuthenticationPrincipal UserDTO user) {
+//        return Response.success(mockExamResultFetchUseCase.getMockExamResults(mockExamId, user.getId()));
+//    }
+//
+//    @GetMapping("/certificates/{certificateId}/user-answers/wrong-answers")
+//    @Operation(summary = "전체 틀린문제 조회")
+//    public Response<Slice<UserAnswerResponse>> getAllWrongUserAnswers(@PageableDefault Pageable pageable,
+//                                                                      @PathVariable Long certificateId,
+//                                                                      @AuthenticationPrincipal UserDTO currentUser) {
+//        return Response.success(mockExamResultFetchUseCase.getAllWrongUserAnswers(pageable, certificateId, currentUser.getId()));
+//    }
 
     @GetMapping("/mock-exam-results/{mockExamResultId}/user-answers/wrong-answers")
     @Operation(summary = "특정 모의고사 틀린문제 조회")

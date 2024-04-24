@@ -19,7 +19,7 @@ public class QuestionService {
     private final QuestionJpaRepository questionJpaRepository;
 
     public List<QuestionEntity> getQuestionListByMockExam(MockExamEntity mockExamEntity) {
-        return questionJpaRepository.findByMockExamEntity(mockExamEntity);
+        return questionJpaRepository.findByMockExamId(mockExamEntity.getId());
     }
 
     public QuestionEntity getQuestion(Long questionId) {

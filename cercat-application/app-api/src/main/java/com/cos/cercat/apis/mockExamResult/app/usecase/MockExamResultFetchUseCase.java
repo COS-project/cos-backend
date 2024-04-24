@@ -5,11 +5,9 @@ import com.cos.cercat.apis.mockExamResult.dto.request.ReportType;
 import com.cos.cercat.apis.mockExamResult.dto.response.*;
 import com.cos.cercat.common.annotation.UseCase;
 import com.cos.cercat.domain.*;
+import com.cos.cercat.domain.mockexam.MockExamService;
 import com.cos.cercat.service.CertificateService;
-import com.cos.cercat.common.exception.CustomException;
-import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.service.GoalService;
-import com.cos.cercat.service.MockExamService;
 import com.cos.cercat.service.MockExamResultService;
 import com.cos.cercat.service.SubjectResultService;
 import com.cos.cercat.service.UserAnswerService;
@@ -32,44 +30,43 @@ import java.util.List;
 public class MockExamResultFetchUseCase {
 
     private final MockExamResultService mockExamResultService;
-    private final MockExamService mockExamService;
     private final UserService userService;
     private final CertificateService certificateService;
     private final UserAnswerService userAnswerService;
     private final SubjectResultService subjectResultService;
     private final GoalService goalService;
 
-    /***
-     * 유저의 해당 모의고사의 성적리포트를 모두 조회
-     * @param mockExamId 모의고사 ID
-     * @param userId 유저 ID
-     * @return 리스트 형태의 성적리포트 Reponse DTO를 반환합니다.
-     */
-    public List<MockExamResultWithSubjectsResponse> getMockExamResults(Long mockExamId, Long userId) {
-        MockExamEntity mockExamEntity = mockExamService.getMockExam(mockExamId);
-        UserEntity userEntity = userService.getUser(userId);
+//    /***
+//     * 유저의 해당 모의고사의 성적리포트를 모두 조회
+//     * @param mockExamId 모의고사 ID
+//     * @param userId 유저 ID
+//     * @return 리스트 형태의 성적리포트 Reponse DTO를 반환합니다.
+//     */
+//    public List<MockExamResultWithSubjectsResponse> getMockExamResults(Long mockExamId, Long userId) {
+//        MockExamEntity mockExamEntity = mockExamService.getMockExam(mockExamId);
+//        UserEntity userEntity = userService.getUser(userId);
+//
+//        List<MockExamResultEntity> mockExamResultEntities = mockExamResultService.getMockExamResults(mockExamEntity, userEntity);
+//        log.info("userEntity - {}, mockExamId - {} 성적리포트 리스트 조회", userEntity.getEmail(), mockExamId);
+//        return mockExamResultEntities.stream()
+//                .map(MockExamResultWithSubjectsResponse::from)
+//                .toList();
+//    }
 
-        List<MockExamResult> mockExamResults = mockExamResultService.getMockExamResults(mockExamEntity, userEntity);
-        log.info("userEntity - {}, mockExamId - {} 성적리포트 리스트 조회", userEntity.getEmail(), mockExamId);
-        return mockExamResults.stream()
-                .map(MockExamResultWithSubjectsResponse::from)
-                .toList();
-    }
-
-    /***
-     * 유저의 해당 자격증시험의 모든 틀린 문제를 조회한다.
-     * @param pageable 페이징 정보
-     * @param certificateId 자격증 ID
-     * @param userId 유저 ID
-     * @return 슬라이스 형태로 문제 정보를 포함하여 유저가 제출한 답을 반환한다.
-     */
-    public Slice<UserAnswerResponse> getAllWrongUserAnswers(Pageable pageable, Long certificateId, Long userId) {
-        CertificateEntity certificateEntity = certificateService.getCertificate(certificateId);
-        UserEntity userEntity = userService.getUser(userId);
-
-        log.info("userEntity - {}, certificateEntity - {} 모든 오답 조회", userEntity.getEmail(), certificateEntity.getCertificateName());
-        return userAnswerService.getAllWrongUserAnswers(pageable, userEntity, certificateEntity).map(UserAnswerResponse::from);
-    }
+//    /***
+//     * 유저의 해당 자격증시험의 모든 틀린 문제를 조회한다.
+//     * @param pageable 페이징 정보
+//     * @param certificateId 자격증 ID
+//     * @param userId 유저 ID
+//     * @return 슬라이스 형태로 문제 정보를 포함하여 유저가 제출한 답을 반환한다.
+//     */
+//    public Slice<UserAnswerResponse> getAllWrongUserAnswers(Pageable pageable, Long certificateId, Long userId) {
+//        CertificateEntity certificateEntity = certificateService.getCertificate(certificateId);
+//        UserEntity userEntity = userService.getUser(userId);
+//
+//        log.info("userEntity - {}, certificateEntity - {} 모든 오답 조회", userEntity.getEmail(), certificateEntity.getCertificateName());
+//        return userAnswerService.getAllWrongUserAnswers(pageable, userEntity, certificateEntity).map(UserAnswerResponse::from);
+//    }
 
     /***
      * 유저의 해당 모의고사 시험의 틀린문제를 모두 조회한다.
@@ -79,14 +76,14 @@ public class MockExamResultFetchUseCase {
      */
     public Slice<UserAnswerResponse> getWrongUserAnswers(Pageable pageable, Long mockExamResultId, Long userId) {
         UserEntity userEntity = userService.getUser(userId);
-        MockExamResult mockExamResult = mockExamResultService.getMockExamResult(mockExamResultId);
-
-        if (!mockExamResult.isAuthorized(userEntity)) {
-            throw new CustomException(ErrorCode.NO_PERMISSION_ERROR);
-        }
+        MockExamResultEntity mockExamResultEntity = mockExamResultService.getMockExamResult(mockExamResultId);
+//
+//        if (!mockExamResultEntity.isAuthorized(userEntity)) {
+//            throw new CustomException(ErrorCode.NO_PERMISSION_ERROR);
+//        }
 
         log.info("mockExamResultId - {} 모든 오답 조회", mockExamResultId);
-        return userAnswerService.getWrongUserAnswers(pageable, mockExamResult).map(UserAnswerResponse::from);
+        return userAnswerService.getWrongUserAnswers(pageable, mockExamResultEntity).map(UserAnswerResponse::from);
     }
 
     /***
