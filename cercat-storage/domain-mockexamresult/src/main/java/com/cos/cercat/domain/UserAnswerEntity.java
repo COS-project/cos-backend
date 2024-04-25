@@ -32,7 +32,7 @@ public class UserAnswerEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private SubjectResultEntity subjectResultEntity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
     private QuestionEntity questionEntity;
 
@@ -61,7 +61,8 @@ public class UserAnswerEntity {
         this.isReviewed = isReviewed;
     }
 
-    public static UserAnswerEntity from(UserAnswer userAnswer, SubjectResultEntity subjectResultEntity) {
+    public static UserAnswerEntity from(UserAnswer userAnswer,
+                                        SubjectResultEntity subjectResultEntity) {
         return UserAnswerEntity.builder()
                 .id(userAnswer.getId())
                 .userEntity(UserEntity.from(userAnswer.getUser()))

@@ -12,7 +12,6 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class PostReader {
 
     private final ReadPostRepository postRepository;

@@ -1,5 +1,6 @@
 package com.cos.cercat.domain;
 
+import com.cos.cercat.domain.mockexamresult.SubjectResult;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -49,5 +50,15 @@ public class SubjectResultEntity {
         this.numberOfCorrect = numberOfCorrect;
         this.totalTakenTime = totalTakenTime;
         this.correctRate = correctRate;
+    }
+
+    public SubjectResult toDomain() {
+        return new SubjectResult(
+                subjectEntity.toDomain(),
+                score,
+                numberOfCorrect,
+                totalTakenTime,
+                correctRate
+        );
     }
 }

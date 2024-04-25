@@ -16,9 +16,8 @@ public class RecommendTagEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tip_post_id")
-    @Setter
     private TipPostEntity tipPost;
 
     @Enumerated(EnumType.STRING)

@@ -1,5 +1,6 @@
 package com.cos.cercat.domain;
 
+import com.cos.cercat.domain.mockexamresult.MockExamResult;
 import com.cos.cercat.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -39,4 +40,16 @@ public class MockExamResultEntity extends BaseTimeEntity {
         this.round = round;
         this.totalScore = totalScore;
     }
+
+    public MockExamResult toDomain() {
+        return new MockExamResult(
+                id,
+                userEntity.toDomain(),
+                mockExamEntity.toDomain(),
+                round,
+                totalScore,
+                createdAt
+        );
+    }
+
 }

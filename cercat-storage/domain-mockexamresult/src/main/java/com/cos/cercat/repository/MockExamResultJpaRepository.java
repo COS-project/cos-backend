@@ -1,8 +1,6 @@
 package com.cos.cercat.repository;
 
-import com.cos.cercat.domain.MockExamEntity;
 import com.cos.cercat.domain.MockExamResultEntity;
-import com.cos.cercat.domain.UserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,7 +13,12 @@ import java.util.List;
 
 public interface MockExamResultJpaRepository extends JpaRepository<MockExamResultEntity, Long>, CustomMockExamResultRepository {
 
-    List<MockExamResultEntity> findMockExamResultByMockExamEntityAndUserEntity(MockExamEntity mockExamEntity, UserEntity userEntity);
+    @Query("""
+           SELECT mer FROM MockExamResultEntity mer
+           WHERE mer.mockExamEntity.id = :mockExamId
+           AND mer.userEntity.id = :userId
+           """)
+    List<MockExamResultEntity> findByMockExamIdAndUserId(Long mockExamId, Long userId);
 
     @Query("""
             SELECT COUNT(mer) FROM MockExamResultEntity mer
@@ -28,22 +31,24 @@ public interface MockExamResultJpaRepository extends JpaRepository<MockExamResul
             SELECT COUNT(mer) FROM MockExamResultEntity mer
             WHERE mer.mockExamEntity.certificateEntity.id = :certificateId
             AND mer.userEntity.id = :userId
-            AND :goalStartDateTime < mer.createdAt
+            AND mer.createdAt BETWEEN :goalStartDateTime AND :goalEndDateTime
             """)
     Integer countTotalMockExamResults(@Param("certificateId") Long certificateId,
                                       @Param("userId") Long userId,
-                                      LocalDateTime goalStartDateTime);
+                                      LocalDateTime goalStartDateTime,
+                                      LocalDateTime goalEndDateTime);
 
     @Query("""
             SELECT MAX(mer.totalScore)
             FROM MockExamResultEntity mer
             WHERE mer.mockExamEntity.certificateEntity.id = :certificateId
             AND mer.userEntity.id = :userId
-            AND :goalStartDateTime < mer.createdAt
+            AND mer.createdAt BETWEEN :goalStartDateTime AND :goalEndDateTime
             """)
     Integer getMockExamResultMaxScore(@Param("certificateId") Long certificateId,
                                       @Param("userId") Long userId,
-                                      LocalDateTime goalStartDateTime);
+                                      LocalDateTime goalStartDateTime,
+                                      LocalDateTime goalEndDateTime);
 
     @Query("""
             SELECT COUNT(mr) FROM MockExamResultEntity mr

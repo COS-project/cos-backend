@@ -1,7 +1,8 @@
 package com.cos.cercat.apis.learning.dto.response;
 
 
-import com.cos.cercat.domain.Goal;
+import com.cos.cercat.domain.GoalEntity;
+import com.cos.cercat.domain.learning.Goal;
 
 import java.time.LocalDate;
 
@@ -11,11 +12,11 @@ public record GoalResponse(
         LocalDate prepareFinishDateTime
 ) {
 
-    public static GoalResponse from(Goal entity) {
+    public static GoalResponse from(Goal goal) {
         return new GoalResponse(
-                entity.getId(),
-                entity.getPrepareStartDateTime().toLocalDate(),
-                entity.getPrepareFinishDateTime().toLocalDate()
+                goal.getId(),
+                goal.getGoalPeriod().startDateTime().toLocalDate(),
+                goal.getGoalPeriod().endDateTime().toLocalDate()
         );
     }
 }

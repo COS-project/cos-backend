@@ -10,9 +10,6 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.util.ArrayList;
-
-
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -33,8 +30,6 @@ public class PostCommentEntity extends BaseTimeEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private PostEntity postEntity;
 
-    @Setter
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Long parentCommentId;
 
     @ColumnDefault("0")

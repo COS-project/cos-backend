@@ -12,13 +12,13 @@ import org.springframework.stereotype.Service;
 public class UpdateMockExamResultService {
 
     private final UserAnswerUpdator userAnswerUpdator;
-    private final UserAnswerReader userAnswerReader;
+    private final UserAnswerManager userAnswerManager;
     private final UserReader userReader;
     private final PermissionValidator permissionValidator;
 
     public void reviewUserAnswer(TargetUser targetUser, TargetUserAnswer targetUserAnswer) {
         User user = userReader.read(targetUser);
-        UserAnswer userAnswer = userAnswerReader.read(targetUserAnswer);
+        UserAnswer userAnswer = userAnswerManager.read(targetUserAnswer);
         permissionValidator.validate(userAnswer, user);
         userAnswer.review();
         userAnswerUpdator.update(userAnswer);

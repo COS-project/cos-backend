@@ -1,21 +1,37 @@
 package com.cos.cercat.repository;
 
 
+import com.cos.cercat.common.domain.Cursor;
+import com.cos.cercat.common.domain.PageResult;
+import com.cos.cercat.common.domain.SliceResult;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
+import com.cos.cercat.common.util.DateUtils;
 import com.cos.cercat.domain.*;
+import com.cos.cercat.domain.certificate.TargetCertificate;
+import com.cos.cercat.domain.learning.GoalPeriod;
 import com.cos.cercat.domain.mockexam.TargetMockExam;
 import com.cos.cercat.domain.mockexamresult.*;
 import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.dto.DailyScoreAverage;
+import com.cos.cercat.dto.MonthlyScoreAverage;
+import com.cos.cercat.dto.SubjectResultsAVG;
+import com.cos.cercat.dto.WeeklyScoreAverage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
+
 
 @Repository
 @RequiredArgsConstructor
-
+@Transactional
 public class MockExamResultRepositoryImpl implements MockExamResultRepository {
 
     private final MockExamResultJpaRepository mockExamResultJpaRepository;
@@ -27,7 +43,6 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
     private final SubjectJpaRepository subjectJpaRepository;
 
     @Override
-    @Transactional
     public TargetMockExamResult save(TargetUser targetUser, TargetMockExam targetMockExam, NewMockExamResult newMockExamResult) {
         UserEntity userEntity = userJpaRepository.getReferenceById(targetUser.userId());
         MockExamEntity mockExamEntity = mockExamJpaRepository.getReferenceById(targetMockExam.mockExamId());
@@ -56,16 +71,211 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
 
     @Override
     @Transactional(readOnly = true)
-    public UserAnswer find(TargetUserAnswer targetUserAnswer) {
+    public UserAnswer findUserAnswer(TargetUserAnswer targetUserAnswer) {
         UserAnswerEntity userAnswerEntity = userAnswerJpaRepository.findById(targetUserAnswer.userAnswerId()).orElseThrow(
                 () -> new CustomException(ErrorCode.USER_ANSWER_NOT_FOUND));
         return userAnswerEntity.toDomain();
     }
 
     @Override
-    public void updateUserAnswer(UserAnswer userAnswer) {
+    public void update(UserAnswer userAnswer) {
         SubjectResultEntity subjectResultEntity = subjectResultJpaRepository.getReferenceById(userAnswer.getSubjectResultId());
         userAnswerJpaRepository.save(UserAnswerEntity.from(userAnswer, subjectResultEntity));
+    }
+
+    @Override
+    public List<MockExamResultDetail> findMockExamResultDetails(TargetMockExam targetMockExam, TargetUser targetUser) {
+        List<MockExamResultEntity> mockExamResultEntities =
+                mockExamResultJpaRepository.findByMockExamIdAndUserId(targetMockExam.mockExamId(), targetUser.userId());
+        return mockExamResultEntities.stream()
+                .map(mockExamResultEntity -> {
+                    List<SubjectResultEntity> subjectResultEntities = subjectResultJpaRepository.findByMockExamResultId(mockExamResultEntity.getId());
+                    return new MockExamResultDetail(
+                            mockExamResultEntity.toDomain(),
+                            subjectResultEntities.stream().map(SubjectResultEntity::toDomain).toList()
+                    );
+                }).toList();
+    }
+
+    @Override
+    public SliceResult<UserAnswer> findAllWrongUserAnswers(TargetCertificate targetCertificate,
+                                                           TargetUser targetUser,
+                                                           Cursor cursor) {
+        Slice<UserAnswerEntity> userAnswerEntities = userAnswerJpaRepository.findWrongUserAnswersByUserIdAndCertificateId(
+                targetUser.userId(),
+                targetCertificate.certificateId(),
+                toPageRequest(cursor));
+
+        return SliceResult.of(userAnswerEntities.stream().map(UserAnswerEntity::toDomain).toList(), userAnswerEntities.hasNext());
+
+    }
+
+    @Override
+    public SliceResult<UserAnswer> findWrongUserAnswers(TargetMockExamResult targetMockExamResult,
+                                                        TargetUser targetUser,
+                                                        Cursor cursor) {
+        Slice<UserAnswerEntity> userAnswerEntities = userAnswerJpaRepository.findWrongUserAnswersByMockExamResultId(
+                targetMockExamResult.mockExamResultId(),
+                toPageRequest(cursor)
+        );
+
+        return SliceResult.of(userAnswerEntities.stream().map(UserAnswerEntity::toDomain).toList(), userAnswerEntities.hasNext());
+    }
+
+    @Override
+    public MockExamResult find(TargetMockExamResult targetMockExamResult) {
+        return mockExamResultJpaRepository.findById(targetMockExamResult.mockExamResultId())
+                .orElseThrow(() -> new CustomException(ErrorCode.MOCK_EXAM_RESULT_NOT_FOUND))
+                .toDomain();
+    }
+
+    @Override
+    public PageResult<MockExamResult> findMockExamResultsByDate(TargetUser targetUser,
+                                                                TargetCertificate targetCertificate,
+                                                                DateCond dateCond,
+                                                                Cursor cursor) {
+        Page<MockExamResultEntity> mockExamResults = mockExamResultJpaRepository.findMockExamResultsByDate(
+                targetUser.userId(),
+                targetCertificate.certificateId(),
+                dateCond.date(),
+                toPageRequest(cursor)
+        );
+
+        return PageResult.of(
+                mockExamResults.stream()
+                        .map(MockExamResultEntity::toDomain)
+                        .toList(),
+                mockExamResults.getNumber(),
+                mockExamResults.getSize()
+        );
+    }
+
+    @Override
+    public PageResult<MockExamResult> findMockExamResultsByWeekOfMonth(TargetUser targetUser,
+                                                                       TargetCertificate targetCertificate,
+                                                                       DateCond dateCond,
+                                                                       Cursor cursor) {
+        Page<MockExamResultEntity> mockExamResults = mockExamResultJpaRepository.findMockExamResultsByWeekOfMonth(
+                targetUser.userId(),
+                targetCertificate.certificateId(),
+                DateUtils.getFirstDayOfMonth(LocalDate.of(dateCond.year(), dateCond.month(), 1)),
+                dateCond.month(),
+                dateCond.weekOfMonth(),
+                toPageRequest(cursor)
+        );
+        return PageResult.of(
+                mockExamResults.stream()
+                        .map(MockExamResultEntity::toDomain)
+                        .toList(),
+                mockExamResults.getNumber(),
+                mockExamResults.getSize()
+        );
+    }
+
+    @Override
+    public PageResult<MockExamResult> findMockExamResultsByMonth(TargetUser targetUser,
+                                                                 TargetCertificate targetCertificate,
+                                                                 DateCond dateCond,
+                                                                 Cursor cursor) {
+        Page<MockExamResultEntity> mockExamResults = mockExamResultJpaRepository.findMockExamResultsByMonth(
+                targetUser.userId(),
+                targetCertificate.certificateId(),
+                dateCond.month(),
+                toPageRequest(cursor)
+        );
+        return PageResult.of(
+                mockExamResults.stream()
+                        .map(MockExamResultEntity::toDomain)
+                        .toList(),
+                mockExamResults.getNumber(),
+                mockExamResults.getSize()
+        );
+    }
+
+    @Override
+    public List<ScoreData> getDailyScoreData(TargetUser targetUser,
+                                             TargetCertificate targetCertificate,
+                                             DateCond dateCond) {
+        return mockExamResultJpaRepository.getDailyScoreDataList(
+                        targetCertificate.certificateId(),
+                        targetUser.userId(),
+                        dateCond
+                ).stream()
+                .map(DailyScoreAverage::toScoreData)
+                .toList();
+    }
+
+    @Override
+    public List<ScoreData> getWeeklyScoreData(TargetUser targetUser,
+                                              TargetCertificate targetCertificate,
+                                              DateCond dateCond) {
+        return mockExamResultJpaRepository.getWeeklyScoreDataList(
+                        targetCertificate.certificateId(),
+                        targetUser.userId(),
+                        dateCond
+                ).stream()
+                .map(WeeklyScoreAverage::toScoreData)
+                .toList();
+    }
+
+    @Override
+    public List<ScoreData> getYearlyScoreData(TargetUser targetUser,
+                                              TargetCertificate targetCertificate,
+                                              DateCond dateCond) {
+        return mockExamResultJpaRepository.getMonthlyScoreDataList(
+                        targetCertificate.certificateId(),
+                        targetUser.userId(),
+                        dateCond
+                ).stream()
+                .map(MonthlyScoreAverage::toScoreData)
+                .toList();
+    }
+
+    @Override
+    public List<SubjectResultStatistics> getSubjectResultStatistics(TargetUser targetUser,
+                                                                    TargetCertificate targetCertificate,
+                                                                    GoalPeriod goalPeriod) {
+        return subjectResultJpaRepository.getSubjectResultsAVG(
+                        targetUser.userId(),
+                        targetCertificate.certificateId(),
+                        goalPeriod.startDateTime(),
+                        goalPeriod.endDateTime()
+                ).stream()
+                .map(SubjectResultsAVG::toDomain)
+                .toList();
+    }
+
+    @Override
+    public int getCurrentMaxScore(TargetCertificate targetCertificate,
+                                  TargetUser targetUser,
+                                  GoalPeriod goalPeriod) {
+        return mockExamResultJpaRepository.getMockExamResultMaxScore(
+                targetCertificate.certificateId(),
+                targetUser.userId(),
+                goalPeriod.startDateTime(),
+                goalPeriod.endDateTime()
+        );
+    }
+
+    @Override
+    public int countTodayMockExamResults(TargetCertificate targetCertificate,
+                                         TargetUser targetUser) {
+        return mockExamResultJpaRepository.countTodayMockExamResults(
+                targetCertificate.certificateId(),
+                targetUser.userId()
+        );
+    }
+
+    @Override
+    public int countTotalMockExamResults(TargetCertificate targetCertificate,
+                                         TargetUser targetUser,
+                                         GoalPeriod goalPeriod) {
+        return mockExamResultJpaRepository.countTotalMockExamResults(
+                targetCertificate.certificateId(),
+                targetUser.userId(),
+                goalPeriod.startDateTime(),
+                goalPeriod.endDateTime()
+        );
     }
 
     private SubjectResultEntity saveSubjectResult(NewSubjectResult newSubjectResult, MockExamResultEntity savedResult) {
@@ -92,5 +302,10 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
                 .takenTime(newUserAnswer.takenTime())
                 .build();
         userAnswerJpaRepository.save(userAnswerEntity);
+    }
+
+    private PageRequest toPageRequest(Cursor cursor) {
+        Sort.Direction direction = Sort.Direction.fromOptionalString(cursor.sortDirection().name()).orElseThrow();
+        return PageRequest.of(cursor.page(), cursor.limit(), Sort.by(direction, cursor.sortKey().key()));
     }
 }

@@ -7,7 +7,6 @@ import com.cos.cercat.domain.TipPostEntity;
 import com.cos.cercat.domain.post.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

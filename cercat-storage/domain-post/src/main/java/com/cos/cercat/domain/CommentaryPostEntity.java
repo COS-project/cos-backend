@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @DiscriminatorValue("CommentaryPost")
 public class CommentaryPostEntity extends PostEntity {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
     private QuestionEntity questionEntity;
 

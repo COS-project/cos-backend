@@ -4,6 +4,7 @@ import com.cos.cercat.domain.UserAnswerEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -28,9 +29,9 @@ public interface UserAnswerJpaRepository extends JpaRepository<UserAnswerEntity,
                 AND ua.isReviewed = false
                 AND ua.userEntity.id = :userId
               """)
-    Slice<UserAnswerEntity> getWrongUserAnswersByUserEntityAndCertificateEntity(Pageable pageable,
-                                                                                @Param("userId") Long userId,
-                                                                                @Param("certificateId") Long certificateId);
+    Slice<UserAnswerEntity> findWrongUserAnswersByUserIdAndCertificateId(@Param("userId") Long userId,
+                                                                         @Param("certificateId") Long certificateId,
+                                                                         Pageable pageable);
 
     @Query("""
             SELECT ua FROM UserAnswerEntity ua
@@ -40,7 +41,16 @@ public interface UserAnswerJpaRepository extends JpaRepository<UserAnswerEntity,
             AND ua.isReviewed = false
             AND sr.mockExamResultEntity.id = :mockExamResultId
             """)
-    Slice<UserAnswerEntity> getWrongUserAnswersByMockExamResult(Pageable pageable, @Param("mockExamResultId") Long mockExamResultId);
+    Slice<UserAnswerEntity> findWrongUserAnswersByMockExamResultId(@Param("mockExamResultId") Long mockExamResultId,
+                                                                   Pageable pageable);
+
+    @Modifying
+    @Query("""
+            UPDATE UserAnswerEntity ua
+            SET ua.isReviewed = true
+            WHERE ua.id = :userAnswerId
+           """)
+    void updateForReview(Long userAnswerId);
 
 
 }

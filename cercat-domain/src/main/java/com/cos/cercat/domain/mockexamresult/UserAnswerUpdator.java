@@ -10,7 +10,7 @@ public class UserAnswerUpdator {
     private final MockExamResultRepository mockExamResultRepository;
 
     public void update(UserAnswer userAnswer) {
-        mockExamResultRepository.updateUserAnswer(userAnswer);
+        mockExamResultRepository.update(userAnswer);
     }
 
 }

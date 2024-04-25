@@ -1,8 +1,8 @@
 package com.cos.cercat.apis.learning.dto.response;
 
 import com.cos.cercat.apis.certificate.response.CertificateResponse;
-import com.cos.cercat.domain.Goal;
-import com.cos.cercat.domain.RepeatDay;
+import com.cos.cercat.domain.StudyScheduleEntity;
+import com.cos.cercat.domain.learning.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,28 +22,30 @@ public record GoalDetailResponse(
         List<Integer> studyRepeatDays
 ) {
 
-    public static GoalDetailResponse from(Goal entity) {
+    public static GoalDetailResponse from(Goal goal) {
+        GoalContent goalContent = goal.getGoalContent();
+        GoalPeriod goalPeriod = goal.getGoalPeriod();
         return new GoalDetailResponse(
-                entity.getId(),
-                CertificateResponse.from(entity.getCertificateEntity().toDomain()),
-                entity.getGoalScore(),
-                entity.getPrepareStartDateTime(),
-                entity.getPrepareFinishDateTime(),
-                entity.getGoalPrepareDays(),
-                entity.getMockExamsPerDay(),
-                entity.getGoalMockExams(),
-                convertIntegerList(entity.getRepeatDays().getMockExamRepeatDays()),
-                entity.getStudyTimePerDay(),
-                entity.getGoalStudyTime(),
-                convertIntegerList(entity.getRepeatDays().getStudyRepeatDays())
+                goal.getId(),
+                CertificateResponse.from(goal.getCertificate()),
+                goalContent.goalScore(),
+                goalPeriod.startDateTime(),
+                goalPeriod.endDateTime(),
+                goalContent.goalPrepareDays(),
+                goalContent.mockExamsPerDay(),
+                goalContent.goalMockExams(),
+                convertIntegerList(goal.getMockExamSchedules()),
+                goalContent.studyTimePerDay(),
+                goalContent.goalStudyTime(),
+                convertIntegerList(goal.getStudySchedules())
         );
     }
 
-    private static List<Integer> convertIntegerList(List<RepeatDay> repeatDays) {
-        return repeatDays.stream()
-                .map(repeatDay -> {
-                    int dayOfWeekValue = repeatDay.getRepeatDayOfWeek().getValue();
-                    return (dayOfWeekValue < RepeatDay.SUNDAY_VALUE) ? dayOfWeekValue : 0;
+    private static List<Integer> convertIntegerList(List<StudySchedule> studySchedules) {
+        return studySchedules.stream()
+                .map(studySchedule -> {
+                    int dayOfWeekValue = studySchedule.getRepeatDayOfWeek().getValue();
+                    return (dayOfWeekValue < StudyScheduleEntity.SUNDAY_VALUE) ? dayOfWeekValue : 0;
                 }).toList();
     }
 }

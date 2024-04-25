@@ -7,7 +7,6 @@ import com.cos.cercat.domain.mockexamresult.CreateMockExamResultService;
 import com.cos.cercat.domain.mockexamresult.TargetMockExamResult;
 import com.cos.cercat.domain.user.TargetUser;
 import com.cos.cercat.dto.UserDTO;
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +28,8 @@ public class CreateMockExamResultApi implements MockExamResultApiDocs{
                 TargetMockExam.from(mockExamId),
                 request.toNewSubjectResults()
         );
-
         return Response.success(targetMockExamResult);
     }
+
+
 }

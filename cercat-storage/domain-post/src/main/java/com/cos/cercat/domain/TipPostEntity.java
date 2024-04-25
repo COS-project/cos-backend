@@ -1,6 +1,5 @@
 package com.cos.cercat.domain;
 
-import com.cos.cercat.domain.post.Post;
 import com.cos.cercat.domain.post.PostType;
 import com.cos.cercat.domain.post.TipPost;
 import jakarta.persistence.DiscriminatorValue;

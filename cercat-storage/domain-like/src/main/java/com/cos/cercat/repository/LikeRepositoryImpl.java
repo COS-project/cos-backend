@@ -10,6 +10,7 @@ import com.cos.cercat.domain.PostEntity;
 import com.cos.cercat.domain.user.TargetUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
@@ -32,6 +33,7 @@ public class LikeRepositoryImpl implements LikeRepository {
     }
 
     @Override
+    @Transactional
     public void save(TargetUser targetUser, Like like) {
         UserEntity userEntity = userJpaRepository.getReferenceById(targetUser.userId());
         switch (like.targetType()) {
@@ -48,6 +50,7 @@ public class LikeRepositoryImpl implements LikeRepository {
     }
 
     @Override
+    @Transactional
     public void remove(TargetUser targetUser, Like like) {
         switch (like.targetType()) {
             case POST -> {

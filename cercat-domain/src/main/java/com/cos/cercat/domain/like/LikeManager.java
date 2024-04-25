@@ -28,7 +28,6 @@ public class LikeManager {
                 likeRepository.save(targetUser, like);
             }
         }
-        likeRepository.save(targetUser, like);
     }
 
     public void unLike(TargetUser targetUser, Like like) {

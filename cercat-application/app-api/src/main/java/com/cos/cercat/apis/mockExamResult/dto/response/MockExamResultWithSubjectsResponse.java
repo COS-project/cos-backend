@@ -2,6 +2,8 @@ package com.cos.cercat.apis.mockExamResult.dto.response;
 
 import com.cos.cercat.apis.mockExam.response.MockExamResponse;
 import com.cos.cercat.domain.MockExamResultEntity;
+import com.cos.cercat.domain.mockexamresult.MockExamResult;
+import com.cos.cercat.domain.mockexamresult.MockExamResultDetail;
 
 import java.util.List;
 
@@ -13,15 +15,15 @@ public record MockExamResultWithSubjectsResponse(
         Integer totalScore
 ) {
 
-//    public static MockExamResultWithSubjectsResponse from(MockExamResultEntity entity) {
-//        return new MockExamResultWithSubjectsResponse(
-//                entity.getId(),
-//                entity.getRound(),
-//                MockExamResponse.from(entity.getMockExamEntity()),
-//                entity.getSubjectResults().getSubjectResultEntities().stream()
-//                        .map(SubjectResultResponse::from)
-//                        .toList(),
-//                entity.getTotalScore()
-//        );
-//    }
+    public static MockExamResultWithSubjectsResponse from(MockExamResultDetail mockExamResultDetail) {
+        return new MockExamResultWithSubjectsResponse(
+                mockExamResultDetail.mockExamResult().getId(),
+                mockExamResultDetail.mockExamResult().getRound(),
+                MockExamResponse.from(mockExamResultDetail.mockExamResult().getMockExam()),
+                mockExamResultDetail.subjectResults().stream()
+                        .map(SubjectResultResponse::from)
+                        .toList(),
+                mockExamResultDetail.mockExamResult().getTotalScore()
+        );
+    }
 }

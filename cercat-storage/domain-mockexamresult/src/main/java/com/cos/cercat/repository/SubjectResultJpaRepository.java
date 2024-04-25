@@ -17,11 +17,17 @@ public interface SubjectResultJpaRepository extends JpaRepository<SubjectResultE
             JOIN sr.subjectEntity.certificateEntity c
             JOIN sr.mockExamResultEntity.userEntity u
             WHERE c.id = :certificateId AND u.id = :userId
-            AND :goalStartDateTime < sr.mockExamResultEntity.createdAt
+            AND sr.mockExamResultEntity.createdAt BETWEEN :goalStartDateTime AND :goalEndDateTime
             GROUP BY sr.subjectEntity
             """)
     List<SubjectResultsAVG> getSubjectResultsAVG(@Param("certificateId") Long certificateId,
                                                  @Param("userId") Long userId,
-                                                 LocalDateTime goalStartDateTime);
+                                                 LocalDateTime goalStartDateTime,
+                                                 LocalDateTime goalEndDateTime);
 
+    @Query("""
+            SELECT sr FROM SubjectResultEntity sr
+            WHERE sr.mockExamResultEntity.id = :mockExamResultId
+           """)
+    List<SubjectResultEntity> findByMockExamResultId(Long mockExamResultId);
 }

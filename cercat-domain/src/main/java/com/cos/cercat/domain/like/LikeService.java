@@ -12,10 +12,10 @@ public class LikeService {
     private final LikeManager likeManager;
 
     //TODO: alarmSender 추가
-
     public void flipLike(TargetUser targetUser, Like like) {
         if (isLiked(targetUser, like)) {
             likeManager.unLike(targetUser, like);
+            return;
         }
         likeManager.like(targetUser, like);
     }

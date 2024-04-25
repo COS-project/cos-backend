@@ -1,5 +1,8 @@
 package com.cos.cercat.dto;
 
+import com.cos.cercat.common.util.ScoreFormatter;
+import com.cos.cercat.domain.mockexamresult.DailyScoreData;
+import com.cos.cercat.domain.mockexamresult.ScoreData;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 
@@ -7,27 +10,25 @@ import java.time.DayOfWeek;
 import java.util.Date;
 
 @Getter
-public class DailyScoreAverage extends ScoreAverage {
-
+public class DailyScoreAverage {
+    private final Double scoreAverage;
     private final DayOfWeek dayOfWeek;
-
     private final Date date;
 
-    private DailyScoreAverage(double scoreAverage, DayOfWeek dayOfWeek, Date date) {
-        super(scoreAverage);
-        this.dayOfWeek = dayOfWeek;
-        this.date = date;
-    }
-
     @QueryProjection
-    public DailyScoreAverage(Double scoreAverage, Integer dayOfWeek, Date date) {
-        super(scoreAverage);
-        this.dayOfWeek = DayOfWeek.of((dayOfWeek > 1) ? dayOfWeek - 1 : 7);
+    public DailyScoreAverage(Double scoreAverage,
+                             Integer dayOfWeek,
+                             Date date) {
+        this.scoreAverage = ScoreFormatter.formatScore(scoreAverage);
+        this.dayOfWeek = DayOfWeek.of(
+                (dayOfWeek > 1) ?
+                        dayOfWeek - 1
+                        : 7);
         this.date = date;
     }
 
-    public static DailyScoreAverage of(double scoreAverage, DayOfWeek dayOfWeek, Date date) {
-        return new DailyScoreAverage(
+    public ScoreData toScoreData() {
+        return new DailyScoreData(
                 scoreAverage,
                 dayOfWeek,
                 date

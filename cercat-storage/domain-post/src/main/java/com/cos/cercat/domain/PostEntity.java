@@ -29,11 +29,11 @@ public class PostEntity extends BaseTimeEntity {
 
     protected String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     protected UserEntity userEntity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "certificate_id")
     protected CertificateEntity certificateEntity;
 

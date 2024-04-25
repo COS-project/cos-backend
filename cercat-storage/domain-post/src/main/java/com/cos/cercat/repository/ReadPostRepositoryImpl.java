@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -107,6 +108,7 @@ public class ReadPostRepositoryImpl implements ReadPostRepository {
     }
 
     @Override
+    @Transactional
     public Post findWithLock(TargetPost targetPost) {
         PostEntity postEntity = postJpaRepository.findByIdWithPessimisticLock(targetPost.postId()).orElseThrow(
                 () -> new CustomException(ErrorCode.POST_NOT_FOUND));
