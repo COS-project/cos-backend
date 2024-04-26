@@ -1,7 +1,9 @@
 package com.cos.cercat.domain.learning;
 
+import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.domain.certificate.TargetCertificate;
 import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.User;
 
 import java.util.List;
 
@@ -21,7 +23,7 @@ public interface LearningRepository {
 
     List<Goal> findAllGoals(TargetCertificate targetCertificate, TargetUser targetUser);
 
-    Goal getRecentGoal(TargetCertificate targetCertificate, TargetUser targetUser);
+    Goal getRecentGoal(User user, Certificate certificate);
 
     long getTodayStudyTime(Long goalId);
 

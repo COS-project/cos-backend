@@ -4,4 +4,5 @@ public record InterestTarget(
         long certificateId,
         InterestPriority interestPriority
 ) {
+
 }

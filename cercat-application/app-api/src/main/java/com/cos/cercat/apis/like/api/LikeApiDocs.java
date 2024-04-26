@@ -6,7 +6,7 @@ import com.cos.cercat.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "좋아요 생성/취소 API")
+@Tag(name = "좋아요 API")
 public interface LikeApiDocs {
 
     @Operation(summary = "좋아요 생성 및 취소")

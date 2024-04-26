@@ -1,6 +1,5 @@
-package com.cos.cercat.dto;
+package com.cos.cercat.domain.examreview;
 
-import com.cos.cercat.domain.ExamDifficulty;
 
 public record ExamReviewSearchCond(
         Integer startMonths,

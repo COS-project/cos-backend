@@ -7,6 +7,7 @@ import com.cos.cercat.dto.MockExamInfoDTO;
 import com.cos.cercat.domain.QuestionEntity;
 import com.cos.cercat.repository.MockExamJpaRepository;
 import com.cos.cercat.repository.QuestionJpaRepository;
+import com.cos.cercat.repository.SubjectJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class QuestionConvertService {
     private final QuestionMapper questionMapperService;
     private final QuestionJpaRepository questionJpaRepository;
     private final MockExamJpaRepository mockExamJpaRepository;
-    private final SubjectService subjectService;
+    private final SubjectJpaRepository subjectJpaRepository;
 
     public static final String CORRECT_ANSWER = "정답";
 
@@ -36,8 +37,8 @@ public class QuestionConvertService {
         List<QuestionEntity> questionEntities = new ArrayList<>();
 
         MockExamInfoDTO mockExamInfoDTO = questionMapperService.jsonToQuestionMap(certificateEntity, json);
-        MockExamEntity mockExamEntity = mockExamJpaRepository.save(MockExamEntity.of(mockExamInfoDTO.mockExamDTO(), 1000000L));
-        List<SubjectEntity> subjectEntityList = subjectService.getSubjectList(certificateEntity);
+        MockExamEntity mockExamEntity = mockExamJpaRepository.save(MockExamEntity.of(mockExamInfoDTO.mockExamDTO(), 1000000L, 200));
+        List<SubjectEntity> subjectEntityList = subjectJpaRepository.findSubjectsByCertificateId(certificateEntity.getId());
 
         mockExamInfoDTO.questions().forEach((title, content) -> {
 

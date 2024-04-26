@@ -1,70 +1,61 @@
 package com.cos.cercat.repository;
 
-import com.cos.cercat.domain.*;
-import com.cos.cercat.dto.ExamReviewSearchCond;
-import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.jpa.impl.JPAQuery;
-import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.cos.cercat.common.domain.Cursor;
+import com.cos.cercat.common.domain.SliceResult;
+import com.cos.cercat.domain.CertificateExamEntity;
+import com.cos.cercat.domain.ExamReviewEntity;
+import com.cos.cercat.domain.UserEntity;
+import com.cos.cercat.domain.certificate.CertificateExam;
+import com.cos.cercat.domain.examreview.ExamReview;
+import com.cos.cercat.domain.examreview.ExamReviewContent;
+import com.cos.cercat.domain.examreview.ExamReviewRepository;
+import com.cos.cercat.domain.examreview.ExamReviewSearchCond;
+import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.support.PageableExecutionUtils;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
-
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
-public class ExamReviewRepositoryImpl implements ExamReviewRepositoryCustom {
+@Transactional
+public class ExamReviewRepositoryImpl implements ExamReviewRepository {
 
-    private final JPAQueryFactory queryFactory;
+    private final ExamReviewJpaRepository examReviewJpaRepository;
 
     @Override
-    public Slice<ExamReview> searchExamReview(CertificateExamEntity certificateExamEntity, ExamReviewSearchCond cond, Pageable pageable) {
+    public void save(User user,
+                     CertificateExam recentExam,
+                     ExamReviewContent content,
+                     int prepareMonths) {
 
-        List<ExamReview> contents = queryFactory.selectFrom(QExamReview.examReview)
-                .leftJoin(QExamReview.examReview.certificateExamEntity, QCertificateExamEntity.certificateExamEntity)
-                .where(
-                        equalDifficulty(cond.examDifficulty()),
-                        betweenPrepareMonths(cond.startMonths(), cond.endPreMonths()),
-                        QExamReview.examReview.certificateExamEntity.eq(certificateExamEntity)
-                )
-                .orderBy(QExamReview.examReview.createdAt.desc())
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
-
-        JPAQuery<Long> count = queryFactory.select(QExamReview.examReview.count())
-                .from(QExamReview.examReview);
-
-        return PageableExecutionUtils.getPage(contents, pageable, count::fetchOne);
+        ExamReviewEntity examReviewEntity = ExamReviewEntity.builder()
+                .userEntity(UserEntity.from(user))
+                .certificateExamEntity(CertificateExamEntity.from(recentExam))
+                .examDifficulty(content.examDifficulty())
+                .content(content.content())
+                .prepareMonths(prepareMonths)
+                .build();
+        examReviewJpaRepository.save(examReviewEntity);
     }
 
-    private BooleanExpression equalDifficulty(ExamDifficulty examDifficulty) {
+    @Override
+    public SliceResult<ExamReview> find(CertificateExam certificateExam, ExamReviewSearchCond cond, Cursor cursor) {
+        Slice<ExamReviewEntity> examReviewEntities =
+                examReviewJpaRepository.searchExamReview(CertificateExamEntity.from(certificateExam), cond, toPageRequest(cursor));
 
-        if (examDifficulty == null) {
-            return null;
-        }
-
-        return QExamReview.examReview.examDifficulty.eq(examDifficulty);
+        return SliceResult.of(examReviewEntities.stream().map(ExamReviewEntity::toDomain).toList(), examReviewEntities.hasNext());
     }
 
-    private BooleanExpression betweenPrepareMonths(Integer startMonths, Integer endMonths) {
+    @Override
+    public boolean existReview(User user, CertificateExam certificateExam) {
+        return examReviewJpaRepository.existsUserIdAndCertificateExamId(user.id(), certificateExam.id());
+    }
 
-        if (startMonths == null && endMonths == null) {
-            return null;
-        }
-
-        if (startMonths == null) {
-            return QExamReview.examReview.prepareMonths.loe(endMonths);
-        }
-
-        if (endMonths == null) {
-            return QExamReview.examReview.prepareMonths.goe(startMonths);
-        }
-
-        return QExamReview.examReview.prepareMonths.between(startMonths, endMonths);
+    private PageRequest toPageRequest(Cursor cursor) {
+        Sort.Direction direction = Sort.Direction.fromOptionalString(cursor.sortDirection().name()).orElseThrow();
+        return PageRequest.of(cursor.page(), cursor.limit(), Sort.by(direction, cursor.sortKey().key()));
     }
 }

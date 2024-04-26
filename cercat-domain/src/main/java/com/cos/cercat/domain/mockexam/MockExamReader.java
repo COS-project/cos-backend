@@ -13,7 +13,11 @@ public class MockExamReader {
     public Question readQuestion(TargetCertificate targetCertificate,
                                  MockExamSession mockExamSession,
                                  int questionSequence) {
-        return mockExamRepository.findQuestion(targetCertificate, mockExamSession, questionSequence);
+        return mockExamRepository.readQuestion(targetCertificate, mockExamSession, questionSequence);
 
+    }
+
+    public MockExam read(TargetMockExam targetMockExam) {
+        return mockExamRepository.read(targetMockExam);
     }
 }

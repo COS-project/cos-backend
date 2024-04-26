@@ -9,8 +9,6 @@ import com.cos.cercat.domain.certificate.CreateCertificateService;
 import com.cos.cercat.domain.certificate.TargetCertificate;
 import com.cos.cercat.domain.user.TargetUser;
 import com.cos.cercat.dto.UserDTO;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +30,7 @@ public class CreateCertificateApi implements CreateCertificateApiDocs {
     @PostMapping("/certificates/{certificateId}/certificate-exams")
     public Response<Void> certificateExamAdd(@PathVariable Long certificateId,
                                             @RequestBody CertificateExamCreateRequest request) {
-        createCertificateService.createCertificateExam(TargetCertificate.from(certificateId), request.toExamInformation());
+        createCertificateService.createCertificateExam(TargetCertificate.from(certificateId), request.toNewExamInformation());
         return Response.success("자격증 시험 정보 생성 성공");
     }
 

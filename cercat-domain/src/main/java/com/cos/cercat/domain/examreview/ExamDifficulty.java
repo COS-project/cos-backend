@@ -1,4 +1,4 @@
-package com.cos.cercat.domain;
+package com.cos.cercat.domain.examreview;
 
 import lombok.RequiredArgsConstructor;
 

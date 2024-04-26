@@ -14,17 +14,16 @@ public class InterestCertificateManager {
 
     private final InterestCertificateRepository interestCertificateRepository;
 
-    @Transactional
-    public void append(TargetUser targetUser, InterestTargets interestTargets) {
-        interestCertificateRepository.saveAll(targetUser, interestTargets);
+    public void append(User user, List<NewInterestCertificate> newInterestCertificates) {
+        interestCertificateRepository.saveAll(user, newInterestCertificates);
     }
 
-    public List<InterestCertificate> read(TargetUser targetUser) {
-        return interestCertificateRepository.findAll(targetUser);
+    public List<InterestCertificate> find(User user) {
+        return interestCertificateRepository.find(user);
     }
 
-    public List<Certificate> readCertificates(TargetUser targetUser) {
-        return read(targetUser).stream()
+    public List<Certificate> findCertificate(User user) {
+        return find(user).stream()
                 .map(InterestCertificate::certificate)
                 .toList();
     }
@@ -35,7 +34,7 @@ public class InterestCertificateManager {
     }
 
     @Transactional
-    public void removeAll(TargetUser targetUser) {
-        interestCertificateRepository.removeAll(targetUser);
+    public void removeAll(User user) {
+        interestCertificateRepository.removeAll(user);
     }
 }

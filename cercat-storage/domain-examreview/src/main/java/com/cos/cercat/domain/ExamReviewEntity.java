@@ -1,17 +1,21 @@
 package com.cos.cercat.domain;
 
+import com.cos.cercat.domain.examreview.ExamDifficulty;
+import com.cos.cercat.domain.examreview.ExamReview;
+import com.cos.cercat.domain.examreview.ExamReviewContent;
 import com.cos.cercat.entity.BaseTimeEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class ExamReview extends BaseTimeEntity {
+@Table(name = "exam_review")
+public class ExamReviewEntity extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +28,7 @@ public class ExamReview extends BaseTimeEntity {
     private UserEntity userEntity;
 
     @ManyToOne
-    @JoinColumn(name = "exam_info_id")
+    @JoinColumn(name = "certificate_exam_id")
     private CertificateExamEntity certificateExamEntity;
 
     @Enumerated(EnumType.STRING)
@@ -34,11 +38,17 @@ public class ExamReview extends BaseTimeEntity {
 
     private String content;
 
-    public ExamReview(UserEntity userEntity, CertificateExamEntity certificateExamEntity, ExamDifficulty examDifficulty, Integer prepareMonths, String content) {
-        this.userEntity = userEntity;
-        this.certificateExamEntity = certificateExamEntity;
-        this.examDifficulty = examDifficulty;
-        this.prepareMonths = prepareMonths;
-        this.content = content;
+    public ExamReview toDomain() {
+        return new ExamReview(
+                id,
+                userEntity.toDomain(),
+                new ExamReviewContent(
+                        examDifficulty,
+                        content
+                ),
+                prepareMonths,
+                createdAt
+        );
     }
+
 }

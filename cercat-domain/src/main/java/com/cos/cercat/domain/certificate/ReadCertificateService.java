@@ -2,6 +2,7 @@ package com.cos.cercat.domain.certificate;
 
 import com.cos.cercat.domain.user.TargetUser;
 
+import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ public class ReadCertificateService {
     private final CertificateReader certificateReader;
     private final CertificateExamReader certificateExamReader;
     private final InterestCertificateManager interestCertificateManager;
+    private final UserReader userReader;
 
     /**
      * 자격증 ID를 통해 자격증 상세정보를 조회한다
@@ -23,7 +25,8 @@ public class ReadCertificateService {
      * @return 자격증 상세 정보
      */
     public CertificateExam readRecentCertificateExam(TargetCertificate targetCertificate) {
-        return certificateExamReader.readRecent(targetCertificate);
+        Certificate certificate = certificateReader.read(targetCertificate);
+        return certificateExamReader.readRecent(certificate);
     }
 
     /**
@@ -35,6 +38,7 @@ public class ReadCertificateService {
     }
 
     public List<InterestCertificate> readInterestCertificates(TargetUser targetUser) {
-        return interestCertificateManager.read(targetUser);
+        User user = userReader.read(targetUser);
+        return interestCertificateManager.find(user);
     }
 }

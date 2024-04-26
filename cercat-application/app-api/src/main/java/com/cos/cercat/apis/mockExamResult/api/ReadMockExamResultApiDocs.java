@@ -29,6 +29,10 @@ public interface ReadMockExamResultApiDocs {
                                                                   @PathVariable Long certificateId,
                                                                   @AuthenticationPrincipal UserDTO currentUser);
 
+    @Operation(summary = "최근 모의고사 결과 조회")
+    Response<MockExamResultResponse> recentMockExamResult(Long mockExamId,
+                                                          UserDTO currentUser);
+
     @Operation(summary = "특정 모의고사 틀린문제 조회")
     Response<SliceResult<UserAnswerResponse>> wrongUserAnswers(Pageable pageable,
                                                                Long mockExamResultId,

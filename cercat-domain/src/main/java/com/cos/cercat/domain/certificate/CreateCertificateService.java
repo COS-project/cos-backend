@@ -3,6 +3,8 @@ package com.cos.cercat.domain.certificate;
 import com.cos.cercat.domain.board.BoardManager;
 import com.cos.cercat.domain.user.TargetUser;
 
+import com.cos.cercat.domain.user.User;
+import com.cos.cercat.domain.user.UserReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +14,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CreateCertificateService {
+    private final UserReader userReader;
+    private final CertificateFinder certificateFinder;
     private final CertificateAppender certificateAppender;
     private final CertificateExamAppender certificateExamAppender;
     private final InterestCertificateManager interestCertificateManager;
@@ -21,13 +25,16 @@ public class CreateCertificateService {
         certificateAppender.append(certificateName, subjectsInfo);
     }
 
-    public void createCertificateExam(TargetCertificate targetCertificate, ExamInformation examInformation) {
-        certificateExamAppender.append(targetCertificate, examInformation);
+    public void createCertificateExam(TargetCertificate targetCertificate, NewExamInformation newExamInformation) {
+        certificateExamAppender.append(targetCertificate, newExamInformation);
     }
 
     @Transactional
     public void addInterestCertificates(TargetUser targetUser, InterestTargets interestTargets) {
-        interestCertificateManager.append(targetUser, interestTargets);
-        boardManager.favoriteAll(targetUser, interestTargets.certificates());
+        User user = userReader.read(targetUser);
+        List<Certificate> certificates = certificateFinder.find(interestTargets.certificates());
+        List<NewInterestCertificate> newInterestCertificates = interestTargets.toNewInterestCertificates(certificates);
+        interestCertificateManager.append(user, newInterestCertificates);
+        boardManager.favoriteAll(user, certificates);
     }
 }

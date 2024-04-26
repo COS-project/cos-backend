@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public record ExamSchedule(
         LocalDateTime applicationStartDateTime,
         LocalDateTime applicationDeadlineDateTime,
-        LocalDateTime ResultAnnouncementDateTime,
+        LocalDateTime resultAnnouncementDateTime,
         LocalDateTime examDateTime
 ) {
     public static ExamSchedule of(LocalDateTime applicationStartDateTime,

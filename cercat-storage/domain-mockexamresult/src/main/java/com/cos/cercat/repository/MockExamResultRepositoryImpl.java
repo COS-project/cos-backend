@@ -8,11 +8,14 @@ import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.common.util.DateUtils;
 import com.cos.cercat.domain.*;
+import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.domain.certificate.TargetCertificate;
 import com.cos.cercat.domain.learning.GoalPeriod;
+import com.cos.cercat.domain.mockexam.MockExam;
 import com.cos.cercat.domain.mockexam.TargetMockExam;
 import com.cos.cercat.domain.mockexamresult.*;
 import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.User;
 import com.cos.cercat.dto.DailyScoreAverage;
 import com.cos.cercat.dto.MonthlyScoreAverage;
 import com.cos.cercat.dto.SubjectResultsAVG;
@@ -27,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -232,12 +236,12 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
     }
 
     @Override
-    public List<SubjectResultStatistics> getSubjectResultStatistics(TargetUser targetUser,
-                                                                    TargetCertificate targetCertificate,
+    public List<SubjectResultStatistics> getSubjectResultStatistics(User user,
+                                                                    Certificate certificate,
                                                                     GoalPeriod goalPeriod) {
         return subjectResultJpaRepository.getSubjectResultsAVG(
-                        targetUser.userId(),
-                        targetCertificate.certificateId(),
+                        user.id(),
+                        certificate.id(),
                         goalPeriod.startDateTime(),
                         goalPeriod.endDateTime()
                 ).stream()
@@ -276,6 +280,13 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
                 goalPeriod.startDateTime(),
                 goalPeriod.endDateTime()
         );
+    }
+
+    @Override
+    public MockExamResult readRecent(MockExam mockExam, User user) {
+        return mockExamResultJpaRepository.findMockExamResultByMockExamIdAndUserId(mockExam.id(), user.id())
+                .orElseThrow(() -> new CustomException(ErrorCode.MOCK_EXAM_RESULT_NOT_FOUND))
+                .toDomain();
     }
 
     private SubjectResultEntity saveSubjectResult(NewSubjectResult newSubjectResult, MockExamResultEntity savedResult) {

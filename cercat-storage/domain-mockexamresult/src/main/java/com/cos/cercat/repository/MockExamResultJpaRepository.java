@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface MockExamResultJpaRepository extends JpaRepository<MockExamResultEntity, Long>, CustomMockExamResultRepository {
 
@@ -102,5 +103,14 @@ public interface MockExamResultJpaRepository extends JpaRepository<MockExamResul
                                                           @Param("userId") Long userId,
                                                           int month,
                                                           Pageable pageable);
+
+    @Query("""
+            SELECT mer FROM MockExamResultEntity mer
+            WHERE mer.mockExamEntity.id = :mockExamId
+            AND mer.userEntity.id = :userId
+            ORDER BY mer.createdAt DESC
+            LIMIT 1
+            """)
+    Optional<MockExamResultEntity> findMockExamResultByMockExamIdAndUserId(Long mockExamId, Long userId);
 
 }

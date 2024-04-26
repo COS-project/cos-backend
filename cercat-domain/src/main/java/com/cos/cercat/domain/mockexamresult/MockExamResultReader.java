@@ -4,12 +4,15 @@ import com.cos.cercat.common.domain.Cursor;
 import com.cos.cercat.common.domain.PageResult;
 import com.cos.cercat.domain.certificate.TargetCertificate;
 import com.cos.cercat.domain.learning.GoalPeriod;
+import com.cos.cercat.domain.mockexam.MockExam;
 import com.cos.cercat.domain.mockexam.TargetMockExam;
 import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -40,5 +43,9 @@ public class MockExamResultReader {
                                           TargetUser targetUser,
                                           GoalPeriod goalPeriod) {
         return mockExamResultRepository.countTotalMockExamResults(targetCertificate, targetUser, goalPeriod);
+    }
+
+    public MockExamResult readRecent(MockExam mockExam, User user) {
+        return mockExamResultRepository.readRecent(mockExam, user);
     }
 }

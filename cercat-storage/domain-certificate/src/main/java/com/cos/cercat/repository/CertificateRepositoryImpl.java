@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class CertificateCoreRepository implements CertificateRepository {
+public class CertificateRepositoryImpl implements CertificateRepository {
 
     private final CertificateJpaRepository certificateJpaRepository;
     private final SubjectJpaRepository subjectJpaRepository;
@@ -43,5 +43,23 @@ public class CertificateCoreRepository implements CertificateRepository {
 
         certificateJpaRepository.save(certificateEntity);
         subjectJpaRepository.saveAll(subjectEntities);
+    }
+
+    @Override
+    public List<Certificate> find(List<TargetCertificate> targetCertificates) {
+        return certificateJpaRepository.findAllById(targetCertificates.stream()
+                .map(TargetCertificate::certificateId)
+                .toList())
+                .stream()
+                .map(CertificateEntity::toDomain)
+                .toList();
+    }
+
+    @Override
+    public List<Subject> findSubject(Certificate certificate) {
+        return subjectJpaRepository.findSubjectsByCertificateId(certificate.id())
+                .stream()
+                .map(SubjectEntity::toDomain)
+                .toList();
     }
 }

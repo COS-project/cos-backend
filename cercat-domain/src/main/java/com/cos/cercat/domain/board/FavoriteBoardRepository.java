@@ -1,13 +1,15 @@
 package com.cos.cercat.domain.board;
 
+import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.domain.certificate.TargetCertificate;
 import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.User;
 
 public interface FavoriteBoardRepository {
 
-    boolean isFavorite(TargetUser targetUser, TargetCertificate targetCertificate);
+    boolean isFavorite(User user, Certificate certificate);
 
-    void save(TargetUser targetUser, TargetCertificate targetCertificate);
+    void save(User user, Certificate certificate);
 
-    void remove(TargetUser targetUser, TargetCertificate targetCertificate);
+    void remove(User user, Certificate interested);
 }

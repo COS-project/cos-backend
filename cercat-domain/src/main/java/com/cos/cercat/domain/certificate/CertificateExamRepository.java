@@ -1,7 +1,7 @@
 package com.cos.cercat.domain.certificate;
 
 public interface CertificateExamRepository {
-    void save(TargetCertificate target, ExamInformation examInformation);
+    void save(TargetCertificate target, NewExamInformation newExamInformation);
 
-    CertificateExam findRecentCertificateExam(TargetCertificate targetCertificate);
+    CertificateExam findRecentCertificateExam(Certificate certificate);
 }

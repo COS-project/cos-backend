@@ -9,8 +9,8 @@ public class CertificateExamAppender {
 
     private final CertificateExamRepository certificateExamRepository;
 
-    public void append(TargetCertificate targetCertificate, ExamInformation examInfo) {
-        certificateExamRepository.save(targetCertificate, examInfo);
+    public void append(TargetCertificate targetCertificate, NewExamInformation newExamInfo) {
+        certificateExamRepository.save(targetCertificate, newExamInfo);
     }
 
 }

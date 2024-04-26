@@ -17,4 +17,18 @@ public record InterestTargets(
                 .toList();
     }
 
+    public List<NewInterestCertificate> toNewInterestCertificates(List<Certificate> certificates) {
+        return interestTargetList.stream()
+                .map(interestTarget -> {
+                    Certificate certificate = certificates.stream()
+                            .filter(c -> c.id() == interestTarget.certificateId())
+                            .findFirst()
+                            .get();
+                    return new NewInterestCertificate(
+                            certificate,
+                            interestTarget.interestPriority()
+                    );
+                }).toList();
+    }
+
 }

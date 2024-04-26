@@ -5,10 +5,10 @@ bootJar {
 dependencies {
 
     implementation project(':cercat-common');
+    implementation project(':cercat-domain')
     implementation project(':cercat-storage:domain-user');
     implementation project(':cercat-storage:domain-certificate');
     implementation project(':cercat-storage:domain-jpa');
-
 
     //Querydsl 추가
     api 'com.querydsl:querydsl-jpa:5.0.0:jakarta'

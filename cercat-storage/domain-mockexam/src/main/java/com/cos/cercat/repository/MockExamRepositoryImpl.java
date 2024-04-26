@@ -14,14 +14,14 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class MockExamCoreRepository implements MockExamRepository {
+public class MockExamRepositoryImpl implements MockExamRepository {
 
     private final QuestionJpaRepository questionJpaRepository;
     private final MockExamJpaRepository mockExamJpaRepository;
 
     @Override
     @Transactional(readOnly = true)
-    public Question findQuestion(TargetCertificate targetCertificate,
+    public Question readQuestion(TargetCertificate targetCertificate,
                                  MockExamSession mockExamSession,
                                  int questionSequence) {
 
@@ -53,5 +53,12 @@ public class MockExamCoreRepository implements MockExamRepository {
     @Override
     public List<Integer> findExamYears(TargetCertificate targetCertificate) {
         return mockExamJpaRepository.findExamYearsByCertificateId(targetCertificate.certificateId());
+    }
+
+    @Override
+    public MockExam read(TargetMockExam targetMockExam) {
+        return mockExamJpaRepository.findById(targetMockExam.mockExamId())
+                .orElseThrow(() -> new CustomException(ErrorCode.MOCK_EXAM_NOT_FOUND))
+                .toDomain();
     }
 }

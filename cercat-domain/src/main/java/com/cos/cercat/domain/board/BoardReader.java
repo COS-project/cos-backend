@@ -1,8 +1,10 @@
 package com.cos.cercat.domain.board;
 
+import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.domain.certificate.CertificateReader;
 import com.cos.cercat.domain.certificate.TargetCertificate;
 import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -15,8 +17,8 @@ public class BoardReader {
     private final FavoriteBoardRepository favoriteBoardRepository;
     private final CertificateReader certificateReader;
 
-    public boolean isFavorite(TargetUser targetUser, TargetCertificate targetCertificate) {
-        return favoriteBoardRepository.isFavorite(targetUser, targetCertificate);
+    public boolean isFavorite(User user, Certificate certificate) {
+        return favoriteBoardRepository.isFavorite(user, certificate);
     }
 
     public List<Board> read() {

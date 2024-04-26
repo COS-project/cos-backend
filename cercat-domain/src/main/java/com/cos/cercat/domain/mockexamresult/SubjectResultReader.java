@@ -1,8 +1,8 @@
 package com.cos.cercat.domain.mockexamresult;
 
-import com.cos.cercat.domain.certificate.TargetCertificate;
+import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.domain.learning.GoalPeriod;
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,10 +14,10 @@ public class SubjectResultReader {
 
     private final MockExamResultRepository mockExamResultRepository;
 
-    public List<SubjectResultStatistics> readStatistics(TargetUser targetUser,
-                                                        TargetCertificate targetCertificate,
+    public List<SubjectResultStatistics> readStatistics(User user,
+                                                        Certificate certificate,
                                                         GoalPeriod goalDate) {
-        return mockExamResultRepository.getSubjectResultStatistics(targetUser, targetCertificate, goalDate);
+        return mockExamResultRepository.getSubjectResultStatistics(user, certificate, goalDate);
     }
 
 }

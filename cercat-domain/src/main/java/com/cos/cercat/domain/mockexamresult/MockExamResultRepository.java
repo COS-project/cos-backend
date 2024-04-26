@@ -3,12 +3,16 @@ package com.cos.cercat.domain.mockexamresult;
 import com.cos.cercat.common.domain.Cursor;
 import com.cos.cercat.common.domain.PageResult;
 import com.cos.cercat.common.domain.SliceResult;
+import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.domain.certificate.TargetCertificate;
 import com.cos.cercat.domain.learning.GoalPeriod;
+import com.cos.cercat.domain.mockexam.MockExam;
 import com.cos.cercat.domain.mockexam.TargetMockExam;
 import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MockExamResultRepository {
 
@@ -52,8 +56,8 @@ public interface MockExamResultRepository {
                                        TargetCertificate targetCertificate,
                                        DateCond dateCond);
 
-    List<SubjectResultStatistics> getSubjectResultStatistics(TargetUser targetUser,
-                                                             TargetCertificate targetCertificate,
+    List<SubjectResultStatistics> getSubjectResultStatistics(User user,
+                                                             Certificate certificate,
                                                              GoalPeriod goalDate);
 
     int getCurrentMaxScore(TargetCertificate targetCertificate,
@@ -65,4 +69,6 @@ public interface MockExamResultRepository {
     int countTotalMockExamResults(TargetCertificate targetCertificate,
                                   TargetUser targetUser,
                                   GoalPeriod goalPeriod);
+
+    MockExamResult readRecent(MockExam mockExam, User user);
 }

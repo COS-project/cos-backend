@@ -1,6 +1,7 @@
 package com.cos.cercat.apis.mockExamResult.api;
 
 import com.cos.cercat.common.domain.PageResult;
+import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.domain.mockexamresult.*;
 import com.cos.cercat.apis.mockExamResult.dto.response.*;
 import com.cos.cercat.common.domain.Response;
@@ -40,6 +41,19 @@ public class ReadMockExamResultApi implements ReadMockExamResultApiDocs {
         return Response.success(responses);
     }
 
+    @GetMapping("/mock-exams/{mockExamId}/mock-exam-results/recent")
+    public Response<MockExamResultResponse> recentMockExamResult(@PathVariable Long mockExamId,
+                                                                 @AuthenticationPrincipal UserDTO currentUser) {
+        MockExamResult recentMockExamResult = readMockExamResultService.getRecentMockExamResult(
+                TargetMockExam.from(mockExamId),
+                TargetUser.from(currentUser.getId())
+        );
+
+        return Response.success(MockExamResultResponse.from(recentMockExamResult));
+    }
+
+
+
     @GetMapping("/certificates/{certificateId}/user-answers/wrong-answers")
     public Response<SliceResult<UserAnswerResponse>> allWrongUserAnswers(@PageableDefault Pageable pageable,
                                                                          @PathVariable Long certificateId,
@@ -53,7 +67,7 @@ public class ReadMockExamResultApi implements ReadMockExamResultApiDocs {
     }
 
     @GetMapping("/mock-exam-results/{mockExamResultId}/user-answers/wrong-answers")
-    public Response<SliceResult<UserAnswerResponse>> wrongUserAnswers(@PageableDefault() Pageable pageable,
+    public Response<SliceResult<UserAnswerResponse>> wrongUserAnswers(@PageableDefault Pageable pageable,
                                                                       @PathVariable Long mockExamResultId,
                                                                       @AuthenticationPrincipal UserDTO currentUser) {
         SliceResult<UserAnswerResponse> responses = readMockExamResultService.getWrongUserAnswers(

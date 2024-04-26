@@ -1,6 +1,5 @@
 package com.cos.cercat.apis.certificate.request;
 
-import com.cos.cercat.domain.*;
 import com.cos.cercat.domain.certificate.*;
 import com.cos.cercat.domain.mockexam.MockExamSession;
 
@@ -15,8 +14,8 @@ public record CertificateExamCreateRequest(
         String examFormat,
         String examEligibility
 ) {
-    public ExamInformation toExamInformation() {
-        return ExamInformation.of(
+    public NewExamInformation toNewExamInformation() {
+        return NewExamInformation.of(
                         mockExamSession,
                         examSchedule,
                         examTimeLimit,

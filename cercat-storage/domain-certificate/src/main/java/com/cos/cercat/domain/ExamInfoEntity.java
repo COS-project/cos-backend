@@ -12,13 +12,14 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "exam_info")
+@AllArgsConstructor
+@Builder
 public class ExamInfoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "exam_info_id")
     private Long id;
-
 
     private Integer examYear;
 
@@ -54,7 +55,6 @@ public class ExamInfoEntity {
 
     private String examEligibility;
 
-    @Builder
     public ExamInfoEntity(
             Integer examYear,
             Integer round,
@@ -93,8 +93,32 @@ public class ExamInfoEntity {
         this.examEligibility = examEligibility;
     }
 
+    public static ExamInfoEntity from(ExamInformation examInformation) {
+        return ExamInfoEntity.builder()
+                .id(examInformation.id())
+                .examYear(examInformation.mockExamSession().examYear())
+                .round(examInformation.mockExamSession().round())
+                .applicationStartDateTime(examInformation.examSchedule().applicationStartDateTime())
+                .applicationDeadlineDateTime(examInformation.examSchedule().applicationDeadlineDateTime())
+                .resultAnnouncementDateTime(examInformation.examSchedule().resultAnnouncementDateTime())
+                .examDateTime(examInformation.examSchedule().examDateTime())
+                .writtenExamFee(examInformation.examFee().writtenExamFee())
+                .practicalExamFee(examInformation.examFee().practicalExamFee())
+                .writtenExamTimeLimit(examInformation.examTimeLimit().writtenExamTimeLimit())
+                .practicalExamTimeLimit(examInformation.examTimeLimit().practicalExamTimeLimit())
+                .subjectPassingCriteria(examInformation.passingCriteria().subjectPassingCriteria())
+                .totalAvgCriteria(examInformation.passingCriteria().totalAvgCriteria())
+                .practicalPassingCriteria(examInformation.passingCriteria().practicalPassingCriteria())
+                .subjectsInfo(examInformation.subjectsInfo())
+                .description(examInformation.description())
+                .examFormat(examInformation.examFormat())
+                .examEligibility(examInformation.examEligibility())
+                .build();
+    }
+
     public ExamInformation toDomain() {
         return ExamInformation.of(
+                id,
                 MockExamSession.of(
                         examYear,
                         round

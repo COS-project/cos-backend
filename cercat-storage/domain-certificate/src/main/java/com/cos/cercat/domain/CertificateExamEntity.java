@@ -8,6 +8,7 @@ import lombok.*;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Builder
 @Getter
 @Table(name = "certificate_exam")
 public class CertificateExamEntity {
@@ -25,14 +26,18 @@ public class CertificateExamEntity {
     @JoinColumn(name = "exam_info_id")
     private ExamInfoEntity examInfoEntity;
 
-    @Builder
-    public CertificateExamEntity(CertificateEntity certificateEntity, ExamInfoEntity examInfoEntity) {
-        this.certificateEntity = certificateEntity;
-        this.examInfoEntity = examInfoEntity;
+    public static CertificateExamEntity from(CertificateExam certificateExam) {
+        return CertificateExamEntity.builder()
+                .id(certificateExam.id())
+                .certificateEntity(CertificateEntity.from(certificateExam.certificate()))
+                .examInfoEntity(ExamInfoEntity.from(certificateExam.examInformation()))
+                .build();
+
     }
 
     public CertificateExam toDomain() {
         return new CertificateExam(
+                id,
                 certificateEntity.toDomain(),
                 examInfoEntity.toDomain()
         );

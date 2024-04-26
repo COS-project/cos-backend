@@ -6,6 +6,7 @@ import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.certificate.*;
 import com.cos.cercat.domain.embededId.InterestCertificatePK;
 import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -21,17 +22,17 @@ public class InterestCertificateCoreRepository implements InterestCertificateRep
 
 
     @Override
-    public void saveAll(TargetUser targetUser, InterestTargets interestTargets) {
-        List<InterestCertificateEntity> interestCertificateEntities = interestTargets.interestTargetList().stream()
-                .map(interestTarget -> toEntity(interestTarget, targetUser))
+    public void saveAll(User targetUser, List<NewInterestCertificate> newInterestCertificates) {
+        List<InterestCertificateEntity> interestCertificateEntities = newInterestCertificates.stream()
+                .map(newInterestCertificate -> toEntity(newInterestCertificate, targetUser))
                 .toList();
 
         interestCertificateJpaRepository.saveAll(interestCertificateEntities);
     }
 
     @Override
-    public List<InterestCertificate> findAll(TargetUser targetUser) {
-        UserEntity userEntity = userJpaRepository.getReferenceById(targetUser.userId());
+    public List<InterestCertificate> find(User user) {
+        UserEntity userEntity = userJpaRepository.getReferenceById(user.id());
         List<InterestCertificateEntity> interestCertificateEntities = interestCertificateJpaRepository.findInterestCertificatesByUserEntity(userEntity);
         return interestCertificateEntities.stream()
                 .map(InterestCertificateEntity::toDomain)
@@ -45,18 +46,17 @@ public class InterestCertificateCoreRepository implements InterestCertificateRep
     }
 
     @Override
-    public void removeAll(TargetUser targetUser) {
-        interestCertificateJpaRepository.deleteAllByUserId(targetUser.userId());
+    public void removeAll(User user) {
+        interestCertificateJpaRepository.deleteAllByUserId(user.id());
     }
 
-    private InterestCertificateEntity toEntity(InterestTarget interestTarget, TargetUser targetUser) {
-        CertificateEntity certificateEntity = certificateJpaRepository.getReferenceById(interestTarget.certificateId());
-        UserEntity userEntity = userJpaRepository.getReferenceById(targetUser.userId());
-
+    private InterestCertificateEntity toEntity(NewInterestCertificate newInterestCertificate, User user) {
+        UserEntity userEntity = UserEntity.from(user);
+        CertificateEntity certificateEntity = CertificateEntity.from(newInterestCertificate.certificate());
         return InterestCertificateEntity.builder()
                 .certificateEntity(certificateEntity)
                 .userEntity(userEntity)
-                .priority(interestTarget.interestPriority())
+                .priority(newInterestCertificate.interestPriority())
                 .build();
     }
 }

@@ -6,6 +6,7 @@ import com.cos.cercat.dto.MockExamDTO;
 import com.cos.cercat.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(
         name = "mockExam",
         indexes = @Index(name = "idx_examYear_round", columnList = "exam_year, round")
@@ -28,24 +30,22 @@ public class MockExamEntity extends BaseTimeEntity {
 
     private Integer round;
 
-    private Long timeLimit;
+    private long timeLimit;
+
+    private int totalScore;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "certificate_id")
     private CertificateEntity certificateEntity;
 
-    private MockExamEntity(Integer examYear, Integer round, CertificateEntity certificateEntity, Long timeLimit) {
-        this.examYear = examYear;
-        this.round = round;
-        this.certificateEntity = certificateEntity;
-        this.timeLimit = timeLimit;
-    }
-
-    public static MockExamEntity of(MockExamDTO dto, Long timeLimit) {
-        return new MockExamEntity(dto.examYear(),
-                dto.round(),
-                dto.certificateDTO().toEntity(),
-                timeLimit);
+    public static MockExamEntity of(MockExamDTO dto, long timeLimit, int totalScore) {
+        return MockExamEntity.builder()
+                .examYear(dto.examYear())
+                .round(dto.round())
+                .timeLimit(timeLimit)
+                .totalScore(totalScore)
+                .certificateEntity(dto.certificateDTO().toEntity())
+                .build();
     }
 
     public static MockExamEntity from(MockExam mockExam) {
@@ -54,12 +54,13 @@ public class MockExamEntity extends BaseTimeEntity {
             return null;
         }
 
-        return new MockExamEntity(
-                mockExam.mockExamSession().examYear(),
-                mockExam.mockExamSession().round(),
-                CertificateEntity.from(mockExam.certificate()),
-                mockExam.timeLimit()
-        );
+        return MockExamEntity.builder()
+                .id(mockExam.id())
+                .examYear(mockExam.mockExamSession().examYear())
+                .round(mockExam.mockExamSession().round())
+                .timeLimit(mockExam.timeLimit())
+                .certificateEntity(CertificateEntity.from(mockExam.certificate()))
+                .build();
     }
 
     public MockExam toDomain() {

@@ -3,6 +3,7 @@ package com.cos.cercat.domain.certificate;
 import com.cos.cercat.domain.mockexam.MockExamSession;
 
 public record ExamInformation(
+        Long id,
         MockExamSession mockExamSession,
         ExamSchedule examSchedule,
         ExamTimeLimit examTimeLimit,
@@ -14,6 +15,7 @@ public record ExamInformation(
         String examEligibility
 ) {
     public static ExamInformation of(
+            Long id,
             MockExamSession mockExamSession,
             ExamSchedule examSchedule,
             ExamTimeLimit examTimeLimit,
@@ -25,6 +27,7 @@ public record ExamInformation(
             String examEligibility
     ) {
         return new ExamInformation(
+                id,
                 mockExamSession,
                 examSchedule,
                 examTimeLimit,

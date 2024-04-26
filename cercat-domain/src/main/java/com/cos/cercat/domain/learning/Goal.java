@@ -62,6 +62,10 @@ public class Goal implements Ownable {
         return (int) diffInDays;
     }
 
+    public int getPrepareMonths() {
+        return goalPeriod.getTotalPeriod().getYears() * 12 + goalPeriod.getTotalPeriod().getMonths();
+    }
+
     @Override
     public boolean isOwner(User user) {
         return this.user.id().equals(user.id());
