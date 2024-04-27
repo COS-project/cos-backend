@@ -17,6 +17,20 @@
 회원님이 설정한 관심 자격증에 대한 시험 신청일 및 마감일 알림은 물론, 좋아요 및 댓글 알림까지 <br>
 중요한 정보를 놓치지 않고, 커뮤니티 내에서의 소통도 놓치지 않을 수 있도록 알림 서비스를 제공합니다.
 
+# 화면
+<div style="display: flex; justify-content: space-between;">
+    <img src="https://github.com/COS-project/cos-backend/assets/128073698/d0c21dae-bbaf-4951-a688-174eae59ff20" width="150" height="300">
+    <img src="https://github.com/COS-project/cos-backend/assets/128073698/06e9c376-1d41-497a-aa2b-a8765f578848" width="150" height="300">
+    <img src="https://github.com/COS-project/cos-backend/assets/128073698/5f6062ea-ffb0-4ddb-bdd9-aed2a7d530c7" width="150" height="300">
+    <img src="https://github.com/COS-project/cos-backend/assets/128073698/09dd3501-5501-45b7-b26b-d44eeb26f3ba" width="150" height="300">
+    <img src="https://github.com/COS-project/cos-backend/assets/128073698/f2d1af03-6980-44b6-b9f1-96a9a69b56be" width="150" height="300">
+    <img src="https://github.com/COS-project/cos-backend/assets/128073698/e4a6c5cb-4012-4444-afa7-c3890327ff87" width="150" height="300">
+</div>
+
+
+
+
+
 # 기술 스택
 - 백엔드 : Spring Boot, Redis, Kafka, ELK, Docker
 - 클라우드 : GCP VM, GCS, GCP MySQL
@@ -58,12 +72,11 @@
 com
  ㄴ cos
     ㄴ cercat
-        ㄴ postEntity
+        ㄴ post
         ㄴ user
         ...
-        ㄴ common
-            ㄴ config
-            ㄴ exception
-            ㄴ security
-            ㄴ util
 ```
+
+## 참고한 아키텍쳐
+
+[지속성장가능한 소프트웨어 개발하는 방법](https://geminikims.medium.com/%EC%A7%80%EC%86%8D-%EC%84%B1%EC%9E%A5-%EA%B0%80%EB%8A%A5%ED%95%9C-%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4%EB%A5%BC-%EB%A7%8C%EB%93%A4%EC%96%B4%EA%B0%80%EB%8A%94-%EB%B0%A9%EB%B2%95-97844c5dab63)
