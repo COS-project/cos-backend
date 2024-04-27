@@ -27,8 +27,8 @@ public class MockExamRepositoryImpl implements MockExamRepository {
 
         MockExamEntity mockExamEntity = mockExamJpaRepository.findMockExamByCertificateIdAndExamYearAndRound(
                 targetCertificate.certificateId(),
-                mockExamSession.getExamYear(),
-                mockExamSession.getRound()
+                mockExamSession.examYear(),
+                mockExamSession.round()
         ).orElseThrow(() -> new CustomException(ErrorCode.MOCK_EXAM_NOT_FOUND));
 
         return questionJpaRepository.findQuestionByMockExamEntityAndQuestionSeq(mockExamEntity, questionSequence).toDomain();

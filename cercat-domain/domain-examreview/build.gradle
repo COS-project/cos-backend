@@ -1,10 +1,10 @@
 bootJar { enabled = false }
 
 dependencies {
-    implementation(project(':cercat-common'))
-    api(project(':cercat-domain:domain-user'))
-    api(project(':cercat-domain:domain-certificate'))
-    api(project(':cercat-domain:domain-learning'))
+    implementation project(':cercat-common')
+    implementation project(':cercat-domain:domain-user')
+    implementation project(':cercat-domain:domain-certificate')
+    implementation project(':cercat-domain:domain-learning')
     implementation 'org.springframework:spring-context'
     implementation 'org.springframework:spring-tx'
 }

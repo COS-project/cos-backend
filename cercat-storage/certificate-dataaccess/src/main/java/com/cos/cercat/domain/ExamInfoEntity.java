@@ -95,8 +95,8 @@ public class ExamInfoEntity {
     public static ExamInfoEntity from(ExamInformation examInformation) {
         return ExamInfoEntity.builder()
                 .id(examInformation.id())
-                .examYear(examInformation.mockExamSession().getExamYear())
-                .round(examInformation.mockExamSession().getRound())
+                .examYear(examInformation.examYear())
+                .round(examInformation.round())
                 .applicationStartDateTime(examInformation.examSchedule().applicationStartDateTime())
                 .applicationDeadlineDateTime(examInformation.examSchedule().applicationDeadlineDateTime())
                 .resultAnnouncementDateTime(examInformation.examSchedule().resultAnnouncementDateTime())
@@ -118,10 +118,8 @@ public class ExamInfoEntity {
     public ExamInformation toDomain() {
         return ExamInformation.of(
                 id,
-                MockExamSession.of(
-                        examYear,
-                        round
-                ),
+                examYear,
+                round,
                 ExamSchedule.of(
                         applicationStartDateTime,
                         applicationDeadlineDateTime,

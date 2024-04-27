@@ -2,7 +2,7 @@ package com.cos.cercat.mockexamresult;
 
 import com.cos.cercat.certificate.TargetCertificate;
 import com.cos.cercat.learning.GoalPeriod;
-import com.cos.cercat.learning.IMockExamResultReader;
+import com.cos.cercat.learning.MockExamResultProvider;
 import com.cos.cercat.mockexam.MockExam;
 import com.cos.cercat.mockexam.TargetMockExam;
 import com.cos.cercat.user.TargetUser;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class MockExamResultReader implements IMockExamResultReader {
+public class MockExamResultReader implements MockExamResultProvider {
 
     private final MockExamResultRepository mockExamResultRepository;
 

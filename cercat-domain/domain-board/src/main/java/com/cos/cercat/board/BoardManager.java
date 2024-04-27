@@ -1,7 +1,7 @@
 package com.cos.cercat.board;
 
 import com.cos.cercat.certificate.Certificate;
-import com.cos.cercat.certificate.IBoardManager;
+import com.cos.cercat.certificate.FavoriteBoardManager;
 import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class BoardManager implements IBoardManager {
+public class BoardManager implements FavoriteBoardManager {
 
     private final FavoriteBoardRepository favoriteBoardRepository;
 

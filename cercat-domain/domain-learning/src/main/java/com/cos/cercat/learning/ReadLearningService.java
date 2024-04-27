@@ -19,7 +19,7 @@ public class ReadLearningService {
     private final GoalFinder goalFinder;
     private final CertificateReader certificateReader;
     private final UserReader userReader;
-    private final IMockExamResultReader mockExamResultReader;
+    private final MockExamResultProvider mockExamResultReader;
     private final StudyTimeLogReader studyTimeLogReader;
 
     public Goal getGoal(TargetGoal targetGoal) {

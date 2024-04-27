@@ -2,7 +2,8 @@ package com.cos.cercat.certificate;
 
 
 public record NewExamInformation(
-        IMockExamSession mockExamSession,
+        int examYear,
+        int round,
         ExamSchedule examSchedule,
         ExamTimeLimit examTimeLimit,
         ExamFee examFee,
@@ -14,7 +15,8 @@ public record NewExamInformation(
 ) {
 
     public static NewExamInformation of(
-            IMockExamSession mockExamSession,
+            int examYear,
+            int round,
             ExamSchedule examSchedule,
             ExamTimeLimit examTimeLimit,
             ExamFee examFee,
@@ -25,7 +27,8 @@ public record NewExamInformation(
             String examEligibility
     ) {
         return new NewExamInformation(
-                mockExamSession,
+                examYear,
+                round,
                 examSchedule,
                 examTimeLimit,
                 examFee,

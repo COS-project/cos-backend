@@ -17,15 +17,16 @@ public record CertificateExamCreateRequest(
 ) {
     public NewExamInformation toNewExamInformation() {
         return NewExamInformation.of(
-                        mockExamSession,
-                        examSchedule,
-                        examTimeLimit,
-                        examFee,
-                        passingCriteria,
-                        subjectsInfo,
-                        description,
-                        examFormat,
-                        examEligibility
+                mockExamSession.examYear(),
+                mockExamSession.round(),
+                examSchedule,
+                examTimeLimit,
+                examFee,
+                passingCriteria,
+                subjectsInfo,
+                description,
+                examFormat,
+                examEligibility
         );
     }
 }

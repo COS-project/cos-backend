@@ -5,6 +5,7 @@ bootJar {
 dependencies {
 
     implementation project(':cercat-common');
+    implementation project(':cercat-domain:domain-user');
     implementation project(':cercat-domain:domain-alarm');
 
     implementation 'org.springframework.boot:spring-boot-starter-web'

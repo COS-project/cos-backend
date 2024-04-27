@@ -14,11 +14,4 @@ public interface SubjectJpaRepository extends JpaRepository<SubjectEntity, Long>
             where s.certificateEntity.id = :certificateId
             """)
     List<SubjectEntity> findSubjectsByCertificateId(Long certificateId);
-
-    @Query("""
-            select s
-            from SubjectEntity s
-            where s.certificateEntity.id = :certificateId
-            """)
-    List<SubjectEntity> findByCertificateId(Long certificateId);
 }

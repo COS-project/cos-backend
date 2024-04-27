@@ -18,8 +18,8 @@ public class CertificateExamRepositoryImpl implements CertificateExamRepository 
     public void save(TargetCertificate targetCertificate, NewExamInformation newExamInfo) {
         CertificateEntity certificateEntity = getCertificateEntity(targetCertificate);
         ExamInfoEntity examInfoEntity = ExamInfoEntity.builder()
-                .examYear(newExamInfo.mockExamSession().getExamYear())
-                .round(newExamInfo.mockExamSession().getRound())
+                .examYear(newExamInfo.examYear())
+                .round(newExamInfo.round())
                 .applicationStartDateTime(newExamInfo.examSchedule().applicationStartDateTime())
                 .applicationDeadlineDateTime(newExamInfo.examSchedule().applicationDeadlineDateTime())
                 .resultAnnouncementDateTime(newExamInfo.examSchedule().resultAnnouncementDateTime())

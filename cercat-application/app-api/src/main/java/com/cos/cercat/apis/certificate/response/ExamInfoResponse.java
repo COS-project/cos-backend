@@ -2,9 +2,11 @@ package com.cos.cercat.apis.certificate.response;
 
 
 import com.cos.cercat.certificate.*;
+import com.cos.cercat.dto.MockExamSession;
 
 public record ExamInfoResponse(
-        IMockExamSession mockExamSession,
+        int examYear, //시험 년도
+        int round, //회차
         ExamSchedule examSchedule, //시험 일정
         ExamFee examFee, //응시료
         ExamTimeLimit examTimeLimit, //제한 시간
@@ -17,7 +19,8 @@ public record ExamInfoResponse(
 
     public static ExamInfoResponse from(ExamInformation examInfo) {
         return new ExamInfoResponse(
-                examInfo.mockExamSession(),
+                examInfo.examYear(),
+                examInfo.round(),
                 examInfo.examSchedule(),
                 examInfo.examFee(),
                 examInfo.examTimeLimit(),
