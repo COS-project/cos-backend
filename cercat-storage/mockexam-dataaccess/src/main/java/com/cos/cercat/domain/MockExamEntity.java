@@ -56,8 +56,8 @@ public class MockExamEntity extends BaseTimeEntity {
 
         return MockExamEntity.builder()
                 .id(mockExam.id())
-                .examYear(mockExam.mockExamSession().getExamYear())
-                .round(mockExam.mockExamSession().getRound())
+                .examYear(mockExam.mockExamSession().examYear())
+                .round(mockExam.mockExamSession().round())
                 .timeLimit(mockExam.timeLimit())
                 .certificateEntity(CertificateEntity.from(mockExam.certificate()))
                 .build();

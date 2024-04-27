@@ -17,7 +17,7 @@ public class CreateCertificateService {
     private final CertificateAppender certificateAppender;
     private final CertificateExamAppender certificateExamAppender;
     private final InterestCertificateManager interestCertificateManager;
-    private final IBoardManager boardManager;
+    private final FavoriteBoardManager favoriteBoardManager;
 
     public void createCertificate(String certificateName, List<SubjectInfo> subjectsInfo) {
         certificateAppender.append(certificateName, subjectsInfo);
@@ -33,6 +33,6 @@ public class CreateCertificateService {
         List<Certificate> certificates = certificateFinder.find(interestTargets.certificates());
         List<NewInterestCertificate> newInterestCertificates = interestTargets.toNewInterestCertificates(certificates);
         interestCertificateManager.append(user, newInterestCertificates);
-        boardManager.favoriteAll(user, certificates);
+        favoriteBoardManager.favoriteAll(user, certificates);
     }
 }

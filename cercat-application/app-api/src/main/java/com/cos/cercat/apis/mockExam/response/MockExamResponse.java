@@ -16,8 +16,8 @@ public record MockExamResponse(
     public static MockExamResponse from(MockExam mockExam) {
         return new MockExamResponse(
                 mockExam.id(),
-                mockExam.mockExamSession().getExamYear(),
-                mockExam.mockExamSession().getRound(),
+                mockExam.mockExamSession().examYear(),
+                mockExam.mockExamSession().round(),
                 mockExam.timeLimit(),
                 CertificateResponse.from(mockExam.certificate())
         );

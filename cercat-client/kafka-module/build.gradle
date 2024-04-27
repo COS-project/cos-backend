@@ -7,6 +7,8 @@ dependencies {
     implementation project(':cercat-common');
     implementation project(':cercat-domain:domain-alarm');
     implementation project(':cercat-domain:domain-search');
+    implementation project(':cercat-domain:domain-post');
+    implementation project(':cercat-domain:domain-user');
     implementation project(':cercat-storage:search-dataaccess');
 
     implementation 'org.springframework.boot:spring-boot-starter-web'

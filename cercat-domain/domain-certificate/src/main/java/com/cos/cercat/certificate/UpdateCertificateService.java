@@ -14,7 +14,7 @@ public class UpdateCertificateService {
 
     private final UserReader userReader;
     private final InterestCertificateManager interestCertificateManager;
-    private final IBoardManager boardManager;
+    private final FavoriteBoardManager boardManager;
     private final CertificateFinder certificateFinder;
 
     public void updateCertificateExam(TargetUser targetUser, InterestTargets interestTargets) {

@@ -1,5 +1,13 @@
 dependencies {
     implementation project(':cercat-common')
+
+    //domain modules
+    implementation project(':cercat-domain:domain-alarm')
+    implementation project(':cercat-domain:domain-board')
+    implementation project(':cercat-domain:domain-certificate')
+    implementation project(':cercat-domain:domain-user')
+
+    //dataaccess modules
     implementation project(':cercat-storage:alarm-dataaccess')
     implementation project(':cercat-storage:user-dataaccess')
     implementation project(':cercat-storage:certificate-dataaccess')
