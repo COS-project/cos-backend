@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.mockExamResult.dto.response;
 
-import com.cos.cercat.apis.mockExam.dto.response.QuestionResponse;
-import com.cos.cercat.domain.UserAnswer;
+import com.cos.cercat.apis.mockExam.response.QuestionResponse;
+import com.cos.cercat.mockexamresult.UserAnswer;
 
 public record UserAnswerResponse(
         QuestionResponse question,
@@ -10,13 +10,13 @@ public record UserAnswerResponse(
         long takenTime,
         boolean isCorrect
 ) {
-    public static UserAnswerResponse from(UserAnswer entity) {
+
+    public static UserAnswerResponse from(UserAnswer userAnswer) {
         return new UserAnswerResponse(
-                QuestionResponse.from(entity.getQuestionEntity()),
-                entity.getId(),
-                entity.getSelectOptionSeq(),
-                entity.getTakenTime(),
-                entity.isCorrect()
-        );
+                QuestionResponse.from(userAnswer.getQuestion()),
+                userAnswer.getId(),
+                userAnswer.getSelectOptionSeq(),
+                userAnswer.getTakenTime(),
+                userAnswer.isCorrect());
     }
 }

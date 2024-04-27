@@ -1,19 +1,15 @@
 package com.cos.cercat.apis.post.api;
 
-import com.cos.cercat.apis.post.dto.request.PostUpdateRequest;
-import com.cos.cercat.common.domain.Image;
+import com.cos.cercat.apis.post.request.PostUpdateRequest;
+import com.cos.cercat.certificate.TargetCertificate;
 import com.cos.cercat.common.domain.Response;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
-import com.cos.cercat.domain.certificate.TargetCertificate;
-import com.cos.cercat.domain.post.PostType;
-import com.cos.cercat.domain.post.TargetPost;
-import com.cos.cercat.domain.post.UpdatePostService;
-import com.cos.cercat.domain.user.TargetUser;
-import com.cos.cercat.dto.UserDTO;
-import com.cos.cercat.gcs.GcsFileUploader;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import com.cos.cercat.post.PostType;
+import com.cos.cercat.post.TargetPost;
+import com.cos.cercat.post.UpdatePostService;
+import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,18 +23,16 @@ import static com.cos.cercat.apis.global.util.FileMapper.toFiles;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v2")
-@Tag(name = "게시글 수정 API")
-public class UpdatePostApi {
+public class UpdatePostApi implements UpdatePostApiDocs {
 
     private final UpdatePostService updatePostService;
 
     @PutMapping(value = "/certificates/{certificateId}/{postType}/posts", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @Operation(summary = "게시글 수정")
     public Response<TargetPost> updateCommentaryPost(@PathVariable Long certificateId,
-                                               @PathVariable PostType postType,
-                                               @RequestPart PostUpdateRequest request,
-                                               @RequestPart(required = false) List<MultipartFile> files,
-                                               @AuthenticationPrincipal UserDTO currentUser) {
+                                                     @PathVariable PostType postType,
+                                                     @RequestPart PostUpdateRequest request,
+                                                     @RequestPart(required = false) List<MultipartFile> files,
+                                                     @AuthenticationPrincipal User currentUser) {
         TargetPost targetPost;
         switch (postType) {
             case COMMENTARY -> targetPost = updatePostService.updateCommentaryPost(

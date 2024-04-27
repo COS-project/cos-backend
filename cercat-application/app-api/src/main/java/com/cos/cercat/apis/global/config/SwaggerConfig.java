@@ -70,14 +70,6 @@ public class SwaggerConfig {
     }
 
     @Bean
-    public GroupedOpenApi comment() {
-        return GroupedOpenApi.builder()
-                .group("댓글")
-                .packagesToScan("com.cos.cercat.apis.comment.api")
-                .build();
-    }
-
-    @Bean
     public GroupedOpenApi learning() {
         return GroupedOpenApi.builder()
                 .group("학습")

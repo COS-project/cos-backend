@@ -1,23 +1,22 @@
 dependencies {
-
     //domain modules
     implementation project(':cercat-common')
-    implementation project(':cercat-domain')
-    implementation project(':cercat-storage:domain-alarm')
-    implementation project(':cercat-storage:domain-board')
-    implementation project(':cercat-storage:domain-certificate')
-    implementation project(':cercat-storage:domain-examreview')
-    implementation project(':cercat-storage:domain-learning')
-    implementation project(':cercat-storage:domain-like')
-    implementation project(':cercat-storage:domain-mockexam')
-    implementation project(':cercat-storage:domain-mockexamresult')
-    implementation project(':cercat-storage:domain-post')
-    implementation project(':cercat-storage:domain-search')
-    implementation project(':cercat-storage:domain-user')
-    implementation project(':cercat-storage:domain-jpa')
-    implementation project(':cercat-storage:domain-redis')
-    implementation project(':cercat-storage:domain-elasticsearch')
-    implementation project(':cercat-client')
+    implementation project(':cercat-storage:alarm-dataaccess')
+    implementation project(':cercat-storage:board-dataaccess')
+    implementation project(':cercat-storage:certificate-dataaccess')
+    implementation project(':cercat-storage:examreview-dataaccess')
+    implementation project(':cercat-storage:learning-dataaccess')
+    implementation project(':cercat-storage:like-dataaccess')
+    implementation project(':cercat-storage:mockexam-dataaccess')
+    implementation project(':cercat-storage:mockexamresult-dataaccess')
+    implementation project(':cercat-storage:post-dataaccess')
+    implementation project(':cercat-storage:search-dataaccess')
+    implementation project(':cercat-storage:user-dataaccess')
+    implementation project(':cercat-storage:redis-dataaccess')
+    implementation project(':cercat-storage:elasticsearch-dataaccess')
+    implementation project(':cercat-client:gcs-module')
+    implementation project(':cercat-client:sse-module')
+    implementation project(':cercat-client:kafka-module')
 
     //infrastructure
 
@@ -29,9 +28,6 @@ dependencies {
 
     //API 문서화 Swagger-UI
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
-
-    //guava
-    implementation("com.google.guava:guava:33.1.0-jre")
 
     //JWT
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'

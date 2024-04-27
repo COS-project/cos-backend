@@ -1,12 +1,22 @@
 dependencies {
     implementation project(':cercat-common')
-    implementation project(':cercat-domain')
-    implementation project(':cercat-storage:domain-post')
-    implementation project(':cercat-storage:domain-board')
-    implementation project(':cercat-storage:domain-mockexam')
-    implementation project(':cercat-storage:domain-user')
-    implementation project(':cercat-storage:domain-alarm')
-    implementation project(':cercat-storage:domain-certificate')
+    implementation project(':cercat-storage:alarm-dataaccess')
+    implementation project(':cercat-storage:board-dataaccess')
+    implementation project(':cercat-storage:certificate-dataaccess')
+    implementation project(':cercat-storage:examreview-dataaccess')
+    implementation project(':cercat-storage:learning-dataaccess')
+    implementation project(':cercat-storage:like-dataaccess')
+    implementation project(':cercat-storage:mockexam-dataaccess')
+    implementation project(':cercat-storage:mockexamresult-dataaccess')
+    implementation project(':cercat-storage:post-dataaccess')
+    implementation project(':cercat-storage:search-dataaccess')
+    implementation project(':cercat-storage:user-dataaccess')
+    implementation project(':cercat-client:gcs-module')
+    implementation project(':cercat-client:sse-module')
+    implementation project(':cercat-client:kafka-module')
+    implementation project(':cercat-storage:jpa-dataaccess')
+    implementation project(':cercat-storage:redis-dataaccess')
+
 
     implementation 'org.springframework.boot:spring-boot-starter-batch'
     runtimeOnly 'com.mysql:mysql-connector-j'

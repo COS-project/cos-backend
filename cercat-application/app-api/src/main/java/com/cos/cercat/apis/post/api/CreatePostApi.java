@@ -1,18 +1,16 @@
 package com.cos.cercat.apis.post.api;
 
-import com.cos.cercat.apis.post.dto.request.PostCommentCreateRequest;
-import com.cos.cercat.apis.post.dto.request.PostCreateRequest;
+import com.cos.cercat.apis.post.request.PostCommentCreateRequest;
+import com.cos.cercat.apis.post.request.PostCreateRequest;
+import com.cos.cercat.certificate.TargetCertificate;
 import com.cos.cercat.common.domain.Response;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
-import com.cos.cercat.domain.certificate.TargetCertificate;
-import com.cos.cercat.domain.post.CreatePostService;
-import com.cos.cercat.domain.post.PostType;
-import com.cos.cercat.domain.post.TargetPost;
-import com.cos.cercat.domain.user.TargetUser;
-import com.cos.cercat.dto.UserDTO;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import com.cos.cercat.post.CreatePostService;
+import com.cos.cercat.post.PostType;
+import com.cos.cercat.post.TargetPost;
+import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,18 +24,16 @@ import static com.cos.cercat.apis.global.util.FileMapper.toFiles;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v2")
-@Tag(name = "게시글/댓글 생성 API")
-public class CreatePostApi {
+public class CreatePostApi implements CreatePostApiDocs {
 
     private final CreatePostService createPostService;
 
     @PostMapping(path = "/certificates/{certificateId}/{postType}/posts", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @Operation(summary = "게시글 생성")
     public Response<TargetPost> createPost(@PathVariable Long certificateId,
                                            @PathVariable PostType postType,
                                            @RequestPart PostCreateRequest request,
                                            @RequestPart(required = false) List<MultipartFile> files,
-                                           @AuthenticationPrincipal UserDTO currentUser) {
+                                           @AuthenticationPrincipal User currentUser) {
         TargetPost targetPost;
         switch (postType) {
             case COMMENTARY ->
@@ -70,10 +66,9 @@ public class CreatePostApi {
     }
 
     @PostMapping("/posts/{postId}/post-comments")
-    @Operation(summary = "댓글 생성")
     public Response<Void> createPostComment(@PathVariable Long postId,
                                             @RequestBody PostCommentCreateRequest request,
-                                            @AuthenticationPrincipal UserDTO currentUser) {
+                                            @AuthenticationPrincipal User currentUser) {
         createPostService.createPostComment(
                 TargetUser.from(currentUser.getId()),
                 TargetPost.from(postId),

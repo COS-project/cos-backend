@@ -1,0 +1,24 @@
+bootJar {
+    enabled = false
+}
+
+dependencies {
+
+    implementation project(':cercat-common');
+    implementation project(':cercat-domain:domain-alarm');
+    implementation project(':cercat-domain:domain-search');
+    implementation project(':cercat-storage:search-dataaccess');
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    //kakfa
+    implementation 'org.springframework.kafka:spring-kafka'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
+
+    //guava
+    implementation("com.google.guava:guava:33.1.0-jre")
+
+    //직렬화 및 역직렬화 관련
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.2'
+}

@@ -1,18 +1,15 @@
 package com.cos.cercat.apis.post.api;
 
-import com.cos.cercat.apis.global.util.CursorConvertor;
-import com.cos.cercat.apis.post.dto.response.PostResponse;
-import com.cos.cercat.apis.post.dto.response.PostWithCommentsResponse;
+import com.cos.cercat.apis.post.response.PostResponse;
+import com.cos.cercat.apis.post.response.PostWithCommentsResponse;
+import com.cos.cercat.certificate.TargetCertificate;
+import com.cos.cercat.common.domain.Cursor;
 import com.cos.cercat.common.domain.Response;
 import com.cos.cercat.common.domain.SliceResult;
-import com.cos.cercat.domain.certificate.TargetCertificate;
-import com.cos.cercat.domain.post.*;
-import com.cos.cercat.domain.user.TargetUser;
-import com.cos.cercat.dto.UserDTO;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import com.cos.cercat.post.*;
+import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,51 +23,45 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v2")
-@Tag(name = "게시글 조회 API")
-public class ReadPostApi {
+public class ReadPostApi implements ReadPostApiDocs {
 
     private final ReadPostService readPostService;
 
     @GetMapping("/certificates/{certificateId}/posts")
-    @Operation(summary = "해설 게시글 검색")
-    public Response<SliceResult<PostResponse>> searchCommentaryPosts(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+    public Response<SliceResult<PostResponse>> searchCommentaryPosts(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Cursor cursor,
                                                                      @PathVariable Long certificateId,
                                                                      CommentaryPostSearchCond cond) {
-        SliceResult<Post> posts = readPostService.searchCommentaryPost(TargetCertificate.from(certificateId), cond, CursorConvertor.toCursor(pageable));
+        SliceResult<Post> posts = readPostService.searchCommentaryPost(TargetCertificate.from(certificateId), cond, cursor);
 
         return Response.success(posts.map(PostResponse::from));
     }
 
     @GetMapping("/posts/{postId}")
-    @Operation(summary = "게시글 상세 조회")
-    public Response<PostWithCommentsResponse> getPostDetail(@PathVariable Long postId) {
+    public Response<PostWithCommentsResponse> readPostDetail(@PathVariable Long postId) {
         PostWithComments postWithComments = readPostService.readDetail(TargetPost.from(postId));
         return Response.success(PostWithCommentsResponse.from(postWithComments));
     }
 
     @GetMapping("/certificates/{certificateId}/tip-posts/best")
-    @Operation(summary = "베스트 꿀팁 TOP3 조회")
-    public Response<List<PostResponse>> getTop3TipPosts(@PathVariable Long certificateId) {
+    public Response<List<PostResponse>> readTop3TipPosts(@PathVariable Long certificateId) {
         return Response.success(readPostService.readTop3TipPosts(TargetCertificate.from(certificateId)).stream()
                 .map(PostResponse::from)
                 .toList());
     }
 
     @GetMapping("/{postType}/posts/my-posts")
-    @Operation(summary = "내가 쓴 글 조회")
-    public Response<SliceResult<PostResponse>> getMyPosts(@PathVariable PostType postType,
-                                                    @AuthenticationPrincipal UserDTO currentUser,
-                                                    @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+    public Response<SliceResult<PostResponse>> readMyPosts(@PathVariable PostType postType,
+                                                    @AuthenticationPrincipal User currentUser,
+                                                    @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Cursor cursor) {
 
-        SliceResult<Post> posts = readPostService.readMyPosts(TargetUser.from(currentUser.getId()), postType, CursorConvertor.toCursor(pageable));
+        SliceResult<Post> posts = readPostService.readMyPosts(TargetUser.from(currentUser.getId()), postType, cursor);
         return Response.success(posts.map(PostResponse::from));
     }
 
     @GetMapping("/comment-posts/my-comment-posts")
-    @Operation(summary = "내가 댓글 쓴 게시글 조회")
-    public Response<SliceResult<PostResponse>> getMyCommentPosts(@AuthenticationPrincipal UserDTO currentUser,
-                                                           @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-        SliceResult<Post> posts = readPostService.readCommentingPosts(TargetUser.from(currentUser.getId()), CursorConvertor.toCursor(pageable));
+    public Response<SliceResult<PostResponse>> readMyCommentPosts(@AuthenticationPrincipal User currentUser,
+                                                           @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Cursor cursor) {
+        SliceResult<Post> posts = readPostService.readCommentingPosts(TargetUser.from(currentUser.getId()), cursor);
         return Response.success(posts.map(PostResponse::from));
     }
 

@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 
 public class DateUtils {
-    public static LocalDateTime getThisSATURDAY(LocalDate dateTime) {
+    public static LocalDateTime getThisSaturday(LocalDate dateTime) {
         return dateTime.with(TemporalAdjusters.nextOrSame(DayOfWeek.SATURDAY)).plusDays(1).atStartOfDay();
     }
 

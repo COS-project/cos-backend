@@ -1,13 +1,8 @@
 package com.cos.cercat.apis.global.security.handler;
 
-import com.cos.cercat.cache.RefreshToken;
-import com.cos.cercat.cache.TokenCacheRepository;
-import com.cos.cercat.cache.UserCacheRepository;
+import com.cos.cercat.apis.global.security.OAuth2CustomUser;
 import com.cos.cercat.apis.global.util.JwtTokenizer;
-import com.cos.cercat.domain.OAuth2CustomUser;
-import com.cos.cercat.service.UserService;
-import com.cos.cercat.dto.UserDTO;
-import jakarta.servlet.ServletException;
+import com.cos.cercat.user.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +16,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -43,36 +36,34 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
     private String SIGN_UP_PATH;
 
     private final JwtTokenizer jwtTokenizer;
-    private final UserService userService;
-    private final TokenCacheRepository tokenCacheRepository;
-    private final UserCacheRepository userCacheRepository;
+    private final UserReader userReader;
+    private final UserCacheManger userCacheManger;
+    private final TokenCacheManager tokenCacheManager;
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         OAuth2CustomUser oAuth2User = (OAuth2CustomUser) authentication.getPrincipal();
 
         List<String> roles = oAuth2User.getAuthorities().stream()
                 .map(String::valueOf)
                 .toList(); // Authorities에서 문자열로 권한 추출
 
-        String email = oAuth2User.getEmail();
+        TargetUser targetUser = TargetUser.from(oAuth2User.getUserId());
 
-        redirect(response, email, roles);
+        redirect(response, targetUser, roles);
 
     }
 
-    private void redirect(HttpServletResponse response, String email, List<String> roles) throws IOException {
-        String accessToken = delegateAccessToken(email, roles);  // Access Token 생성// Refresh Token 생성
-        String refreshToken = jwtTokenizer.generateRefreshToken(email);
-        UserDTO user = userService.findByEmail(email);
+    private void redirect(HttpServletResponse response, TargetUser targetUser, List<String> roles) throws IOException {
+        String accessToken = delegateAccessToken(targetUser);
+        String refreshToken = jwtTokenizer.generateRefreshToken(targetUser);
+        User user = userReader.read(targetUser);
 
-        tokenCacheRepository.getRefreshToken(email) // 이미 로그인 한 유저가 또 로그인했을 경우 리프레시토큰 갱신
-                        .ifPresent(token ->
-                                tokenCacheRepository.deleteRefreshToken(email)
-                        );
+        tokenCacheManager.getRefreshToken(targetUser).ifPresent(token -> // 이미 로그인 한 유저가 또 로그인했을 경우 리프레시토큰 갱신.
+                tokenCacheManager.deleteRefreshToken(targetUser));
 
-        tokenCacheRepository.setRefreshToken(RefreshToken.of(user.getEmail(), refreshToken));
-        userCacheRepository.setUser(user); // 로그인 시 유저 캐싱
+        tokenCacheManager.setRefreshToken(RefreshToken.of(targetUser, refreshToken));
+        userCacheManger.append(user); // 로그인 시 유저 캐싱
 
         log.info("로그인 성공 accessToken 발급  - {}", accessToken);
         log.info("로그인 성공 refreshToken 발급 - {}", refreshToken);
@@ -89,12 +80,8 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
     }
 
     // Access Token 생성
-    private String delegateAccessToken(String email, List<String> authorities) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("email", email);
-        claims.put("roles", authorities);
-
-        return jwtTokenizer.generateAccessToken(claims, email, jwtTokenizer.getTokenExpiration());
+    private String delegateAccessToken(TargetUser targetUser) {
+        return jwtTokenizer.generateAccessToken(targetUser, jwtTokenizer.getTokenExpiration());
     }
 
     private String getURIString(String accessToken, String refreshToken, String path) {

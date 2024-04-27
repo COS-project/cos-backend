@@ -5,7 +5,7 @@ import com.cos.cercat.apis.global.security.filter.JwtTokenFilter;
 import com.cos.cercat.apis.global.security.handler.JwtAuthenticationEntryPoint;
 import com.cos.cercat.apis.global.security.handler.OAuth2LoginFailureHandler;
 import com.cos.cercat.apis.global.security.handler.OAuth2MemberSuccessHandler;
-import com.cos.cercat.service.CustomOAuth2UserService;
+import com.cos.cercat.apis.global.security.handler.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

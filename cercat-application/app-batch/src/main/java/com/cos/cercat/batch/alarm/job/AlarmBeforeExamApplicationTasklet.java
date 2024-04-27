@@ -1,7 +1,7 @@
 package com.cos.cercat.batch.alarm.job;
 
+import com.cos.cercat.alarm.AlarmType;
 import com.cos.cercat.domain.*;
-import com.cos.cercat.domain.alarm.AlarmType;
 import com.cos.cercat.repository.AlarmJpaRepository;
 import com.cos.cercat.repository.CertificateExamJpaRepository;
 import com.cos.cercat.repository.InterestCertificateJpaRepository;

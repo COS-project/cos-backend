@@ -1,0 +1,15 @@
+bootJar {
+    enabled = false
+}
+
+dependencies {
+
+    implementation project(':cercat-common');
+    api project(':cercat-domain:domain-alarm')
+    implementation project(':cercat-storage:user-dataaccess');
+    implementation project(':cercat-storage:jpa-dataaccess');
+    implementation project(':cercat-storage:redis-dataaccess');
+    implementation project(':cercat-storage:certificate-dataaccess');
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+}

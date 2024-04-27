@@ -1,21 +1,20 @@
 package com.cos.cercat.apis.mockExamResult.dto.response;
 
-import com.cos.cercat.apis.certificate.dto.response.SubjectResponse;
-import com.cos.cercat.dto.SubjectResultsAVG;
+import com.cos.cercat.apis.certificate.response.SubjectResponse;
+import com.cos.cercat.mockexamresult.SubjectResultStatistics;
 
 public record SubjectResultsAVGResponse(
         SubjectResponse subject,
-        Integer correctRate,
-        Long totalTakenTime
+        int correctRate,
+        long totalTakenTime
 ) {
 
 
-    public static SubjectResultsAVGResponse from(SubjectResultsAVG dto) {
-
+    public static SubjectResultsAVGResponse from(SubjectResultStatistics subjectResultStatistics) {
         return new SubjectResultsAVGResponse(
-                SubjectResponse.from(dto.subjectEntity()),
-                dto.correctRate().intValue(),
-                dto.totalTakenTime().longValue()
+                SubjectResponse.from(subjectResultStatistics.subject()),
+                subjectResultStatistics.correctRate(),
+                subjectResultStatistics.totalTakenTime()
         );
     }
 }

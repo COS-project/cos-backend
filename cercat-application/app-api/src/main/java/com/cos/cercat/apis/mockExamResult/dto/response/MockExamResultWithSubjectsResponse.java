@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.mockExamResult.dto.response;
 
-import com.cos.cercat.apis.mockExam.dto.response.MockExamResponse;
-import com.cos.cercat.domain.MockExamResult;
+import com.cos.cercat.apis.mockExam.response.MockExamResponse;
+import com.cos.cercat.mockexamresult.MockExamResultDetail;
 
 import java.util.List;
 
@@ -13,15 +13,15 @@ public record MockExamResultWithSubjectsResponse(
         Integer totalScore
 ) {
 
-    public static MockExamResultWithSubjectsResponse from(MockExamResult entity) {
+    public static MockExamResultWithSubjectsResponse from(MockExamResultDetail mockExamResultDetail) {
         return new MockExamResultWithSubjectsResponse(
-                entity.getId(),
-                entity.getRound(),
-                MockExamResponse.from(entity.getMockExamEntity()),
-                entity.getSubjectResults().getSubjectResults().stream()
+                mockExamResultDetail.mockExamResult().getId(),
+                mockExamResultDetail.mockExamResult().getRound(),
+                MockExamResponse.from(mockExamResultDetail.mockExamResult().getMockExam()),
+                mockExamResultDetail.subjectResults().stream()
                         .map(SubjectResultResponse::from)
                         .toList(),
-                entity.getTotalScore()
+                mockExamResultDetail.mockExamResult().getTotalScore()
         );
     }
 }

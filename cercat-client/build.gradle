@@ -1,24 +1,3 @@
-bootJar {enabled = false}
-
-dependencies {
-
-    implementation project(':cercat-common')
-    implementation(project(':cercat-domain'))
-
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-
-    //google GCP 버킷
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-gcp-starter', version: '1.2.5.RELEASE'
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-gcp-storage', version: '1.2.5.RELEASE'
-
-    //redis & cache
-    api 'org.springframework.boot:spring-boot-starter-data-redis'
-
-    //직렬화 및 역직렬화 관련
-    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.2'
-
-    //kakfa
-    implementation 'org.springframework.kafka:spring-kafka'
-    testImplementation 'org.springframework.kafka:spring-kafka-test'
+bootJar {
+    enabled = false
 }
