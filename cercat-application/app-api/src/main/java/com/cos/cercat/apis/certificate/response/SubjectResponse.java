@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.certificate.response;
 
-import com.cos.cercat.domain.SubjectEntity;
-import com.cos.cercat.domain.certificate.Subject;
+
+import com.cos.cercat.certificate.Subject;
 
 public record SubjectResponse(
         Long subjectId,
@@ -9,14 +9,6 @@ public record SubjectResponse(
         int numberOfQuestions,
         int totalScore
 ) {
-    public static SubjectResponse from(SubjectEntity entity) {
-        return new SubjectResponse(
-                entity.getId(),
-                entity.getSubjectName(),
-                entity.getNumberOfQuestions(),
-                entity.getTotalScore()
-        );
-    }
 
     public static SubjectResponse from(Subject subject) {
         return new SubjectResponse(

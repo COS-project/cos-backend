@@ -2,8 +2,7 @@ package com.cos.cercat.apis.mockExam.response;
 
 import com.cos.cercat.apis.certificate.response.SubjectResponse;
 import com.cos.cercat.common.domain.Image;
-import com.cos.cercat.domain.QuestionEntity;
-import com.cos.cercat.domain.mockexam.Question;
+import com.cos.cercat.mockexam.Question;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
@@ -20,21 +19,6 @@ public record QuestionResponse(
         int correctOption,
         int score
 ) {
-    public static QuestionResponse from(QuestionEntity entity) {
-        return new QuestionResponse(
-                entity.getId(),
-                MockExamResponse.from(entity.getMockExamEntity()),
-                SubjectResponse.from(entity.getSubjectEntity()),
-                entity.getQuestionSeq(),
-                entity.getQuestionText(),
-                entity.getQuestionImageEntity().toImage(),
-                entity.getQuestionOptions().stream()
-                        .map(QuestionOptionResponse::from)
-                        .toList(),
-                entity.getCorrectOption(),
-                entity.getScore()
-        );
-    }
 
     public static QuestionResponse from(Question question) {
         return new QuestionResponse(

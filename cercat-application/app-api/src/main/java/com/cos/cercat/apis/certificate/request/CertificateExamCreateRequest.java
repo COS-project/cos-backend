@@ -1,7 +1,8 @@
 package com.cos.cercat.apis.certificate.request;
 
-import com.cos.cercat.domain.certificate.*;
-import com.cos.cercat.domain.mockexam.MockExamSession;
+
+import com.cos.cercat.certificate.*;
+import com.cos.cercat.mockexam.MockExamSession;
 
 public record CertificateExamCreateRequest(
         MockExamSession mockExamSession,

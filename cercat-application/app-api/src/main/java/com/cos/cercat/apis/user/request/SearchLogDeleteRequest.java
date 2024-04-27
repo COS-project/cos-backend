@@ -1,0 +1,17 @@
+package com.cos.cercat.apis.user.request;
+
+import com.cos.cercat.search.SearchLog;
+
+import java.time.LocalDateTime;
+
+public record SearchLogDeleteRequest(
+        String keyword,
+        LocalDateTime createdAt
+) {
+    public SearchLog toSearchLog() {
+        return new SearchLog(
+                keyword,
+                createdAt.toString()
+        );
+    }
+}

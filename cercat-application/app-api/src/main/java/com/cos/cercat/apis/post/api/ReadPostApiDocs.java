@@ -2,14 +2,14 @@ package com.cos.cercat.apis.post.api;
 
 import com.cos.cercat.apis.post.response.PostResponse;
 import com.cos.cercat.apis.post.response.PostWithCommentsResponse;
+import com.cos.cercat.common.domain.Cursor;
 import com.cos.cercat.common.domain.Response;
 import com.cos.cercat.common.domain.SliceResult;
-import com.cos.cercat.domain.post.CommentaryPostSearchCond;
-import com.cos.cercat.domain.post.PostType;
-import com.cos.cercat.dto.UserDTO;
+import com.cos.cercat.post.CommentaryPostSearchCond;
+import com.cos.cercat.post.PostType;
+import com.cos.cercat.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
 public interface ReadPostApiDocs {
 
     @Operation(summary = "해설 게시글 검색")
-    Response<SliceResult<PostResponse>> searchCommentaryPosts(Pageable pageable,
+    Response<SliceResult<PostResponse>> searchCommentaryPosts(Cursor cursor,
                                                               Long certificateId,
                                                               CommentaryPostSearchCond cond);
 
@@ -29,11 +29,11 @@ public interface ReadPostApiDocs {
 
     @Operation(summary = "내가 쓴 글 조회")
     Response<SliceResult<PostResponse>> readMyPosts(PostType postType,
-                                                   UserDTO currentUser,
-                                                   Pageable pageable);
+                                                    User currentUser,
+                                                    Cursor cursor);
 
     @Operation(summary = "내가 댓글 쓴 게시글 조회")
-    Response<SliceResult<PostResponse>> readMyCommentPosts(UserDTO currentUser,
-                                                             Pageable pageable);
+    Response<SliceResult<PostResponse>> readMyCommentPosts(User currentUser,
+                                                             Cursor cursor);
 
 }

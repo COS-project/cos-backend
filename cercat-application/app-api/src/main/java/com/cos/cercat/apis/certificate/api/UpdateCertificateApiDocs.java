@@ -2,7 +2,7 @@ package com.cos.cercat.apis.certificate.api;
 
 import com.cos.cercat.apis.certificate.request.InterestCertificateUpdateRequest;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.dto.UserDTO;
+import com.cos.cercat.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -13,6 +13,6 @@ public interface UpdateCertificateApiDocs {
 
     @Operation(summary = "관심 자격증 수정")
     Response<Void> updateInterestCertificates(@RequestBody InterestCertificateUpdateRequest request,
-                                              @AuthenticationPrincipal UserDTO currentUser);
+                                              @AuthenticationPrincipal User currentUser);
 
 }

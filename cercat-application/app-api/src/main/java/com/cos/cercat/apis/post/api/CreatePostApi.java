@@ -2,15 +2,15 @@ package com.cos.cercat.apis.post.api;
 
 import com.cos.cercat.apis.post.request.PostCommentCreateRequest;
 import com.cos.cercat.apis.post.request.PostCreateRequest;
+import com.cos.cercat.certificate.TargetCertificate;
 import com.cos.cercat.common.domain.Response;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
-import com.cos.cercat.domain.certificate.TargetCertificate;
-import com.cos.cercat.domain.post.CreatePostService;
-import com.cos.cercat.domain.post.PostType;
-import com.cos.cercat.domain.post.TargetPost;
-import com.cos.cercat.domain.user.TargetUser;
-import com.cos.cercat.dto.UserDTO;
+import com.cos.cercat.post.CreatePostService;
+import com.cos.cercat.post.PostType;
+import com.cos.cercat.post.TargetPost;
+import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -33,7 +33,7 @@ public class CreatePostApi implements CreatePostApiDocs {
                                            @PathVariable PostType postType,
                                            @RequestPart PostCreateRequest request,
                                            @RequestPart(required = false) List<MultipartFile> files,
-                                           @AuthenticationPrincipal UserDTO currentUser) {
+                                           @AuthenticationPrincipal User currentUser) {
         TargetPost targetPost;
         switch (postType) {
             case COMMENTARY ->
@@ -68,7 +68,7 @@ public class CreatePostApi implements CreatePostApiDocs {
     @PostMapping("/posts/{postId}/post-comments")
     public Response<Void> createPostComment(@PathVariable Long postId,
                                             @RequestBody PostCommentCreateRequest request,
-                                            @AuthenticationPrincipal UserDTO currentUser) {
+                                            @AuthenticationPrincipal User currentUser) {
         createPostService.createPostComment(
                 TargetUser.from(currentUser.getId()),
                 TargetPost.from(postId),

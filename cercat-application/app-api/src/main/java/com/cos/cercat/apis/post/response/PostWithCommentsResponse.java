@@ -1,6 +1,6 @@
 package com.cos.cercat.apis.post.response;
 
-import com.cos.cercat.domain.post.*;
+import com.cos.cercat.post.PostWithComments;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;

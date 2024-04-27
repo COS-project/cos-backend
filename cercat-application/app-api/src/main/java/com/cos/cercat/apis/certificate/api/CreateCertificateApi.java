@@ -4,11 +4,11 @@ package com.cos.cercat.apis.certificate.api;
 import com.cos.cercat.apis.certificate.request.CertificateCreateRequest;
 import com.cos.cercat.apis.certificate.request.CertificateExamCreateRequest;
 import com.cos.cercat.apis.certificate.request.InterestCertificateCreateRequest;
+import com.cos.cercat.certificate.CreateCertificateService;
+import com.cos.cercat.certificate.TargetCertificate;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.domain.certificate.CreateCertificateService;
-import com.cos.cercat.domain.certificate.TargetCertificate;
-import com.cos.cercat.domain.user.TargetUser;
-import com.cos.cercat.dto.UserDTO;
+import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +36,7 @@ public class CreateCertificateApi implements CreateCertificateApiDocs {
 
     @PostMapping("/interest-certificates")
     public Response<Void> InterestCertificateAdd(@RequestBody InterestCertificateCreateRequest request,
-                                                     @AuthenticationPrincipal UserDTO currentUser) {
+                                                     @AuthenticationPrincipal User currentUser) {
         createCertificateService.addInterestCertificates(TargetUser.from(currentUser.getId()), request.toInterestTargets());
         return Response.success("관심 자격증 리스트 생성 성공");
     }

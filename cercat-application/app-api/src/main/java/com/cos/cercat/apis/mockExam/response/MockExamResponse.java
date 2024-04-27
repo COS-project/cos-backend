@@ -2,8 +2,7 @@ package com.cos.cercat.apis.mockExam.response;
 
 
 import com.cos.cercat.apis.certificate.response.CertificateResponse;
-import com.cos.cercat.domain.MockExamEntity;
-import com.cos.cercat.domain.mockexam.MockExam;
+import com.cos.cercat.mockexam.MockExam;
 
 public record MockExamResponse(
         Long MockExamId,
@@ -12,21 +11,13 @@ public record MockExamResponse(
         Long timeLimit,
         CertificateResponse certificate
 ) {
-    public static MockExamResponse from(MockExamEntity entity) {
-        return new MockExamResponse(
-                entity.getId(),
-                entity.getExamYear(),
-                entity.getRound(),
-                entity.getTimeLimit(),
-                CertificateResponse.from(entity.getCertificateEntity().toDomain())
-        );
-    }
+
 
     public static MockExamResponse from(MockExam mockExam) {
         return new MockExamResponse(
                 mockExam.id(),
-                mockExam.mockExamSession().examYear(),
-                mockExam.mockExamSession().round(),
+                mockExam.mockExamSession().getExamYear(),
+                mockExam.mockExamSession().getRound(),
                 mockExam.timeLimit(),
                 CertificateResponse.from(mockExam.certificate())
         );

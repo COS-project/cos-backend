@@ -1,11 +1,11 @@
 package com.cos.cercat.apis.alarm.Response;
 
-import com.cos.cercat.domain.alarm.Alarm;
-import com.cos.cercat.domain.alarm.AlarmType;
-import com.cos.cercat.domain.alarm.BoardAlarm;
-import com.cos.cercat.domain.alarm.ExamAlarm;
-import com.cos.cercat.domain.certificate.CertificateExam;
-import com.cos.cercat.domain.user.User;
+import com.cos.cercat.alarm.Alarm;
+import com.cos.cercat.alarm.AlarmType;
+import com.cos.cercat.alarm.BoardAlarm;
+import com.cos.cercat.alarm.ExamAlarm;
+import com.cos.cercat.certificate.CertificateExam;
+import com.cos.cercat.user.User;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -31,12 +31,12 @@ public record AlarmResponse(
     }
 
 
-    private static String makeBoardAlarmText(AlarmType alarmType, User fromUser) {
+    private static String makeBoardAlarmText(AlarmType alarmType, User user) {
         return switch (alarmType) {
-            case NEW_LIKE_ON_POST -> "회원님의 게시글에 " + fromUser.nickname() + "님이 좋아요를 눌렀습니다!";
-            case NEW_COMMENT_ON_POST -> "회원님의 게시글에 " + fromUser.nickname() + "님이 댓글을 달았습니다!";
-            case NEW_LIKE_ON_COMMENT -> "회원님의 댓글에 " + fromUser.nickname() + "님이 좋아요를 눌렀습니다!";
-            case REPLY_ON_COMMENT -> "회원님의 댓글에 " + fromUser.nickname() + "님이 대댓글을 달았습니다!";
+            case NEW_LIKE_ON_POST -> "회원님의 게시글에 " + user.getNickname() + "님이 좋아요를 눌렀습니다!";
+            case NEW_COMMENT_ON_POST -> "회원님의 게시글에 " + user.getNickname() + "님이 댓글을 달았습니다!";
+            case NEW_LIKE_ON_COMMENT -> "회원님의 댓글에 " + user.getNickname() + "님이 좋아요를 눌렀습니다!";
+            case REPLY_ON_COMMENT -> "회원님의 댓글에 " + user.getNickname() + "님이 대댓글을 달았습니다!";
             default -> null;
         };
     }

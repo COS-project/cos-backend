@@ -2,11 +2,11 @@ package com.cos.cercat.apis.mockExam.api;
 
 import com.cos.cercat.apis.mockExam.response.MockExamResponse;
 import com.cos.cercat.apis.mockExam.response.QuestionResponse;
+import com.cos.cercat.certificate.TargetCertificate;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.domain.certificate.TargetCertificate;
-import com.cos.cercat.domain.mockexam.MockExamService;
-import com.cos.cercat.domain.mockexam.TargetMockExam;
-import com.cos.cercat.dto.UserDTO;
+import com.cos.cercat.mockexam.MockExamService;
+import com.cos.cercat.mockexam.TargetMockExam;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +26,7 @@ public class MockExamApi implements MockExamApiDocs {
     @GetMapping("/certificates/{certificateId}/mock-exams")
     public Response<List<MockExamResponse>> findMockExams(@PathVariable Long certificateId,
                                                           Integer examYear,
-                                                          @AuthenticationPrincipal UserDTO currentUser) {
+                                                          @AuthenticationPrincipal User currentUser) {
         List<MockExamResponse> mockExamResponses = mockExamService.find(TargetCertificate.from(certificateId), examYear).stream()
                 .map(MockExamResponse::from)
                 .toList();

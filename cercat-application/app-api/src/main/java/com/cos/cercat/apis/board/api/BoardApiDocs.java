@@ -2,7 +2,7 @@ package com.cos.cercat.apis.board.api;
 
 import com.cos.cercat.apis.board.response.BoardResponse;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.dto.UserDTO;
+import com.cos.cercat.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -12,8 +12,8 @@ import java.util.List;
 public interface BoardApiDocs {
 
     @Operation(summary = "게시판 즐겨찾기 및 해제")
-    Response<Void> flipFavoriteBoard(Long certificateId, UserDTO currentUser);
+    Response<Void> flipFavoriteBoard(Long certificateId, User currentUser);
 
     @Operation(summary = "게시판 목록 조회")
-    Response<List<BoardResponse>> readBoards(UserDTO currentUser);
+    Response<List<BoardResponse>> readBoards(User currentUser);
 }

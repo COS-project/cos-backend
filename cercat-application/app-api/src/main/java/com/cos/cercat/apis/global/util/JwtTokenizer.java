@@ -1,5 +1,6 @@
 package com.cos.cercat.apis.global.util;
 
+import com.cos.cercat.user.TargetUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -14,40 +15,44 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
 
 @Getter
 @Component
 public class JwtTokenizer {
 
+    private static String secretKey;
+
+    private static int accessTokenExpirationMinutes;
+
     @Value("${jwt.token.secret-key}")
-    private String secretKey;
+    public void setSecretKey(String secretKey) {
+        JwtTokenizer.secretKey = secretKey;
+    }
 
-    @Getter
     @Value("${jwt.access-token.expire-length}")
-    private int accessTokenExpirationMinutes;
+    public void setAccessTokenExpirationMinutes(int accessTokenExpirationMinutes) {
+        JwtTokenizer.accessTokenExpirationMinutes = accessTokenExpirationMinutes;
+    }
 
-    public String generateAccessToken(Map<String, Object> claims,
-                                      String subject,
+    public String generateAccessToken(TargetUser targetUser,
                                       Date expiration) {
 
         Key key = getKeyFromBase64EncodedKey();
 
         return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(subject)
+                .setSubject(targetUser.userId().toString())
                 .setIssuedAt(Calendar.getInstance().getTime())
                 .setExpiration(expiration)
                 .signWith(key)
                 .compact();
     }
 
-    public String generateRefreshToken(String email) {
+    public String generateRefreshToken(TargetUser targetUser) {
 
         Key key = getKeyFromBase64EncodedKey();
 
         return Jwts.builder()
-                .setSubject(email)
+                .setSubject(targetUser.userId().toString())
                 .setIssuedAt(Calendar.getInstance().getTime())
                 .signWith(key)
                 .compact();
@@ -79,14 +84,14 @@ public class JwtTokenizer {
         return calendar.getTime();
     }
 
-    public Key getKeyFromBase64EncodedKey() {
+    public static Key getKeyFromBase64EncodedKey() {
         String base64SecretKey = encodeBase64SecretKey(secretKey);
         byte[] keyBytes = Decoders.BASE64.decode(base64SecretKey);
         Key key = Keys.hmacShaKeyFor(keyBytes);
         return key;
     }
 
-    private String encodeBase64SecretKey(String secretKey) {
+    private static String encodeBase64SecretKey(String secretKey) {
         return Encoders.BASE64.encode(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 }

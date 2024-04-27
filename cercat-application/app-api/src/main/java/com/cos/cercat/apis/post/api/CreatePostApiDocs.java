@@ -3,9 +3,9 @@ package com.cos.cercat.apis.post.api;
 import com.cos.cercat.apis.post.request.PostCommentCreateRequest;
 import com.cos.cercat.apis.post.request.PostCreateRequest;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.domain.post.PostType;
-import com.cos.cercat.domain.post.TargetPost;
-import com.cos.cercat.dto.UserDTO;
+import com.cos.cercat.post.PostType;
+import com.cos.cercat.post.TargetPost;
+import com.cos.cercat.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,11 +19,11 @@ public interface CreatePostApiDocs {
     Response<TargetPost> createPost(Long certificateId, PostType postType,
                                     PostCreateRequest request,
                                     List<MultipartFile> files,
-                                    UserDTO currentUser);
+                                    User currentUser);
 
     @Operation(summary = "댓글 생성")
     public Response<Void> createPostComment(Long postId,
                                             PostCommentCreateRequest request,
-                                            UserDTO currentUser);
+                                            User currentUser);
 
 }

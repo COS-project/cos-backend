@@ -1,11 +1,7 @@
 package com.cos.cercat.apis.mockExamResult.dto.request;
 
-import com.cos.cercat.domain.QuestionEntity;
-import com.cos.cercat.domain.UserAnswerEntity;
-import com.cos.cercat.domain.UserEntity;
-import com.cos.cercat.domain.mockexamresult.NewUserAnswer;
 
-import java.util.Objects;
+import com.cos.cercat.mockexamresult.NewUserAnswer;
 
 public record CreateUserAnswerRequest(
         Long questionId,

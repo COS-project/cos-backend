@@ -2,7 +2,7 @@ package com.cos.cercat.apis.global.util;
 
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
-import com.nimbusds.jose.util.Pair;
+import com.cos.cercat.user.TargetUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.util.Calendar;
 import java.util.Optional;
+
+import static com.cos.cercat.apis.global.util.JwtTokenizer.getKeyFromBase64EncodedKey;
 
 @Component
 @RequiredArgsConstructor
@@ -35,19 +37,17 @@ public class JwtTokenUtil {
     private static final String EMAIL_CLAIM = "email";
     private static final String BEARER = "Bearer ";
 
-    private final JwtTokenizer jwtTokenizer;
-
     /**
      * AccessToken + RefreshToken 헤더에 실어서 보내기
      */
-    public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken) {
+    public void setTokenInHeader(HttpServletResponse response, String accessToken, String refreshToken) {
         response.setStatus(HttpServletResponse.SC_OK);
         response.setHeader(accessHeader, BEARER + accessToken);
         response.setHeader(refreshHeader, BEARER + refreshToken);
         log.info("Access Token, Refresh Token 헤더 설정 완료");
     }
 
-    public long getAccessTokenExpirationMillis(String accessToken) {
+    public static long getAccessTokenExpirationMillis(String accessToken) {
 
         String replaced = accessToken.replace(BEARER, "");
         return extractAllClaims(replaced).getExpiration().getTime() - Calendar.getInstance().getTimeInMillis();
@@ -85,38 +85,26 @@ public class JwtTokenUtil {
      * 유효하지 않다면 빈 Optional 객체 반환
      */
 
-    public String extractEmailFromRefreshToken(String refreshToken) {
+    public TargetUser extractTargetUser(String token) {
         try {
-            Key key = jwtTokenizer.getKeyFromBase64EncodedKey();
+            Key key = getKeyFromBase64EncodedKey();
 
-            return Jwts.parserBuilder()
+            String subject = Jwts.parserBuilder()
                     .setSigningKey(key)
                     .build()
-                    .parseClaimsJws(refreshToken)
+                    .parseClaimsJws(token)
                     .getBody()
                     .getSubject();
+            return TargetUser.from(Long.valueOf(subject));
         } catch (ExpiredJwtException e) {
-            log.warn("리프레시 토큰으로 부터 이메일 추출중 예외 발생 - {}", e.getMessage());
+            log.warn("토큰으로 부터 정보 추출중 예외 발생 - {}", e.getMessage());
             throw new CustomException(ErrorCode.INVALID_REFRESH_TOKEN);
         }
     }
 
-    public Pair<String, String> extractEmail(String token) {
+    public static Claims extractAllClaims(String token) {
 
-        try {
-            return Pair.of(token, extractAllClaims(token).get(EMAIL_CLAIM, String.class));
-        } catch (ExpiredJwtException e) {
-            log.warn("액세스 토큰 만료 - {}", e.getMessage());
-            throw new CustomException(ErrorCode.ACCESS_TOKEN_EXPIRED);
-        } catch (Exception e) {
-            log.warn("엑세스 토큰으로 부터 이메일 추출중 예외 발생 - {}", e.getMessage());
-            throw new CustomException(ErrorCode.INVALID_ACCESS_TOKEN, e.getMessage());
-        }
-    }
-
-    public Claims extractAllClaims(String token) {
-
-        Key key = jwtTokenizer.getKeyFromBase64EncodedKey();
+        Key key = getKeyFromBase64EncodedKey();
 
         return Jwts.parserBuilder()
                 .setSigningKey(key)

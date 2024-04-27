@@ -1,11 +1,11 @@
 package com.cos.cercat.apis.post.api;
 
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.domain.post.DeletePostService;
-import com.cos.cercat.domain.post.TargetComment;
-import com.cos.cercat.domain.post.TargetPost;
-import com.cos.cercat.domain.user.TargetUser;
-import com.cos.cercat.dto.UserDTO;
+import com.cos.cercat.post.DeletePostService;
+import com.cos.cercat.post.TargetComment;
+import com.cos.cercat.post.TargetPost;
+import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,14 +22,14 @@ public class DeletePostApi implements DeletePostApiDocs {
 
     @DeleteMapping("/posts/{postId}")
     public Response<Void> deletePost(@PathVariable Long postId,
-                                     @AuthenticationPrincipal UserDTO currentUser) {
+                                     @AuthenticationPrincipal User currentUser) {
         deletePostService.deletePost(TargetUser.from(currentUser.getId()), TargetPost.from(postId));
         return Response.success("게시글 삭제 성공");
     }
 
     @DeleteMapping("/post-comments/{commentId}")
     public Response<Void> deletePostComment(@PathVariable Long commentId,
-                                            @AuthenticationPrincipal UserDTO currentUser) {
+                                            @AuthenticationPrincipal User currentUser) {
         deletePostService.deletePostComment(TargetUser.from(currentUser.getId()), TargetComment.from(commentId));
         return Response.success("댓글 삭제 성공");
     }

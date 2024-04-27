@@ -3,15 +3,13 @@ package com.cos.cercat.apis.certificate.api;
 import com.cos.cercat.apis.certificate.response.CertificateExamResponse;
 import com.cos.cercat.apis.certificate.response.CertificateResponse;
 import com.cos.cercat.apis.certificate.response.InterestCertificateResponse;
+import com.cos.cercat.certificate.Certificate;
+import com.cos.cercat.certificate.CertificateExam;
+import com.cos.cercat.certificate.ReadCertificateService;
+import com.cos.cercat.certificate.TargetCertificate;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.domain.certificate.Certificate;
-import com.cos.cercat.domain.certificate.CertificateExam;
-import com.cos.cercat.domain.certificate.ReadCertificateService;
-import com.cos.cercat.domain.certificate.TargetCertificate;
-import com.cos.cercat.domain.user.TargetUser;
-import com.cos.cercat.dto.UserDTO;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +41,7 @@ public class ReadCertificateApi implements ReadCertificateApiDocs{
     }
 
     @GetMapping("/interest-certificates")
-    public Response<List<InterestCertificateResponse>> getInterestCertificates(@AuthenticationPrincipal UserDTO currentUser) {
+    public Response<List<InterestCertificateResponse>> getInterestCertificates(@AuthenticationPrincipal User currentUser) {
         return Response.success(readCertificateService.readInterestCertificates(TargetUser.from(currentUser.getId())).stream()
                 .map(InterestCertificateResponse::from)
                 .toList());

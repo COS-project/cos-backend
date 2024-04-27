@@ -1,10 +1,10 @@
 package com.cos.cercat.apis.post.request;
 
-import com.cos.cercat.common.domain.Image;
-import com.cos.cercat.domain.mockexam.MockExamSession;
-import com.cos.cercat.domain.post.*;
 
-import java.util.List;
+import com.cos.cercat.mockexam.MockExamSession;
+import com.cos.cercat.post.PostContent;
+import com.cos.cercat.post.RecommendTag;
+
 import java.util.Set;
 
 public record PostCreateRequest(

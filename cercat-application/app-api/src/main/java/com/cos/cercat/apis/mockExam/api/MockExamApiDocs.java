@@ -3,7 +3,7 @@ package com.cos.cercat.apis.mockExam.api;
 import com.cos.cercat.apis.mockExam.response.MockExamResponse;
 import com.cos.cercat.apis.mockExam.response.QuestionResponse;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.dto.UserDTO;
+import com.cos.cercat.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -15,7 +15,7 @@ public interface MockExamApiDocs {
     @Operation(summary = "년도별 모의고사 가져오기")
     Response<List<MockExamResponse>> findMockExams(Long certificateId,
                                                    Integer examYear,
-                                                   UserDTO currentUser);
+                                                   User currentUser);
 
     @Operation(summary = "모의고사 문제들 가져오기")
     Response<List<QuestionResponse>> findQuestions(Long mockExamId);

@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.post.request;
 
 
-import com.cos.cercat.domain.post.CommentContent;
+import com.cos.cercat.post.CommentContent;
 
 public record PostCommentCreateRequest(
         Long parentCommentId,

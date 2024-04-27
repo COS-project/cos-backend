@@ -1,12 +1,12 @@
 package com.cos.cercat.apis.learning.api;
 
-import com.cos.cercat.apis.learning.dto.request.GoalRequest;
+import com.cos.cercat.apis.learning.request.GoalRequest;
+import com.cos.cercat.certificate.TargetCertificate;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.domain.certificate.TargetCertificate;
-import com.cos.cercat.domain.learning.CreateLearningService;
-import com.cos.cercat.domain.learning.TargetGoal;
-import com.cos.cercat.domain.user.TargetUser;
-import com.cos.cercat.dto.UserDTO;
+import com.cos.cercat.learning.CreateLearningService;
+import com.cos.cercat.learning.TargetGoal;
+import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,7 @@ public class CreateLearningApi implements CreateLearningApiDocs {
     @PostMapping("/certificates/{certificateId}/goals")
     public Response<Void> createGoal(@PathVariable Long certificateId,
                                      @RequestBody GoalRequest request,
-                                     @AuthenticationPrincipal UserDTO currentUser) {
+                                     @AuthenticationPrincipal User currentUser) {
         createLearningService.createGoal(
                 TargetUser.from(currentUser.getId()),
                 TargetCertificate.from(certificateId),

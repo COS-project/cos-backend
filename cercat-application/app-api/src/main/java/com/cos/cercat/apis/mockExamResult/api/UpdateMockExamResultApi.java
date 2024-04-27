@@ -1,10 +1,10 @@
 package com.cos.cercat.apis.mockExamResult.api;
 
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.domain.mockexamresult.TargetUserAnswer;
-import com.cos.cercat.domain.mockexamresult.UpdateMockExamResultService;
-import com.cos.cercat.domain.user.TargetUser;
-import com.cos.cercat.dto.UserDTO;
+import com.cos.cercat.mockexamresult.TargetUserAnswer;
+import com.cos.cercat.mockexamresult.UpdateMockExamResultService;
+import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -21,7 +21,7 @@ public class UpdateMockExamResultApi implements UpdateMockExamResultApiDocs{
 
     @PatchMapping("/user-answers/{userAnswerId}/review")
     public Response<Void> reviewUserAnswers(@PathVariable Long userAnswerId,
-                                            @AuthenticationPrincipal UserDTO currentUser) {
+                                            @AuthenticationPrincipal User currentUser) {
         updateMockExamResultService.reviewUserAnswer(TargetUser.from(currentUser.getId()), TargetUserAnswer.from(userAnswerId));
         return Response.success("틀린 문제 리뷰 성공");
     }

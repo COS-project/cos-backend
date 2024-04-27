@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.mockExamResult.dto.response;
 
 
-import com.cos.cercat.domain.mockexamresult.ScoreData;
+import com.cos.cercat.mockexamresult.ScoreData;
 
 import java.util.List;
 

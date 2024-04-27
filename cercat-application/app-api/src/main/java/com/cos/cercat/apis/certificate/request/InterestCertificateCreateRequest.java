@@ -1,7 +1,8 @@
 package com.cos.cercat.apis.certificate.request;
 
-import com.cos.cercat.domain.certificate.InterestTarget;
-import com.cos.cercat.domain.certificate.InterestTargets;
+
+import com.cos.cercat.certificate.InterestTarget;
+import com.cos.cercat.certificate.InterestTargets;
 
 import java.util.List;
 

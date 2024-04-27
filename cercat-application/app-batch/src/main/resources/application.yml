@@ -4,7 +4,12 @@ spring:
       local: common, domain
       prod: common, domain
     include:
+      - elasticsearch
       - jpa
+      - redis
+      - gcs
+      - kafka
+      - sse
   main:
     web-application-type: none
 

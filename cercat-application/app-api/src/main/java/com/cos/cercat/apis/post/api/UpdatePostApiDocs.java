@@ -3,9 +3,9 @@ package com.cos.cercat.apis.post.api;
 
 import com.cos.cercat.apis.post.request.PostUpdateRequest;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.domain.post.PostType;
-import com.cos.cercat.domain.post.TargetPost;
-import com.cos.cercat.dto.UserDTO;
+import com.cos.cercat.post.PostType;
+import com.cos.cercat.post.TargetPost;
+import com.cos.cercat.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,5 +21,5 @@ public interface UpdatePostApiDocs {
                                               PostType postType,
                                               PostUpdateRequest request,
                                               List<MultipartFile> files,
-                                              UserDTO currentUser);
+                                              User currentUser);
 }

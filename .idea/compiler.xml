@@ -10,27 +10,41 @@
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.30/f195ee86e6c896ea47a1d39defbe20eb59cd149d/lombok-1.18.30.jar" />
         </processorPath>
-        <module name="cercat.cercat-storage.domain-mockexam.test" />
-        <module name="cercat.cercat-storage.domain-redis.test" />
-        <module name="cercat.cercat-common.test" />
-        <module name="cercat.cercat-storage.domain-elasticsearch.test" />
-        <module name="cercat.cercat-client.test" />
-        <module name="cercat.cercat-storage.domain-search.test" />
-        <module name="cercat.cercat-storage.domain-like.test" />
-        <module name="cercat.cercat-storage.domain-user.test" />
-        <module name="cercat.cercat-storage.domain-mockexamresult.test" />
-        <module name="cercat.cercat-application.test" />
-        <module name="cercat.cercat-storage.domain-post.test" />
-        <module name="cercat.cercat-storage.domain-jpa.test" />
-        <module name="cercat.cercat-storage.domain-alarm.test" />
+        <module name="cercat.cercat-domain.domain-post.test" />
+        <module name="cercat.cercat-storage.redis-dataaccess.test" />
+        <module name="cercat.cercat-storage.mockexamresult-dataaccess.test" />
+        <module name="cercat.cercat-storage.board-dataaccess.test" />
+        <module name="cercat.cercat-storage.elasticsearch-dataaccess.test" />
+        <module name="cercat.cercat-domain.domain-search.test" />
+        <module name="cercat.cercat-storage.user-dataaccess.test" />
+        <module name="cercat.cercat-client.gcs-module.test" />
+        <module name="cercat.cercat-domain.domain-alarm.test" />
+        <module name="com.cos.cercat.cercat-storage.post-dataaccess.test" />
+        <module name="cercat.cercat-domain.domain-like.test" />
+        <module name="cercat.cercat-storage.certificate-dataaccess.test" />
+        <module name="cercat.cercat-client.sse-module.test" />
+        <module name="cercat.cercat-storage.mockexam-dataaccess.test" />
+        <module name="cercat.cercat-storage.learning-dataaccess.test" />
+        <module name="cercat.cercat-client.kafka-module.test" />
         <module name="cercat.cercat-application.app-api.test" />
-        <module name="cercat.cercat-application.app-batch.test" />
-        <module name="cercat.cercat-storage.domain-examreview.test" />
-        <module name="cercat.cercat-domain.test" />
+        <module name="cercat.cercat-domain.domain-board.test" />
+        <module name="cercat.cercat-storage.jpa-dataaccess.test" />
         <module name="cercat.cercat-storage.test" />
-        <module name="cercat.cercat-storage.domain-certificate.test" />
-        <module name="cercat.cercat-storage.domain-learning.test" />
-        <module name="cercat.cercat-storage.domain-board.test" />
+        <module name="cercat.cercat-storage.alarm-dataaccess.test" />
+        <module name="cercat.cercat-domain.domain-learning.test" />
+        <module name="cercat.cercat-common.test" />
+        <module name="cercat.cercat-storage.search-dataaccess.test" />
+        <module name="cercat.cercat-client.test" />
+        <module name="cercat.cercat-domain.domain-certificate.test" />
+        <module name="cercat.cercat-domain.domain-examreview.test" />
+        <module name="cercat.cercat-domain.domain-user.test" />
+        <module name="cercat.cercat-domain.domain-mockexam.test" />
+        <module name="cercat.cercat-application.test" />
+        <module name="cercat.cercat-storage.examreview-dataaccess.test" />
+        <module name="cercat.cercat-application.app-batch.test" />
+        <module name="cercat.cercat-domain.test" />
+        <module name="cercat.cercat-storage.like-dataaccess.test" />
+        <module name="cercat.cercat-domain.domain-mockexamresult.test" />
       </profile>
       <profile name="Gradle Imported" enabled="true">
         <outputRelativeToContentRoot value="true" />
@@ -38,17 +52,31 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.30/f195ee86e6c896ea47a1d39defbe20eb59cd149d/lombok-1.18.30.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-configuration-processor/3.2.1/9d6ac9a2fa98598d1a38e9f06d6f0aab250cae2f/spring-boot-configuration-processor-3.2.1.jar" />
         </processorPath>
-        <module name="cercat.cercat-storage.main" />
-        <module name="cercat.cercat-application.app-api.main" />
-        <module name="cercat.cercat-storage.domain-alarm.main" />
+        <module name="cercat.cercat-domain.domain-board.main" />
         <module name="cercat.cercat-application.app-batch.main" />
-        <module name="cercat.cercat-storage.domain-elasticsearch.main" />
-        <module name="cercat.cercat-domain.main" />
-        <module name="cercat.cercat-storage.domain-redis.main" />
-        <module name="cercat.cercat-application.main" />
+        <module name="cercat.cercat-domain.domain-user.main" />
+        <module name="cercat.cercat-domain.domain-certificate.main" />
+        <module name="cercat.cercat-domain.domain-learning.main" />
         <module name="cercat.cercat-common.main" />
         <module name="cercat.cercat-client.main" />
-        <module name="cercat.cercat-storage.domain-search.main" />
+        <module name="cercat.cercat-domain.domain-like.main" />
+        <module name="cercat.cercat-client.gcs-module.main" />
+        <module name="cercat.cercat-domain.domain-search.main" />
+        <module name="cercat.cercat-application.app-api.main" />
+        <module name="cercat.cercat-domain.domain-mockexamresult.main" />
+        <module name="cercat.cercat-domain.main" />
+        <module name="cercat.cercat-storage.elasticsearch-dataaccess.main" />
+        <module name="cercat.cercat-domain.domain-post.main" />
+        <module name="cercat.cercat-client.kafka-module.main" />
+        <module name="cercat.cercat-application.main" />
+        <module name="cercat.cercat-domain.domain-examreview.main" />
+        <module name="cercat.cercat-storage.main" />
+        <module name="cercat.cercat-domain.domain-mockexam.main" />
+        <module name="cercat.cercat-domain.domain-alarm.main" />
+        <module name="cercat.cercat-client.sse-module.main" />
+        <module name="cercat.cercat-storage.redis-dataaccess.main" />
+        <module name="cercat.cercat-storage.search-dataaccess.main" />
+        <module name="cercat.cercat-storage.alarm-dataaccess.main" />
       </profile>
       <profile name="Gradle Imported" enabled="true">
         <outputRelativeToContentRoot value="true" />
@@ -66,16 +94,16 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mysema.commons/mysema-commons-lang/0.2.4/d09c8489d54251a6c22fbce804bdd4a070557317/mysema-commons-lang-0.2.4.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jdt/ecj/3.26.0/4837be609a3368a0f7e7cf0dc1bdbc7fe94993de/ecj-3.26.0.jar" />
         </processorPath>
-        <module name="cercat.cercat-storage.domain-mockexamresult.main" />
-        <module name="cercat.cercat-storage.domain-board.main" />
-        <module name="cercat.cercat-storage.domain-jpa.main" />
-        <module name="cercat.cercat-storage.domain-user.main" />
-        <module name="cercat.cercat-storage.domain-post.main" />
-        <module name="cercat.cercat-storage.domain-mockexam.main" />
-        <module name="cercat.cercat-storage.domain-examreview.main" />
-        <module name="cercat.cercat-storage.domain-like.main" />
-        <module name="cercat.cercat-storage.domain-learning.main" />
-        <module name="cercat.cercat-storage.domain-certificate.main" />
+        <module name="cercat.cercat-storage.certificate-dataaccess.main" />
+        <module name="cercat.cercat-storage.jpa-dataaccess.main" />
+        <module name="com.cos.cercat.cercat-storage.post-dataaccess.main" />
+        <module name="cercat.cercat-storage.like-dataaccess.main" />
+        <module name="cercat.cercat-storage.mockexam-dataaccess.main" />
+        <module name="cercat.cercat-storage.examreview-dataaccess.main" />
+        <module name="cercat.cercat-storage.user-dataaccess.main" />
+        <module name="cercat.cercat-storage.board-dataaccess.main" />
+        <module name="cercat.cercat-storage.mockexamresult-dataaccess.main" />
+        <module name="cercat.cercat-storage.learning-dataaccess.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="17" />

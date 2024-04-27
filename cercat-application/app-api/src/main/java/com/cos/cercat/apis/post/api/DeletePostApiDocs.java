@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.post.api;
 
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.dto.UserDTO;
+import com.cos.cercat.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -10,10 +10,10 @@ public interface DeletePostApiDocs {
 
     @Operation(summary = "게시글 삭제")
     Response<Void> deletePost(Long postId,
-                              UserDTO currentUser);
+                              User currentUser);
 
     @Operation(summary = "댓글 삭제")
     Response<Void> deletePostComment(Long commentId,
-                                     UserDTO currentUser);
+                                     User currentUser);
 
 }

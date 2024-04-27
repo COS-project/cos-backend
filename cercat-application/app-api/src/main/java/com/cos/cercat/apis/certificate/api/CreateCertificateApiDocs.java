@@ -4,7 +4,7 @@ import com.cos.cercat.apis.certificate.request.CertificateCreateRequest;
 import com.cos.cercat.apis.certificate.request.CertificateExamCreateRequest;
 import com.cos.cercat.apis.certificate.request.InterestCertificateCreateRequest;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.dto.UserDTO;
+import com.cos.cercat.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -18,6 +18,6 @@ public interface CreateCertificateApiDocs {
     Response<Void> certificateExamAdd(Long certificateId, CertificateExamCreateRequest request);
 
     @Operation(summary = "관심 자격증 리스트 생성")
-    Response<Void> InterestCertificateAdd(InterestCertificateCreateRequest request, UserDTO currentUser);
+    Response<Void> InterestCertificateAdd(InterestCertificateCreateRequest request, User currentUser);
 
 }

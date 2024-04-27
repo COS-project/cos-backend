@@ -1,12 +1,10 @@
 package com.cos.cercat.apis.certificate.api;
 
 import com.cos.cercat.apis.certificate.request.InterestCertificateUpdateRequest;
+import com.cos.cercat.certificate.UpdateCertificateService;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.domain.certificate.UpdateCertificateService;
-import com.cos.cercat.domain.user.TargetUser;
-import com.cos.cercat.dto.UserDTO;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -23,7 +21,7 @@ public class UpdateCertificateApi implements UpdateCertificateApiDocs{
 
     @PutMapping("/interest-certificates")
     public Response<Void> updateInterestCertificates(@RequestBody InterestCertificateUpdateRequest request,
-                                                     @AuthenticationPrincipal UserDTO currentUser) {
+                                                     @AuthenticationPrincipal User currentUser) {
         updateCertificateService.updateCertificateExam(TargetUser.from(currentUser.getId()), request.toInterestTargets());
         return Response.success("관심 자격증 수정 성공");
     }

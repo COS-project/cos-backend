@@ -1,10 +1,10 @@
 package com.cos.cercat.apis.certificate.response;
 
-import com.cos.cercat.domain.certificate.*;
-import com.cos.cercat.domain.mockexam.MockExamSession;
+
+import com.cos.cercat.certificate.*;
 
 public record ExamInfoResponse(
-        MockExamSession mockExamSession,
+        IMockExamSession mockExamSession,
         ExamSchedule examSchedule, //시험 일정
         ExamFee examFee, //응시료
         ExamTimeLimit examTimeLimit, //제한 시간

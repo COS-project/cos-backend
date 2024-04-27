@@ -36,7 +36,8 @@ public enum ErrorCode {
     USER_ANSWER_NOT_FOUND(HttpStatus.NOT_FOUND, "user answer not founded"),
     SEARCH_LOG_NOT_EXIST(HttpStatus.BAD_REQUEST, "search log not exist"),
     ES_SEARCH_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "엘라스틱 서치 서버에러입니다. 강지원에게 문의해주세요"),
-    FILE_CONVERT_ERROR(HttpStatus.BAD_REQUEST, "file convert error");
+    FILE_CONVERT_ERROR(HttpStatus.BAD_REQUEST, "file convert error"),
+    TYPE_MISMATCH(HttpStatus.BAD_REQUEST, "type mismatch"),;
 
     private final HttpStatus httpStatus;
     private final String message;

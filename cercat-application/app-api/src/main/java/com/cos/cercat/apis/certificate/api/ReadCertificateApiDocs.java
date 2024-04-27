@@ -4,7 +4,7 @@ import com.cos.cercat.apis.certificate.response.CertificateExamResponse;
 import com.cos.cercat.apis.certificate.response.CertificateResponse;
 import com.cos.cercat.apis.certificate.response.InterestCertificateResponse;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.dto.UserDTO;
+import com.cos.cercat.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -20,6 +20,6 @@ public interface ReadCertificateApiDocs {
     Response<CertificateExamResponse> getCertificateExamDetail(Long certificateId);
 
     @Operation(summary = "나의 관심 자격증 조회")
-    Response<List<InterestCertificateResponse>> getInterestCertificates(UserDTO currentUser);
+    Response<List<InterestCertificateResponse>> getInterestCertificates(User currentUser);
 
 }
