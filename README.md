@@ -49,7 +49,8 @@
 
 
 # ERD
-![erd](https://github.com/COS-project/cos-backend/assets/128073698/a54221cb-5c76-4b2d-87bd-a816401e6b8d)
+![image](https://github.com/COS-project/cos-backend/assets/128073698/f8fa127d-db6f-40ae-8e51-fa44f9c79734)
+
 
 # 멀티모듈 구조
 ```
