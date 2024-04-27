@@ -6,7 +6,6 @@ dependencies {
 
     implementation project(':cercat-common');
     api project(':cercat-domain:domain-certificate');
-    implementation project(':cercat-domain:domain-mockexam');
     implementation project(':cercat-storage:user-dataaccess');
     implementation project(':cercat-storage:jpa-dataaccess');
 
