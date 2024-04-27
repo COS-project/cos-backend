@@ -1,6 +1,7 @@
 package com.cos.cercat.domain;
 
 import com.cos.cercat.certificate.*;
+import com.cos.cercat.dto.MockExamSession;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -117,7 +118,7 @@ public class ExamInfoEntity {
     public ExamInformation toDomain() {
         return ExamInformation.of(
                 id,
-                IMockExamSession.of(
+                MockExamSession.of(
                         examYear,
                         round
                 ),
