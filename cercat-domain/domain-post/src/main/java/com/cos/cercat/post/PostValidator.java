@@ -13,9 +13,9 @@ public class PostValidator {
 
 
     //대댓글이 작성이 정상적인지 검증
-    public void validate(TargetComment targetComment, TargetPost targetPost) {
+    public void validate(TargetComment targetComment, Post post) {
         PostComment parentComment = postReader.readComment(targetComment);
-        if (parentComment.getPostId() != targetPost.postId()) {
+        if (!parentComment.getPostId().equals(post.getId())) {
             throw new CustomException(ErrorCode.BAD_REQUEST);
         }
     }

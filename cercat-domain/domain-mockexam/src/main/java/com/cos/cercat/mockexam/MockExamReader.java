@@ -1,6 +1,6 @@
 package com.cos.cercat.mockexam;
 
-import com.cos.cercat.certificate.TargetCertificate;
+import com.cos.cercat.certificate.Certificate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -10,10 +10,10 @@ public class MockExamReader {
 
     private final MockExamRepository mockExamRepository;
 
-    public Question readQuestion(TargetCertificate targetCertificate,
+    public Question readQuestion(Certificate certificate,
                                  MockExamSession mockExamSession,
                                  int questionSequence) {
-        return mockExamRepository.readQuestion(targetCertificate, mockExamSession, questionSequence);
+        return mockExamRepository.readQuestion(certificate, mockExamSession, questionSequence);
 
     }
 

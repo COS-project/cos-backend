@@ -1,10 +1,10 @@
 package com.cos.cercat.repository;
 
-import com.cos.cercat.certificate.TargetCertificate;
+import com.cos.cercat.certificate.Certificate;
 import com.cos.cercat.domain.*;
 import com.cos.cercat.mockexam.Question;
 import com.cos.cercat.post.*;
-import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -18,34 +18,25 @@ import static com.cos.cercat.PostMapper.toRecommendTagEntities;
 @RequiredArgsConstructor
 public class CreatePostRepositoryImpl implements CreatePostRepository {
 
-    private final CertificateJpaRepository certificateJpaRepository;
     private final CommentaryPostJpaRepository commentaryPostJpaRepository;
     private final NormalPostJpaRepository normalPostJpaRepository;
     private final TipPostJpaRepository tipPostJpaRepository;
     private final PostImageJpaRepository postImageJpaRepository;
-    private final UserJpaRepository userJpaRepository;
-    private final QuestionJpaRepository questionJpaRepository;
     private final RecommendTagJpaRepository recommendTagJpaRepository;
     private final PostCommentJpaRepository postCommentJpaRepository;
 
     @Override
-    public TargetPost saveCommentaryPost(TargetUser targetUser,
-                                         TargetCertificate targetCertificate,
+    public TargetPost saveCommentaryPost(User user,
+                                         Certificate certificate,
                                          PostContent postContent,
                                          Question question) {
-
-        UserEntity userEntity = userJpaRepository.getReferenceById(targetUser.userId());
-        QuestionEntity questionEntity = questionJpaRepository.getReferenceById(question.id());
-        CertificateEntity certificateEntity = certificateJpaRepository.getReferenceById(targetCertificate.certificateId());
-
-
         CommentaryPostEntity commentaryPostEntity = new CommentaryPostEntity(
                 postContent.getTitle(),
                 postContent.getContent(),
-                userEntity,
-                certificateEntity,
+                UserEntity.from(user),
+                CertificateEntity.from(certificate),
                 PostType.COMMENTARY,
-                questionEntity
+                QuestionEntity.from(question)
         );
 
         CommentaryPostEntity savedPost = commentaryPostJpaRepository.save(commentaryPostEntity);
@@ -55,18 +46,15 @@ public class CreatePostRepositoryImpl implements CreatePostRepository {
     }
 
     @Override
-    public TargetPost saveNormalPost(TargetUser targetUser, TargetCertificate targetCertificate, PostContent postContent) {
-        UserEntity userEntity = userJpaRepository.getReferenceById(targetUser.userId());
-        CertificateEntity certificateEntity = certificateJpaRepository.getReferenceById(targetCertificate.certificateId());
+    public TargetPost saveNormalPost(User user, Certificate certificate, PostContent postContent) {
 
         NormalPostEntity normalPostEntity = new NormalPostEntity(
                 postContent.getTitle(),
                 postContent.getContent(),
-                userEntity,
-                certificateEntity,
+                UserEntity.from(user),
+                CertificateEntity.from(certificate),
                 PostType.NORMAL
         );
-
         NormalPostEntity savedPost = normalPostJpaRepository.save(normalPostEntity);
         List<PostImageEntity> postImageEntities = toPostImageEntities(postContent, savedPost);
         postImageJpaRepository.saveAll(postImageEntities);
@@ -74,18 +62,15 @@ public class CreatePostRepositoryImpl implements CreatePostRepository {
     }
 
     @Override
-    public TargetPost saveTipPost(TargetUser targetUser,
-                                  TargetCertificate targetCertificate,
+    public TargetPost saveTipPost(User user,
+                                  Certificate certificate,
                                   PostContent postContent,
                                   Set<RecommendTag> recommendTags) {
-        UserEntity userEntity = userJpaRepository.getReferenceById(targetUser.userId());
-        CertificateEntity certificateEntity = certificateJpaRepository.getReferenceById(targetCertificate.certificateId());
-
         TipPostEntity tipPostEntity = new TipPostEntity(
                 postContent.getTitle(),
                 postContent.getContent(),
-                userEntity,
-                certificateEntity,
+                UserEntity.from(user),
+                CertificateEntity.from(certificate),
                 PostType.TIP
         );
 
@@ -99,15 +84,12 @@ public class CreatePostRepositoryImpl implements CreatePostRepository {
     }
 
     @Override
-    public void saveComment(TargetUser targetUser,
-                            TargetPost targetPost,
+    public void saveComment(User user,
+                            Post post,
                             CommentContent content) {
-        UserEntity userEntity = userJpaRepository.getReferenceById(targetUser.userId());
-        PostEntity postEntity = commentaryPostJpaRepository.getReferenceById(targetPost.postId());
-
         PostCommentEntity newPostCommentEntity = PostCommentEntity.of(
-                userEntity,
-                postEntity,
+                UserEntity.from(user),
+                PostEntity.from(post),
                 content.parentId(),
                 content.content()
         );

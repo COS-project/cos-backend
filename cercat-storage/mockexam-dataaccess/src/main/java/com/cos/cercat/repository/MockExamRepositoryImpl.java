@@ -1,5 +1,6 @@
 package com.cos.cercat.repository;
 
+import com.cos.cercat.certificate.Certificate;
 import com.cos.cercat.certificate.TargetCertificate;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
@@ -21,12 +22,12 @@ public class MockExamRepositoryImpl implements MockExamRepository {
 
     @Override
     @Transactional(readOnly = true)
-    public Question readQuestion(TargetCertificate targetCertificate,
+    public Question readQuestion(Certificate certificate,
                                  MockExamSession mockExamSession,
                                  int questionSequence) {
 
         MockExamEntity mockExamEntity = mockExamJpaRepository.findMockExamByCertificateIdAndExamYearAndRound(
-                targetCertificate.certificateId(),
+                certificate.id(),
                 mockExamSession.examYear(),
                 mockExamSession.round()
         ).orElseThrow(() -> new CustomException(ErrorCode.MOCK_EXAM_NOT_FOUND));

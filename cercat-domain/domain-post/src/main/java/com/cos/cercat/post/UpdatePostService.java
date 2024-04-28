@@ -1,5 +1,7 @@
 package com.cos.cercat.post;
 
+import com.cos.cercat.certificate.Certificate;
+import com.cos.cercat.certificate.CertificateReader;
 import com.cos.cercat.certificate.TargetCertificate;
 import com.cos.cercat.common.domain.File;
 import com.cos.cercat.common.domain.Image;
@@ -26,6 +28,7 @@ public class UpdatePostService {
     private final PostUpdator postUpdator;
     private final MockExamReader mockExamReader;
     private final PermissionValidator permissionValidator;
+    private final CertificateReader certificateReader;
     private final FileUploader fileUploader;
 
     public TargetPost updateCommentaryPost(TargetUser targetUser,
@@ -37,8 +40,9 @@ public class UpdatePostService {
                                            List<Long> removedImageIds,
                                            List<File> uploadImages) {
         CommentaryPost commentaryPost = (CommentaryPost) postReader.read(targetPost);
+        Certificate certificate = certificateReader.read(targetCertificate);
         User user = userReader.read(targetUser);
-        Question question = mockExamReader.readQuestion(targetCertificate, mockExamSession, questionSequence);
+        Question question = mockExamReader.readQuestion(certificate, mockExamSession, questionSequence);
         permissionValidator.validate(commentaryPost, user);
         List<Image> images = fileUploader.upload(uploadImages);
         postContent.addImages(images);
