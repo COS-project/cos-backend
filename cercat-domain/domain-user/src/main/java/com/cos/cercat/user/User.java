@@ -22,6 +22,10 @@ public class User {
         this.userProfileImage = UserProfileImage.of(image, userProfileImage.getKakaoProfileImageUrl());
     }
 
+    public void updateRole() {
+        this.userRole = Role.ROLE_USER;
+    }
+
     public void oauthUpdate(String email, String kakaoProfileImageUrl) {
         this.email = email;
         this.userProfileImage = UserProfileImage.of(userProfileImage.getMainProfileImage(), kakaoProfileImageUrl);

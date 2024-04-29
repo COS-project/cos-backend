@@ -3,6 +3,7 @@ package com.cos.cercat.certificate;
 import com.cos.cercat.user.TargetUser;
 import com.cos.cercat.user.User;
 import com.cos.cercat.user.UserReader;
+import com.cos.cercat.user.UserUpdater;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ public class CreateCertificateService {
     private final CertificateExamAppender certificateExamAppender;
     private final InterestCertificateManager interestCertificateManager;
     private final FavoriteBoardManager favoriteBoardManager;
+    private final UserUpdater userUpdater;
 
     public void createCertificate(String certificateName, List<SubjectInfo> subjectsInfo) {
         certificateAppender.append(certificateName, subjectsInfo);
@@ -27,12 +29,13 @@ public class CreateCertificateService {
         certificateExamAppender.append(targetCertificate, newExamInformation);
     }
 
-    @Transactional
     public void addInterestCertificates(TargetUser targetUser, InterestTargets interestTargets) {
         User user = userReader.read(targetUser);
         List<Certificate> certificates = certificateFinder.find(interestTargets.certificates());
         List<NewInterestCertificate> newInterestCertificates = interestTargets.toNewInterestCertificates(certificates);
         interestCertificateManager.append(user, newInterestCertificates);
         favoriteBoardManager.favoriteAll(user, certificates);
+        user.updateRole();
+        userUpdater.update(user);
     }
 }
