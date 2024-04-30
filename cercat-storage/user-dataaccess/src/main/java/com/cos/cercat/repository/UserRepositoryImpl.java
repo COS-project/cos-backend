@@ -7,17 +7,17 @@ import com.cos.cercat.user.NewUser;
 import com.cos.cercat.user.TargetUser;
 import com.cos.cercat.user.User;
 import com.cos.cercat.user.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Repository
+@Transactional
+@RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
 
     private final UserJpaRepository userJpaRepository;
-
-    public UserRepositoryImpl(UserJpaRepository userJpaRepository) {
-        this.userJpaRepository = userJpaRepository;
-    }
 
     @Override
     public User read(TargetUser targetUser) {

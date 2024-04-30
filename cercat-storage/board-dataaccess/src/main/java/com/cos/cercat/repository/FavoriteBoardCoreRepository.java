@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
+@Transactional
 public class FavoriteBoardCoreRepository implements FavoriteBoardRepository {
 
     private final FavoriteBoardJpaRepository favoriteBoardJpaRepository;

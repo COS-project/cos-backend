@@ -12,11 +12,13 @@ import com.cos.cercat.user.TargetUser;
 import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
+@Transactional
 public class InterestCertificateCoreRepository implements InterestCertificateRepository {
 
     private final InterestCertificateJpaRepository interestCertificateJpaRepository;
