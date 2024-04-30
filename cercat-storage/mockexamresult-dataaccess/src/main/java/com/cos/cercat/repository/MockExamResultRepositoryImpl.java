@@ -41,14 +41,12 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
     private final SubjectResultJpaRepository subjectResultJpaRepository;
     private final QuestionJpaRepository questionJpaRepository;
     private final UserAnswerJpaRepository userAnswerJpaRepository;
-    private final MockExamJpaRepository mockExamJpaRepository;
-    private final UserJpaRepository userJpaRepository;
     private final SubjectJpaRepository subjectJpaRepository;
 
     @Override
-    public TargetMockExamResult save(TargetUser targetUser, TargetMockExam targetMockExam, NewMockExamResult newMockExamResult) {
-        UserEntity userEntity = userJpaRepository.getReferenceById(targetUser.userId());
-        MockExamEntity mockExamEntity = mockExamJpaRepository.getReferenceById(targetMockExam.mockExamId());
+    public TargetMockExamResult save(User user, MockExam mockExam, NewMockExamResult newMockExamResult) {
+        UserEntity userEntity = UserEntity.from(user);
+        MockExamEntity mockExamEntity = MockExamEntity.from(mockExam);
 
         MockExamResultEntity mockExamResultEntity = MockExamResultEntity.builder()
                 .mockExamEntity(mockExamEntity)

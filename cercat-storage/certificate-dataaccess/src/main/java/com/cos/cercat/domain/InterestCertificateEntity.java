@@ -18,30 +18,22 @@ public class InterestCertificateEntity extends BaseTimeEntity implements Persist
     @EmbeddedId
     private InterestCertificatePK interestCertificatePK = new InterestCertificatePK();
 
-    @MapsId("certificateId")
-    @ManyToOne
-    @JoinColumn(name = "certificate_id")
-    private CertificateEntity certificateEntity;
-
-    @MapsId("userId")
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity userEntity;
-
     @Enumerated(EnumType.STRING)
     private InterestPriority priority;
 
     @Builder
     public InterestCertificateEntity(CertificateEntity certificateEntity, UserEntity userEntity, InterestPriority priority) {
-        this.certificateEntity = certificateEntity;
-        this.userEntity = userEntity;
+        this.interestCertificatePK = InterestCertificatePK.of(certificateEntity, userEntity);
         this.priority = priority;
     }
 
     public InterestCertificate toDomain() {
-        return new InterestCertificate(userEntity.toDomain(), certificateEntity.toDomain(), priority);
+        return new InterestCertificate(
+                interestCertificatePK.getUserEntity().toDomain(),
+                interestCertificatePK.getCertificateEntity().toDomain(),
+                priority
+        );
     }
-
 
     @Override
     public InterestCertificatePK getId() {

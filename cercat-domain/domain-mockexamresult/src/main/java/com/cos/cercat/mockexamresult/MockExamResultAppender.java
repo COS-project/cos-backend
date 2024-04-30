@@ -1,7 +1,7 @@
 package com.cos.cercat.mockexamresult;
 
-import com.cos.cercat.mockexam.TargetMockExam;
-import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.mockexam.MockExam;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,12 +11,12 @@ public class MockExamResultAppender {
 
     private final MockExamResultRepository mockExamResultRepository;
 
-    public TargetMockExamResult append(TargetUser targetUser,
-                                       TargetMockExam targetMockExam,
+    public TargetMockExamResult append(User user,
+                                       MockExam mockExam,
                                        NewMockExamResult newSubjectResults) {
         return mockExamResultRepository.save(
-                targetUser,
-                targetMockExam,
+                user,
+                mockExam,
                 newSubjectResults
         );
     }

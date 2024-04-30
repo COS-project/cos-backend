@@ -7,6 +7,7 @@ import com.cos.cercat.post.*;
 import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -16,6 +17,7 @@ import static com.cos.cercat.PostMapper.toRecommendTagEntities;
 
 @Repository
 @RequiredArgsConstructor
+@Transactional
 public class CreatePostRepositoryImpl implements CreatePostRepository {
 
     private final CommentaryPostJpaRepository commentaryPostJpaRepository;

@@ -1,6 +1,10 @@
 package com.cos.cercat.domain.embededId;
 
+import com.cos.cercat.domain.CertificateEntity;
+import com.cos.cercat.domain.UserEntity;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,7 +19,11 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class FavoriteBoardPK implements Serializable {
 
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity userEntity;
 
-    private Long certificateId;
+    @ManyToOne
+    @JoinColumn(name = "certifiate_id")
+    private CertificateEntity certificateEntity;
 }

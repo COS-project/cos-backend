@@ -15,8 +15,8 @@ import java.util.List;
 
 public interface MockExamResultRepository {
 
-    TargetMockExamResult save(TargetUser targetUser,
-                              TargetMockExam targetMockExam,
+    TargetMockExamResult save(User user,
+                              MockExam mockExam,
                               NewMockExamResult newMockExamResult);
 
     int countMockExamResult(TargetUser targetUser,

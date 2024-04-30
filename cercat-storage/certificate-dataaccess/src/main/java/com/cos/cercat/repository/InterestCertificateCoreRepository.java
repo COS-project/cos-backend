@@ -1,14 +1,10 @@
 package com.cos.cercat.repository;
 
-import com.cos.cercat.certificate.InterestCertificate;
-import com.cos.cercat.certificate.InterestCertificateRepository;
-import com.cos.cercat.certificate.NewInterestCertificate;
-import com.cos.cercat.certificate.TargetCertificate;
+import com.cos.cercat.certificate.*;
 import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.domain.InterestCertificateEntity;
 import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.embededId.InterestCertificatePK;
-import com.cos.cercat.user.TargetUser;
 import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -22,14 +18,11 @@ import java.util.List;
 public class InterestCertificateCoreRepository implements InterestCertificateRepository {
 
     private final InterestCertificateJpaRepository interestCertificateJpaRepository;
-    private final CertificateJpaRepository certificateJpaRepository;
-    private final UserJpaRepository userJpaRepository;
-
 
     @Override
-    public void saveAll(User targetUser, List<NewInterestCertificate> newInterestCertificates) {
+    public void saveAll(User user, List<NewInterestCertificate> newInterestCertificates) {
         List<InterestCertificateEntity> interestCertificateEntities = newInterestCertificates.stream()
-                .map(newInterestCertificate -> toEntity(newInterestCertificate, targetUser))
+                .map(newInterestCertificate -> toEntity(newInterestCertificate, user))
                 .toList();
 
         interestCertificateJpaRepository.saveAll(interestCertificateEntities);
@@ -37,16 +30,17 @@ public class InterestCertificateCoreRepository implements InterestCertificateRep
 
     @Override
     public List<InterestCertificate> find(User user) {
-        UserEntity userEntity = userJpaRepository.getReferenceById(user.getId());
-        List<InterestCertificateEntity> interestCertificateEntities = interestCertificateJpaRepository.findInterestCertificatesByUserEntity(userEntity);
+        List<InterestCertificateEntity> interestCertificateEntities = interestCertificateJpaRepository.findInterestCertificatesByUserId(user.getId());
         return interestCertificateEntities.stream()
                 .map(InterestCertificateEntity::toDomain)
                 .toList();
     }
 
     @Override
-    public void remove(TargetUser targetUser, TargetCertificate targetCertificate) {
-        InterestCertificatePK interestCertificatePK = InterestCertificatePK.of(targetCertificate.certificateId(), targetCertificate.certificateId());
+    public void remove(User user, Certificate certificate) {
+        UserEntity userEntity = UserEntity.from(user);
+        CertificateEntity certificateEntity = CertificateEntity.from(certificate);
+        InterestCertificatePK interestCertificatePK = InterestCertificatePK.of(certificateEntity, userEntity);
         interestCertificateJpaRepository.deleteById(interestCertificatePK);
     }
 

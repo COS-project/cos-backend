@@ -98,7 +98,7 @@ public class JwtTokenUtil {
             return TargetUser.from(Long.valueOf(subject));
         } catch (ExpiredJwtException e) {
             log.warn("토큰으로 부터 정보 추출중 예외 발생 - {}", e.getMessage());
-            throw new CustomException(ErrorCode.INVALID_REFRESH_TOKEN);
+            throw new CustomException(ErrorCode.INVALID_TOKEN);
         }
     }
 

@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Table(name = "certificate")
+@Builder
 public class CertificateEntity {
 
     @Id

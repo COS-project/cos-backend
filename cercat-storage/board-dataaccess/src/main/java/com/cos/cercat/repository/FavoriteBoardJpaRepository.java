@@ -12,8 +12,8 @@ public interface FavoriteBoardJpaRepository extends JpaRepository<FavoriteBoardE
     @Modifying
     @Query("""
             delete from FavoriteBoardEntity f
-            where f.favoriteBoardPK.userId = :userId
-            and f.favoriteBoardPK.certificateId = :certificateId
+            where f.favoriteBoardPK.userEntity.id = :userId
+            and f.favoriteBoardPK.certificateEntity.id = :certificateId
             """)
     void deleteById(Long userId, Long certificateId);
 

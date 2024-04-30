@@ -1,6 +1,5 @@
 package com.cos.cercat.certificate;
 
-import com.cos.cercat.user.TargetUser;
 import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -29,8 +28,8 @@ public class InterestCertificateManager {
     }
 
     @Transactional
-    public void remove(TargetUser targetUser, TargetCertificate targetCertificate) {
-        interestCertificateRepository.remove(targetUser, targetCertificate);
+    public void remove(User user, Certificate certificate) {
+        interestCertificateRepository.remove(user, certificate);
     }
 
     @Transactional

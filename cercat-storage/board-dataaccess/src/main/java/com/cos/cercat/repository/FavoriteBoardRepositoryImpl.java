@@ -14,22 +14,22 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @RequiredArgsConstructor
 @Transactional
-public class FavoriteBoardCoreRepository implements FavoriteBoardRepository {
+public class FavoriteBoardRepositoryImpl implements FavoriteBoardRepository {
 
     private final FavoriteBoardJpaRepository favoriteBoardJpaRepository;
-    private final UserJpaRepository userJpaRepository;
-    private final CertificateJpaRepository certificateJpaRepository;
 
     @Override
     public boolean isFavorite(User user, Certificate certificate) {
-        return favoriteBoardJpaRepository.existsFavoriteBoardByFavoriteBoardPK(FavoriteBoardPK.of(user.getId(), certificate.id()));
+        UserEntity userEntity = UserEntity.from(user);
+        CertificateEntity certificateEntity = CertificateEntity.from(certificate);
+        return favoriteBoardJpaRepository.existsFavoriteBoardByFavoriteBoardPK(FavoriteBoardPK.of(userEntity, certificateEntity));
     }
 
     @Override
     @Transactional
     public void save(User user, Certificate certificate) {
-        UserEntity userEntity = userJpaRepository.getReferenceById(user.getId());
-        CertificateEntity certificateEntity = certificateJpaRepository.getReferenceById(certificate.id());
+        UserEntity userEntity = UserEntity.from(user);
+        CertificateEntity certificateEntity = CertificateEntity.from(certificate);
         favoriteBoardJpaRepository.save(FavoriteBoardEntity.of(userEntity, certificateEntity));
     }
 

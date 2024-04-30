@@ -31,7 +31,7 @@ public enum ErrorCode {
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버에러입니다. 강지원에게 문의해주세요"),
     ALARM_CONNECT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "alarm connect error"),
     INVALID_REFRESH_TOKEN(HttpStatus.BAD_REQUEST, "invalid refresh token"),
-    INVALID_ACCESS_TOKEN(HttpStatus.BAD_REQUEST, "invalid access token"),
+    INVALID_TOKEN(HttpStatus.BAD_REQUEST, "invalid token"),
     ACCESS_TOKEN_EXPIRED(HttpStatus.BAD_REQUEST, "access token expired"),
     USER_ANSWER_NOT_FOUND(HttpStatus.NOT_FOUND, "user answer not founded"),
     SEARCH_LOG_NOT_EXIST(HttpStatus.BAD_REQUEST, "search log not exist"),
