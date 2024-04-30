@@ -6,13 +6,16 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.domain.Persistable;
+
+import java.io.Serializable;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
 @Table(name = "post_image")
-public class PostImageEntity {
+public class PostImageEntity implements Persistable<PostImageId> {
 
     @EmbeddedId
     private PostImageId postImageId = new PostImageId();
@@ -29,16 +32,22 @@ public class PostImageEntity {
     @JoinColumn(name = "image_id")
     private ImageEntity imageEntity;
 
-    private PostImageEntity(PostEntity postEntity, ImageEntity imageEntity) {
-        this.postEntity = postEntity;
-        this.imageEntity = imageEntity;
-    }
-
     public static PostImageEntity of(PostEntity postEntity, ImageEntity imageEntity) {
         return new PostImageEntity(
                 new PostImageId(postEntity.getId(), imageEntity.getId()),
                 postEntity,
                 imageEntity
         );
+    }
+
+
+    @Override
+    public PostImageId getId() {
+        return postImageId;
+    }
+
+    @Override
+    public boolean isNew() {
+        return postImageId.getImageId() == null;
     }
 }

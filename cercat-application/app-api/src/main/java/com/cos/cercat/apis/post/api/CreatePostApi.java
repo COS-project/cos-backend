@@ -34,34 +34,12 @@ public class CreatePostApi implements CreatePostApiDocs {
                                            @RequestPart PostCreateRequest request,
                                            @RequestPart(required = false) List<MultipartFile> files,
                                            @AuthenticationPrincipal User currentUser) {
-        TargetPost targetPost;
-        switch (postType) {
-            case COMMENTARY ->
-                targetPost = createPostService.createCommentaryPost(
-                        TargetUser.from(currentUser.getId()),
-                        TargetCertificate.from(certificateId),
-                        request.toContent(),
-                        request.toMockExamSession(),
-                        request.questionSequence(),
-                        toFiles(files)
-                );
-            case NORMAL->
-                targetPost = createPostService.createNormalPost(
-                        TargetUser.from(currentUser.getId()),
-                        TargetCertificate.from(certificateId),
-                        request.toContent(),
-                        toFiles(files)
-                );
-            case TIP ->
-                targetPost = createPostService.createTipPost(
-                        TargetUser.from(currentUser.getId()),
-                        TargetCertificate.from(certificateId),
-                        request.toContent(),
-                        request.tags(),
-                        toFiles(files)
-                );
-            default -> throw new CustomException(ErrorCode.UNKNOWN_POST_TYPE);
-        }
+        TargetPost targetPost = createPostService.createPost(
+                TargetUser.from(currentUser.getId()),
+                TargetCertificate.from(certificateId),
+                request.toNewPost(postType),
+                toFiles(files)
+        );
         return Response.success(targetPost);
     }
 

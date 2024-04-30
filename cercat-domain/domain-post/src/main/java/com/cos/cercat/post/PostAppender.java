@@ -1,45 +1,48 @@
 package com.cos.cercat.post;
 
-import com.cos.cercat.certificate.TargetCertificate;
+import com.cos.cercat.certificate.Certificate;
+import com.cos.cercat.mockexam.MockExamReader;
 import com.cos.cercat.mockexam.Question;
-import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
 public class PostAppender {
 
     private final CreatePostRepository postRepository;
+    private final MockExamReader mockExamReader;
 
-    @Transactional
-    public TargetPost appendCommentaryPost(TargetUser targetUser,
-                                     TargetCertificate targetCertificate,
-                                     PostContent postContent,
-                                     Question question) {
-        return postRepository.saveCommentaryPost(targetUser, targetCertificate, postContent, question);
-
+    public TargetPost append(User user, Certificate certificate, NewPost newPost) {
+        return switch (newPost.postType()) {
+            case COMMENTARY -> appendCommentaryPost(user, certificate, newPost);
+            case NORMAL -> appendNormalPost(user, certificate, newPost);
+            case TIP -> appendTipPost(user, certificate, newPost);
+        };
     }
 
-    @Transactional
-    public TargetPost appendNormalPost(TargetUser targetUser,
-                                       TargetCertificate targetCertificate,
-                                       PostContent postContent) {
-        return postRepository.saveNormalPost(targetUser, targetCertificate, postContent);
+    public void appendComment(User user, Post post, CommentContent content) {
+        postRepository.saveComment(user, post, content);
     }
 
-    @Transactional
-    public TargetPost appendTipPost(TargetUser targetUser,
-                              TargetCertificate targetCertificate,
-                              PostContent postContent,
-                              Set<RecommendTag> recommendTags) {
-        return postRepository.saveTipPost(targetUser, targetCertificate, postContent, recommendTags);
+
+    private TargetPost appendCommentaryPost(User user,
+                                           Certificate certificate,
+                                           NewPost newPost) {
+        Question question = mockExamReader.readQuestion(certificate, newPost.mockExamSession(), newPost.questionSequence());
+        return postRepository.saveCommentaryPost(user, certificate, newPost.content(), question);
     }
 
-    public void appendComment(TargetUser targetUser, TargetPost targetPost, CommentContent content) {
-        postRepository.saveComment(targetUser, targetPost, content);
+    private TargetPost appendNormalPost(User user,
+                                       Certificate certificate,
+                                       NewPost newPost) {
+        return postRepository.saveNormalPost(user, certificate, newPost.content());
+    }
+
+    private TargetPost appendTipPost(User user,
+                                    Certificate certificate,
+                                    NewPost newPost) {
+        return postRepository.saveTipPost(user, certificate, newPost.content(), newPost.tags());
     }
 }
