@@ -39,9 +39,11 @@ public class AlarmBeforeExamApplicationTasklet implements Tasklet {
 
         for (CertificateExamEntity certificateExamEntity : certificateExamEntities) {
             CertificateEntity certificateEntity = certificateExamEntity.getCertificateEntity();
-            List<InterestCertificateEntity> interestCertificateEntities = interestCertificateJpaRepository.findInterestCertificatesByCertificateId(certificateEntity);
+            List<InterestCertificateEntity> interestCertificateEntities = interestCertificateJpaRepository.findInterestCertificatesByCertificateId(certificateEntity.getId());
 
-            List<UserEntity> userEntities = interestCertificateEntities.stream().map(InterestCertificateEntity::getUserEntity).toList();
+            List<UserEntity> userEntities = interestCertificateEntities.stream().map(interestCertificateEntity ->
+                            interestCertificateEntity.getInterestCertificatePK().getUserEntity())
+                    .toList();
 
             count += sendApplicationAlarm(userEntities, certificateExamEntity);
         }

@@ -32,7 +32,7 @@ public class UserApi implements UserApiDocs {
 
     @PatchMapping(path = "/users/me", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Response<Void> updateUserInfo(@RequestPart UserCreateRequest request,
-                                         @RequestPart MultipartFile file,
+                                         @RequestPart(required = false) MultipartFile file,
                                          @AuthenticationPrincipal User currentUser) {
         userService.updateUser(
                 TargetUser.from(currentUser.getId()),
