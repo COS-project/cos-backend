@@ -13,7 +13,15 @@ public record File(
 ) {
     public static File from(MultipartFile multipartFile) {
         try {
-            return new File(multipartFile.getContentType(), multipartFile.getInputStream());
+
+            if (multipartFile == null) {
+                return null;
+            }
+
+            return new File(
+                    multipartFile.getContentType(),
+                    multipartFile.getInputStream()
+            );
         } catch (IOException e) {
             throw new CustomException(ErrorCode.FILE_CONVERT_ERROR);
         }

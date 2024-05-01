@@ -35,30 +35,36 @@ public class GcsFileUploader implements FileUploader {
     @Override
     public List<Image> upload(List<File> files) {
         List<Image> images = new ArrayList<>();
-
-        if (files.isEmpty()) {
-            return images;
-        }
-
         for (File file : files) {
-            String ext = file.contentType();
-            String uuid = UUID.randomUUID().toString();
-
-            BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, uuid)
-                    .setContentType(ext)
-                    .build();
-
-            try (var writer = storage.writer(blobInfo)) {
-                try (var input = file.inputStream()) {
-                    ByteStreams.copy(input, Channels.newOutputStream(writer));
-                }
-                images.add(Image.from(storagePath + uuid));
-                log.info("이미지 업로드 성공 - {}", storagePath + uuid);
-            } catch (IOException e) {
-                log.warn("ImageEntity upload failed", e);
-                throw new CustomException(ErrorCode.IMAGE_UPLOAD_FAIL_ERROR);
+            if (file != null) {
+                images.add(uploadFile(file));
             }
         }
         return images;
+    }
+
+    @Override
+    public Image upload(File file) {
+        return (file != null) ? uploadFile(file) : null;
+    }
+
+    private Image uploadFile(File file) {
+        String ext = file.contentType();
+        String uuid = UUID.randomUUID().toString();
+
+        BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, uuid)
+                .setContentType(ext)
+                .build();
+
+        try (var writer = storage.writer(blobInfo)) {
+            try (var input = file.inputStream()) {
+                ByteStreams.copy(input, Channels.newOutputStream(writer));
+            }
+            log.info("이미지 업로드 성공 - {}", storagePath + uuid);
+            return Image.from(storagePath + uuid);
+        } catch (IOException e) {
+            log.warn("ImageEntity upload failed", e);
+            throw new CustomException(ErrorCode.IMAGE_UPLOAD_FAIL_ERROR);
+        }
     }
 }

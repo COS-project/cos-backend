@@ -6,6 +6,7 @@ import com.cos.cercat.global.FileUploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,7 +23,7 @@ public class UserService {
     public void updateUser(TargetUser targetUser,
                            File file,
                            String nickname) {
-        Image image = fileUploader.upload(List.of(file)).get(0);
+        Image image = fileUploader.upload(file);
         User user = userReader.read(targetUser);
         user.update(nickname, image);
         userUpdater.update(user);

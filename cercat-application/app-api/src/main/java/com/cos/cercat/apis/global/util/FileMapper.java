@@ -10,6 +10,7 @@ public class FileMapper {
 
     public static List<File> toFiles(List<MultipartFile> files) {
         if (files == null) {
+
             return Collections.emptyList();
         }
 

@@ -19,7 +19,7 @@ public class User {
 
     public void update(String nickname, Image image) {
         this.nickname = nickname;
-        this.userProfileImage = UserProfileImage.of(image, userProfileImage.getKakaoProfileImageUrl());
+        this.userProfileImage.updateProfileImage(image, userProfileImage.getKakaoProfileImageUrl());
     }
 
     public void updateRole() {
@@ -28,6 +28,6 @@ public class User {
 
     public void oauthUpdate(String email, String kakaoProfileImageUrl) {
         this.email = email;
-        this.userProfileImage = UserProfileImage.of(userProfileImage.getMainProfileImage(), kakaoProfileImageUrl);
+        this.userProfileImage.updateProfileImage(null, kakaoProfileImageUrl);
     }
 }
