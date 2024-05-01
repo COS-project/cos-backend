@@ -12,7 +12,7 @@ public interface InterestCertificateJpaRepository extends JpaRepository<Interest
 
     @Query("""
             select i from InterestCertificateEntity i
-            where i.interestCertificatePK.userEntity = :userId
+            where i.interestCertificatePK.userEntity.id = :userId
             """)
     List<InterestCertificateEntity> findInterestCertificatesByUserId(Long userId);
 
