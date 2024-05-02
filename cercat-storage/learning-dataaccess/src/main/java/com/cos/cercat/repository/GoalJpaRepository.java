@@ -20,11 +20,13 @@ public interface GoalJpaRepository extends JpaRepository<GoalEntity, Long> {
     Optional<GoalEntity> findRecentGoalByUserIdAndCertificateId(Long userId, Long certificateId);
 
     @Query("""
-            SELECT g FROM GoalEntity g
-            WHERE g.userEntity.id = :userId
-            AND g.certificateEntity.id = :certificateId
+            SELECT exists (
+                SELECT 1 FROM GoalEntity g
+                WHERE g.userEntity.id = :userId
+                AND g.certificateEntity.id = :certificateId
+            )
             """)
-    boolean existsGoalByUserIdAndCertificateId(Long userId, Long certificateId);
+    Boolean existsGoalByUserIdAndCertificateId(Long userId, Long certificateId);
 
     @Query("""
             SELECT g FROM GoalEntity g
