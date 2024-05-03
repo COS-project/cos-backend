@@ -21,14 +21,14 @@ public class AlarmProducer implements AlarmSender {
     private String topic;
     private final KafkaTemplate<Long, AlarmEvent> kafkaTemplate;
 
-    public void send(User user, Post post, AlarmType alarmType) {
-        AlarmEvent alarm = createAlarm(user, post, alarmType);
+    public void send(User receiver, User sender, Long targetId, AlarmType alarmType) {
+        AlarmEvent alarm = createAlarm(receiver, sender, targetId, alarmType);
         kafkaTemplate.send(topic, alarm.recieveUser().getId(), alarm);
         log.info("Kafka alarm send complete");
     }
 
-    private AlarmEvent createAlarm(User user, Post post, AlarmType alarmType) {
-        return AlarmEvent.of(user, AlarmArg.of(user, post.getId()), alarmType);
+    private AlarmEvent createAlarm(User receiver, User sender, Long targetId, AlarmType alarmType) {
+        return AlarmEvent.of(receiver, AlarmArg.of(sender, targetId), alarmType);
     }
 
 

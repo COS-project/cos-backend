@@ -1,8 +1,8 @@
 package com.cos.cercat.mockexam;
 
 public record MockExamSession(
-        int examYear,
-        int round
+        Integer examYear,
+        Integer round
 ) {
 
     public static MockExamSession of(int examYear, int round) {

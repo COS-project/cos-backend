@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.mockExamResult.api;
 
 
-import com.cos.cercat.apis.mockExamResult.dto.request.CreateMockExamResultRequest;
+import com.cos.cercat.apis.mockExamResult.request.CreateMockExamResultRequest;
 import com.cos.cercat.common.domain.Response;
 import com.cos.cercat.mockexamresult.TargetMockExamResult;
 import com.cos.cercat.user.User;

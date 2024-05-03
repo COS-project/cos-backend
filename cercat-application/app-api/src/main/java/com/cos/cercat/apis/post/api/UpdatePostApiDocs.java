@@ -17,9 +17,9 @@ public interface UpdatePostApiDocs {
 
 
     @Operation(summary = "게시글 수정")
-    Response<TargetPost> updateCommentaryPost(Long certificateId,
-                                              PostType postType,
-                                              PostUpdateRequest request,
-                                              List<MultipartFile> files,
-                                              User currentUser);
+    Response<TargetPost> updatePost(Long certificateId,
+                                    PostType postType,
+                                    PostUpdateRequest request,
+                                    List<MultipartFile> files,
+                                    User currentUser);
 }

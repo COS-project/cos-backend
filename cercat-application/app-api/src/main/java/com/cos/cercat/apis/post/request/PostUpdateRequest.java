@@ -2,8 +2,7 @@ package com.cos.cercat.apis.post.request;
 
 
 import com.cos.cercat.mockexam.MockExamSession;
-import com.cos.cercat.post.PostContent;
-import com.cos.cercat.post.RecommendTag;
+import com.cos.cercat.post.*;
 
 import java.util.List;
 import java.util.Set;
@@ -15,15 +14,18 @@ public record PostUpdateRequest(
         Integer examYear,
         Integer round,
         Integer questionSequence,
-        Set<RecommendTag> newTags,
+        Set<RecommendTag> tags,
         List<Long> removeImageIds
 ) {
 
-    public PostContent toPostContent() {
-        return new PostContent(title, content);
-    }
-
-    public MockExamSession toMockExamSession() {
-        return new MockExamSession(examYear, round);
+    public UpdatedPost toUpdatedPost(PostType postType) {
+        return new UpdatedPost(
+                postType,
+                new PostContent(title, content),
+                new MockExamSession(examYear, round),
+                questionSequence,
+                tags,
+                removeImageIds
+        );
     }
 }

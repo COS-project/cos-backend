@@ -1,7 +1,9 @@
 package com.cos.cercat.like;
 
+import com.cos.cercat.alarm.AlarmSender;
+import com.cos.cercat.alarm.AlarmType;
 import com.cos.cercat.post.*;
-import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -12,37 +14,42 @@ public class LikeManager {
     private final LikeRepository likeRepository;
     private final PostReader postReader;
     private final PostUpdator postUpdator;
+    private final CommentUpdator commentUpdator;
+    private final AlarmSender alarmSender;
+    private final CommentReader commentReader;
 
-    public void like(TargetUser targetUser, Like like) {
+    public void like(User user, Like like) {
         switch (like.targetType()) {
             case POST -> {
                 Post post = postReader.readToLike(TargetPost.from(like.targetId()));
                 post.like();
                 postUpdator.update(post);
-                likeRepository.save(targetUser, like);
+                likeRepository.save(user, like);
+                alarmSender.send(post.getUser(), user, post.getId(), AlarmType.NEW_LIKE_ON_POST);
             }
             case COMMENT -> {
-                PostComment comment = postReader.readCommentToLike(TargetComment.from(like.targetId()));
+                PostComment comment = commentReader.readToLike(TargetComment.from(like.targetId()));
                 comment.like();
-                postUpdator.updateComment(comment);
-                likeRepository.save(targetUser, like);
+                commentUpdator.update(comment);
+                likeRepository.save(user, like);
+                alarmSender.send(comment.getUser(), user, comment.getId(), AlarmType.NEW_LIKE_ON_POST);
             }
         }
     }
 
-    public void unLike(TargetUser targetUser, Like like) {
+    public void unLike(User user, Like like) {
         switch (like.targetType()) {
             case POST -> {
                 Post post = postReader.readToLike(TargetPost.from(like.targetId()));
                 post.unLike();
                 postUpdator.update(post);
-                likeRepository.remove(targetUser, like);
+                likeRepository.remove(user, like);
             }
             case COMMENT -> {
-                PostComment comment = postReader.readCommentToLike(TargetComment.from(like.targetId()));
+                PostComment comment = commentReader.readToLike(TargetComment.from(like.targetId()));
                 comment.unLike();
-                postUpdator.updateComment(comment);
-                likeRepository.remove(targetUser, like);
+                commentUpdator.update(comment);
+                likeRepository.remove(user, like);
             }
         }
     }

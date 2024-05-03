@@ -1,6 +1,6 @@
 package com.cos.cercat.apis.mockExamResult.api;
 
-import com.cos.cercat.apis.mockExamResult.dto.response.*;
+import com.cos.cercat.apis.mockExamResult.response.*;
 import com.cos.cercat.common.domain.Cursor;
 import com.cos.cercat.common.domain.PageResult;
 import com.cos.cercat.common.domain.Response;

@@ -26,59 +26,19 @@ public class UpdatePostService {
     private final UserReader userReader;
     private final PostReader postReader;
     private final PostUpdator postUpdator;
-    private final MockExamReader mockExamReader;
     private final PermissionValidator permissionValidator;
-    private final CertificateReader certificateReader;
     private final FileUploader fileUploader;
 
-    public TargetPost updateCommentaryPost(TargetUser targetUser,
-                                           TargetPost targetPost,
-                                           TargetCertificate targetCertificate,
-                                           PostContent postContent,
-                                           MockExamSession mockExamSession,
-                                           int questionSequence,
-                                           List<Long> removedImageIds,
-                                           List<File> uploadImages) {
-        CommentaryPost commentaryPost = (CommentaryPost) postReader.read(targetPost);
-        Certificate certificate = certificateReader.read(targetCertificate);
-        User user = userReader.read(targetUser);
-        Question question = mockExamReader.readQuestion(certificate, mockExamSession, questionSequence);
-        permissionValidator.validate(commentaryPost, user);
-        List<Image> images = fileUploader.upload(uploadImages);
-        postContent.addImages(images);
-        commentaryPost.update(postContent, question);
-        postUpdator.update(commentaryPost, removedImageIds);
-        return targetPost;
-    }
-
-    public TargetPost updateTipPost(TargetUser targetUser,
-                                    TargetPost targetPost,
-                                    PostContent postContent,
-                                    Set<RecommendTag> newRecommendTags,
-                                    List<Long> removedImageIds,
-                                    List<File> uploadImages) {
-        TipPost tipPost = (TipPost) postReader.read(targetPost);
-        User user = userReader.read(targetUser);
-        permissionValidator.validate(tipPost, user);
-        List<Image> images = fileUploader.upload(uploadImages);
-        postContent.addImages(images);
-        tipPost.update(postContent, newRecommendTags);
-        postUpdator.update(tipPost, removedImageIds);
-        return targetPost;
-    }
-
-    public TargetPost updateNormalPost(TargetUser targetUser,
-                                       TargetPost targetPost,
-                                       PostContent postContent,
-                                       List<Long> removedImageIds,
-                                       List<File> uploadImages) {
+    public TargetPost updatePost(TargetUser targetUser,
+                                 TargetPost targetPost,
+                                 UpdatedPost updatedPost,
+                                 List<File> uploadImages) {
         Post post = postReader.read(targetPost);
         User user = userReader.read(targetUser);
         permissionValidator.validate(post, user);
         List<Image> images = fileUploader.upload(uploadImages);
-        postContent.addImages(images);
-        post.update(postContent);
-        postUpdator.update(post, removedImageIds);
+        updatedPost.content().addImages(images);
+        postUpdator.update(post, updatedPost);
         return targetPost;
     }
 

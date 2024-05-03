@@ -2,11 +2,16 @@ package com.cos.cercat.apis.certificate.request;
 
 
 import com.cos.cercat.certificate.*;
-import com.cos.cercat.mockexam.MockExamSession;
+
+import java.time.LocalDateTime;
 
 public record CertificateExamCreateRequest(
-        MockExamSession mockExamSession,
-        ExamSchedule examSchedule,
+        Integer examYear,
+        Integer round,
+        LocalDateTime applicationStartDateTime,
+        LocalDateTime applicationDeadlineDateTime,
+        LocalDateTime resultAnnouncementDateTime,
+        LocalDateTime examDateTime,
         ExamFee examFee,
         ExamTimeLimit examTimeLimit,
         PassingCriteria passingCriteria,
@@ -17,9 +22,14 @@ public record CertificateExamCreateRequest(
 ) {
     public NewExamInformation toNewExamInformation() {
         return NewExamInformation.of(
-                mockExamSession.examYear(),
-                mockExamSession.round(),
-                examSchedule,
+                examYear,
+                round,
+                ExamSchedule.of(
+                        applicationStartDateTime,
+                        applicationDeadlineDateTime,
+                        resultAnnouncementDateTime,
+                        examDateTime
+                ),
                 examTimeLimit,
                 examFee,
                 passingCriteria,

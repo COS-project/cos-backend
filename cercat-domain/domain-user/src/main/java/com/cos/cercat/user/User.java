@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDateTime;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,6 +18,7 @@ public class User {
     private String username;
     private UserProfileImage userProfileImage;
     private Role userRole;
+    private LocalDateTime createdAt;
 
     public void update(String nickname, Image image) {
         this.nickname = nickname;

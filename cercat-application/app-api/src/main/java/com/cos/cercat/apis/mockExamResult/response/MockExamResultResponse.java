@@ -1,4 +1,4 @@
-package com.cos.cercat.apis.mockExamResult.dto.response;
+package com.cos.cercat.apis.mockExamResult.response;
 
 import com.cos.cercat.apis.mockExam.response.MockExamResponse;
 import com.cos.cercat.mockexamresult.MockExamResult;

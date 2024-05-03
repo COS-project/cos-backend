@@ -77,7 +77,7 @@ public class PostEntity extends BaseTimeEntity {
                     userEntity.toDomain(),
                     certificateEntity.toDomain(),
                     new PostContent(title, content, images),
-                    new PostStatus(likeCount, commentCount, postType),
+                    new PostStatus(commentCount, likeCount, postType),
                     ((CommentaryPostEntity) this).getQuestionEntity().toDomain(),
                     new DateTime(createdAt, modifiedAt)
                 );
@@ -86,7 +86,7 @@ public class PostEntity extends BaseTimeEntity {
                     userEntity.toDomain(),
                     certificateEntity.toDomain(),
                     new PostContent(title, content, images),
-                    new PostStatus(likeCount, commentCount, postType),
+                    new PostStatus(commentCount, likeCount, postType),
                     new DateTime(createdAt, modifiedAt),
                     recommendTags
             );

@@ -4,7 +4,7 @@ import com.cos.cercat.alarm.Alarm;
 import com.cos.cercat.alarm.AlarmEvent;
 import com.cos.cercat.alarm.AlarmRepository;
 import com.cos.cercat.domain.AlarmEntity;
-import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -17,20 +17,20 @@ public class AlarmRepositoryImpl implements AlarmRepository {
     private final AlarmJpaRepository alarmJpaRepository;
 
     @Override
-    public List<Alarm> findUnreadAlarms(TargetUser targetUser) {
-        return alarmJpaRepository.findUnreadAlarms(targetUser.userId()).stream()
+    public List<Alarm> findUnreadAlarms(User user) {
+        return alarmJpaRepository.findUnreadAlarms(user.getId()).stream()
                 .map(AlarmEntity::toDomain)
                 .toList();
     }
 
     @Override
-    public int countUnreadAlarms(TargetUser targetUser) {
-        return alarmJpaRepository.countUnreadAlarms(targetUser.userId()).intValue();
+    public int countUnreadAlarms(User user) {
+        return alarmJpaRepository.countUnreadAlarms(user.getId()).intValue();
     }
 
     @Override
-    public void markAsRead(TargetUser targetUser) {
-        alarmJpaRepository.markAllAsReadByUserEntity(targetUser.userId());
+    public void markAsRead(User user) {
+        alarmJpaRepository.markAllAsReadByUserEntity(user.getId());
     }
 
     @Override

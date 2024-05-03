@@ -23,28 +23,20 @@ public record GoalRequest(
 
     public NewGoal toNewGoal() {
         return NewGoal.of(
-                toGoalPeriod(),
-                toContent(),
+                new GoalPeriod(
+                        prepareStartDateTime,
+                        prepareFinishDateTime
+                ),
+                new GoalContent(
+                        goalScore,
+                        goalPrepareDays,
+                        mockExamsPerDay,
+                        goalMockExams,
+                        studyTimePerDay,
+                        goalStudyTime
+                ),
                 mockExamRepeatDays,
                 studyRepeatDays
-        );
-    }
-
-    public GoalPeriod toGoalPeriod() {
-        return new GoalPeriod(
-                prepareStartDateTime,
-                prepareFinishDateTime
-        );
-    }
-
-    public GoalContent toContent() {
-        return new GoalContent(
-                goalScore,
-                goalPrepareDays,
-                mockExamsPerDay,
-                goalMockExams,
-                studyTimePerDay,
-                goalStudyTime
         );
     }
 }
