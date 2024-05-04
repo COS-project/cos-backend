@@ -22,7 +22,7 @@ public class PostContent {
     public PostContent(String title, String content, List<Image> images) {
         this.title = title;
         this.content = content;
-        this.images = images;
+        this.images = new ArrayList<>(images);
     }
 
     public void addImages(List<Image> images) {

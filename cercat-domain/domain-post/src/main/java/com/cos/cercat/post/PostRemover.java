@@ -11,8 +11,8 @@ public class PostRemover {
 
     private final DeletePostRepository postRepository;
 
-    public void deleteRecommendTags(TargetPost targetPost) {
-        postRepository.deleteRecommendTags(targetPost);
+    public void deleteRecommendTags(Post post) {
+        postRepository.deleteRecommendTags(post);
     }
 
     public void deleteImages(List<Long> removeImageIds) {

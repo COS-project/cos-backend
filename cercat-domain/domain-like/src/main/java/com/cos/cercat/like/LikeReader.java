@@ -1,6 +1,6 @@
 package com.cos.cercat.like;
 
-import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -10,8 +10,8 @@ public class LikeReader {
 
     private final LikeRepository likeRepository;
 
-    public boolean isLiked(TargetUser targetUser, Like like) {
-        return likeRepository.isLiked(targetUser, like);
+    public boolean isLiked(User user, Like like) {
+        return likeRepository.isLiked(user, like);
     }
 
 }

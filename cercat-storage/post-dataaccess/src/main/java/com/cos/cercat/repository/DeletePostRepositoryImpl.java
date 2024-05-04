@@ -21,8 +21,8 @@ public class DeletePostRepositoryImpl implements DeletePostRepository {
     private final PostJpaRepository postJpaRepository;
 
     @Override
-    public void deleteRecommendTags(TargetPost targetPost) {
-        recommendTagJpaRepository.deleteByPostId(targetPost.postId());
+    public void deleteRecommendTags(Post post) {
+        recommendTagJpaRepository.deleteByPostId(post.getId());
     }
 
     @Override

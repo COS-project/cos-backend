@@ -28,40 +28,17 @@ public class UpdatePostApi implements UpdatePostApiDocs {
     private final UpdatePostService updatePostService;
 
     @PutMapping(value = "/certificates/{certificateId}/{postType}/posts", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Response<TargetPost> updateCommentaryPost(@PathVariable Long certificateId,
-                                                     @PathVariable PostType postType,
-                                                     @RequestPart PostUpdateRequest request,
-                                                     @RequestPart(required = false) List<MultipartFile> files,
-                                                     @AuthenticationPrincipal User currentUser) {
-        TargetPost targetPost;
-        switch (postType) {
-            case COMMENTARY -> targetPost = updatePostService.updateCommentaryPost(
-                    TargetUser.from(currentUser.getId()),
-                    TargetPost.from(request.postId()),
-                    TargetCertificate.from(certificateId),
-                    request.toPostContent(),
-                    request.toMockExamSession(),
-                    request.questionSequence(),
-                    request.removeImageIds(),
-                    toFiles(files)
-            );
-            case TIP -> targetPost = updatePostService.updateTipPost(
-                    TargetUser.from(currentUser.getId()),
-                    TargetPost.from(request.postId()),
-                    request.toPostContent(),
-                    request.newTags(),
-                    request.removeImageIds(),
-                    toFiles(files)
-            );
-            case NORMAL -> targetPost = updatePostService.updateNormalPost(
-                    TargetUser.from(currentUser.getId()),
-                    TargetPost.from(request.postId()),
-                    request.toPostContent(),
-                    request.removeImageIds(),
-                    toFiles(files)
-            );
-            default -> throw new CustomException(ErrorCode.UNKNOWN_POST_TYPE);
-        }
+    public Response<TargetPost> updatePost(@PathVariable Long certificateId,
+                                           @PathVariable PostType postType,
+                                           @RequestPart PostUpdateRequest request,
+                                           @RequestPart(required = false) List<MultipartFile> files,
+                                           @AuthenticationPrincipal User currentUser) {
+        TargetPost targetPost = updatePostService.updatePost(
+                TargetUser.from(currentUser.getId()),
+                TargetPost.from(request.postId()),
+                request.toUpdatedPost(postType),
+                toFiles(files)
+        );
         return Response.success(targetPost);
     }
 

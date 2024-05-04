@@ -12,16 +12,18 @@ public class CommentAppender {
 
     private final CreatePostRepository createPostRepository;
     private final AlarmSender alarmSender;
+    private final CommentReader commentReader;
 
     public void append(User user, Post post, CommentContent content) {
         createPostRepository.saveComment(user, post, content);
-        alarmSender.send(user, post, AlarmType.NEW_COMMENT_ON_POST);
+        alarmSender.send(post.getUser(), user, post.getId(), AlarmType.NEW_COMMENT_ON_POST);
     }
 
     public void appendChild(User user, Post post, CommentContent commentContent) {
+        PostComment parentComment = commentReader.read(TargetComment.from(commentContent.parentId()));
         append(user, post, commentContent);
-        alarmSender.send(user, post, AlarmType.NEW_COMMENT_ON_POST);
-        alarmSender.send(user, post, AlarmType.REPLY_ON_COMMENT);
+        alarmSender.send(post.getUser(), user, post.getId(), AlarmType.NEW_COMMENT_ON_POST);
+        alarmSender.send(parentComment.getUser(), user, post.getId(), AlarmType.REPLY_ON_COMMENT);
     }
 
 

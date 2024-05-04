@@ -3,6 +3,7 @@ package com.cos.cercat.post;
 import com.cos.cercat.certificate.Certificate;
 import com.cos.cercat.mockexam.MockExamReader;
 import com.cos.cercat.mockexam.Question;
+import com.cos.cercat.mockexam.QuestionReader;
 import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class PostAppender {
 
     private final CreatePostRepository postRepository;
-    private final MockExamReader mockExamReader;
+    private final QuestionReader questionReader;
 
     public TargetPost append(User user, Certificate certificate, NewPost newPost) {
         return switch (newPost.postType()) {
@@ -22,15 +23,10 @@ public class PostAppender {
         };
     }
 
-    public void appendComment(User user, Post post, CommentContent content) {
-        postRepository.saveComment(user, post, content);
-    }
-
-
     private TargetPost appendCommentaryPost(User user,
                                            Certificate certificate,
                                            NewPost newPost) {
-        Question question = mockExamReader.readQuestion(certificate, newPost.mockExamSession(), newPost.questionSequence());
+        Question question = questionReader.read(certificate, newPost.mockExamSession(), newPost.questionSequence());
         return postRepository.saveCommentaryPost(user, certificate, newPost.content(), question);
     }
 

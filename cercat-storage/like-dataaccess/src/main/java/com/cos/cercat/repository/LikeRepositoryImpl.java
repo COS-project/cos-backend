@@ -7,7 +7,7 @@ import com.cos.cercat.domain.PostCommentEntity;
 import com.cos.cercat.domain.PostEntity;
 import com.cos.cercat.like.Like;
 import com.cos.cercat.like.LikeRepository;
-import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class LikeRepositoryImpl implements LikeRepository {
 
-    //개념적으로 동일한 두 테이블에대한 의존
     private final PostLikeJpaRepository postLikeJpaRepository;
     private final CommentLikeJpaRepository commentLikeJpaRepository;
     private final UserJpaRepository userJpaRepository;
@@ -24,18 +23,17 @@ public class LikeRepositoryImpl implements LikeRepository {
     private final PostCommentJpaRepository commentJpaRepository;
 
     @Override
-    public boolean isLiked(TargetUser targetUser, Like like) {
+    public boolean isLiked(User user, Like like) {
         return switch (like.targetType()) {
-            case POST -> postLikeJpaRepository.existsPostLikeByPostLikePK(targetUser.userId(), like.targetId());
-            case COMMENT ->
-                    commentLikeJpaRepository.existsCommentLikeByCommentLikePK(targetUser.userId(), like.targetId());
+            case POST -> postLikeJpaRepository.existsPostLikeByPostLikePK(user.getId(), like.targetId());
+            case COMMENT -> commentLikeJpaRepository.existsCommentLikeByCommentLikePK(user.getId(), like.targetId());
         };
     }
 
     @Override
     @Transactional
-    public void save(TargetUser targetUser, Like like) {
-        UserEntity userEntity = userJpaRepository.getReferenceById(targetUser.userId());
+    public void save(User user, Like like) {
+        UserEntity userEntity = userJpaRepository.getReferenceById(user.getId());
         switch (like.targetType()) {
             case POST -> {
                 PostEntity postEntity = postJpaRepository.getReferenceById(like.targetId());
@@ -51,13 +49,13 @@ public class LikeRepositoryImpl implements LikeRepository {
 
     @Override
     @Transactional
-    public void remove(TargetUser targetUser, Like like) {
+    public void remove(User user, Like like) {
         switch (like.targetType()) {
             case POST -> {
-                postLikeJpaRepository.deleteByPostIdAndUserId(targetUser.userId(), like.targetId());
+                postLikeJpaRepository.deleteByPostIdAndUserId(user.getId(), like.targetId());
             }
             case COMMENT -> {
-                commentLikeJpaRepository.deleteByCommentIdAndUserId(targetUser.userId(), like.targetId());
+                commentLikeJpaRepository.deleteByCommentIdAndUserId(user.getId(), like.targetId());
             }
         }
     }

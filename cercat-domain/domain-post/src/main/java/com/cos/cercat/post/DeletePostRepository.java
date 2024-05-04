@@ -3,7 +3,7 @@ package com.cos.cercat.post;
 import java.util.List;
 
 public interface DeletePostRepository {
-    void deleteRecommendTags(TargetPost targetPost);
+    void deleteRecommendTags(Post post);
 
     void deleteImages(List<Long> removeImageIds);
 

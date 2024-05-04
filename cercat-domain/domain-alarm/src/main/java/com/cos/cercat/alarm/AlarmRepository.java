@@ -2,16 +2,17 @@ package com.cos.cercat.alarm;
 
 
 import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 
 import java.util.List;
 
 public interface AlarmRepository {
 
-    List<Alarm> findUnreadAlarms(TargetUser user);
+    List<Alarm> findUnreadAlarms(User user);
 
-    int countUnreadAlarms(TargetUser targetUser);
+    int countUnreadAlarms(User user);
 
-    void markAsRead(TargetUser targetUser);
+    void markAsRead(User user);
 
     void save(AlarmEvent alarmEvent);
 }

@@ -1,14 +1,12 @@
 package com.cos.cercat.like;
 
-
-import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 
 public interface LikeRepository {
 
-    boolean
-    isLiked(TargetUser targetUser, Like like);
+    boolean isLiked(User user, Like like);
 
-    void save(TargetUser targetUser, Like like);
+    void save(User user, Like like);
 
-    void remove(TargetUser targetUser, Like like);
+    void remove(User user, Like like);
 }

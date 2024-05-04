@@ -30,18 +30,6 @@ public class PostReader {
 
     }
 
-    public PostComment readComment(TargetComment targetComment) {
-        return postRepository.find(targetComment);
-    }
-
-    public PostComment readCommentToLike(TargetComment targetComment) {
-        return postRepository.findCommentWithLock(targetComment);
-    }
-
-    public SliceResult<PostComment> readComment(TargetUser targetUser, Cursor cursor) {
-        return postRepository.findComment(targetUser, cursor);
-    }
-
     public List<Post> readTop3TipPosts(TargetCertificate targetCertificate) {
         return postRepository.findTop3TipPosts(targetCertificate);
     }

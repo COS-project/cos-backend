@@ -16,9 +16,8 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @ToString
-@Builder
+@AllArgsConstructor
 @Table(name = "users")
 @SQLDelete(sql = "UPDATE users SET removed_at = NOW() WHERE user_id = ?")
 public class UserEntity extends BaseTimeEntity {
@@ -42,9 +41,29 @@ public class UserEntity extends BaseTimeEntity {
     @JoinColumn(name = "image_id")
     private ImageEntity mainProfileImageEntity;
 
-
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Builder
+    public UserEntity(Long id,
+                      String nickname,
+                      String username,
+                      String email,
+                      String kakaoProfileImage,
+                      LocalDateTime removedAt,
+                      ImageEntity mainProfileImageEntity,
+                      Role role,
+                      LocalDateTime createdAt) {
+        this.id = id;
+        this.nickname = nickname;
+        this.username = username;
+        this.email = email;
+        this.kakaoProfileImage = kakaoProfileImage;
+        this.removedAt = removedAt;
+        this.mainProfileImageEntity = mainProfileImageEntity;
+        this.role = role;
+        this.createdAt = createdAt;
+    }
 
     public static UserEntity from(NewUser newUser) {
         return UserEntity.builder()
@@ -53,7 +72,6 @@ public class UserEntity extends BaseTimeEntity {
                 .kakaoProfileImage(newUser.kakaoProfileImage())
                 .role(newUser.role())
                 .build();
-
     }
 
     public Image getMainProfileImage() {
@@ -74,7 +92,8 @@ public class UserEntity extends BaseTimeEntity {
                         getMainProfileImage(),
                         kakaoProfileImage
                 ),
-                this.role
+                this.role,
+                this.createdAt
         );
     }
 
@@ -91,6 +110,7 @@ public class UserEntity extends BaseTimeEntity {
                         ImageEntity.from(mainProfileImage)
                         : null)
                 .role(user.getUserRole())
+                .createdAt(user.getCreatedAt())
                 .build();
     }
 }

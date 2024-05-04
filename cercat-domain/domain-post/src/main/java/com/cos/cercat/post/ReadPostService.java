@@ -15,6 +15,7 @@ import java.util.List;
 public class ReadPostService {
 
     private final PostReader postReader;
+    private final CommentReader commentReader;
     private final PostSearcher postSearcher;
 
     @Transactional(readOnly = true)
@@ -40,7 +41,7 @@ public class ReadPostService {
 
     public SliceResult<Post> readCommentingPosts(TargetUser targetUser,
                                                 Cursor cursor) {
-        SliceResult<PostComment> postComments = postReader.readComment(targetUser, cursor);
+        SliceResult<PostComment> postComments = commentReader.read(targetUser, cursor);
         return postComments.map(postComment ->
                 postReader.read(TargetPost.from(postComment.getPostId()))
         );
