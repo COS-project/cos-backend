@@ -34,6 +34,7 @@ public class CreatePostService {
     private final UserReader userReader;
     private final PostReader postReader;
     private final CertificateReader certificateReader;
+    private final CommentAppender commentAppender;
 
     public TargetPost createPost(TargetUser targetUser,
                                  TargetCertificate targetCertificate,
@@ -48,25 +49,15 @@ public class CreatePostService {
 
     public void createPostComment(TargetUser targetUser,
                                   TargetPost targetPost,
-                                  CommentContent content) {
+                                  CommentContent commentContent) {
         User user = userReader.read(targetUser);
         Post post = postReader.read(targetPost);
 
-        if (content.hasParent()) {
-            postValidator.validate(TargetComment.from(content.parentId()), post);
-            postAppender.appendComment(user, post, content);
-            AlarmEvent commentAlarm = createAlarm(user, post, AlarmType.NEW_COMMENT_ON_POST);
-            AlarmEvent replayAlarm = createAlarm(user, post, AlarmType.REPLY_ON_COMMENT);
-            alarmSender.send(commentAlarm);
-            alarmSender.send(replayAlarm);
+        if (commentContent.hasParent()) {
+            postValidator.validate(TargetComment.from(commentContent.parentId()), post);
+            commentAppender.appendChild(user, post, commentContent);
             return;
         }
-        postAppender.appendComment(user, post, content);
-        AlarmEvent alarm = createAlarm(user, post, AlarmType.NEW_COMMENT_ON_POST);
-        alarmSender.send(alarm);
-    }
-
-    private AlarmEvent createAlarm(User user, Post post, AlarmType alarmType) {
-        return AlarmEvent.of(user, AlarmArg.of(user, post.getId()), alarmType);
+        commentAppender.append(user, post, commentContent);
     }
 }

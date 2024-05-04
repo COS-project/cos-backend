@@ -27,6 +27,7 @@ public class CreateLearningApi implements CreateLearningApiDocs {
                 TargetCertificate.from(certificateId),
                 request.toNewGoal()
         );
+
         return Response.success("목표 생성 성공");
     }
 
