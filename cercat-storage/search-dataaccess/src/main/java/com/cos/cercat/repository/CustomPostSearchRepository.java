@@ -13,6 +13,6 @@ public interface CustomPostSearchRepository {
 
     List<String> getAutoCompletedKeywords(Long certificateId, String searchText);
 
-    List<String> getRecentTop5Keywords(Long certificateId);
+    List<String> getRecentTop10Keywords(Long certificateId);
 
 }

@@ -2,18 +2,18 @@ package com.cos.cercat.search;
 
 
 import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 
 import java.util.List;
 
 public interface SearchLogRepository {
 
+    void setLog(User user, SearchLog searchLog);
 
-    void setLog(TargetUser targetUser, SearchLog searchLog);
+    List<SearchLog> findSearchLogs(User user);
 
-    List<SearchLog> findSearchLogs(TargetUser targetUser);
+    void deleteSearchLog(User user, SearchLog searchLog);
 
-    void deleteSearchLog(TargetUser targetUser, SearchLog searchLog);
-
-    void deleteAllSearchLogs(TargetUser targetUser);
+    void deleteAllSearchLogs(User user);
 
 }

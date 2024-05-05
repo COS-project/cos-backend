@@ -1,6 +1,6 @@
 package com.cos.cercat.search;
 
-import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -12,9 +12,11 @@ public class SearchLogAppender {
 
     private final SearchLogRepository searchLogRepository;
 
-    public void appendSearchLog(TargetUser targetUser, String searchKeyword) {
-        SearchLog searchLog = new SearchLog(searchKeyword, LocalDateTime.now().toString());
-        searchLogRepository.setLog(targetUser, searchLog);
+    public void appendSearchLog(User user, SearchCond cond) {
+        if (!cond.keyword().isBlank()) {
+            SearchLog searchLog = new SearchLog(cond.keyword(), LocalDateTime.now().toString());
+            searchLogRepository.setLog(user, searchLog);
+        }
     }
 
 }

@@ -10,8 +10,6 @@ import com.cos.cercat.post.*;
 import com.cos.cercat.user.TargetUser;
 import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,9 +26,9 @@ public class ReadPostApi implements ReadPostApiDocs {
     private final ReadPostService readPostService;
 
     @GetMapping("/certificates/{certificateId}/posts")
-    public Response<SliceResult<PostResponse>> searchCommentaryPosts(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Cursor cursor,
-                                                                     @PathVariable Long certificateId,
-                                                                     CommentaryPostSearchCond cond) {
+    public Response<SliceResult<PostResponse>> searchCommentaryPosts(@PathVariable Long certificateId,
+                                                                     CommentaryPostSearchCond cond,
+                                                                     Cursor cursor) {
         SliceResult<Post> posts = readPostService.searchCommentaryPost(TargetCertificate.from(certificateId), cond, cursor);
 
         return Response.success(posts.map(PostResponse::from));
@@ -51,8 +49,8 @@ public class ReadPostApi implements ReadPostApiDocs {
 
     @GetMapping("/{postType}/posts/my-posts")
     public Response<SliceResult<PostResponse>> readMyPosts(@PathVariable PostType postType,
-                                                    @AuthenticationPrincipal User currentUser,
-                                                    @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Cursor cursor) {
+                                                           @AuthenticationPrincipal User currentUser,
+                                                           Cursor cursor) {
 
         SliceResult<Post> posts = readPostService.readMyPosts(TargetUser.from(currentUser.getId()), postType, cursor);
         return Response.success(posts.map(PostResponse::from));
@@ -60,7 +58,7 @@ public class ReadPostApi implements ReadPostApiDocs {
 
     @GetMapping("/comment-posts/my-comment-posts")
     public Response<SliceResult<PostResponse>> readMyCommentPosts(@AuthenticationPrincipal User currentUser,
-                                                           @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Cursor cursor) {
+                                                                  Cursor cursor) {
         SliceResult<Post> posts = readPostService.readCommentingPosts(TargetUser.from(currentUser.getId()), cursor);
         return Response.success(posts.map(PostResponse::from));
     }

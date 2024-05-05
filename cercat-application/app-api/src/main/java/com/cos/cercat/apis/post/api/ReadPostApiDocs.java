@@ -17,9 +17,9 @@ import java.util.List;
 public interface ReadPostApiDocs {
 
     @Operation(summary = "해설 게시글 검색")
-    Response<SliceResult<PostResponse>> searchCommentaryPosts(Cursor cursor,
-                                                              Long certificateId,
-                                                              CommentaryPostSearchCond cond);
+    Response<SliceResult<PostResponse>> searchCommentaryPosts(Long certificateId,
+                                                              CommentaryPostSearchCond cond,
+                                                              Cursor cursor);
 
     @Operation(summary = "게시글 상세 조회")
     Response<PostWithCommentsResponse> readPostDetail(Long postId);

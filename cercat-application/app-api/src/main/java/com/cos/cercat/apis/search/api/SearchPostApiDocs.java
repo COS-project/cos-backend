@@ -7,6 +7,7 @@ import com.cos.cercat.common.domain.Response;
 import com.cos.cercat.common.domain.SliceResult;
 import com.cos.cercat.search.SearchCond;
 import com.cos.cercat.search.SearchLog;
+import com.cos.cercat.search.TrendingKeyword;
 import com.cos.cercat.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,8 +30,8 @@ public interface SearchPostApiDocs {
     Response<List<String>> getAutoCompleteKeywords(String searchText,
                                                    Long certificateId);
 
-    @Operation(summary = "실시간 검색어 TOP5 조회")
-    Response<List<String>> getRecentTop5Keywords(Long certificateId);
+    @Operation(summary = "실시간 검색어 TOP10 조회")
+    Response<List<TrendingKeyword>> getTrendingKeywords(Long certificateId);
 
     @Operation(summary = "특정 검색 기록 삭제")
     Response<Void> deleteSearchLogs(User currentUser,

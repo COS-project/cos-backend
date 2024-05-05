@@ -1,6 +1,6 @@
 package com.cos.cercat.search;
 
-import com.cos.cercat.certificate.TargetCertificate;
+import com.cos.cercat.certificate.Certificate;
 import com.cos.cercat.common.domain.Cursor;
 import com.cos.cercat.common.domain.SliceResult;
 import com.cos.cercat.post.TargetPost;
@@ -15,9 +15,9 @@ public interface PostForSearchRepository {
 
     void delete(TargetPost targetPost);
 
-    SliceResult<PostForSearch> search(SearchCond cond, TargetCertificate targetCertificate, Cursor cursor);
+    SliceResult<PostForSearch> search(SearchCond cond, Certificate certificate, Cursor cursor);
 
-    List<String> findAutoCompletedKeywords(TargetCertificate targetCertificate, String searchText);
+    List<String> findAutoCompletedKeywords(Certificate certificate, String searchText);
 
-    List<String> findRecentTop5Keywords(TargetCertificate targetCertificate);
+    List<String> findRecentTop10Keywords(Certificate certificate);
 }

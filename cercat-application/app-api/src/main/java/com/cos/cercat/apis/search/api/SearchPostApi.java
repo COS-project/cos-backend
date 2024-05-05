@@ -10,6 +10,7 @@ import com.cos.cercat.post.Post;
 import com.cos.cercat.search.SearchCond;
 import com.cos.cercat.search.SearchLog;
 import com.cos.cercat.search.SearchPostService;
+import com.cos.cercat.search.TrendingKeyword;
 import com.cos.cercat.user.TargetUser;
 import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
@@ -46,9 +47,9 @@ public class SearchPostApi implements SearchPostApiDocs {
         return Response.success(searchPostService.readAutoCompleteKeyword(TargetCertificate.from(certificateId), searchText));
     }
 
-    @GetMapping("/certificates/{certificateId}/recent-top5-keywords")
-    public Response<List<String>> getRecentTop5Keywords(@PathVariable Long certificateId) {
-        return Response.success(searchPostService.getRecentTop5Keywords(TargetCertificate.from(certificateId)));
+    @GetMapping("/certificates/{certificateId}/trending-keywords")
+    public Response<List<TrendingKeyword>> getTrendingKeywords(@PathVariable Long certificateId) {
+        return Response.success(searchPostService.getTrendingKeywords(TargetCertificate.from(certificateId)));
     }
 
 

@@ -11,6 +11,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TokenCacheManager {
 
+    private static final String BEARER = "Bearer ";
+
     private final TokenCacheRepository tokenCacheRepository;
     private final BanTokenRepository banTokenRepository;
 
@@ -27,7 +29,8 @@ public class TokenCacheManager {
     }
 
     public void ban(String accessToken) {
-        banTokenRepository.ban(accessToken);
+        String token = accessToken.replace(BEARER, "");
+        banTokenRepository.ban(token);
     }
 
     public boolean isLoginUser(String accessToken) {

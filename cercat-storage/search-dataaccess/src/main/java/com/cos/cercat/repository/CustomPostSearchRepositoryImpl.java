@@ -53,6 +53,7 @@ public class CustomPostSearchRepositoryImpl implements CustomPostSearchRepositor
     private final String KEYWORD_AGGREGATION = "keywords";
     private final String POST_TYPE_FIELD = "postType";
     private final String CERTIFICATE_ID_FIELD = "certificateId";
+    private final int KEYWORDS_SIZE = 10;
 //    private final String TIME_FIELD = "time";
 
     @Value("${elasticsearch.client.host}")
@@ -156,7 +157,7 @@ public class CustomPostSearchRepositoryImpl implements CustomPostSearchRepositor
     }
 
     @Override
-    public List<String> getRecentTop5Keywords(Long certificateId) {
+    public List<String> getRecentTop10Keywords(Long certificateId) {
         ElasticsearchClient client = createElasticsearchClient();
 
         Query query = createRecentTop5Query(certificateId);
@@ -235,7 +236,7 @@ public class CustomPostSearchRepositoryImpl implements CustomPostSearchRepositor
         return a -> a
                 .terms(t -> t
                         .field(KEYWORD_KEYWORD)
-                        .size(5)
+                        .size(KEYWORDS_SIZE)
                         .order(List.of(NamedValue.of("_count", SortOrder.Desc)))
                 );
     }

@@ -1,6 +1,6 @@
 package com.cos.cercat.search;
 
-import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +12,8 @@ public class SearchLogReader {
 
     private final SearchLogRepository searchLogRepository;
 
-    public List<SearchLog> readSearchLogs(TargetUser targetUser) {
-        return searchLogRepository.findSearchLogs(targetUser);
+    public List<SearchLog> readSearchLogs(User user) {
+        return searchLogRepository.findSearchLogs(user);
     }
 
 }
