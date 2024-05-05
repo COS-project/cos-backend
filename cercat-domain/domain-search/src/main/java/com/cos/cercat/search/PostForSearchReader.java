@@ -44,12 +44,15 @@ public class PostForSearchReader {
         if (beforeKeywords == null || !beforeKeywords.contains(currentKeyword)) {
             return KeywordStatus.NEW;
         }
+
         int currentRank = currentKeywords.indexOf(currentKeyword);
         int beforeRank = beforeKeywords.indexOf(currentKeyword);
 
         if (currentRank > beforeRank) {
             return KeywordStatus.RANK_DOWN;
-        } else if (currentRank < beforeRank) {
+        }
+
+        if (currentRank < beforeRank) {
             return KeywordStatus.RANK_UP;
         }
         return KeywordStatus.UNCHANGED;
