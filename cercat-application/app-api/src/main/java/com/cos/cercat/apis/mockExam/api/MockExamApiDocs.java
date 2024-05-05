@@ -17,10 +17,12 @@ public interface MockExamApiDocs {
                                                    Integer examYear,
                                                    User currentUser);
 
+    @Operation(summary = "자격증별 시험년도 조회")
+    Response<List<Integer>> findExamYears(Long certificateId);
+
     @Operation(summary = "모의고사 문제들 가져오기")
     Response<List<QuestionResponse>> findQuestions(Long mockExamId);
 
-    @Operation(summary = "자격증별 시험년도 조회")
-    Response<List<Integer>> findExamYears(Long certificateId);
+
 
 }
