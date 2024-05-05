@@ -34,7 +34,7 @@ public class SearchPostService {
                                     Cursor cursor) {
         User user = userReader.read(targetUser);
         Certificate certificate = certificateReader.read(targetCertificate);
-        searchLogAppender.appendSearchLog(user, cond);
+        searchLogAppender.append(user, cond.keyword());
         return postForSearchReader.read(cond, certificate, cursor)
                 .map(post -> postReader.read(TargetPost.from(post.getId())));
     }

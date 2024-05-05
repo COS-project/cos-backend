@@ -12,9 +12,9 @@ public class SearchLogAppender {
 
     private final SearchLogRepository searchLogRepository;
 
-    public void appendSearchLog(User user, SearchCond cond) {
-        if (!cond.keyword().isBlank()) {
-            SearchLog searchLog = new SearchLog(cond.keyword(), LocalDateTime.now().toString());
+    public void append(User user, String searchKeyword) {
+        if (searchKeyword != null && !searchKeyword.isBlank()) {
+            SearchLog searchLog = new SearchLog(searchKeyword, LocalDateTime.now().toString());
             searchLogRepository.setLog(user, searchLog);
         }
     }
