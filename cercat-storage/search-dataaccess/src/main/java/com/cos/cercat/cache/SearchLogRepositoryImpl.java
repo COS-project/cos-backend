@@ -4,7 +4,7 @@ import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.search.SearchLog;
 import com.cos.cercat.search.SearchLogRepository;
-import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -16,15 +16,15 @@ import java.util.Objects;
 @Repository
 @Slf4j
 @RequiredArgsConstructor
-public class SearchLogCacheRepository implements SearchLogRepository {
+public class SearchLogRepositoryImpl implements SearchLogRepository {
 
     private final RedisTemplate<String, SearchLog> redisTemplate;
 
     private final static int LIST_FULL_SIZE = 10;
 
     @Override
-    public void setLog(TargetUser targetUser, SearchLog searchLog) {
-        String key = getKey(targetUser);
+    public void setLog(User user, SearchLog searchLog) {
+        String key = getKey(user.getId());
         log.info("Set Search Log from {} : {}", key, searchLog);
 
         int size = Objects.requireNonNull(redisTemplate.opsForList().size(key)).intValue();
@@ -37,16 +37,16 @@ public class SearchLogCacheRepository implements SearchLogRepository {
     }
 
     @Override
-    public List<SearchLog> findSearchLogs(TargetUser targetUser) {
-        String key = getKey(targetUser);
+    public List<SearchLog> findSearchLogs(User user) {
+        String key = getKey(user.getId());
         List<SearchLog> searchLogs = redisTemplate.opsForList().range(key, 0, 10);
         log.info("Get Search Log from {} : {}", key, searchLogs);
         return searchLogs;
     }
 
     @Override
-    public void deleteSearchLog(TargetUser targetUser, SearchLog searchLog) {
-        String key = getKey(targetUser);
+    public void deleteSearchLog(User user, SearchLog searchLog) {
+        String key = getKey(user.getId());
         int count = Objects.requireNonNull(redisTemplate.opsForList().remove(key, 1, searchLog)).intValue();
         if (count == 0) {
             throw new CustomException(ErrorCode.SEARCH_LOG_NOT_EXIST);
@@ -54,13 +54,13 @@ public class SearchLogCacheRepository implements SearchLogRepository {
     }
 
     @Override
-    public void deleteAllSearchLogs(TargetUser targetUser) {
-        String key = getKey(targetUser);
+    public void deleteAllSearchLogs(User user) {
+        String key = getKey(user.getId());
         redisTemplate.delete(key);
     }
 
-    public String getKey(TargetUser targetUser) {
-        return "SEARCH_LOG:" + targetUser.userId();
+    public String getKey(Long userId) {
+        return "SEARCH_LOG:" + userId;
     }
 
 }

@@ -1,6 +1,6 @@
 package com.cos.cercat.repository;
 
-import com.cos.cercat.cache.SearchLogCacheRepository;
+import com.cos.cercat.certificate.Certificate;
 import com.cos.cercat.certificate.TargetCertificate;
 import com.cos.cercat.common.domain.Cursor;
 import com.cos.cercat.common.domain.SliceResult;
@@ -24,7 +24,6 @@ import java.util.List;
 public class PostForForSearchRepositoryImpl implements PostForSearchRepository {
     
     private final PostSearchElasticRepository postSearchElasticRepository;
-    private final SearchLogCacheRepository searchLogCacheRepository;
 
     @Override
     public void save(PostForSearch post) {
@@ -44,8 +43,10 @@ public class PostForForSearchRepositoryImpl implements PostForSearchRepository {
     }
 
     @Override
-    public SliceResult<PostForSearch> search(SearchCond cond, TargetCertificate targetCertificate, Cursor cursor) {
-        Slice<PostDocument> search = postSearchElasticRepository.search(cond, targetCertificate.certificateId(), toPageRequest(cursor));
+    public SliceResult<PostForSearch> search(SearchCond cond,
+                                             Certificate certificate,
+                                             Cursor cursor) {
+        Slice<PostDocument> search = postSearchElasticRepository.search(cond, certificate.id(), toPageRequest(cursor));
         List<PostForSearch> postForSearches = search.getContent().stream()
                 .map(PostDocument::toDomain)
                 .toList();
@@ -53,13 +54,13 @@ public class PostForForSearchRepositoryImpl implements PostForSearchRepository {
     }
 
     @Override
-    public List<String> findAutoCompletedKeywords(TargetCertificate targetCertificate, String searchText) {
-        return postSearchElasticRepository.getAutoCompletedKeywords(targetCertificate.certificateId(), searchText);
+    public List<String> findAutoCompletedKeywords(Certificate certificate, String searchText) {
+        return postSearchElasticRepository.getAutoCompletedKeywords(certificate.id(), searchText);
     }
 
     @Override
-    public List<String> findRecentTop5Keywords(TargetCertificate targetCertificate) {
-        return postSearchElasticRepository.getRecentTop5Keywords(targetCertificate.certificateId());
+    public List<String> findRecentTop10Keywords(Certificate certificate) {
+        return postSearchElasticRepository.getRecentTop10Keywords(certificate.id());
     }
 
     private PageRequest toPageRequest(Cursor cursor) {

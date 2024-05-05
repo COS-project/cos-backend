@@ -13,6 +13,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
@@ -49,9 +50,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
                 .toList(); // Authorities에서 문자열로 권한 추출
 
         TargetUser targetUser = TargetUser.from(oAuth2User.getUserId());
-
         redirect(response, targetUser, roles);
-
     }
 
     private void redirect(HttpServletResponse response, TargetUser targetUser, List<String> roles) throws IOException {

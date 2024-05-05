@@ -1,6 +1,6 @@
 package com.cos.cercat.search;
 
-import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,11 +11,11 @@ public class SearchLogRemover {
     private final SearchLogRepository searchLogRepository;
 
 
-    public void deleteSearchLog(TargetUser targetUser, SearchLog searchLog) {
-        searchLogRepository.deleteSearchLog(targetUser, searchLog);
+    public void deleteSearchLog(User user, SearchLog searchLog) {
+        searchLogRepository.deleteSearchLog(user, searchLog);
     }
 
-    public void deleteAllSearchLogs(TargetUser targetUser) {
-        searchLogRepository.deleteAllSearchLogs(targetUser);
+    public void deleteAllSearchLogs(User user) {
+        searchLogRepository.deleteAllSearchLogs(user);
     }
 }

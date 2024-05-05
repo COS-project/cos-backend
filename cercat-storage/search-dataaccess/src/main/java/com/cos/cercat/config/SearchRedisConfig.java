@@ -11,6 +11,8 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import java.util.List;
+
 @EnableRedisRepositories
 @Configuration
 public class SearchRedisConfig {
@@ -32,6 +34,15 @@ public class SearchRedisConfig {
         redisTemplate.setConnectionFactory(redisConnectionFactory());
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(SearchLog.class));
+        return redisTemplate;
+    }
+
+    @Bean
+    public RedisTemplate<String, List<String>> trendingKeywordRedisTemplate() {
+        RedisTemplate<String, List<String>> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory());
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(List.class));
         return redisTemplate;
     }
 
