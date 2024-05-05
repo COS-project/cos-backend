@@ -11,15 +11,15 @@ import java.util.List;
 public class MockExamService {
 
     private final MockExamFinder mockExamFinder;
+    private final QuestionFinder questionFinder;
 
     public List<MockExam> find(TargetCertificate targetCertificate,
                                Integer examYear) {
         return mockExamFinder.find(targetCertificate, examYear);
     }
 
-    //TODO: Cache
     public List<Question> findQuestions(TargetMockExam targetMockExam) {
-        return mockExamFinder.findQuestions(targetMockExam);
+        return questionFinder.find(targetMockExam);
     }
 
     public List<Integer> findExamYears(TargetCertificate targetCertificate) {

@@ -7,7 +7,6 @@ dependencies {
 
     //redis & cache
     api 'org.springframework.boot:spring-boot-starter-data-redis'
-    api 'org.springframework.boot:spring-boot-starter-cache'
 
     //직렬화 및 역직렬화 관련
     api 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'

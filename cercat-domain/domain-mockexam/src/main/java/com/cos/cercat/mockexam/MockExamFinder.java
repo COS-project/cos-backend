@@ -16,10 +16,6 @@ public class MockExamFinder {
         return mockExamRepository.find(targetCertificate, examYear);
     }
 
-    public List<Question> findQuestions(TargetMockExam targetMockExam) {
-        return mockExamRepository.findQuestions(targetMockExam);
-    }
-
     public List<Integer> findExamYears(TargetCertificate targetCertificate) {
         return mockExamRepository.findExamYears(targetCertificate);
     }
