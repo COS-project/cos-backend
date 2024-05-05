@@ -10,6 +10,10 @@ dependencies {
     implementation project(':cercat-storage:user-dataaccess');
     implementation project(':cercat-storage:jpa-dataaccess');
 
+    //redis-dataaccess
+    implementation project(':cercat-storage:redis-dataaccess')
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.2'
 

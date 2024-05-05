@@ -35,6 +35,12 @@ public class MockExamApi implements MockExamApiDocs {
     }
 
     @Override
+    @GetMapping("/certificates/{certificateId}/exam-years")
+    public Response<List<Integer>> findExamYears(@PathVariable  Long certificateId) {
+        return Response.success(mockExamService.findExamYears(TargetCertificate.from(certificateId)));
+    }
+
+    @Override
     @GetMapping("/mock-exams/{mockExamId}/questions")
     public Response<List<QuestionResponse>> findQuestions(@PathVariable Long mockExamId) {
         List<QuestionResponse> questionResponses = mockExamService.findQuestions(TargetMockExam.from(mockExamId)).stream()
@@ -44,9 +50,5 @@ public class MockExamApi implements MockExamApiDocs {
         return Response.success(questionResponses);
     }
 
-    @Override
-    @GetMapping("/certificates/{certificateId}/exam-years")
-    public Response<List<Integer>> findExamYears(@PathVariable  Long certificateId) {
-        return Response.success(mockExamService.findExamYears(TargetCertificate.from(certificateId)));
-    }
+
 }
