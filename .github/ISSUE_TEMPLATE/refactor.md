@@ -2,7 +2,7 @@
 name: Refactor
 about: 리팩토링하기
 title: "[REFACTOR] refactor 내용"
-labels: enhancement
+labels: ''
 assignees: ''
 
 ---
