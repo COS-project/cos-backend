@@ -4,15 +4,14 @@ package com.cos.cercat.learning;
 import com.cos.cercat.certificate.Certificate;
 import com.cos.cercat.user.Ownable;
 import com.cos.cercat.user.User;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-@AllArgsConstructor
 @Getter
 public class Goal implements Ownable {
 
@@ -22,6 +21,15 @@ public class Goal implements Ownable {
     private GoalPeriod goalPeriod;
     private GoalContent goalContent;
     private List<StudySchedule> studySchedules;
+
+    public Goal(Long id, Certificate certificate, User user, GoalPeriod goalPeriod, GoalContent goalContent, List<StudySchedule> studySchedules) {
+        this.id = id;
+        this.certificate = certificate;
+        this.user = user;
+        this.goalPeriod = goalPeriod;
+        this.goalContent = goalContent;
+        this.studySchedules = new ArrayList<>(studySchedules);
+    }
 
     public List<StudySchedule> getStudySchedules() {
         return this.studySchedules.stream()
