@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/cercat-client" />
             <option value="$PROJECT_DIR$/cercat-client/gcs-module" />
             <option value="$PROJECT_DIR$/cercat-client/kafka-module" />
+            <option value="$PROJECT_DIR$/cercat-client/redis-message-module" />
             <option value="$PROJECT_DIR$/cercat-client/sse-module" />
             <option value="$PROJECT_DIR$/cercat-common" />
             <option value="$PROJECT_DIR$/cercat-domain" />

@@ -1,0 +1,10 @@
+bootJar {
+    enabled = false
+}
+
+dependencies {
+
+    implementation project(':cercat-domain:domain-alarm')
+    implementation project(':cercat-domain:domain-user')
+    implementation project(':cercat-storage:redis-dataaccess')
+}

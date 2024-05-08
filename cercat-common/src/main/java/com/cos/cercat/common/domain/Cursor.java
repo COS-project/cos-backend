@@ -26,4 +26,5 @@ public record Cursor(
             sortDirection = SortDirection.DESC; // 기본 정렬 방향
         }
     }
+
 }

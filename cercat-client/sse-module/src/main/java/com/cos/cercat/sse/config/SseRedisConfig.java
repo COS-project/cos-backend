@@ -1,4 +1,4 @@
-package com.cos.cercat.sse;
+package com.cos.cercat.sse.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

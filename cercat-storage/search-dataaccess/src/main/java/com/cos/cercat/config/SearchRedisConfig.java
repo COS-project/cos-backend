@@ -1,6 +1,7 @@
 package com.cos.cercat.config;
 
 import com.cos.cercat.search.SearchLog;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,23 +16,15 @@ import java.util.List;
 
 @EnableRedisRepositories
 @Configuration
+@RequiredArgsConstructor
 public class SearchRedisConfig {
 
-    @Value("${redis.host}")
-    private String host;
-
-    @Value("${redis.port}")
-    private Integer port;
-
-    @Bean
-    public RedisConnectionFactory redisConnectionFactory() {
-        return new LettuceConnectionFactory(host, port);
-    }
+    private final RedisConnectionFactory redisConnectionFactory;
 
     @Bean
     public RedisTemplate<String, SearchLog> searchLogRedisTemplate() {
         RedisTemplate<String, SearchLog> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(redisConnectionFactory());
+        redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(SearchLog.class));
         return redisTemplate;
@@ -40,7 +33,7 @@ public class SearchRedisConfig {
     @Bean
     public RedisTemplate<String, List<String>> trendingKeywordRedisTemplate() {
         RedisTemplate<String, List<String>> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(redisConnectionFactory());
+        redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(List.class));
         return redisTemplate;

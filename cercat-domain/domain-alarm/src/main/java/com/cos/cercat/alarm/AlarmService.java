@@ -4,6 +4,9 @@ import com.cos.cercat.user.TargetUser;
 import com.cos.cercat.user.User;
 import com.cos.cercat.user.UserReader;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +16,8 @@ import java.util.List;
 public class AlarmService {
 
     private final AlarmManager alarmManager;
-    private final SseProcessor sseProcessor;
     private final UserReader userReader;
+    private final AlarmSubscribeManager alarmSubscribeManager;
 
     public List<Alarm> readAlarms(TargetUser targetUser) {
         User user = userReader.read(targetUser);
@@ -28,9 +31,14 @@ public class AlarmService {
         return alarmManager.countUnread(user);
     }
 
-    public void sendAlarm(AlarmEvent alarmEvent) {
-        alarmManager.append(alarmEvent);
-        sseProcessor.sendEvent(alarmEvent);
+    public void subscribe(Long userId) {
+        alarmSubscribeManager.subscribe(userId);
+    }
+
+    @Async
+    @EventListener
+    public void unsubscribe(SseClosedEvent event) {
+        alarmSubscribeManager.unsubscribe(event.userId());
     }
 
 }
