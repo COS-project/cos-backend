@@ -29,8 +29,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     private final JwtTokenUtil jwtTokenUtil;
     private final UserReader userReader;
 
-    public final static List<String> TOKEN_IN_PARAM_URLS = List.of("/api/v2/alarms/subscribe");
-
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
