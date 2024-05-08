@@ -36,7 +36,11 @@
 - 협업도구 : Slack
 
 # 인프라 구성
-<img width="1013" alt="cercat 아키텍쳐" src="https://github.com/COS-project/cos-backend/assets/128073698/14d2c909-676d-4419-b090-72b6d3a9870b">
+![infra](https://github.com/COS-project/cos-backend/assets/128073698/4724134f-1a0a-479a-a349-20ce7c920be7)
+
+
+
+
 
 - Nginx로 리버스 프록시
 - Kafka를 통해 비동기 알림 pub/sub
