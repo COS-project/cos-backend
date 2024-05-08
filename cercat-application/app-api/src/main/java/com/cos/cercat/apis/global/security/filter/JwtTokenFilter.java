@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -27,6 +28,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     private final JwtTokenizer jwtTokenizer;
     private final JwtTokenUtil jwtTokenUtil;
     private final UserReader userReader;
+
+    private final static List<String> TOKEN_IN_PARAM_URLS = List.of("/api/v2/alarms/subscribe");
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -43,12 +46,22 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             throw new CustomException(ErrorCode.REFRESH_TOKEN_REISSUE); //리프레시토큰 재발급 시 401 에러 발생을 방지
         }
 
+        if (TOKEN_IN_PARAM_URLS.contains(request.getRequestURI())) {
+            log.info("Request with {} check query param", request.getRequestURI());
+            jwtTokenUtil.extractAccessToken(request)
+                    .filter(tokenCacheManager::isLoginUser)
+                    .map(jwtTokenUtil::extractTargetUser)
+                    .map(userReader::read)
+                    .ifPresent(this::saveAuthentication);
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         jwtTokenUtil.extractAccessToken(request)//토큰 검증
                 .filter(tokenCacheManager::isLoginUser)
                 .map(jwtTokenUtil::extractTargetUser)
                 .map(userReader::read)
                 .ifPresent(this::saveAuthentication);
-
         filterChain.doFilter(request, response);
     }
 
