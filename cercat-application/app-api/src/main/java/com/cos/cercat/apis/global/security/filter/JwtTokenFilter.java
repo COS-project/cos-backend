@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -49,6 +48,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 .map(jwtTokenUtil::extractTargetUser)
                 .map(userReader::read)
                 .ifPresent(this::saveAuthentication);
+
         filterChain.doFilter(request, response);
     }
 

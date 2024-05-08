@@ -17,7 +17,6 @@ import java.security.Key;
 import java.util.Calendar;
 import java.util.Optional;
 
-import static com.cos.cercat.apis.global.security.filter.JwtTokenFilter.TOKEN_IN_PARAM_URLS;
 import static com.cos.cercat.apis.global.util.JwtTokenizer.getKeyFromBase64EncodedKey;
 
 @Component
