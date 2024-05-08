@@ -15,7 +15,6 @@ public class CustomException extends RuntimeException {
         this.message = null;
     }
 
-    @Override
     public String getMessage() {
         if (message == null) {
             return errorCode.getMessage();

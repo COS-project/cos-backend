@@ -30,6 +30,7 @@
         <module name="cercat.cercat-domain.domain-board.test" />
         <module name="cercat.cercat-storage.jpa-dataaccess.test" />
         <module name="cercat.cercat-storage.test" />
+        <module name="cercat.cercat-client.redis-message-module.test" />
         <module name="cercat.cercat-storage.alarm-dataaccess.test" />
         <module name="cercat.cercat-domain.domain-learning.test" />
         <module name="cercat.cercat-common.test" />
@@ -76,6 +77,7 @@
         <module name="cercat.cercat-client.sse-module.main" />
         <module name="cercat.cercat-storage.redis-dataaccess.main" />
         <module name="cercat.cercat-storage.search-dataaccess.main" />
+        <module name="cercat.cercat-client.redis-message-module.main" />
         <module name="cercat.cercat-storage.alarm-dataaccess.main" />
       </profile>
       <profile name="Gradle Imported" enabled="true">

@@ -8,6 +8,7 @@ import com.cos.cercat.user.TargetUser;
 import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,8 +26,10 @@ public class AlarmApi implements AlarmApiDocs {
     private final SseEmitterService sseEmitterService;
 
     @GetMapping(value = "/alarms/subscribe", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Response<SseEmitter> subscribeAlarm(@AuthenticationPrincipal User currentUser) {
-        return Response.success(sseEmitterService.connect(currentUser.getId()));
+    public ResponseEntity<SseEmitter> subscribeAlarm(@AuthenticationPrincipal User currentUser) {
+        SseEmitter connected = sseEmitterService.connect(currentUser.getId());
+        alarmService.subscribe(currentUser.getId());
+        return ResponseEntity.ok(connected);
     }
 
     @GetMapping("/alarms")

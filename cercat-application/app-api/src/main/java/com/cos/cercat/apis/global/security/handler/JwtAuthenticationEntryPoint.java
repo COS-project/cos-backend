@@ -22,7 +22,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException){
 
         if (request.getAttribute("exception") == null) { //null인 경우는 리프레시 토큰을 재발급후에 필터 태운뒤에 리턴하는 경우밖에없음
-            resolver.resolveException(request, response, null, authException);
+            resolver.resolveException(request, response,  null, authException);
             return;
         }
 

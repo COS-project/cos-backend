@@ -1,6 +1,5 @@
 package com.cos.cercat.alarm;
 
-import com.cos.cercat.user.TargetUser;
 import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -13,10 +12,11 @@ import java.util.List;
 public class AlarmManager {
 
     private final AlarmRepository alarmRepository;
+    private final SseProcessor sseProcessor;
+
 
     public List<Alarm> read(User user) {
-            return alarmRepository.findUnreadAlarms(user);
-
+        return alarmRepository.findUnreadAlarms(user);
     }
 
     @Transactional
@@ -28,8 +28,9 @@ public class AlarmManager {
         return alarmRepository.countUnreadAlarms(user);
     }
 
-    public void append(AlarmEvent alarmEvent) {
+    public void send(AlarmEvent alarmEvent) {
         alarmRepository.save(alarmEvent);
+        sseProcessor.sendEvent(alarmEvent);
     }
 
 

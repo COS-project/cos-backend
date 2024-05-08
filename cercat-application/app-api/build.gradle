@@ -29,7 +29,10 @@ dependencies {
     implementation project(':cercat-storage:user-dataaccess')
     implementation project(':cercat-storage:redis-dataaccess')
     implementation project(':cercat-storage:elasticsearch-dataaccess')
+
+
     implementation project(':cercat-client:gcs-module')
+    implementation project(':cercat-client:redis-message-module')
     implementation project(':cercat-client:sse-module')
     implementation project(':cercat-client:kafka-module')
 
