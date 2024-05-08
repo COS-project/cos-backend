@@ -17,6 +17,7 @@ import java.security.Key;
 import java.util.Calendar;
 import java.util.Optional;
 
+import static com.cos.cercat.apis.global.security.filter.JwtTokenFilter.TOKEN_IN_PARAM_URLS;
 import static com.cos.cercat.apis.global.util.JwtTokenizer.getKeyFromBase64EncodedKey;
 
 @Component
@@ -70,6 +71,12 @@ public class JwtTokenUtil {
      * 헤더를 가져온 후 "Bearer"를 삭제(""로 replace)
      */
     public Optional<String> extractAccessToken(HttpServletRequest request) {
+
+        if (TOKEN_IN_PARAM_URLS.contains(request.getRequestURI())) {
+            log.info("Request with {} check query param", request.getRequestURI());
+            return Optional.ofNullable(request.getQueryString())
+                    .map(queryString -> queryString.split("=")[1].trim());
+        }
 
         return Optional.ofNullable(request.getHeader("Access-Token"))
                 .filter(accessToken -> accessToken.startsWith(BEARER))
