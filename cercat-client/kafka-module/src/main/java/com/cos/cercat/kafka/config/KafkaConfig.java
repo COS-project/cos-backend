@@ -1,4 +1,4 @@
-package com.cos.cercat.kafka;
+package com.cos.cercat.kafka.config;
 
 import com.cos.cercat.alarm.AlarmEvent;
 import com.cos.cercat.kafka.debezium.DebeziumEvent;

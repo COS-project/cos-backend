@@ -12,7 +12,7 @@ import java.util.List;
 public class AlarmManager {
 
     private final AlarmRepository alarmRepository;
-    private final SseProcessor sseProcessor;
+    private final EventSender eventSender;
 
 
     public List<Alarm> read(User user) {
@@ -30,7 +30,7 @@ public class AlarmManager {
 
     public void send(AlarmEvent alarmEvent) {
         alarmRepository.save(alarmEvent);
-        sseProcessor.sendEvent(alarmEvent);
+        eventSender.send(alarmEvent);
     }
 
 

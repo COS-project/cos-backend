@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
 
-import static com.cos.cercat.sse.SseProcessorImpl.EVENT_NAME;
+import static com.cos.cercat.sse.SseEventSender.EVENT_NAME;
 
 @Service
 @RequiredArgsConstructor

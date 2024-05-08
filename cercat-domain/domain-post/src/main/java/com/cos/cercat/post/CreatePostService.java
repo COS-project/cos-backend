@@ -1,6 +1,5 @@
 package com.cos.cercat.post;
 
-import com.cos.cercat.alarm.AlarmType;
 import com.cos.cercat.certificate.Certificate;
 import com.cos.cercat.certificate.CertificateReader;
 import com.cos.cercat.certificate.TargetCertificate;

@@ -2,7 +2,7 @@ package com.cos.cercat.sse;
 
 import com.cos.cercat.alarm.AlarmEvent;
 import com.cos.cercat.alarm.SseClosedEvent;
-import com.cos.cercat.alarm.SseProcessor;
+import com.cos.cercat.alarm.EventSender;
 import com.cos.cercat.common.exception.CustomException;
 import com.cos.cercat.common.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +16,14 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class SseProcessorImpl implements SseProcessor {
+public class SseEventSender implements EventSender {
 
     public final static String EVENT_NAME = "alarm";
     private final SseEmitterManager sseEmitterManager;
     private final ApplicationEventPublisher applicationEventPublisher;
 
     @Override
-    public void sendEvent(AlarmEvent event) {
+    public void send(AlarmEvent event) {
 
         SseEmitter emitter = sseEmitterManager.read(event);
 
