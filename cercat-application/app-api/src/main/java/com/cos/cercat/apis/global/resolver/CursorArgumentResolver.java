@@ -36,18 +36,14 @@ public class CursorArgumentResolver implements HandlerMethodArgumentResolver {
         String sortFieldsParam = webRequest.getParameter("sortFields");
         String sortDirectionsParam = webRequest.getParameter("sortDirections");
 
-        if (sortFieldsParam == null && sortDirectionsParam == null) {
-            String field = cursorDefault.sortFields();
-            String direction = cursorDefault.sortDirections();
-            sortOrders.add(new SortOrder(field, SortDirection.valueOf(direction.toUpperCase())));
-            return new Cursor(page, size, sortOrders);
-        }
+        String[] fields = (sortFieldsParam != null) ? sortFieldsParam.split(",") : cursorDefault.sortFields().split(",");
+        String[] directions = (sortDirectionsParam != null) ? sortDirectionsParam.split(",") : cursorDefault.sortDirections().split(",");
 
-        String[] fields = sortFieldsParam.split(",");
-        String[] directions = sortDirectionsParam.split(",");
-
-        for (int i = 0; i < fields.length; i++) {
-            sortOrders.add(new SortOrder(fields[i].trim(), SortDirection.valueOf(directions[i].trim().toUpperCase())));
+        // 필드와 방향 배열의 길이가 일치하지 않는 경우, 짧은 배열의 길이에 맞춰 정렬
+        int length = Math.min(fields.length, directions.length);
+        for (int i = 0; i < length; i++) {
+            SortDirection direction = SortDirection.valueOf(directions[i].trim().toUpperCase());
+            sortOrders.add(new SortOrder(fields[i].trim(), direction));
         }
 
         return new Cursor(page, size, sortOrders);

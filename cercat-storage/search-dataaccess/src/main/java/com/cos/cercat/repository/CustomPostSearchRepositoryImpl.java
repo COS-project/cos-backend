@@ -108,7 +108,7 @@ public class CustomPostSearchRepositoryImpl implements CustomPostSearchRepositor
 
         Query query = boolQueryBuilder.must(queries).build()._toQuery();
 
-        Pageable sizeUpPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize() + 1);
+        Pageable sizeUpPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize() + 1, pageable.getSort());
 
         NativeQuery nativeQuery = new NativeQueryBuilder()
                 .withQuery(query)
