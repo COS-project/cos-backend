@@ -21,15 +21,18 @@ public class UserCacheRepositoryImpl implements UserCacheRepository {
 
     public void setUser(User user) {
         String key = getKey(user.getId());
-        log.info("Set UserEntity from {} : {}", key, user);
+        log.info("Set UserEntity from {} : {}", key, user.getUsername());
         redisTemplate.opsForValue().setIfAbsent(key, user, USER_CACHE_TTL);
     }
 
     public Optional<User> getUser(TargetUser targetUser) {
         String key = getKey(targetUser.userId());
-        User user = redisTemplate.opsForValue().get(key);
-        log.info("Get UserEntity from {} : {}", key, user);
-        return Optional.ofNullable(user);
+        Optional<User> user = Optional.ofNullable(redisTemplate.opsForValue().get(key));
+        user.ifPresentOrElse(
+                u -> log.info("Get User from Cache - {} : {}", key, u.getUsername()),
+                () -> log.info("No User Cache - {}", key)
+        );
+
     }
 
     public void deleteUser(TargetUser targetUser) {
