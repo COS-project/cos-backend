@@ -2,6 +2,7 @@ package com.cos.cercat.apis.mockExamResult.api;
 
 import com.cos.cercat.apis.mockExamResult.response.*;
 import com.cos.cercat.certificate.TargetCertificate;
+import com.cos.cercat.common.annotation.CursorDefault;
 import com.cos.cercat.common.domain.Cursor;
 import com.cos.cercat.common.domain.PageResult;
 import com.cos.cercat.common.domain.Response;
@@ -52,9 +53,12 @@ public class ReadMockExamResultApi implements ReadMockExamResultApiDocs {
 
 
     @GetMapping("/certificates/{certificateId}/user-answers/wrong-answers")
-    public Response<SliceResult<UserAnswerResponse>> allWrongUserAnswers(Cursor cursor,
+    public Response<SliceResult<UserAnswerResponse>> allWrongUserAnswers(@CursorDefault Cursor cursor,
                                                                          @PathVariable Long certificateId,
                                                                          @AuthenticationPrincipal User currentUser) {
+
+
+
         SliceResult<UserAnswer> allWrongUserAnswers = readMockExamResultService.getAllWrongUserAnswers(
                 TargetCertificate.from(certificateId),
                 TargetUser.from(currentUser.getId()),
@@ -64,7 +68,7 @@ public class ReadMockExamResultApi implements ReadMockExamResultApiDocs {
     }
 
     @GetMapping("/mock-exam-results/{mockExamResultId}/user-answers/wrong-answers")
-    public Response<SliceResult<UserAnswerResponse>> wrongUserAnswers(Cursor cursor,
+    public Response<SliceResult<UserAnswerResponse>> wrongUserAnswers(@CursorDefault Cursor cursor,
                                                                       @PathVariable Long mockExamResultId,
                                                                       @AuthenticationPrincipal User currentUser) {
         SliceResult<UserAnswerResponse> responses = readMockExamResultService.getWrongUserAnswers(
