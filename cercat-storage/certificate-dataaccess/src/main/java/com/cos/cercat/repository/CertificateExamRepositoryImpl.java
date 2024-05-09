@@ -12,11 +12,9 @@ import org.springframework.stereotype.Repository;
 public class CertificateExamRepositoryImpl implements CertificateExamRepository {
 
     private final CertificateExamJpaRepository certificateExamJpaRepository;
-    private final CertificateJpaRepository certificateJpaRepository;
 
     @Override
-    public void save(TargetCertificate targetCertificate, NewExamInformation newExamInfo) {
-        CertificateEntity certificateEntity = getCertificateEntity(targetCertificate);
+    public void save(Certificate certificate, NewExamInformation newExamInfo) {
         ExamInfoEntity examInfoEntity = ExamInfoEntity.builder()
                 .examYear(newExamInfo.examYear())
                 .round(newExamInfo.round())
@@ -38,7 +36,7 @@ public class CertificateExamRepositoryImpl implements CertificateExamRepository 
                 .build();
 
         CertificateExamEntity certificateExamEntity = CertificateExamEntity.builder()
-                .certificateEntity(certificateEntity)
+                .certificateEntity(CertificateEntity.from(certificate))
                 .examInfoEntity(examInfoEntity)
                 .build();
 
@@ -49,10 +47,5 @@ public class CertificateExamRepositoryImpl implements CertificateExamRepository 
     public CertificateExam findRecentCertificateExam(Certificate certificate) {
         CertificateExamEntity recentCertificateExam = certificateExamJpaRepository.findRecentCertificateExam(certificate.id());
         return recentCertificateExam.toDomain();
-    }
-
-    private CertificateEntity getCertificateEntity(TargetCertificate target) {
-        return certificateJpaRepository.findById(target.certificateId())
-                .orElseThrow(() -> new IllegalArgumentException("Certificate not found"));
     }
 }
