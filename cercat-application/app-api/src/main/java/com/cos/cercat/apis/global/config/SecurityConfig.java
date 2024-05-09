@@ -1,5 +1,6 @@
-package com.cos.cercat.apis.global.security.config;
+package com.cos.cercat.apis.global.config;
 
+import com.cos.cercat.apis.global.security.HttpCookieAuth2AuthorizationRequestRepository;
 import com.cos.cercat.apis.global.security.filter.JwtExceptionHandleFilter;
 import com.cos.cercat.apis.global.security.filter.JwtTokenFilter;
 import com.cos.cercat.apis.global.security.handler.JwtAuthenticationEntryPoint;
@@ -27,6 +28,7 @@ public class SecurityConfig {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final JwtTokenFilter jwtTokenFilter;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final HttpCookieAuth2AuthorizationRequestRepository cookieOAuth2AuthorizationRequestRepository;
 
     private static final String[] SWAGGER_URIS = {
             /* swagger v2 */
@@ -64,12 +66,17 @@ public class SecurityConfig {
                 .oauth2Login(
                         oauth2 -> oauth2
                                 .loginPage("/oauth2/authorization/kakao")
+                                .authorizationEndpoint(
+                                        authorizationEndpointConfig -> authorizationEndpointConfig
+                                                .authorizationRequestRepository(cookieOAuth2AuthorizationRequestRepository)
+                                )
                                 .successHandler(oAuth2MemberSuccessHandler)
                                 .failureHandler(oAuth2LoginFailureHandler)
                                 .userInfoEndpoint(
                                         userInfoEndpointConfig -> userInfoEndpointConfig
                                                 .userService(customOAuth2UserService)
                                 )
+
                 );
 
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);

@@ -9,8 +9,11 @@ dependencies {
     implementation project(':cercat-storage:jpa-dataaccess');
 
     //redis-dataaccess
-    api project(':cercat-storage:redis-dataaccess')
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation project(':cercat-storage:redis-dataaccess')
+
+    //직렬화 및 역직렬화 관련
+    api 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    api group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.2'
 
     //query dsl
     annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
