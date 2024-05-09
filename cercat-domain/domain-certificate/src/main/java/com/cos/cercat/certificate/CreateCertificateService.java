@@ -5,6 +5,7 @@ import com.cos.cercat.user.User;
 import com.cos.cercat.user.UserReader;
 import com.cos.cercat.user.UserUpdater;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,11 +15,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CreateCertificateService {
     private final UserReader userReader;
-    private final CertificateFinder certificateFinder;
+    private final CertificateReader certificateReader;
     private final CertificateAppender certificateAppender;
     private final CertificateExamAppender certificateExamAppender;
     private final InterestCertificateManager interestCertificateManager;
-    private final FavoriteBoardManager favoriteBoardManager;
     private final UserUpdater userUpdater;
 
     public void createCertificate(String certificateName, List<SubjectInfo> subjectsInfo) {
@@ -26,15 +26,13 @@ public class CreateCertificateService {
     }
 
     public void createCertificateExam(TargetCertificate targetCertificate, NewExamInformation newExamInformation) {
-        certificateExamAppender.append(targetCertificate, newExamInformation);
+        Certificate certificate = certificateReader.read(targetCertificate);
+        certificateExamAppender.append(certificate, newExamInformation);
     }
 
     public void addInterestCertificates(TargetUser targetUser, InterestTargets interestTargets) {
         User user = userReader.read(targetUser);
-        List<Certificate> certificates = certificateFinder.find(interestTargets.certificates());
-        List<NewInterestCertificate> newInterestCertificates = interestTargets.toNewInterestCertificates(certificates);
-        interestCertificateManager.append(user, newInterestCertificates);
-        favoriteBoardManager.favoriteAll(user, certificates);
+        interestCertificateManager.append(user, interestTargets);
         user.updateRole();
         userUpdater.update(user);
     }
