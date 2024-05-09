@@ -32,10 +32,12 @@ public class RedisMessageManager implements AlarmPublisher, AlarmSubscribeManage
 
     @Override
     public void subscribe(Long userId) {
+        log.info("RedisMessageManager subscribe: {}", userId);
         container.addMessageListener(alarmMessageListener, ChannelTopic.of(getChannelName(userId)));
     }
 
     public void unsubscribe(Long userId) {
+        log.info("RedisMessageManager unsubscribe: {}", userId);
         container.removeMessageListener(alarmMessageListener, ChannelTopic.of(getChannelName(userId)));
     }
 
