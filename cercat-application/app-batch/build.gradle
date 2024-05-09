@@ -13,6 +13,8 @@ dependencies {
     implementation project(':cercat-storage:certificate-dataaccess')
     implementation project(':cercat-storage:board-dataaccess')
     implementation project(':cercat-storage:jpa-dataaccess')
+    implementation project(':cercat-storage:redis-dataaccess')
+    implementation project(':cercat-client:redis-message-module')
     implementation project(':cercat-client:gcs-module')
     implementation project(':cercat-client:sse-module')
 

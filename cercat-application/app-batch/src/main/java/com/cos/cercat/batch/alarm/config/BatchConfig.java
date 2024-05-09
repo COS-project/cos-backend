@@ -1,4 +1,4 @@
-package com.cos.cercat.batch.common.config;
+package com.cos.cercat.batch.alarm.config;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
