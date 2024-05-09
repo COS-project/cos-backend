@@ -10,8 +10,8 @@ public class UserRemover {
     private final UserRepository userRepository;
     private final UserCacheManger userCacheManger;
 
-    public void remove(TargetUser targetUser) {
-        userRepository.delete(targetUser);
-        userCacheManger.remove(targetUser);
+    public void remove(User user) {
+        userRepository.delete(user);
+        userCacheManger.remove(user);
     }
 }

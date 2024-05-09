@@ -9,6 +9,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "subject_result")
@@ -37,19 +38,11 @@ public class SubjectResultEntity {
 
     private Integer correctRate;
 
-    @Builder
-    public SubjectResultEntity(MockExamResultEntity mockExamResultEntity,
-                               SubjectEntity subjectEntity,
-                               Integer score,
-                               Integer numberOfCorrect,
-                               Long totalTakenTime,
-                               Integer correctRate) {
-        this.mockExamResultEntity = mockExamResultEntity;
-        this.subjectEntity = subjectEntity;
-        this.score = score;
-        this.numberOfCorrect = numberOfCorrect;
-        this.totalTakenTime = totalTakenTime;
-        this.correctRate = correctRate;
+
+    public static SubjectResultEntity from(Long subjectResultId) {
+        return SubjectResultEntity.builder()
+                .id(subjectResultId)
+                .build();
     }
 
     public SubjectResult toDomain() {

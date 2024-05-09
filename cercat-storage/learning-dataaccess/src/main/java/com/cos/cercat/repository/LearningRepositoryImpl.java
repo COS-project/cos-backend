@@ -32,11 +32,11 @@ public class LearningRepositoryImpl implements LearningRepository {
 
 
     @Override
-    public void save(TargetUser targetUser,
-                     TargetCertificate targetCertificate,
+    public void save(User user,
+                     Certificate certificate,
                      NewGoal newGoal) {
-        UserEntity userEntity = userJpaRepository.getReferenceById(targetUser.userId());
-        CertificateEntity certificateEntity = certificateJpaRepository.getReferenceById(targetCertificate.certificateId());
+        UserEntity userEntity = userJpaRepository.getReferenceById(user.getId());
+        CertificateEntity certificateEntity = certificateJpaRepository.getReferenceById(certificate.id());
         goalJpaRepository.save(GoalEntity.of(certificateEntity, userEntity, newGoal));
     }
 
@@ -55,13 +55,13 @@ public class LearningRepositoryImpl implements LearningRepository {
     }
 
     @Override
-    public boolean existsGoal(TargetCertificate targetCertificate, TargetUser targetUser) {
-        return goalJpaRepository.existsGoalByUserIdAndCertificateId(targetCertificate.certificateId(), targetUser.userId());
+    public boolean existsGoal(User user, Certificate certificate) {
+        return goalJpaRepository.existsGoalByUserIdAndCertificateId(user.getId(), certificate.id());
     }
 
     @Override
-    public List<Goal> findAllGoals(TargetCertificate targetCertificate, TargetUser targetUser) {
-        return goalJpaRepository.findGoalsByUserIdAndCertificateId(targetUser.userId(), targetCertificate.certificateId()).stream()
+    public List<Goal> findAllGoals(User user, Certificate certificate) {
+        return goalJpaRepository.findGoalsByUserIdAndCertificateId(user.getId(), certificate.id()).stream()
                 .map(GoalEntity::toDomain)
                 .toList();
     }

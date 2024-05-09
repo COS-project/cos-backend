@@ -1,9 +1,10 @@
 package com.cos.cercat.mockexamresult;
 
-import com.cos.cercat.certificate.TargetCertificate;
+import com.cos.cercat.certificate.Certificate;
 import com.cos.cercat.common.domain.Cursor;
 import com.cos.cercat.common.domain.SliceResult;
 import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -17,13 +18,12 @@ public class UserAnswerManager {
         return mockExamResultRepository.findUserAnswer(targetUserAnswer);
     }
 
-    public SliceResult<UserAnswer> findAllWrongUserAnswers(TargetCertificate targetCertificate, TargetUser targetUser, Cursor cursor) {
-        return mockExamResultRepository.findAllWrongUserAnswers(targetCertificate, targetUser, cursor);
+    public SliceResult<UserAnswer> findAllWrongUserAnswers(User user, Certificate certificate, Cursor cursor) {
+        return mockExamResultRepository.findAllWrongUserAnswers(user, certificate, cursor);
     }
 
-    public SliceResult<UserAnswer> findWrongUserAnswers(TargetMockExamResult targetMockExamResult,
-                                                        TargetUser targetUser,
+    public SliceResult<UserAnswer> findWrongUserAnswers(MockExamResult mockExamResult,
                                                         Cursor cursor) {
-        return mockExamResultRepository.findWrongUserAnswers(targetMockExamResult, targetUser, cursor);
+        return mockExamResultRepository.findWrongUserAnswers(mockExamResult, cursor);
     }
 }

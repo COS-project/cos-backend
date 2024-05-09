@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface CustomMockExamResultRepository {
 
-    List<DailyScoreAverage> getDailyScoreDataList(Long certificateId, Long userId, DateCond dateCond);
+    List<DailyScoreAverage> getDailyScoreDataList(Long userId, Long certificateId, DateCond dateCond);
 
-    List<WeeklyScoreAverage> getWeeklyScoreDataList(Long certificateId, Long userId, DateCond dateCond);
+    List<WeeklyScoreAverage> getWeeklyScoreDataList(Long userId, Long certificateId, DateCond dateCond);
 
-    List<MonthlyScoreAverage> getMonthlyScoreDataList(Long certificateId, Long userId, DateCond dateCond);
+    List<MonthlyScoreAverage> getMonthlyScoreDataList(Long userId, Long certificateId, DateCond dateCond);
 }

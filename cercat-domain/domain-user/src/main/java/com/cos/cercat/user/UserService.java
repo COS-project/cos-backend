@@ -34,6 +34,7 @@ public class UserService {
     }
 
     public void deleteUser(TargetUser targetUser) {
-        userRemover.remove(targetUser);
+        User user = userReader.read(targetUser);
+        userRemover.remove(user);
     }
 }

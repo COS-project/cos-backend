@@ -1,7 +1,7 @@
 package com.cos.cercat.learning;
 
-import com.cos.cercat.certificate.TargetCertificate;
-import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.certificate.Certificate;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +13,8 @@ public class GoalFinder {
 
     private final LearningRepository learningRepository;
 
-    public List<Goal> findAll(TargetCertificate targetCertificate, TargetUser targetUser) {
-        return learningRepository.findAllGoals(targetCertificate, targetUser);
+    public List<Goal> findAll(User user, Certificate certificate) {
+        return learningRepository.findAllGoals(user, certificate);
     }
 
 }

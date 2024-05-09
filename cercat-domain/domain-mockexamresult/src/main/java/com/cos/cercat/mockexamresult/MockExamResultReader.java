@@ -1,11 +1,9 @@
 package com.cos.cercat.mockexamresult;
 
-import com.cos.cercat.certificate.TargetCertificate;
+import com.cos.cercat.certificate.Certificate;
 import com.cos.cercat.learning.GoalPeriod;
 import com.cos.cercat.learning.MockExamResultProvider;
 import com.cos.cercat.mockexam.MockExam;
-import com.cos.cercat.mockexam.TargetMockExam;
-import com.cos.cercat.user.TargetUser;
 import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -20,25 +18,25 @@ public class MockExamResultReader implements MockExamResultProvider {
         return mockExamResultRepository.find(targetMockExamResult);
     }
 
-    public int count(TargetUser targetUser, TargetMockExam targetMockExam) {
-        return mockExamResultRepository.countMockExamResult(targetUser, targetMockExam);
+    public int count(User user, MockExam mockExam) {
+        return mockExamResultRepository.countMockExamResult(user, mockExam);
     }
 
-    public int readCurrentMaxScore(TargetCertificate targetCertificate,
-                                   TargetUser targetUser,
+    public int readCurrentMaxScore(User user,
+                                   Certificate certificate,
                                    GoalPeriod goalPeriod) {
-        return mockExamResultRepository.getCurrentMaxScore(targetCertificate, targetUser, goalPeriod);
+        return mockExamResultRepository.getCurrentMaxScore(user, certificate, goalPeriod);
     }
 
-    public int countTodayMockExamResults(TargetCertificate targetCertificate,
-                                          TargetUser targetUser) {
-        return mockExamResultRepository.countTodayMockExamResults(targetCertificate, targetUser);
+    public int countTodayMockExamResults(User user,
+                                         Certificate certificate) {
+        return mockExamResultRepository.countTodayMockExamResults(user, certificate);
     }
 
-    public int countTotalMockExamResults(TargetCertificate targetCertificate,
-                                          TargetUser targetUser,
-                                          GoalPeriod goalPeriod) {
-        return mockExamResultRepository.countTotalMockExamResults(targetCertificate, targetUser, goalPeriod);
+    public int countTotalMockExamResults(User user,
+                                         Certificate certificate,
+                                         GoalPeriod goalPeriod) {
+        return mockExamResultRepository.countTotalMockExamResults(user, certificate, goalPeriod);
     }
 
     public MockExamResult readRecent(MockExam mockExam, User user) {

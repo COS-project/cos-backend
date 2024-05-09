@@ -19,54 +19,65 @@ public interface MockExamResultRepository {
                               MockExam mockExam,
                               NewMockExamResult newMockExamResult);
 
-    int countMockExamResult(TargetUser targetUser,
-                            TargetMockExam targetMockExam);
+    int countMockExamResult(User user,
+                            MockExam mockExam);
 
     UserAnswer findUserAnswer(TargetUserAnswer targetUserAnswer);
 
     void update(UserAnswer userAnswer);
 
-    List<MockExamResultDetail> findMockExamResultDetails(TargetMockExam targetMockExam,
-                                                         TargetUser targetUser);
+    List<MockExamResultDetail> findMockExamResultDetails(User user,
+                                                         MockExam mockExam);
 
-    SliceResult<UserAnswer> findAllWrongUserAnswers(TargetCertificate targetCertificate,
-                                                    TargetUser targetUser, Cursor cursor);
+    SliceResult<UserAnswer> findAllWrongUserAnswers(User user,
+                                                    Certificate certificate,
+                                                    Cursor cursor);
 
-    SliceResult<UserAnswer> findWrongUserAnswers(TargetMockExamResult targetMockExamResult,
-                                                 TargetUser targetUser, Cursor cursor);
+    SliceResult<UserAnswer> findWrongUserAnswers(MockExamResult mockExamResult,
+                                                 Cursor cursor);
 
     MockExamResult find(TargetMockExamResult targetMockExamResult);
 
-    PageResult<MockExamResult> findMockExamResultsByDate(TargetUser targetUser, TargetCertificate targetCertificate, DateCond dateCond, Cursor cursor);
+    PageResult<MockExamResult> findMockExamResultsByDate(User user,
+                                                         Certificate certificate,
+                                                         DateCond dateCond,
+                                                         Cursor cursor);
 
-    PageResult<MockExamResult> findMockExamResultsByWeekOfMonth(TargetUser targetUser, TargetCertificate targetCertificate, DateCond dateCond, Cursor cursor);
+    PageResult<MockExamResult> findMockExamResultsByWeekOfMonth(User user,
+                                                                Certificate certificate,
+                                                                DateCond dateCond,
+                                                                Cursor cursor);
 
-    PageResult<MockExamResult> findMockExamResultsByMonth(TargetUser targetUser, TargetCertificate targetCertificate, DateCond dateCond, Cursor cursor);
+    PageResult<MockExamResult> findMockExamResultsByMonth(User user,
+                                                          Certificate certificate,
+                                                          DateCond dateCond,
+                                                          Cursor cursor);
 
-    List<ScoreData> getDailyScoreData(TargetUser targetUser,
-                                      TargetCertificate targetCertificate,
+    List<ScoreData> getDailyScoreData(User user,
+                                      Certificate certificate,
                                       DateCond dateCond);
 
-    List<ScoreData> getWeeklyScoreData(TargetUser targetUser,
-                                       TargetCertificate targetCertificate,
+    List<ScoreData> getWeeklyScoreData(User user,
+                                       Certificate certificate,
                                        DateCond dateCond);
 
-    List<ScoreData> getYearlyScoreData(TargetUser targetUser,
-                                       TargetCertificate targetCertificate,
+    List<ScoreData> getYearlyScoreData(User user,
+                                       Certificate certificate,
                                        DateCond dateCond);
 
     List<SubjectResultStatistics> getSubjectResultStatistics(User user,
                                                              Certificate certificate,
                                                              GoalPeriod goalDate);
 
-    int getCurrentMaxScore(TargetCertificate targetCertificate,
-                           TargetUser targetUser,
+    int getCurrentMaxScore(User user,
+                           Certificate certificate,
                            GoalPeriod goalPeriod);
 
-    int countTodayMockExamResults(TargetCertificate targetCertificate, TargetUser targetUser);
+    int countTodayMockExamResults(User user,
+                                  Certificate certificate);
 
-    int countTotalMockExamResults(TargetCertificate targetCertificate,
-                                  TargetUser targetUser,
+    int countTotalMockExamResults(User user,
+                                  Certificate certificate,
                                   GoalPeriod goalPeriod);
 
     MockExamResult readRecent(MockExam mockExam, User user);

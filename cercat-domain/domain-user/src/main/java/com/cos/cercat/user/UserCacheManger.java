@@ -19,12 +19,12 @@ public class UserCacheManger {
         return userCacheRepository.getUser(targetUser);
     }
 
-    public void remove(TargetUser targetUser) {
-        userCacheRepository.deleteUser(targetUser);
+    public void remove(User user) {
+        userCacheRepository.deleteUser(user);
     }
 
     public void refresh(User user) {
-        remove(TargetUser.from(user.getId()));
+        remove(user);
         append(user);
     }
 

@@ -1,5 +1,6 @@
 package com.cos.cercat.repository;
 
+import com.cos.cercat.certificate.Certificate;
 import com.cos.cercat.certificate.TargetCertificate;
 import com.cos.cercat.common.domain.Cursor;
 import com.cos.cercat.common.domain.Image;
@@ -9,6 +10,7 @@ import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.domain.*;
 import com.cos.cercat.post.*;
 import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
@@ -25,7 +27,6 @@ import java.util.stream.Collectors;
 @Transactional
 public class ReadPostRepositoryImpl implements ReadPostRepository {
 
-    private final CertificateJpaRepository certificateJpaRepository;
     private final CommentaryPostJpaRepository commentaryPostJpaRepository;
     private final NormalPostJpaRepository normalPostJpaRepository;
     private final TipPostJpaRepository tipPostJpaRepository;
@@ -36,11 +37,15 @@ public class ReadPostRepositoryImpl implements ReadPostRepository {
 
     @Override
     @Transactional
-    public SliceResult<Post> search(TargetCertificate targetCertificate,
+    public SliceResult<Post> search(Certificate certificate,
                                     CommentaryPostSearchCond commentaryPostSearchCond,
                                     Cursor cursor) {
-        CertificateEntity certificateEntity = certificateJpaRepository.getReferenceById(targetCertificate.certificateId());
-        Slice<CommentaryPostEntity> commentaryPostEntities = commentaryPostJpaRepository.searchPosts(toPageRequest(cursor), certificateEntity, commentaryPostSearchCond);
+
+        Slice<CommentaryPostEntity> commentaryPostEntities = commentaryPostJpaRepository.searchPosts(
+                toPageRequest(cursor),
+                CertificateEntity.from(certificate),
+                commentaryPostSearchCond
+        );
 
         List<Post> commentaryPosts = commentaryPostEntities.stream()
                 .map(this::toPost)
@@ -64,19 +69,17 @@ public class ReadPostRepositoryImpl implements ReadPostRepository {
     }
 
     @Override
-    public List<Post> findTop3TipPosts(TargetCertificate targetCertificate) {
+    public List<Post> findTop3TipPosts(Certificate certificate) {
 
-        return tipPostJpaRepository.findTop3(targetCertificate.certificateId()).stream()
+        return tipPostJpaRepository.findTop3(certificate.id()).stream()
                 .map(this::toPost)
                 .toList();
     }
 
-
-
     @Override
-    public SliceResult<Post> findMyCommentaryPosts(TargetUser targetUser, Cursor cursor) {
+    public SliceResult<Post> findMyCommentaryPosts(User user, Cursor cursor) {
         Slice<CommentaryPostEntity> commentaryPostEntities =
-                commentaryPostJpaRepository.findByUserId(targetUser.userId(), toPageRequest(cursor));
+                commentaryPostJpaRepository.findByUserId(user.getId(), toPageRequest(cursor));
 
         List<Post> commentaryPosts = commentaryPostEntities.stream()
                 .map(this::toPost)
@@ -85,25 +88,25 @@ public class ReadPostRepositoryImpl implements ReadPostRepository {
     }
 
     @Override
-    public SliceResult<Post> findMyNormalPosts(TargetUser targetUser, Cursor cursor) {
+    public SliceResult<Post> findMyNormalPosts(User user, Cursor cursor) {
 
-        Slice<Post> posts = normalPostJpaRepository.findNormalPostsByUserId(targetUser.userId(), toPageRequest(cursor))
+        Slice<Post> posts = normalPostJpaRepository.findNormalPostsByUserId(user.getId(), toPageRequest(cursor))
                 .map(this::toPost);
 
         return SliceResult.of(posts.getContent(), posts.hasNext());
     }
 
     @Override
-    public SliceResult<Post> findMyTipPosts(TargetUser targetUser, Cursor cursor) {
-        Slice<Post> posts = tipPostJpaRepository.findTipPostsByUserId(targetUser.userId(), toPageRequest(cursor))
+    public SliceResult<Post> findMyTipPosts(User user, Cursor cursor) {
+        Slice<Post> posts = tipPostJpaRepository.findTipPostsByUserId(user.getId(), toPageRequest(cursor))
                 .map(this::toPost);
 
         return SliceResult.of(posts.getContent(), posts.hasNext());
     }
 
     @Override
-    public SliceResult<PostComment> findComment(TargetUser targetUser, Cursor cursor) {
-        Slice<PostComment> postComments = postCommentJpaRepository.findByUserId(targetUser.userId(), toPageRequest(cursor))
+    public SliceResult<PostComment> findComment(User user, Cursor cursor) {
+        Slice<PostComment> postComments = postCommentJpaRepository.findByUserId(user.getId(), toPageRequest(cursor))
                 .map(PostCommentEntity::toDomain);
 
         return SliceResult.of(postComments.getContent(), postComments.hasNext());

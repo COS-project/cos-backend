@@ -25,9 +25,11 @@ public class RedisMessageManager implements AlarmPublisher, AlarmSubscribeManage
 
     @Override
     public void publish(User receiver, User sender, Long targetId, AlarmType alarmType) {
+
         AlarmEvent alarm = createAlarm(receiver, sender, targetId, alarmType);
+        String channelTopic = getChannelName(receiver.getId());
         log.info("RedisMessageManager publish: {}", alarm);
-        redisTemplate.convertAndSend(getChannelName(receiver.getId()), alarm);
+        redisTemplate.convertAndSend(channelTopic, alarm);
     }
 
     @Override

@@ -1,10 +1,10 @@
 package com.cos.cercat.mockexamresult;
 
-import com.cos.cercat.certificate.TargetCertificate;
+import com.cos.cercat.certificate.Certificate;
 import com.cos.cercat.common.domain.Cursor;
 import com.cos.cercat.common.domain.PageResult;
-import com.cos.cercat.mockexam.TargetMockExam;
-import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.mockexam.MockExam;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -16,37 +16,37 @@ public class MockExamResultFinder {
 
     private final MockExamResultRepository mockExamResultRepository;
 
-    public List<MockExamResultDetail> findDetails(TargetMockExam targetMockExam,
-                                                  TargetUser targetUser) {
-        return mockExamResultRepository.findMockExamResultDetails(targetMockExam, targetUser);
+    public List<MockExamResultDetail> findDetails(User user,
+                                                  MockExam mockExam) {
+        return mockExamResultRepository.findMockExamResultDetails(user, mockExam);
     }
 
-    public PageResult<MockExamResult> findMockExamResults(TargetUser targetUser,
-                                                          TargetCertificate targetCertificate,
+    public PageResult<MockExamResult> findMockExamResults(User user,
+                                                          Certificate certificate,
                                                           DateType dateType,
                                                           DateCond dateCond,
                                                           Cursor cursor) {
         return switch (dateType) {
             case DATE ->
-                    mockExamResultRepository.findMockExamResultsByDate(targetUser, targetCertificate, dateCond, cursor);
+                    mockExamResultRepository.findMockExamResultsByDate(user, certificate, dateCond, cursor);
             case WEEK_OF_MONTH ->
-                    mockExamResultRepository.findMockExamResultsByWeekOfMonth(targetUser, targetCertificate, dateCond, cursor);
+                    mockExamResultRepository.findMockExamResultsByWeekOfMonth(user, certificate, dateCond, cursor);
             case MONTH ->
-                    mockExamResultRepository.findMockExamResultsByMonth(targetUser, targetCertificate, dateCond, cursor);
+                    mockExamResultRepository.findMockExamResultsByMonth(user, certificate, dateCond, cursor);
         };
     }
 
-    public List<ScoreData> findReportData(TargetUser targetUser,
-                                         TargetCertificate targetCertificate,
-                                         ReportType reportType,
-                                         DateCond dateCond) {
+    public List<ScoreData> findReportData(User user,
+                                          Certificate certificate,
+                                          ReportType reportType,
+                                          DateCond dateCond) {
         return switch (reportType) {
             case WEEKLY ->
-                    mockExamResultRepository.getDailyScoreData(targetUser, targetCertificate, dateCond);
+                    mockExamResultRepository.getDailyScoreData(user, certificate, dateCond);
             case MONTHLY ->
-                    mockExamResultRepository.getWeeklyScoreData(targetUser, targetCertificate, dateCond);
+                    mockExamResultRepository.getWeeklyScoreData(user, certificate, dateCond);
             case YEARLY ->
-                    mockExamResultRepository.getYearlyScoreData(targetUser, targetCertificate, dateCond);
+                    mockExamResultRepository.getYearlyScoreData(user, certificate, dateCond);
         };
     }
 

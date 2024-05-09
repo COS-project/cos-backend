@@ -1,9 +1,9 @@
 package com.cos.cercat.post;
 
-import com.cos.cercat.certificate.TargetCertificate;
+import com.cos.cercat.certificate.Certificate;
 import com.cos.cercat.common.domain.Cursor;
 import com.cos.cercat.common.domain.SliceResult;
-import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -30,15 +30,15 @@ public class PostReader {
 
     }
 
-    public List<Post> readTop3TipPosts(TargetCertificate targetCertificate) {
-        return postRepository.findTop3TipPosts(targetCertificate);
+    public List<Post> readTop3TipPosts(Certificate certificate) {
+        return postRepository.findTop3TipPosts(certificate);
     }
 
-    public SliceResult<Post> readMyPosts(TargetUser targetUser, PostType postType, Cursor cursor) {
+    public SliceResult<Post> readMyPosts(User user, PostType postType, Cursor cursor) {
         return switch (postType) {
-            case COMMENTARY -> postRepository.findMyCommentaryPosts(targetUser, cursor);
-            case NORMAL -> postRepository.findMyNormalPosts(targetUser, cursor);
-            case TIP -> postRepository.findMyTipPosts(targetUser, cursor);
+            case COMMENTARY -> postRepository.findMyCommentaryPosts(user, cursor);
+            case NORMAL -> postRepository.findMyNormalPosts(user, cursor);
+            case TIP -> postRepository.findMyTipPosts(user, cursor);
         };
     }
 }
