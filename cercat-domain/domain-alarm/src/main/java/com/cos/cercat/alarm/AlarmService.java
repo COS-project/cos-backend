@@ -4,7 +4,6 @@ import com.cos.cercat.user.TargetUser;
 import com.cos.cercat.user.User;
 import com.cos.cercat.user.UserReader;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;

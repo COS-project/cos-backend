@@ -32,7 +32,7 @@ public class ReadLearningApi implements ReadLearningApiDocs {
     @GetMapping("/certificates/{certificateId}/goals")
     public Response<List<GoalResponse>> getAllGoal(@PathVariable Long certificateId,
                                                    @AuthenticationPrincipal User currentUser) {
-        List<GoalResponse> responses = readLearningService.getAllGoals(TargetCertificate.from(certificateId), TargetUser.from(currentUser.getId())).stream()
+        List<GoalResponse> responses = readLearningService.getAllGoals(TargetUser.from(currentUser.getId()), TargetCertificate.from(certificateId)).stream()
                 .map(GoalResponse::from)
                 .toList();
         return Response.success(responses);
@@ -49,7 +49,7 @@ public class ReadLearningApi implements ReadLearningApiDocs {
     @GetMapping("/certificates/{certificateId}/goals/achievement")
     public Response<GoalAchievement> getGoalAchievement(@PathVariable Long certificateId,
                                                         @AuthenticationPrincipal User currentUser) {
-        GoalAchievement goalAchievement = readLearningService.getGoalAchievement(TargetCertificate.from(certificateId), TargetUser.from(currentUser.getId()));
+        GoalAchievement goalAchievement = readLearningService.getGoalAchievement(TargetUser.from(currentUser.getId()), TargetCertificate.from(certificateId));
         return Response.success(goalAchievement);
     }
 
@@ -57,7 +57,7 @@ public class ReadLearningApi implements ReadLearningApiDocs {
     @GetMapping("/certificates/{certificateId}/goal-status")
     public Response<Boolean> existsGoal(@PathVariable Long certificateId,
                                         @AuthenticationPrincipal User currentUser) {
-        boolean existsGoal = readLearningService.existsGoal(TargetCertificate.from(certificateId), TargetUser.from(currentUser.getId()));
+        boolean existsGoal = readLearningService.existsGoal(TargetUser.from(currentUser.getId()), TargetCertificate.from(certificateId));
         return Response.success(existsGoal);
     }
 }

@@ -26,21 +26,25 @@ public class ReadLearningService {
         return goalReader.read(targetGoal);
     }
 
-    public boolean existsGoal(TargetCertificate targetCertificate, TargetUser targetUser) {
-        return goalReader.exists(targetCertificate, targetUser);
+    public boolean existsGoal(TargetUser targetUser, TargetCertificate targetCertificate) {
+        User user = userReader.read(targetUser);
+        Certificate certificate = certificateReader.read(targetCertificate);
+        return goalReader.exists(user, certificate);
     }
 
-    public List<Goal> getAllGoals(TargetCertificate targetCertificate, TargetUser targetUser) {
-        return goalFinder.findAll(targetCertificate, targetUser);
+    public List<Goal> getAllGoals(TargetUser targetUser, TargetCertificate targetCertificate) {
+        User user = userReader.read(targetUser);
+        Certificate certificate = certificateReader.read(targetCertificate);
+        return goalFinder.findAll(user, certificate);
     }
 
-    public GoalAchievement getGoalAchievement(TargetCertificate targetCertificate, TargetUser targetUser) {
+    public GoalAchievement getGoalAchievement(TargetUser targetUser, TargetCertificate targetCertificate) {
         User user = userReader.read(targetUser);
         Certificate certificate = certificateReader.read(targetCertificate);
         Goal goal = goalReader.readRecentGoal(user, certificate);
-        int currentMaxScore = mockExamResultReader.readCurrentMaxScore(targetCertificate, targetUser, goal.getGoalPeriod());
-        int countTodayMockExamResult = mockExamResultReader.countTodayMockExamResults(targetCertificate, targetUser);
-        int countTotalMockExamResults = mockExamResultReader.countTotalMockExamResults(targetCertificate, targetUser, goal.getGoalPeriod());
+        int currentMaxScore = mockExamResultReader.readCurrentMaxScore(user, certificate, goal.getGoalPeriod());
+        int countTodayMockExamResult = mockExamResultReader.countTodayMockExamResults(user, certificate);
+        int countTotalMockExamResults = mockExamResultReader.countTotalMockExamResults(user, certificate, goal.getGoalPeriod());
         long todayTotalStudyTime = studyTimeLogReader.readTodayStudyTime(goal);
         long totalStudyTime = studyTimeLogReader.readTotalStudyTime(goal);
 

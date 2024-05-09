@@ -35,8 +35,8 @@ public class UserCacheRepositoryImpl implements UserCacheRepository {
         return user;
     }
 
-    public void deleteUser(TargetUser targetUser) {
-        String key = getKey(targetUser.userId());
+    public void deleteUser(User user) {
+        String key = getKey(user.getId());
         redisTemplate.delete(key);
         log.info("유저 캐싱 폐기 완료 - {}", key);
     }

@@ -42,10 +42,6 @@ public class CreatePostService {
                                   CommentContent commentContent) {
         User user = userReader.read(targetUser);
         Post post = postReader.read(targetPost);
-        if (commentContent.hasParent()) {
-            commentAppender.appendChild(user, post, commentContent);
-            return;
-        }
         commentAppender.append(user, post, commentContent);
     }
 }

@@ -61,13 +61,12 @@ public class UserAnswerEntity {
         this.isReviewed = isReviewed;
     }
 
-    public static UserAnswerEntity from(UserAnswer userAnswer,
-                                        SubjectResultEntity subjectResultEntity) {
+    public static UserAnswerEntity from(UserAnswer userAnswer) {
         return UserAnswerEntity.builder()
                 .id(userAnswer.getId())
                 .userEntity(UserEntity.from(userAnswer.getUser()))
                 .questionEntity(QuestionEntity.from(userAnswer.getQuestion()))
-                .subjectResultEntity(subjectResultEntity)
+                .subjectResultEntity(SubjectResultEntity.from(userAnswer.getSubjectResultId()))
                 .selectOptionSeq(userAnswer.getSelectOptionSeq())
                 .takenTime(userAnswer.getTakenTime())
                 .isCorrect(userAnswer.isCorrect())

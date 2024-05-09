@@ -1,8 +1,6 @@
 package com.cos.cercat.learning;
 
 import com.cos.cercat.certificate.Certificate;
-import com.cos.cercat.certificate.TargetCertificate;
-import com.cos.cercat.user.TargetUser;
 import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -17,8 +15,8 @@ public class GoalReader {
         return learningRepository.getGoal(targetGoal);
     }
 
-    public boolean exists(TargetCertificate targetCertificate, TargetUser targetUser) {
-        return learningRepository.existsGoal(targetCertificate, targetUser);
+    public boolean exists(User user, Certificate certificate) {
+        return learningRepository.existsGoal(user, certificate);
     }
 
     public Goal readRecentGoal(User user, Certificate certificate) {

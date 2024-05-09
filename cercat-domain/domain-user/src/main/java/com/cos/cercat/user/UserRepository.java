@@ -6,7 +6,7 @@ public interface UserRepository {
 
     void update(User user);
 
-    void delete(TargetUser targetUser);
+    void delete(User user);
 
     User save(NewUser newUser);
 

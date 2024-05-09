@@ -2,7 +2,6 @@ package com.cos.cercat.mockexam;
 
 
 import com.cos.cercat.certificate.Certificate;
-import com.cos.cercat.certificate.TargetCertificate;
 
 import java.util.List;
 
@@ -11,11 +10,11 @@ public interface MockExamRepository {
                           MockExamSession mockExamSession,
                           int questionSequence);
 
-    List<MockExam> find(TargetCertificate targetCertificate, Integer examYear);
+    List<MockExam> find(Certificate certificate, Integer examYear);
 
-    List<Question> findQuestions(TargetMockExam targetMockExam);
+    List<Question> findQuestions(MockExam mockExam);
 
-    List<Integer> findExamYears(TargetCertificate targetCertificate);
+    List<Integer> findExamYears(Certificate certificate);
 
     MockExam read(TargetMockExam targetMockExam);
 }

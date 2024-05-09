@@ -37,23 +37,23 @@ public class MockExamRepositoryImpl implements MockExamRepository {
 
     @Override
     @Transactional(readOnly = true)
-    public List<MockExam> find(TargetCertificate targetCertificate, Integer examYear) {
-        return mockExamJpaRepository.findMockExamByCertificateIdAndExamYear(targetCertificate.certificateId(), examYear).stream()
+    public List<MockExam> find(Certificate certificate, Integer examYear) {
+        return mockExamJpaRepository.findMockExamByCertificateIdAndExamYear(certificate.id(), examYear).stream()
                 .map(MockExamEntity::toDomain)
                 .toList();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Question> findQuestions(TargetMockExam targetMockExam) {
-        return questionJpaRepository.findByMockExamId(targetMockExam.mockExamId()).stream()
+    public List<Question> findQuestions(MockExam mockExam) {
+        return questionJpaRepository.findByMockExamId(mockExam.id()).stream()
                 .map(QuestionEntity::toDomain)
                 .toList();
     }
 
     @Override
-    public List<Integer> findExamYears(TargetCertificate targetCertificate) {
-        return mockExamJpaRepository.findExamYearsByCertificateId(targetCertificate.certificateId());
+    public List<Integer> findExamYears(Certificate certificate) {
+        return mockExamJpaRepository.findExamYearsByCertificateId(certificate.id());
     }
 
     @Override

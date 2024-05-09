@@ -7,7 +7,7 @@ public interface MockExamCacheRepository {
 
     void setQuestions(List<Question> questions);
 
-    Optional<List<Question>> getQuestions(TargetMockExam targetMockExam);
+    Optional<List<Question>> getQuestions(MockExam mockExam);
 
     void deleteQuestions(TargetMockExam targetMockExam);
 

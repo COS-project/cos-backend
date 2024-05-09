@@ -16,7 +16,6 @@ import com.cos.cercat.dto.SubjectResultsAVG;
 import com.cos.cercat.dto.WeeklyScoreAverage;
 import com.cos.cercat.learning.GoalPeriod;
 import com.cos.cercat.mockexam.MockExam;
-import com.cos.cercat.mockexam.TargetMockExam;
 import com.cos.cercat.mockexamresult.*;
 import com.cos.cercat.user.TargetUser;
 import com.cos.cercat.user.User;
@@ -66,8 +65,8 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
     }
 
     @Override
-    public int countMockExamResult(TargetUser targetUser, TargetMockExam targetMockExam) {
-        return mockExamResultJpaRepository.countMockExamResults(targetUser.userId(), targetMockExam.mockExamId());
+    public int countMockExamResult(User user, MockExam mockExam) {
+        return mockExamResultJpaRepository.countMockExamResults(user.getId(), mockExam.id());
     }
 
     @Override
@@ -80,14 +79,13 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
 
     @Override
     public void update(UserAnswer userAnswer) {
-        SubjectResultEntity subjectResultEntity = subjectResultJpaRepository.getReferenceById(userAnswer.getSubjectResultId());
-        userAnswerJpaRepository.save(UserAnswerEntity.from(userAnswer, subjectResultEntity));
+        userAnswerJpaRepository.save(UserAnswerEntity.from(userAnswer));
     }
 
     @Override
-    public List<MockExamResultDetail> findMockExamResultDetails(TargetMockExam targetMockExam, TargetUser targetUser) {
+    public List<MockExamResultDetail> findMockExamResultDetails(User user, MockExam mockExam) {
         List<MockExamResultEntity> mockExamResultEntities =
-                mockExamResultJpaRepository.findByMockExamIdAndUserId(targetMockExam.mockExamId(), targetUser.userId());
+                mockExamResultJpaRepository.findByMockExamIdAndUserId(user.getId(), mockExam.id());
         return mockExamResultEntities.stream()
                 .map(mockExamResultEntity -> {
                     List<SubjectResultEntity> subjectResultEntities = subjectResultJpaRepository.findByMockExamResultId(mockExamResultEntity.getId());
@@ -99,12 +97,12 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
     }
 
     @Override
-    public SliceResult<UserAnswer> findAllWrongUserAnswers(TargetCertificate targetCertificate,
-                                                           TargetUser targetUser,
+    public SliceResult<UserAnswer> findAllWrongUserAnswers(User user,
+                                                           Certificate certificate,
                                                            Cursor cursor) {
         Slice<UserAnswerEntity> userAnswerEntities = userAnswerJpaRepository.findWrongUserAnswersByUserIdAndCertificateId(
-                targetUser.userId(),
-                targetCertificate.certificateId(),
+                user.getId(),
+                certificate.id(),
                 toPageRequest(cursor));
 
         return SliceResult.of(userAnswerEntities.stream().map(UserAnswerEntity::toDomain).toList(), userAnswerEntities.hasNext());
@@ -112,11 +110,10 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
     }
 
     @Override
-    public SliceResult<UserAnswer> findWrongUserAnswers(TargetMockExamResult targetMockExamResult,
-                                                        TargetUser targetUser,
+    public SliceResult<UserAnswer> findWrongUserAnswers(MockExamResult mockExamResult,
                                                         Cursor cursor) {
         Slice<UserAnswerEntity> userAnswerEntities = userAnswerJpaRepository.findWrongUserAnswersByMockExamResultId(
-                targetMockExamResult.mockExamResultId(),
+                mockExamResult.getId(),
                 toPageRequest(cursor)
         );
 
@@ -131,13 +128,13 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
     }
 
     @Override
-    public PageResult<MockExamResult> findMockExamResultsByDate(TargetUser targetUser,
-                                                                TargetCertificate targetCertificate,
+    public PageResult<MockExamResult> findMockExamResultsByDate(User user,
+                                                                Certificate certificate,
                                                                 DateCond dateCond,
                                                                 Cursor cursor) {
         Page<MockExamResultEntity> mockExamResults = mockExamResultJpaRepository.findMockExamResultsByDate(
-                targetUser.userId(),
-                targetCertificate.certificateId(),
+                user.getId(),
+                certificate.id(),
                 dateCond.date(),
                 toPageRequest(cursor)
         );
@@ -152,13 +149,13 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
     }
 
     @Override
-    public PageResult<MockExamResult> findMockExamResultsByWeekOfMonth(TargetUser targetUser,
-                                                                       TargetCertificate targetCertificate,
+    public PageResult<MockExamResult> findMockExamResultsByWeekOfMonth(User user,
+                                                                       Certificate certificate,
                                                                        DateCond dateCond,
                                                                        Cursor cursor) {
         Page<MockExamResultEntity> mockExamResults = mockExamResultJpaRepository.findMockExamResultsByWeekOfMonth(
-                targetUser.userId(),
-                targetCertificate.certificateId(),
+                user.getId(),
+                certificate.id(),
                 DateUtils.getFirstDayOfMonth(LocalDate.of(dateCond.year(), dateCond.month(), 1)),
                 dateCond.month(),
                 dateCond.weekOfMonth(),
@@ -174,13 +171,13 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
     }
 
     @Override
-    public PageResult<MockExamResult> findMockExamResultsByMonth(TargetUser targetUser,
-                                                                 TargetCertificate targetCertificate,
+    public PageResult<MockExamResult> findMockExamResultsByMonth(User user,
+                                                                 Certificate certificate,
                                                                  DateCond dateCond,
                                                                  Cursor cursor) {
         Page<MockExamResultEntity> mockExamResults = mockExamResultJpaRepository.findMockExamResultsByMonth(
-                targetUser.userId(),
-                targetCertificate.certificateId(),
+                user.getId(),
+                certificate.id(),
                 dateCond.month(),
                 toPageRequest(cursor)
         );
@@ -194,12 +191,12 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
     }
 
     @Override
-    public List<ScoreData> getDailyScoreData(TargetUser targetUser,
-                                             TargetCertificate targetCertificate,
+    public List<ScoreData> getDailyScoreData(User user,
+                                             Certificate certificate,
                                              DateCond dateCond) {
         return mockExamResultJpaRepository.getDailyScoreDataList(
-                        targetCertificate.certificateId(),
-                        targetUser.userId(),
+                        user.getId(),
+                        certificate.id(),
                         dateCond
                 ).stream()
                 .map(DailyScoreAverage::toScoreData)
@@ -207,12 +204,12 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
     }
 
     @Override
-    public List<ScoreData> getWeeklyScoreData(TargetUser targetUser,
-                                              TargetCertificate targetCertificate,
+    public List<ScoreData> getWeeklyScoreData(User user,
+                                              Certificate certificate,
                                               DateCond dateCond) {
         return mockExamResultJpaRepository.getWeeklyScoreDataList(
-                        targetCertificate.certificateId(),
-                        targetUser.userId(),
+                        user.getId(),
+                        certificate.id(),
                         dateCond
                 ).stream()
                 .map(WeeklyScoreAverage::toScoreData)
@@ -220,12 +217,12 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
     }
 
     @Override
-    public List<ScoreData> getYearlyScoreData(TargetUser targetUser,
-                                              TargetCertificate targetCertificate,
+    public List<ScoreData> getYearlyScoreData(User user,
+                                              Certificate certificate,
                                               DateCond dateCond) {
         return mockExamResultJpaRepository.getMonthlyScoreDataList(
-                        targetCertificate.certificateId(),
-                        targetUser.userId(),
+                        user.getId(),
+                        certificate.id(),
                         dateCond
                 ).stream()
                 .map(MonthlyScoreAverage::toScoreData)
@@ -247,33 +244,33 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
     }
 
     @Override
-    public int getCurrentMaxScore(TargetCertificate targetCertificate,
-                                  TargetUser targetUser,
+    public int getCurrentMaxScore(User user,
+                                  Certificate certificate,
                                   GoalPeriod goalPeriod) {
         return mockExamResultJpaRepository.getMockExamResultMaxScore(
-                targetCertificate.certificateId(),
-                targetUser.userId(),
+                user.getId(),
+                certificate.id(),
                 goalPeriod.startDateTime(),
                 goalPeriod.endDateTime()
         );
     }
 
     @Override
-    public int countTodayMockExamResults(TargetCertificate targetCertificate,
-                                         TargetUser targetUser) {
+    public int countTodayMockExamResults(User user,
+                                         Certificate certificate) {
         return mockExamResultJpaRepository.countTodayMockExamResults(
-                targetCertificate.certificateId(),
-                targetUser.userId()
+                user.getId(),
+                certificate.id()
         );
     }
 
     @Override
-    public int countTotalMockExamResults(TargetCertificate targetCertificate,
-                                         TargetUser targetUser,
+    public int countTotalMockExamResults(User user,
+                                         Certificate certificate,
                                          GoalPeriod goalPeriod) {
         return mockExamResultJpaRepository.countTotalMockExamResults(
-                targetCertificate.certificateId(),
-                targetUser.userId(),
+                user.getId(),
+                certificate.id(),
                 goalPeriod.startDateTime(),
                 goalPeriod.endDateTime()
         );

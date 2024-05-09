@@ -1,5 +1,6 @@
 package com.cos.cercat.cache;
 
+import com.cos.cercat.mockexam.MockExam;
 import com.cos.cercat.mockexam.MockExamCacheRepository;
 import com.cos.cercat.mockexam.Question;
 import com.cos.cercat.mockexam.TargetMockExam;
@@ -28,8 +29,8 @@ public class MockExamCacheRepositoryImpl implements MockExamCacheRepository {
     }
 
     @Override
-    public Optional<List<Question>> getQuestions(TargetMockExam targetMockExam) {
-        String key = getKey(targetMockExam.mockExamId());
+    public Optional<List<Question>> getQuestions(MockExam mockExam) {
+        String key = getKey(mockExam.id());
         List<Question> questions = redisTemplate.opsForValue().get(key);
         log.info("Get Questions from {}", key);
         return Optional.ofNullable(questions);

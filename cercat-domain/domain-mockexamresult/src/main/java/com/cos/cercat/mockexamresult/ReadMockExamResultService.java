@@ -36,15 +36,19 @@ public class ReadMockExamResultService {
 
     public List<MockExamResultDetail> getMockExamResultDetail(TargetMockExam targetMockExam,
                                                               TargetUser targetUser) {
-        return mockExamResultFinder.findDetails(targetMockExam, targetUser);
+        User user = userReader.read(targetUser);
+        MockExam mockExam = mockExamReader.read(targetMockExam);
+        return mockExamResultFinder.findDetails(user, mockExam);
     }
 
     public SliceResult<UserAnswer> getAllWrongUserAnswers(TargetCertificate targetCertificate,
                                                           TargetUser targetUser,
                                                           Cursor cursor) {
+        User user = userReader.read(targetUser);
+        Certificate certificate = certificateReader.read(targetCertificate);
         return userAnswerManager.findAllWrongUserAnswers(
-                targetCertificate,
-                targetUser,
+                user,
+                certificate,
                 cursor
         );
 
@@ -56,11 +60,7 @@ public class ReadMockExamResultService {
         User user = userReader.read(targetUser);
         MockExamResult mockExamResult = mockExamResultReader.read(targetMockExamResult);
         permissionValidator.validate(mockExamResult, user);
-        return userAnswerManager.findWrongUserAnswers(
-                targetMockExamResult,
-                targetUser,
-                cursor
-        );
+        return userAnswerManager.findWrongUserAnswers(mockExamResult, cursor);
     }
 
     public PageResult<MockExamResult> findMockExamResults(TargetUser targetUser,
@@ -68,9 +68,11 @@ public class ReadMockExamResultService {
                                                           DateType dateType,
                                                           DateCond dateCond,
                                                           Cursor cursor) {
+        User user = userReader.read(targetUser);
+        Certificate certificate = certificateReader.read(targetCertificate);
         return mockExamResultFinder.findMockExamResults(
-                targetUser,
-                targetCertificate,
+                user,
+                certificate,
                 dateType,
                 dateCond,
                 cursor
@@ -95,9 +97,11 @@ public class ReadMockExamResultService {
                                              TargetCertificate targetCertificate,
                                              ReportType reportType,
                                              DateCond dateCond) {
+        User user = userReader.read(targetUser);
+        Certificate certificate = certificateReader.read(targetCertificate);
         return mockExamResultFinder.findReportData(
-                targetUser,
-                targetCertificate,
+                user,
+                certificate,
                 reportType,
                 dateCond
         );

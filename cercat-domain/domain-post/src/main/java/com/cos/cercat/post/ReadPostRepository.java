@@ -1,15 +1,17 @@
 package com.cos.cercat.post;
 
+import com.cos.cercat.certificate.Certificate;
 import com.cos.cercat.certificate.TargetCertificate;
 import com.cos.cercat.common.domain.Cursor;
 import com.cos.cercat.common.domain.SliceResult;
 import com.cos.cercat.user.TargetUser;
+import com.cos.cercat.user.User;
 
 import java.util.List;
 
 public interface ReadPostRepository {
 
-    SliceResult<Post> search(TargetCertificate targetCertificate,
+    SliceResult<Post> search(Certificate certificate,
                              CommentaryPostSearchCond commentaryPostSearchCond,
                              Cursor cursor);
 
@@ -21,15 +23,15 @@ public interface ReadPostRepository {
 
     PostComment find(TargetComment targetComment);
 
-    SliceResult<PostComment> findComment(TargetUser targetUser, Cursor cursor);
+    SliceResult<PostComment> findComment(User user, Cursor cursor);
 
-    List<Post> findTop3TipPosts(TargetCertificate targetCertificate);
+    List<Post> findTop3TipPosts(Certificate certificate);
 
-    SliceResult<Post> findMyCommentaryPosts(TargetUser targetUser, Cursor cursor);
+    SliceResult<Post> findMyCommentaryPosts(User user, Cursor cursor);
 
-    SliceResult<Post> findMyNormalPosts(TargetUser targetUser, Cursor cursor);
+    SliceResult<Post> findMyNormalPosts(User user, Cursor cursor);
 
-    SliceResult<Post> findMyTipPosts(TargetUser targetUser, Cursor cursor);
+    SliceResult<Post> findMyTipPosts(User user, Cursor cursor);
 
     Post find(TargetPost targetPost);
 }

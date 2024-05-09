@@ -1,8 +1,6 @@
 package com.cos.cercat.learning;
 
 import com.cos.cercat.certificate.Certificate;
-import com.cos.cercat.certificate.TargetCertificate;
-import com.cos.cercat.user.TargetUser;
 import com.cos.cercat.user.User;
 
 import java.util.List;
@@ -10,8 +8,8 @@ import java.util.List;
 public interface LearningRepository {
 
 
-    void save(TargetUser targetUser,
-              TargetCertificate targetCertificate,
+    void save(User user,
+              Certificate certificate,
               NewGoal newGoal);
 
     void saveStudyTimeLog(TargetGoal targetGoal,
@@ -19,9 +17,9 @@ public interface LearningRepository {
 
     Goal getGoal(TargetGoal targetGoal);
 
-    boolean existsGoal(TargetCertificate targetCertificate, TargetUser targetUser);
+    boolean existsGoal(User user, Certificate certificate);
 
-    List<Goal> findAllGoals(TargetCertificate targetCertificate, TargetUser targetUser);
+    List<Goal> findAllGoals(User user, Certificate certificate);
 
     Goal getRecentGoal(User user, Certificate certificate);
 
