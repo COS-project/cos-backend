@@ -9,7 +9,7 @@ dependencies {
     implementation project(':cercat-storage:jpa-dataaccess');
 
     //redis-dataaccess
-    implementation project(':cercat-storage:redis-dataaccess')
+    api project(':cercat-storage:redis-dataaccess')
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
     //query dsl
