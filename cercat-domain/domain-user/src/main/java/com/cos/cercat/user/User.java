@@ -4,6 +4,7 @@ import com.cos.cercat.common.domain.Image;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,8 @@ public class User {
     private String username;
     private UserProfileImage userProfileImage;
     private Role userRole;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime createdAt;
 
     public void update(String nickname, Image image) {
