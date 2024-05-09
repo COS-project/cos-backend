@@ -14,6 +14,9 @@ RUN mkdir -p ${MODULE_PATH}/build/extracted && (java -Djarmode=layertools -jar $
 FROM eclipse-temurin:17-jdk-alpine
 VOLUME /tmp
 
+RUN apk update
+RUN apk --no-cache add curl
+
 # 환경변수를 이용해 경로 설정
 ARG MODULE_PATH=cercat-application/app-api
 ARG MODULE_NAME=app-api
