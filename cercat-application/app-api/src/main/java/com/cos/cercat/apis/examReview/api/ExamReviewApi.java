@@ -3,6 +3,7 @@ package com.cos.cercat.apis.examReview.api;
 import com.cos.cercat.apis.examReview.request.ExamReviewCreateRequest;
 import com.cos.cercat.apis.examReview.response.ExamReviewResponse;
 import com.cos.cercat.certificate.TargetCertificate;
+import com.cos.cercat.common.annotation.CursorDefault;
 import com.cos.cercat.common.domain.Cursor;
 import com.cos.cercat.common.domain.Response;
 import com.cos.cercat.common.domain.SliceResult;
@@ -37,7 +38,7 @@ public class ExamReviewApi implements ExamReviewApiDocs {
     @GetMapping("/certificates/{certificateId}/exam-reviews")
     public Response<SliceResult<ExamReviewResponse>> getExamReviews(@PathVariable Long certificateId,
                                                               ExamReviewSearchCond cond,
-                                                              Cursor cursor) {
+                                                              @CursorDefault Cursor cursor) {
         SliceResult<ExamReviewResponse> responses = examReviewService.getExamReviews(
                 TargetCertificate.from(certificateId),
                 cond,

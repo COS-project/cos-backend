@@ -10,6 +10,8 @@ import com.cos.cercat.search.SearchLog;
 import com.cos.cercat.search.TrendingKeyword;
 import com.cos.cercat.user.User;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
@@ -21,6 +23,16 @@ public interface SearchPostApiDocs {
     Response<SliceResult<PostResponse>> search(SearchCond cond,
                                                User user,
                                                Long certificateId,
+                                               @Parameter(examples = {
+                                                       @ExampleObject(name = "cursor", value = """ 
+                                                                    {
+                                                                        "page" : 0,
+                                                                        "size" : 10,
+                                                                        "sortFields" : "createdAt, id",
+                                                                        "sortDirections" : "DESC, ASC"
+                                                                    }
+                                                                """)
+                                               })
                                                Cursor cursor);
 
     @Operation(summary = "최근 검색 기록 조회")

@@ -9,6 +9,8 @@ import com.cos.cercat.common.domain.SliceResult;
 import com.cos.cercat.examreview.ExamReviewSearchCond;
 import com.cos.cercat.user.User;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "따끈 후기 API")
@@ -22,6 +24,16 @@ public interface ExamReviewApiDocs {
     @Operation(summary = "최근 시험의 따끈 후기 조회")
     Response<SliceResult<ExamReviewResponse>> getExamReviews(Long certificateId,
                                                             ExamReviewSearchCond cond,
+                                                             @Parameter(examples = {
+                                                                     @ExampleObject(name = "cursor", value = """ 
+                                                                    {
+                                                                        "page" : 0,
+                                                                        "size" : 10,
+                                                                        "sortFields" : "createdAt, id",
+                                                                        "sortDirections" : "DESC, ASC"
+                                                                    }
+                                                                """)
+                                                             })
                                                             Cursor cursor);
 
     @Operation(summary = "따끈후기 작성 대상자인지 조회")

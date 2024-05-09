@@ -3,6 +3,7 @@ package com.cos.cercat.apis.post.api;
 import com.cos.cercat.apis.post.response.PostResponse;
 import com.cos.cercat.apis.post.response.PostWithCommentsResponse;
 import com.cos.cercat.certificate.TargetCertificate;
+import com.cos.cercat.common.annotation.CursorDefault;
 import com.cos.cercat.common.domain.Cursor;
 import com.cos.cercat.common.domain.Response;
 import com.cos.cercat.common.domain.SliceResult;
@@ -28,7 +29,7 @@ public class ReadPostApi implements ReadPostApiDocs {
     @GetMapping("/certificates/{certificateId}/posts")
     public Response<SliceResult<PostResponse>> searchCommentaryPosts(@PathVariable Long certificateId,
                                                                      CommentaryPostSearchCond cond,
-                                                                     Cursor cursor) {
+                                                                     @CursorDefault Cursor cursor) {
         SliceResult<Post> posts = readPostService.searchCommentaryPost(TargetCertificate.from(certificateId), cond, cursor);
 
         return Response.success(posts.map(PostResponse::from));
@@ -50,7 +51,7 @@ public class ReadPostApi implements ReadPostApiDocs {
     @GetMapping("/{postType}/posts/my-posts")
     public Response<SliceResult<PostResponse>> readMyPosts(@PathVariable PostType postType,
                                                            @AuthenticationPrincipal User currentUser,
-                                                           Cursor cursor) {
+                                                           @CursorDefault Cursor cursor) {
 
         SliceResult<Post> posts = readPostService.readMyPosts(TargetUser.from(currentUser.getId()), postType, cursor);
         return Response.success(posts.map(PostResponse::from));
@@ -58,7 +59,7 @@ public class ReadPostApi implements ReadPostApiDocs {
 
     @GetMapping("/comment-posts/my-comment-posts")
     public Response<SliceResult<PostResponse>> readMyCommentPosts(@AuthenticationPrincipal User currentUser,
-                                                                  Cursor cursor) {
+                                                                  @CursorDefault Cursor cursor) {
         SliceResult<Post> posts = readPostService.readCommentingPosts(TargetUser.from(currentUser.getId()), cursor);
         return Response.success(posts.map(PostResponse::from));
     }

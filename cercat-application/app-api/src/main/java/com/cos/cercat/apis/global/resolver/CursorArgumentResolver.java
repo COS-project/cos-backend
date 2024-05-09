@@ -25,16 +25,32 @@ public class CursorArgumentResolver implements HandlerMethodArgumentResolver {
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
                                   NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         CursorDefault cursorDefault = parameter.getParameterAnnotation(CursorDefault.class);
-        int page = cursorDefault.page();
-        int size = cursorDefault.size();
-        String[] fields = cursorDefault.sortFields().split(",");
-        String[] directions = cursorDefault.sortDirections().split(",");
+
+        String pageParam = webRequest.getParameter("page");
+        int page = (pageParam != null) ? Integer.parseInt(pageParam) : cursorDefault.page();
+
+        String sizeParam = webRequest.getParameter("size");
+        int size = (sizeParam != null) ? Integer.parseInt(sizeParam) : cursorDefault.size();
 
         List<SortOrder> sortOrders = new ArrayList<>();
+        String sortFieldsParam = webRequest.getParameter("sortFields");
+        String sortDirectionsParam = webRequest.getParameter("sortDirections");
+
+        if (sortFieldsParam != null && sortDirectionsParam != null) {
+            String[] fields = sortFieldsParam.split(",");
+            String[] directions = sortDirectionsParam.split(",");
+            for (int i = 0; i < fields.length; i++) {
+                sortOrders.add(new SortOrder(fields[i].trim(), SortDirection.valueOf(directions[i].trim().toUpperCase())));
+            }
+
+            return new Cursor(page, size, sortOrders);
+        }
+
+        String[] fields = cursorDefault.sortFields().split(",");
+        String[] directions = cursorDefault.sortDirections().split(",");
         for (int i = 0; i < fields.length; i++) {
             sortOrders.add(new SortOrder(fields[i].trim(), SortDirection.valueOf(directions[i].trim().toUpperCase())));
         }
-
         return new Cursor(page, size, sortOrders);
     }
 }

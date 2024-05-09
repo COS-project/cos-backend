@@ -15,10 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -93,7 +90,7 @@ public class ReadMockExamResultApi implements ReadMockExamResultApiDocs {
         return Response.success(responses);
     }
 
-    @GetMapping("/certificates/{certificateId}/mock-exam-result")
+    @GetMapping("/certificates/{certificateId}/mock-exam-result/{reportType}/statistics")
     public Response<ReportResponse> scoreReport(@PathVariable Long certificateId,
                                                 @PathVariable ReportType reportType,
                                                 DateCond dateCond,
@@ -113,7 +110,7 @@ public class ReadMockExamResultApi implements ReadMockExamResultApiDocs {
                                                                         @PathVariable DateType dateType,
                                                                         DateCond dateCond,
                                                                         @AuthenticationPrincipal User currentUser,
-                                                                        @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Cursor cursor) {
+                                                                        @CursorDefault Cursor cursor) {
         PageResult<MockExamResultResponse> responses = readMockExamResultService.findMockExamResults(
                 TargetUser.from(currentUser.getId()),
                 TargetCertificate.from(certificateId),

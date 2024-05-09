@@ -3,6 +3,7 @@ package com.cos.cercat.apis.search.api;
 import com.cos.cercat.apis.post.response.PostResponse;
 import com.cos.cercat.apis.user.request.SearchLogDeleteRequest;
 import com.cos.cercat.certificate.TargetCertificate;
+import com.cos.cercat.common.annotation.CursorDefault;
 import com.cos.cercat.common.domain.Cursor;
 import com.cos.cercat.common.domain.Response;
 import com.cos.cercat.common.domain.SliceResult;
@@ -31,7 +32,7 @@ public class SearchPostApi implements SearchPostApiDocs {
     public Response<SliceResult<PostResponse>> search(SearchCond cond,
                                                       @AuthenticationPrincipal User user,
                                                       @PathVariable Long certificateId,
-                                                      Cursor cursor) {
+                                                      @CursorDefault Cursor cursor) {
         SliceResult<Post> posts = searchPostService.search(TargetUser.from(user.getId()), TargetCertificate.from(certificateId), cond, cursor);
         return Response.success(posts.map(PostResponse::from));
     }
