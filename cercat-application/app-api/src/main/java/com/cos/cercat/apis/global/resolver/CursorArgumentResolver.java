@@ -36,21 +36,20 @@ public class CursorArgumentResolver implements HandlerMethodArgumentResolver {
         String sortFieldsParam = webRequest.getParameter("sortFields");
         String sortDirectionsParam = webRequest.getParameter("sortDirections");
 
-        if (sortFieldsParam != null && sortDirectionsParam != null) {
-            String[] fields = sortFieldsParam.split(",");
-            String[] directions = sortDirectionsParam.split(",");
-            for (int i = 0; i < fields.length; i++) {
-                sortOrders.add(new SortOrder(fields[i].trim(), SortDirection.valueOf(directions[i].trim().toUpperCase())));
-            }
-
+        if (sortFieldsParam == null && sortDirectionsParam == null) {
+            String field = cursorDefault.sortFields();
+            String direction = cursorDefault.sortDirections();
+            sortOrders.add(new SortOrder(field, SortDirection.valueOf(direction.toUpperCase())));
             return new Cursor(page, size, sortOrders);
         }
 
-        String[] fields = cursorDefault.sortFields().split(",");
-        String[] directions = cursorDefault.sortDirections().split(",");
+        String[] fields = sortFieldsParam.split(",");
+        String[] directions = sortDirectionsParam.split(",");
+
         for (int i = 0; i < fields.length; i++) {
             sortOrders.add(new SortOrder(fields[i].trim(), SortDirection.valueOf(directions[i].trim().toUpperCase())));
         }
+
         return new Cursor(page, size, sortOrders);
     }
 }
