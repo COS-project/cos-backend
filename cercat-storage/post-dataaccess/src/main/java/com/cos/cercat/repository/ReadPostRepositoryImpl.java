@@ -165,7 +165,14 @@ public class ReadPostRepositoryImpl implements ReadPostRepository {
     }
 
     private PageRequest toPageRequest(Cursor cursor) {
-        Sort.Direction direction = Sort.Direction.fromOptionalString(cursor.sortDirection().name()).orElseThrow();
-        return PageRequest.of(cursor.page(), cursor.size(), Sort.by(direction, cursor.sortKey()));
+        // 여러 정렬 기준을 처리할 Sort 객체 생성
+        Sort sort = Sort.by(cursor.sortOrders().stream()
+                .map(order -> new Sort.Order(
+                        Sort.Direction.fromOptionalString(order.direction().name()).orElse(Sort.Direction.ASC),
+                        order.key()
+                ))
+                .toList());
+
+        return PageRequest.of(cursor.page(), cursor.size(), sort);
     }
 }

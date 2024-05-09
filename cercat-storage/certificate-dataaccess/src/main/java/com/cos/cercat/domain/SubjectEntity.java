@@ -10,6 +10,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "subject")
 public class SubjectEntity extends BaseTimeEntity {
 
@@ -28,13 +29,6 @@ public class SubjectEntity extends BaseTimeEntity {
     private Integer numberOfQuestions;
 
     private Integer totalScore;
-
-    @Builder
-    public SubjectEntity(String subjectName, Integer numberOfQuestions, Integer totalScore) {
-        this.subjectName = subjectName;
-        this.numberOfQuestions = numberOfQuestions;
-        this.totalScore = totalScore;
-    }
 
     public static SubjectEntity from(Subject subject) {
 
@@ -56,6 +50,12 @@ public class SubjectEntity extends BaseTimeEntity {
                 .subjectName(subjectInfo.subjectName())
                 .numberOfQuestions(subjectInfo.numberOfQuestions())
                 .totalScore(subjectInfo.totalScore())
+                .build();
+    }
+
+    public static SubjectEntity from(Long subjectId) {
+        return SubjectEntity.builder()
+                .id(subjectId)
                 .build();
     }
 
