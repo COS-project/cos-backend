@@ -20,7 +20,6 @@ public class BoardService {
     private final BoardManager boardManager;
 
     public void flipFavorite(TargetUser targetUser, TargetCertificate targetCertificate) {
-
         User user = userReader.read(targetUser);
         Certificate certificate = certificateReader.read(targetCertificate);
 
