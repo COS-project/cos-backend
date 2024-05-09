@@ -32,7 +32,7 @@ public class UserCacheRepositoryImpl implements UserCacheRepository {
                 u -> log.info("Get User from Cache - {} : {}", key, u.getUsername()),
                 () -> log.info("No User Cache - {}", key)
         );
-
+        return user;
     }
 
     public void deleteUser(TargetUser targetUser) {

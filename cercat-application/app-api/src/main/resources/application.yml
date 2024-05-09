@@ -20,7 +20,8 @@ springdoc:
   swagger-ui:
     persist-authorization: true
     default-models-expand-depth: -1
-
+server:
+  shutdown: graceful
 ---
 spring:
   config:
