@@ -2,25 +2,43 @@
 
 IS_BLUE=$(docker compose ps | grep cercat-blue)
 DEFAULT_CONF=" data/nginx/nginx.conf"
-MAX_RETRIES=40
+MAX_RETRIES=30
 
 check_service() {
   local RETRIES=0
-  local URL=$1
+  local SERVICE_NAME=$1
+
+  local container_ids=($(docker compose ps -q $SERVICE_NAME))
+
+  # 최대 재시도 횟수
   while [ $RETRIES -lt $MAX_RETRIES ]; do
-    echo "Checking service at $URL/health... (attempt: $((RETRIES+1)))"
+    echo "Checking service at $SERVICE_NAME (attempt: $((RETRIES+1)))"
     sleep 3
 
-    REQUEST=$(curl -s "$URL/health")  # -s 옵션은 조용한 모드로 curl 명령어의 출력을 감춥니다.
-    if echo "$REQUEST" | grep -q "health check success"; then  # 응답에서 "health check success" 문자열이 있는지 확인합니다.
-      echo "Health check passed."
+    # 서비스에 대한 모든 컨테이너 ID 가져오기
+    local all_healthy=true
+
+    # 각 컨테이너의 헬스 상태 검사
+    for id in "${container_ids[@]}"; do
+      local health_status=$(docker container inspect --format='{{.State.Health.Status}}' "$id")
+      echo "Health status of container $id: $health_status"
+
+      if [ "$health_status" != "healthy" ]; then
+        all_healthy=false
+        break
+      fi
+    done
+
+    # 모든 컨테이너가 healthy 상태일 경우
+    if [ "$all_healthy" = true ]; then
+      echo "$SERVICE_NAME health check passed."
       return 0
     fi
 
     RETRIES=$((RETRIES+1))
   done;
 
-  echo "Failed to check service after $MAX_RETRIES attempts."
+  echo "Failed to check service $SERVICE_NAME after $MAX_RETRIES attempts."
   return 1
 }
 
@@ -34,8 +52,8 @@ if [ -z "$IS_BLUE" ];then
   docker compose up -d cercat-blue --scale cercat-blue=2
 
   echo "3. health check"
-  if ! check_service "http://127.0.0.1:8080"; then
-    echo "BLUE health check 가 실패했습니다."
+  if ! check_service "cercat-blue"; then
+    echo "BLUE health check failed."
     exit 1
   fi
 
@@ -57,10 +75,10 @@ else
   docker compose up -d cercat-green --scale cercat-green=2
 
   echo "3. health check"
-  if ! check_service "http://127.0.0.1:8081"; then
-      echo "GREEN health check 가 실패했습니다."
-      exit 1
-    fi
+  if ! check_service "cercat-green"; then
+    echo "GREEN health check failed."
+    exit 1
+  fi
 
   echo "4. nginx 재실행"
   sudo cp data/nginx/nginx-green.conf data/nginx/nginx.conf
