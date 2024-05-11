@@ -1,12 +1,12 @@
 package com.cos.cercat.board;
 
-import com.cos.cercat.certificate.Certificate;
-import com.cos.cercat.certificate.CertificateReader;
-import com.cos.cercat.certificate.TargetCertificate;
+import com.cos.cercat.certificate.*;
 import com.cos.cercat.user.TargetUser;
 import com.cos.cercat.user.User;
 import com.cos.cercat.user.UserReader;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,5 +42,17 @@ public class BoardService {
         return boardReader.isFavorite(user, certificate);
     }
 
+
+    @Async
+    @EventListener
+    public void favoriteAll(InterestCertificateCreatedEvent interestCertificateCreatedEvent) {
+        boardManager.favoriteAll(interestCertificateCreatedEvent.user(), interestCertificateCreatedEvent.certificateList());
+    }
+
+    @Async
+    @EventListener
+    public void unfavoriteAll(InterestCertificateRemovedEvent interestCertificateRemovedEvent) {
+        boardManager.unfavoriteAll(interestCertificateRemovedEvent.user(), interestCertificateRemovedEvent.certificateList());
+    }
 
 }

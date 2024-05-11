@@ -4,7 +4,6 @@ import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class InterestCertificateManager {
         List<Certificate> interesting = certificateFinder.find(interestTargets.certificates());
         List<NewInterestCertificate> newInterestCertificates = interestTargets.toNewInterestCertificates(interesting);
         interestCertificateRepository.saveAll(user, newInterestCertificates);
-        applicationEventPublisher.publishEvent(CreateInterestCertificateEvent.of(user, interesting));
+        applicationEventPublisher.publishEvent(InterestCertificateCreatedEvent.of(user, interesting));
     }
 
     public List<InterestCertificate> find(User user) {
@@ -40,6 +39,6 @@ public class InterestCertificateManager {
     public void removeAll(User user) {
         List<Certificate> interested = findCertificate(user);
         interestCertificateRepository.removeAll(user);
-        applicationEventPublisher.publishEvent(RemoveInterestCertificateEvent.of(user, interested));
+        applicationEventPublisher.publishEvent(InterestCertificateRemovedEvent.of(user, interested));
     }
 }
