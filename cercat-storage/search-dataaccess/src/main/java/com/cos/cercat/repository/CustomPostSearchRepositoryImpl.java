@@ -45,8 +45,8 @@ public class CustomPostSearchRepositoryImpl implements CustomPostSearchRepositor
     private final String KEYWORD_KEYWORD = "keyword.keyword";
     private final String KEYWORD_EDGE_NGRAM = "keyword.edge_ngram";
     private final String KEYWORD_NORI = "keyword.nori";
-    private final String URI_FIELD = "uri";
-    private final String URI_PREFIX = "/api/v1/certificates/";
+    private final String URI_KEYWORD = "uri.keyword";
+    private final String URI_PREFIX = "/api/v2/certificates/";
     private final String URI_SEARCH = "/search";
     private final String MINIMUM_SHOULD_MATCH = "1";
     private final String LOG_INDEX_PREFIX = "logstash-";
@@ -160,7 +160,7 @@ public class CustomPostSearchRepositoryImpl implements CustomPostSearchRepositor
     public List<String> getRecentTop10Keywords(Long certificateId) {
         ElasticsearchClient client = createElasticsearchClient();
 
-        Query query = createRecentTop5Query(certificateId);
+        Query query = createRecentTop10Query(certificateId);
 
         try {
             SearchResponse<Void> response = client.search(s -> s
@@ -182,9 +182,9 @@ public class CustomPostSearchRepositoryImpl implements CustomPostSearchRepositor
     private Query createAutoCompletedQuery(Long certificateId, String searchText) {
         return BoolQuery.of(b -> b
                 .filter(f -> f
-                        .match(m -> m
-                                .field(URI_FIELD)
-                                .query(URI_PREFIX + certificateId + URI_SEARCH)
+                        .term(m -> m
+                                .field(URI_KEYWORD)
+                                .value(URI_PREFIX + certificateId + URI_SEARCH)
                         )
                 ).must(m -> m.
                         bool(b1 -> b1
@@ -209,7 +209,7 @@ public class CustomPostSearchRepositoryImpl implements CustomPostSearchRepositor
         )._toQuery();
     }
 
-    private Query createRecentTop5Query(Long certificateId) {
+    private Query createRecentTop10Query(Long certificateId) {
         return BoolQuery.of(b -> b
 //                .filter(f -> f
 //                        .range(r -> r
@@ -219,9 +219,9 @@ public class CustomPostSearchRepositoryImpl implements CustomPostSearchRepositor
 //                        )
 //                ) // 유저수가 적어서 최근 2시간 검색어가 없을 수 있음 -> 향후 변경
                 .filter(f -> f
-                        .match(m -> m
-                                .field(URI_FIELD)
-                                .query(URI_PREFIX + certificateId + URI_SEARCH)
+                        .term(m -> m
+                                .field(URI_KEYWORD)
+                                .value(URI_PREFIX + certificateId + URI_SEARCH)
                         )
                 ))._toQuery();
     }

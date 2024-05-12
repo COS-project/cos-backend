@@ -6,8 +6,8 @@ import com.cos.cercat.common.domain.SliceResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -15,7 +15,6 @@ public class PostForSearchReader {
 
     private final PostForSearchRepository postForSearchRepository;
     private final TrendingKeywordsCacheManager trendingKeywordsCacheManager;
-
 
     public SliceResult<PostForSearch> read(SearchCond cond, Certificate certificate, Cursor cursor) {
         return postForSearchRepository.search(cond, certificate, cursor);
@@ -26,35 +25,16 @@ public class PostForSearchReader {
     }
 
     public List<TrendingKeyword> readTrendingKeywords(Certificate certificate) {
-        List<TrendingKeyword> trendingKeywords = new ArrayList<>();
-        List<String> currentKeywords = postForSearchRepository.findRecentTop10Keywords(certificate);
-        List<String> beforeKeywords = trendingKeywordsCacheManager.findTrendingKeywords();
+        return Optional.ofNullable(trendingKeywordsCacheManager.findTrendingKeywords(certificate))
+                .orElseGet(() -> {
+                    List<String> recentTop10Keywords = postForSearchRepository.findRecentTop10Keywords(certificate);
 
-        for (String currentKeyword : currentKeywords) {
-            KeywordStatus status = getKeywordStatus(beforeKeywords, currentKeywords, currentKeyword);
-            trendingKeywords.add(TrendingKeyword.of(currentKeyword, status));
-        }
-        trendingKeywordsCacheManager.setTrendingKeywords(currentKeywords);
-        return trendingKeywords;
-    }
+                    List<TrendingKeyword> trendingKeywords = recentTop10Keywords.stream()
+                            .map(TrendingKeyword::newKeyword)
+                            .toList();
 
-    private KeywordStatus getKeywordStatus(List<String> beforeKeywords,
-                                           List<String> currentKeywords,
-                                           String currentKeyword) {
-        if (beforeKeywords == null || !beforeKeywords.contains(currentKeyword)) {
-            return KeywordStatus.NEW;
-        }
-
-        int currentRank = currentKeywords.indexOf(currentKeyword);
-        int beforeRank = beforeKeywords.indexOf(currentKeyword);
-
-        if (currentRank > beforeRank) {
-            return KeywordStatus.RANK_DOWN;
-        }
-
-        if (currentRank < beforeRank) {
-            return KeywordStatus.RANK_UP;
-        }
-        return KeywordStatus.UNCHANGED;
+                    trendingKeywordsCacheManager.setTrendingKeywords(certificate, trendingKeywords);
+                    return trendingKeywords;
+                });
     }
 }

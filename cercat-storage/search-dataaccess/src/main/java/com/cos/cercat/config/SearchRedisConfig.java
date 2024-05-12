@@ -1,6 +1,9 @@
 package com.cos.cercat.config;
 
 import com.cos.cercat.search.SearchLog;
+import com.cos.cercat.search.TrendingKeyword;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -31,11 +34,12 @@ public class SearchRedisConfig {
     }
 
     @Bean
-    public RedisTemplate<String, List<String>> trendingKeywordRedisTemplate() {
-        RedisTemplate<String, List<String>> redisTemplate = new RedisTemplate<>();
+    public RedisTemplate<String, List<TrendingKeyword>> trendingKeywordRedisTemplate() {
+        RedisTemplate<String, List<TrendingKeyword>> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(List.class));
+        JavaType type = TypeFactory.defaultInstance().constructCollectionType(List.class, TrendingKeyword.class);
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(type));
         return redisTemplate;
     }
 
