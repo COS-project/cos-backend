@@ -1,5 +1,6 @@
 package com.cos.cercat.search;
 
+import com.cos.cercat.certificate.Certificate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,12 +12,12 @@ public class TrendingKeywordsCacheManager {
 
     private final TrendingKeywordRepository trendingKeywordRepository;
 
-    public void setTrendingKeywords(List<String> trendingKeywords) {
-        trendingKeywordRepository.setTrendingKeywords(trendingKeywords);
+    public void setTrendingKeywords(Certificate certificate, List<TrendingKeyword> trendingKeywords) {
+        trendingKeywordRepository.setTrendingKeywords(certificate, trendingKeywords);
     }
 
-    public List<String> findTrendingKeywords() {
-        return trendingKeywordRepository.findTrendingKeywords();
+    public List<TrendingKeyword> findTrendingKeywords(Certificate certificate) {
+        return trendingKeywordRepository.findTrendingKeywords(certificate);
     }
 
 }

@@ -1,3 +1,6 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+}
 bootJar {
     enabled = false
 }
@@ -11,13 +14,19 @@ dependencies {
     implementation project(':cercat-domain:domain-user');
     implementation project(':cercat-storage:post-dataaccess');
     implementation project(':cercat-storage:user-dataaccess');
+    implementation project(':cercat-storage:certificate-dataaccess');
     implementation project(':cercat-storage:jpa-dataaccess');
     implementation project(':cercat-storage:redis-dataaccess');
     implementation project(':cercat-storage:elasticsearch-dataaccess');
 
+    // shedlock - schedule lock
+    implementation 'net.javacrumbs.shedlock:shedlock-spring:5.10.0'
+    implementation 'net.javacrumbs.shedlock:shedlock-provider-jdbc-template:5.10.0'
+
     //elastic search
     api 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
     api 'co.elastic.clients:elasticsearch-java:8.9.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 bootJar {
@@ -40,4 +49,10 @@ sourceSets {
 // gradle clean 시에 QClass 디렉토리 삭제
 clean {
     delete file(generated)
+}
+repositories {
+    mavenCentral()
+}
+kotlin {
+    jvmToolchain(17)
 }

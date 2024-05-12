@@ -8,7 +8,6 @@ import org.springframework.data.domain.Persistable;
 
 @Entity
 @Getter
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "favorite_board")
 public class FavoriteBoardEntity extends BaseTimeEntity implements Persistable<FavoriteBoardPK> {
