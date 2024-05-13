@@ -3,6 +3,7 @@ package com.cos.cercat.config;
 import net.javacrumbs.shedlock.core.LockProvider;
 import net.javacrumbs.shedlock.provider.jdbctemplate.JdbcTemplateLockProvider;
 import net.javacrumbs.shedlock.spring.annotation.EnableSchedulerLock;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,6 +19,9 @@ import javax.sql.DataSource;
 @EnableSchedulerLock(defaultLockAtMostFor = "PT30M")
 public class TrendingCacheScheduleConfig implements SchedulingConfigurer {
 
+    @Value("${spring.shedlock.table.name}")
+    private String shedlockTableName;
+
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
         ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
@@ -31,7 +35,7 @@ public class TrendingCacheScheduleConfig implements SchedulingConfigurer {
     public LockProvider lockProvider(DataSource dataSource) {
         return new JdbcTemplateLockProvider(
                 JdbcTemplateLockProvider.Configuration.builder()
-                        .withTableName("cercat_test.shedlock")
+                        .withTableName(shedlockTableName)
                         .withJdbcTemplate(new JdbcTemplate(dataSource))
                         .usingDbTime()
                         .build()

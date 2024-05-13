@@ -25,6 +25,9 @@ spring:
         show-sql: true
         format_sql: true
         default_batch_fetch_size: 10
+  shedlock:
+    table:
+      name: cercat_test.shedlock
 ---
 spring:
   config:
@@ -42,3 +45,6 @@ spring:
     properties:
       hibernate:
         default_batch_fetch_size: 100
+  shedlock:
+    table:
+      name: cercat.shedlock
