@@ -1,6 +1,7 @@
 package com.cos.cercat.repository;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.ElasticsearchException;
 import co.elastic.clients.elasticsearch._types.FieldValue;
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
@@ -16,6 +17,7 @@ import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.domain.PostDocument;
 import com.cos.cercat.search.SearchCond;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,8 +39,9 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
+@Slf4j
 @Component
+@RequiredArgsConstructor
 public class CustomPostSearchRepositoryImpl implements CustomPostSearchRepository {
 
     private final ElasticsearchOperations elasticsearchOperations;
@@ -164,10 +167,10 @@ public class CustomPostSearchRepositoryImpl implements CustomPostSearchRepositor
 
         try {
             SearchResponse<Void> response = client.search(s -> s
-                            .index(LOG_INDEX_PREFIX + extractDate())
-                            .size(0)
-                            .query(query)
-                            .aggregations(KEYWORD_AGGREGATION, keywordAggregation()), Void.class);
+                    .index(LOG_INDEX_PREFIX + extractDate())
+                    .size(0)
+                    .query(query)
+                    .aggregations(KEYWORD_AGGREGATION, keywordAggregation()), Void.class);
 
             return response.aggregations().get(KEYWORD_AGGREGATION).sterms().buckets().array().stream()
                     .map(StringTermsBucket::key)
@@ -176,6 +179,9 @@ public class CustomPostSearchRepositoryImpl implements CustomPostSearchRepositor
 
         } catch (IOException e) {
             throw new CustomException(ErrorCode.ES_SEARCH_ERROR);
+        } catch (ElasticsearchException e) {
+            log.error("elastic search error", e);
+            return List.of();
         }
     }
 
