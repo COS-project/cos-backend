@@ -2,12 +2,10 @@ package com.cos.cercat.schedule;
 
 import com.cos.cercat.cache.TrendingKeywordCacheRepositoryImpl;
 import com.cos.cercat.certificate.Certificate;
-import com.cos.cercat.certificate.TargetCertificate;
 import com.cos.cercat.repository.CertificateRepositoryImpl;
 import com.cos.cercat.repository.PostForForSearchRepositoryImpl;
 import com.cos.cercat.search.KeywordStatus;
 import com.cos.cercat.search.TrendingKeyword;
-import com.cos.cercat.search.TrendingKeywordsCacheManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
