@@ -14,9 +14,9 @@ dependencies {
     implementation project(':cercat-storage:board-dataaccess')
     implementation project(':cercat-storage:jpa-dataaccess')
     implementation project(':cercat-storage:redis-dataaccess')
-    implementation project(':cercat-client:redis-message-module')
-    implementation project(':cercat-client:gcs-module')
-    implementation project(':cercat-client:sse-module')
+    implementation project(':cercat-internal:redis-message-module')
+    implementation project(':cercat-internal:gcs-module')
+    implementation project(':cercat-internal:sse-module')
 
     implementation 'org.springframework.boot:spring-boot-starter-batch'
     runtimeOnly 'com.mysql:mysql-connector-j'
