@@ -25,7 +25,6 @@ public class CreateMockExamResultService {
                                                      List<NewSubjectResult> newSubjectResults) {
         User user = userReader.read(targetUser);
         MockExam mockExam = mockExamReader.read(targetMockExam);
-        int round = mockExamResultReader.count(user, mockExam);
-        return mockExamResultAppender.append(user, mockExam, NewMockExamResult.of(round, newSubjectResults));
+        return mockExamResultAppender.append(user, mockExam, newSubjectResults);
     }
 }

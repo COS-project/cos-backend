@@ -11,11 +11,6 @@
             <option value="$PROJECT_DIR$/cercat-application" />
             <option value="$PROJECT_DIR$/cercat-application/app-api" />
             <option value="$PROJECT_DIR$/cercat-application/app-batch" />
-            <option value="$PROJECT_DIR$/cercat-client" />
-            <option value="$PROJECT_DIR$/cercat-client/gcs-module" />
-            <option value="$PROJECT_DIR$/cercat-client/kafka-module" />
-            <option value="$PROJECT_DIR$/cercat-client/redis-message-module" />
-            <option value="$PROJECT_DIR$/cercat-client/sse-module" />
             <option value="$PROJECT_DIR$/cercat-common" />
             <option value="$PROJECT_DIR$/cercat-domain" />
             <option value="$PROJECT_DIR$/cercat-domain/domain-alarm" />
@@ -29,6 +24,11 @@
             <option value="$PROJECT_DIR$/cercat-domain/domain-post" />
             <option value="$PROJECT_DIR$/cercat-domain/domain-search" />
             <option value="$PROJECT_DIR$/cercat-domain/domain-user" />
+            <option value="$PROJECT_DIR$/cercat-internal" />
+            <option value="$PROJECT_DIR$/cercat-internal/gcs-module" />
+            <option value="$PROJECT_DIR$/cercat-internal/kafka-module" />
+            <option value="$PROJECT_DIR$/cercat-internal/redis-message-module" />
+            <option value="$PROJECT_DIR$/cercat-internal/sse-module" />
             <option value="$PROJECT_DIR$/cercat-storage" />
             <option value="$PROJECT_DIR$/cercat-storage/alarm-dataaccess" />
             <option value="$PROJECT_DIR$/cercat-storage/board-dataaccess" />

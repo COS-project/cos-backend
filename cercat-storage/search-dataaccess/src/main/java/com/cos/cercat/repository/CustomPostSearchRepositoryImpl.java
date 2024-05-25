@@ -180,7 +180,7 @@ public class CustomPostSearchRepositoryImpl implements CustomPostSearchRepositor
         } catch (IOException e) {
             throw new CustomException(ErrorCode.ES_SEARCH_ERROR);
         } catch (ElasticsearchException e) {
-            log.error("elastic search error", e);
+            log.error("검색어가 아직 없습니다.");
             return List.of();
         }
     }

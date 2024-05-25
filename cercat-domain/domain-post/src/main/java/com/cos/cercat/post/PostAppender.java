@@ -1,7 +1,6 @@
 package com.cos.cercat.post;
 
 import com.cos.cercat.certificate.Certificate;
-import com.cos.cercat.mockexam.MockExamReader;
 import com.cos.cercat.mockexam.Question;
 import com.cos.cercat.mockexam.QuestionReader;
 import com.cos.cercat.user.User;
