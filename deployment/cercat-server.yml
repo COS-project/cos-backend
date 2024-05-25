@@ -28,6 +28,12 @@ services:
       - CLIENT_SECRET=${CLIENT_SECRET}
       - SECRET_KEY=${SECRET_KEY}
     restart: always
+    healthcheck:
+      test: "curl -f http://localhost:8080/health || exit 1"
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 30s
   cercat-green:
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -51,6 +57,12 @@ services:
       - CLIENT_SECRET=${CLIENT_SECRET}
       - SECRET_KEY=${SECRET_KEY}
     restart: always
+    healthcheck:
+      test: "curl -f http://localhost:8080/health || exit 1"
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 30s
   cercat-batch:
     container_name: cercat-batch
     extra_hosts:
