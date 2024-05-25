@@ -1,4 +1,5 @@
 # 📚 Cercat 핵심 기능
+
 ### 🌟 모의고사
 회원님은 다양한 년도와 회차에 걸친 모의고사에 응시할 수 있습니다. <br>
 각 시험마다 과목별 정답률과 문제별 머문 시간 등의 상세한 분석을 제공하여, 회원님의 학습 진단 및 개선에 필요한 데이터를 제공합니다.  
@@ -56,17 +57,24 @@
 
 
 
-
 # ERD
 ![image](https://github.com/COS-project/cos-backend/assets/128073698/f8fa127d-db6f-40ae-8e51-fa44f9c79734)
 
 
+# 아키텍쳐
+![image](https://github.com/COS-project/cos-backend/assets/128073698/de0f406e-4b73-477f-bba3-f6caaaead435)
+
+
+[지속성장가능한 소프트웨어 개발하는 방법](https://geminikims.medium.com/%EC%A7%80%EC%86%8D-%EC%84%B1%EC%9E%A5-%EA%B0%80%EB%8A%A5%ED%95%9C-%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4%EB%A5%BC-%EB%A7%8C%EB%93%A4%EC%96%B4%EA%B0%80%EB%8A%94-%EB%B0%A9%EB%B2%95-97844c5dab63)
+
+
+
 # 멀티모듈 구조
 ```
-📁 cercat-application # Controller, Request, Response
+📁 cercat-application # Presentation-Layer, Request, Response
 📁 cercat-common # 공통
-📁 cercat-domain # Service, Implementation
-📁 cercat-storage # Entity, Repository
+📁 cercat-domain # Business-Layer, Implementation-Layer
+📁 cercat-storage # Entity, Data-Access-Layer
 📁 cercat-client # 외부 API 기능(GCP Cloud Storage)
 ```
 - [cercat-application](https://github.com/COS-project/cos-backend/blob/main/cercat-application/README.md)
@@ -84,7 +92,3 @@ com
         ㄴ user
         ...
 ```
-
-## 참고한 아키텍쳐
-
-[지속성장가능한 소프트웨어 개발하는 방법](https://geminikims.medium.com/%EC%A7%80%EC%86%8D-%EC%84%B1%EC%9E%A5-%EA%B0%80%EB%8A%A5%ED%95%9C-%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4%EB%A5%BC-%EB%A7%8C%EB%93%A4%EC%96%B4%EA%B0%80%EB%8A%94-%EB%B0%A9%EB%B2%95-97844c5dab63)
