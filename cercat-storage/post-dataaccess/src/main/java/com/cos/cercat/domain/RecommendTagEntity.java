@@ -4,6 +4,9 @@ import com.cos.cercat.post.RecommendTag;
 import com.cos.cercat.post.TagType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -18,6 +21,7 @@ public class RecommendTagEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tip_post_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private TipPostEntity tipPost;
 
     @Enumerated(EnumType.STRING)
