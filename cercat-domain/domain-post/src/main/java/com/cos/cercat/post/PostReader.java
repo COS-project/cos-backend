@@ -25,9 +25,7 @@ public class PostReader {
 
     public PostWithComments readDetail(TargetPost targetPost) {
         PostWithComments postWithComments = postRepository.findDetail(targetPost);
-        List<PostComment> organizedComments = postWithComments.organizeChildComments();
-        return PostWithComments.of(postWithComments.post(), organizedComments);
-
+        return postWithComments.organizeChildComments();
     }
 
     public List<Post> readTop3TipPosts(Certificate certificate) {

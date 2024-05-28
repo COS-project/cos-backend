@@ -1,6 +1,7 @@
 package com.cos.cercat.redis.config;
 
 import com.cos.cercat.alarm.AlarmEvent;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class AlarmRedisConfig {
 
     private final RedisConnectionFactory redisConnectionFactory;
+    private final ObjectMapper objectMapper;
 
     @Bean
     public RedisMessageListenerContainer redisMessageListenerContainer() {
@@ -30,7 +32,7 @@ public class AlarmRedisConfig {
         RedisTemplate<String, AlarmEvent> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(AlarmEvent.class));
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(objectMapper, AlarmEvent.class));
         return redisTemplate;
     }
 

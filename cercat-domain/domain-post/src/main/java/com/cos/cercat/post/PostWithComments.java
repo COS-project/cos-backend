@@ -14,7 +14,7 @@ public record PostWithComments(
         return new PostWithComments(post, postComments);
     }
 
-    public List<PostComment> organizeChildComments() {
+    public PostWithComments organizeChildComments() {
         Map<Long, PostComment> map = postComments.stream()
                 .collect(Collectors.toMap(PostComment::getId, Function.identity()));
 
@@ -23,16 +23,16 @@ public record PostWithComments(
                 .forEach(postComment -> {
                     Long parentId = postComment.getContent().parentId();
                     PostComment parentComment = map.get(parentId);
-                    if (parentComment != null) {
-                        parentComment.addChildren(postComment);
-                    }
+                    parentComment.addChildren(postComment);
                 });
 
-        return map.values().stream()
-                .filter(PostComment::hasParent)
+        List<PostComment> collected = map.values().stream()
+                .filter(postComment -> !postComment.hasParent())
                 .sorted(Comparator
                         .comparing(PostComment::getDateTime, Comparator.comparing(DateTime::createdAt).reversed())
                         .thenComparing(PostComment::getId))
-                .collect(Collectors.toList());
+                .toList();
+
+        return new PostWithComments(post, collected);
     }
 }
