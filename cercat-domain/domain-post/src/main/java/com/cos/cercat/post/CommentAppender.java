@@ -28,7 +28,7 @@ public class CommentAppender {
     private void appendChild(User user, Post post, CommentContent content) {
         PostComment parentComment = commentReader.read(TargetComment.from(content.parentId()));
 
-        if (parentComment.getPostId().equals(post.getId())) {
+        if (!parentComment.getPostId().equals(post.getId())) {
             throw new CustomException(ErrorCode.BAD_REQUEST);
         }
 
