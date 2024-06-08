@@ -31,7 +31,6 @@ public class ReadPostApi implements ReadPostApiDocs {
                                                                      CommentaryPostSearchCond cond,
                                                                      @CursorDefault Cursor cursor) {
         SliceResult<Post> posts = readPostService.searchCommentaryPost(TargetCertificate.from(certificateId), cond, cursor);
-
         return Response.success(posts.map(PostResponse::from));
     }
 
