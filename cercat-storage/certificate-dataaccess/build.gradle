@@ -8,7 +8,7 @@ dependencies {
     implementation project(':cercat-domain:domain-certificate');
     implementation project(':cercat-domain:domain-user');
     implementation project(':cercat-storage:user-dataaccess');
-    implementation project(':cercat-storage:jpa-dataaccess');
+    api project(':cercat-storage:jpa-dataaccess');
 
     annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
     annotationProcessor "jakarta.annotation:jakarta.annotation-api"

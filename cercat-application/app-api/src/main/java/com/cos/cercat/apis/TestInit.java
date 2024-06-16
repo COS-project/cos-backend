@@ -1,14 +1,26 @@
-package com.cos.cercat.apis;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
-
-@Slf4j
-@Component
-@RequiredArgsConstructor
-public class TestInit {
-
+//package com.cos.cercat.apis;
+//
+//import com.cos.cercat.domain.CertificateEntity;
+//import com.cos.cercat.domain.CertificateExamEntity;
+//import com.cos.cercat.domain.ExamInfoEntity;
+//import com.cos.cercat.domain.SubjectEntity;
+//import com.cos.cercat.repository.CertificateExamJpaRepository;
+//import com.cos.cercat.repository.CertificateJpaRepository;
+//import com.cos.cercat.repository.SubjectJpaRepository;
+//import com.cos.cercat.service.QuestionConvertService;
+//import jakarta.annotation.PostConstruct;
+//import lombok.RequiredArgsConstructor;
+//import lombok.extern.slf4j.Slf4j;
+//import org.springframework.stereotype.Component;
+//
+//import java.io.File;
+//import java.time.LocalDateTime;
+//
+//@Slf4j
+//@Component
+//@RequiredArgsConstructor
+//public class TestInit {
+//
 //    private final SubjectJpaRepository subjectRepository;
 //    private final CertificateJpaRepository certificateRepository;
 //    private final QuestionConvertService questionMapper;
@@ -17,26 +29,35 @@ public class TestInit {
 //    @PostConstruct
 //    public void init() {
 //        CertificateEntity testCertificate = certificateRepository.save(new CertificateEntity(1L, "컴퓨터활용능력1급"));
-//        ExamInfoEntity testExamInfo = ExamInfoEntity.of(
-//                new ExamSchedule(LocalDateTime.now().plusDays(1), LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now()),
-//                new ExamFee(20000, 30000),
-//                new ExamTimeLimit(1000000L, 2000000L),
-//                new PassingCriteria(40, 60, 70),
-//                "컴퓨터 일반, 스프레드시트, 데이터 베이스",
-//                "사무자동화의 필수 프로그램인 스프레드 시트, 데이터베이스 활용능력을 평가하는 국가기술 자격시험입니다.",
-//                "대면시험",
-//                "응시자격에 제한은 없지만 실기 시험은 필기합격 훟 2년 이내 실기 시험응시 가능"
-//        );
-//        certificateExamRepository.save(CertificateExamEntity.of(testCertificate, testExamInfo, 2023, 3));
-//
-//        SubjectEntity subject1 = subjectRepository.save(new SubjectEntity(1L, testCertificate, "컴퓨터 일반", 20, 100));
-//        SubjectEntity subject2 = subjectRepository.save(new SubjectEntity(2L, testCertificate, "스프레드시트", 20, 100));
-//        SubjectEntity subject3 = subjectRepository.save(new SubjectEntity(3L, testCertificate, "데이터 베이스", 20, 100));
-//
-//        log.info("TestCertificate = {}", testCertificate);
-//        log.info("TestSubject 1 - {}", subject1);
-//        log.info("TestSubject 2 - {}", subject2);
-//        log.info("TestSubject 3 - {}", subject3);
+////        ExamInfoEntity testExamInfo = new ExamInfoEntity(
+////                2022, // examYear
+////                1, // round
+////                LocalDateTime.of(2022, 1, 1, 0, 0), // applicationStartDateTime
+////                LocalDateTime.of(2022, 1, 31, 23, 59), // applicationDeadlineDateTime
+////                LocalDateTime.of(2022, 2, 15, 12, 0), // resultAnnouncementDateTime
+////                LocalDateTime.of(2022, 3, 1, 9, 0), // examDateTime
+////                100000, // writtenExamFee
+////                50000, // practicalExamFee
+////                120L, // writtenExamTimeLimit
+////                60L, // practicalExamTimeLimit
+////                60, // subjectPassingCriteria
+////                70, // totalAvgCriteria
+////                70, // practicalPassingCriteria
+////                "Subject 1, Subject 2, Subject 3", // subjectsInfo
+////                "This is a dummy exam.", // description
+////                "Written and Practical", // examFormat
+////                "Anyone can apply" // examEligibility
+////        );
+////        certificateExamRepository.save(new CertificateExamEntity(1L, testCertificate, testExamInfo));
+////
+////        SubjectEntity subject1 = subjectRepository.save(new SubjectEntity(1L, testCertificate, "컴퓨터 일반", 20, 100));
+////        SubjectEntity subject2 = subjectRepository.save(new SubjectEntity(2L, testCertificate, "스프레드시트", 20, 100));
+////        SubjectEntity subject3 = subjectRepository.save(new SubjectEntity(3L, testCertificate, "데이터 베이스", 20, 100));
+////
+////        log.info("TestCertificate = {}", testCertificate);
+////        log.info("TestSubject 1 - {}", subject1);
+////        log.info("TestSubject 2 - {}", subject2);
+////        log.info("TestSubject 3 - {}", subject3);
 //
 //        String path = "/Users/kangjiwon/Desktop/Projects/Core/컴퓨터활용능력1급";
 //        File folder = new File(path);
@@ -50,4 +71,4 @@ public class TestInit {
 //                questionMapper.saveQuestionMap(testCertificate, listedFile);
 //        }
 //    }
-}
+//}

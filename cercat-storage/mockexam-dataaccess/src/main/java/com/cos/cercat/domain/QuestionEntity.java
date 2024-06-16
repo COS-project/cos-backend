@@ -9,6 +9,7 @@ import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -50,7 +51,7 @@ public class QuestionEntity {
     private String questionText;
 
     @OneToMany(mappedBy = "questionEntity", cascade = CascadeType.ALL)
-    private List<QuestionOptionEntity> questionOptions;
+    private List<QuestionOptionEntity> questionOptions = new ArrayList<>();
 
     private int correctOption;
 
