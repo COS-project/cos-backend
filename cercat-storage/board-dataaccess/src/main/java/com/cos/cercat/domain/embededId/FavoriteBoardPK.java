@@ -24,6 +24,6 @@ public class FavoriteBoardPK implements Serializable {
     private UserEntity userEntity;
 
     @ManyToOne
-    @JoinColumn(name = "certifiate_id")
+    @JoinColumn(name = "certificate_id")
     private CertificateEntity certificateEntity;
 }

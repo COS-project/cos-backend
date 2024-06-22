@@ -21,7 +21,6 @@ public class CreateCertificateApi implements CreateCertificateApiDocs {
     private final CreateCertificateService createCertificateService;
 
     @PostMapping("/certificates")
-
     public Response<Void> certificateAdd(@RequestBody CertificateCreateRequest request) {
         createCertificateService.createCertificate(request.certificateName(), request.subjectInfoList());
         return Response.success("자격증 생성 성공");

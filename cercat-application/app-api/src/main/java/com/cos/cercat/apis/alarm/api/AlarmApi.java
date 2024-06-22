@@ -28,7 +28,6 @@ public class AlarmApi implements AlarmApiDocs {
     @GetMapping(value = "/alarms/subscribe", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public ResponseEntity<SseEmitter> subscribeAlarm(@AuthenticationPrincipal User currentUser) {
         SseEmitter connected = sseEmitterService.connect(currentUser.getId());
-        alarmService.subscribe(currentUser.getId());
         return ResponseEntity.ok(connected);
     }
 

@@ -24,7 +24,6 @@ public class SseEventSender implements EventSender {
 
     @Override
     public void send(AlarmEvent event) {
-
         SseEmitter emitter = sseEmitterManager.read(event);
 
         if (emitter == null) {

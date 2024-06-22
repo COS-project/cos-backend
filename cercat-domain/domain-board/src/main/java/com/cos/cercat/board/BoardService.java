@@ -42,7 +42,6 @@ public class BoardService {
         return boardReader.isFavorite(user, certificate);
     }
 
-
     @Async
     @EventListener
     public void favoriteAll(InterestCertificateCreatedEvent interestCertificateCreatedEvent) {

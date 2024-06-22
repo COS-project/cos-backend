@@ -16,7 +16,6 @@ public class AlarmService {
 
     private final AlarmManager alarmManager;
     private final UserReader userReader;
-    private final AlarmSubscribeManager alarmSubscribeManager;
 
     public List<Alarm> readAlarms(TargetUser targetUser) {
         User user = userReader.read(targetUser);
@@ -30,14 +29,5 @@ public class AlarmService {
         return alarmManager.countUnread(user);
     }
 
-    public void subscribe(Long userId) {
-        alarmSubscribeManager.subscribe(userId);
-    }
-
-    @Async
-    @EventListener
-    public void unsubscribe(SseClosedEvent event) {
-        alarmSubscribeManager.unsubscribe(event.userId());
-    }
 
 }

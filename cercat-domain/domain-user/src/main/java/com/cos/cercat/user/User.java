@@ -19,7 +19,6 @@ public class User {
     private String username;
     private UserProfileImage userProfileImage;
     private Role userRole;
-
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime createdAt;
 

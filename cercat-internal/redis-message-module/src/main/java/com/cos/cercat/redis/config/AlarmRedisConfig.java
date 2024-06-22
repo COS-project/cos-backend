@@ -1,13 +1,16 @@
 package com.cos.cercat.redis.config;
 
 import com.cos.cercat.alarm.AlarmEvent;
+import com.cos.cercat.redis.AlarmMessageListener;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
+import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -21,10 +24,16 @@ public class AlarmRedisConfig {
     private final ObjectMapper objectMapper;
 
     @Bean
-    public RedisMessageListenerContainer redisMessageListenerContainer() {
+    public RedisMessageListenerContainer redisMessageListenerContainer(MessageListenerAdapter listenerAdapter) {
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
         container.setConnectionFactory(redisConnectionFactory);
+        container.addMessageListener(listenerAdapter, new ChannelTopic("ALARM_CHANNEL"));
         return container;
+    }
+
+    @Bean
+    public MessageListenerAdapter listenerAdapter(AlarmMessageListener listener) {
+        return new MessageListenerAdapter(listener, "onMessage");
     }
 
     @Bean
