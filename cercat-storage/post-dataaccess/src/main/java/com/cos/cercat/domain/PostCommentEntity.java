@@ -10,6 +10,8 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.time.LocalDateTime;
+
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -43,13 +45,15 @@ public class PostCommentEntity extends BaseTimeEntity {
                              PostEntity postEntity,
                              Long parentCommentId,
                              Integer likeCount,
-                             String content) {
+                             String content,
+                             LocalDateTime createdAt) {
         this.id = id;
         this.userEntity = userEntity;
         this.postEntity = postEntity;
         this.parentCommentId = parentCommentId;
         this.likeCount = likeCount;
         this.content = content;
+        this.createdAt = createdAt;
     }
 
     private PostCommentEntity(UserEntity userEntity,
@@ -80,14 +84,15 @@ public class PostCommentEntity extends BaseTimeEntity {
         );
     }
 
-    public static PostCommentEntity of(PostComment postComment,PostEntity postEntity) {
+    public static PostCommentEntity of(PostComment postComment, PostEntity postEntity) {
         return new PostCommentEntity(
                 postComment.getId(),
                 UserEntity.from(postComment.getUser()),
                 postEntity,
                 postComment.getContent().parentId(),
                 postComment.getLikeCount(),
-                postComment.getContent().content()
+                postComment.getContent().content(),
+                postComment.getDateTime().createdAt()
         );
     }
 

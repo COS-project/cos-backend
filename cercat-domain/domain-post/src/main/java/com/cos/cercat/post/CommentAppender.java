@@ -16,12 +16,12 @@ public class CommentAppender {
     private final AlarmPublisher alarmPublisher;
     private final CommentReader commentReader;
 
-    public void append(User user, Post post, CommentContent content) {
-        if (content.hasParent()) {
-            appendChild(user, post, content);
+    public void append(User user, Post post, CommentContent comment) {
+        if (comment.hasParent()) {
+            appendChild(user, post, comment);
             return;
         }
-        createPostRepository.saveComment(user, post, content);
+        createPostRepository.saveComment(user, post, comment);
         alarmPublisher.publish(post.getUser(), user, post.getId(), AlarmType.NEW_COMMENT_ON_POST);
     }
 
