@@ -1,5 +1,7 @@
 package com.cos.cercat.apis.mockExam.api;
 
+import com.cos.cercat.apis.mockExam.request.CreateQuestionRequest;
+import com.cos.cercat.mockexam.MockExamInfo;
 import com.cos.cercat.apis.mockExam.response.MockExamResponse;
 import com.cos.cercat.apis.mockExam.response.QuestionResponse;
 import com.cos.cercat.certificate.TargetCertificate;
@@ -50,5 +52,12 @@ public class MockExamApi implements MockExamApiDocs {
         return Response.success(questionResponses);
     }
 
+    @Override
+    public Response<Void> createMockExam(@PathVariable Long certificateId,
+                                         MockExamInfo mockExamInfo,
+                                         CreateQuestionRequest questionRequest) {
 
+        mockExamService.createMockExam(TargetCertificate.from(certificateId), mockExamInfo, questionRequest.questions());
+        return Response.success("모의고사 생성 성공");
+    }
 }

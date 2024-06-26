@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -31,5 +32,12 @@ public class MockExamService {
     public List<Question> findQuestions(TargetMockExam targetMockExam) {
         MockExam mockExam = mockExamReader.read(targetMockExam);
         return questionFinder.find(mockExam);
+    }
+
+    public void createMockExam(TargetCertificate target,
+                               MockExamInfo mockExamInfo,
+                               Map<String, List<String>> questions) {
+
+
     }
 }

@@ -24,6 +24,8 @@ public class SubjectEntity extends BaseTimeEntity {
     @Setter
     private CertificateEntity certificateEntity;
 
+    private Integer subjectSequence;
+
     private String subjectName;
 
     private Integer numberOfQuestions;
@@ -39,6 +41,7 @@ public class SubjectEntity extends BaseTimeEntity {
         return new SubjectEntity(
                 subject.subjectId(),
                 CertificateEntity.from(subject.certificate()),
+                subject.subjectInfo().subjectSequence(),
                 subject.subjectInfo().subjectName(),
                 subject.subjectInfo().numberOfQuestions(),
                 subject.subjectInfo().totalScore()
@@ -47,6 +50,7 @@ public class SubjectEntity extends BaseTimeEntity {
 
     public static SubjectEntity from(SubjectInfo subjectInfo) {
         return SubjectEntity.builder()
+                .subjectSequence(subjectInfo.subjectSequence())
                 .subjectName(subjectInfo.subjectName())
                 .numberOfQuestions(subjectInfo.numberOfQuestions())
                 .totalScore(subjectInfo.totalScore())
@@ -63,7 +67,12 @@ public class SubjectEntity extends BaseTimeEntity {
         return new Subject(
                 id,
                 certificateEntity.toDomain(),
-                new SubjectInfo(subjectName, numberOfQuestions, totalScore)
+                new SubjectInfo(
+                        subjectSequence,
+                        subjectName,
+                        numberOfQuestions,
+                        totalScore
+                )
         );
     }
 
