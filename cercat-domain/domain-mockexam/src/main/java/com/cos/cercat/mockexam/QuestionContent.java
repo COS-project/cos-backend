@@ -12,4 +12,19 @@ public record QuestionContent(
         List<QuestionOption> questionOptions,
         int score
 ) {
+    public static QuestionContent of(int questionSequence,
+                                     String questionText,
+                                     int correctOption,
+                                     Image questionImage,
+                                     List<QuestionOption> questionOptions,
+                                     int score) {
+        return new QuestionContent(
+                questionSequence,
+                questionText,
+                correctOption,
+                questionImage,
+                questionOptions,
+                score
+        );
+    }
 }

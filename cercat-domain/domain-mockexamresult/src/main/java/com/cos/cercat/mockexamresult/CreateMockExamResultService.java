@@ -16,7 +16,6 @@ import java.util.List;
 public class CreateMockExamResultService {
 
     private final MockExamResultAppender mockExamResultAppender;
-    private final MockExamResultReader mockExamResultReader;
     private final UserReader userReader;
     private final MockExamReader mockExamReader;
 

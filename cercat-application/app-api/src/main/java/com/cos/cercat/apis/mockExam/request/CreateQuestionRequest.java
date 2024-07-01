@@ -1,11 +1,31 @@
 package com.cos.cercat.apis.mockExam.request;
 
+import com.cos.cercat.mockexam.NewQuestion;
+import com.cos.cercat.mockexam.QuestionContent;
+import com.cos.cercat.mockexam.QuestionOption;
+
 import java.util.List;
-import java.util.Map;
 
 public record CreateQuestionRequest(
-        String examYear,
-        String round,
-        Map<String, List<String>> questions
+        Integer subjectSeq,
+        Integer questionNumber,
+        String question,
+        List<String> choices,
+        Integer answer
 ) {
+    public NewQuestion toNewQuestion(int score) {
+        return new NewQuestion(
+                subjectSeq,
+                QuestionContent.of(
+                        questionNumber,
+                        question,
+                        answer,
+                        null,
+                        choices.stream()
+                                .map((choice) -> QuestionOption.of(choices.indexOf(choice), choice, null))
+                                .toList(),
+                        score
+                )
+        );
+    }
 }

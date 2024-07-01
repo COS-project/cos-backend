@@ -21,6 +21,11 @@ public class MockExamRepositoryImpl implements MockExamRepository {
     private final MockExamJpaRepository mockExamJpaRepository;
 
     @Override
+    public TargetMockExam save(NewMockExam newMockExam) {
+        return null;
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public Question readQuestion(Certificate certificate,
                                  MockExamSession mockExamSession,
