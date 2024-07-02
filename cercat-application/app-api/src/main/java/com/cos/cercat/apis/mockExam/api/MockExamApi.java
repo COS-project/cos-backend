@@ -1,7 +1,6 @@
 package com.cos.cercat.apis.mockExam.api;
 
-import com.cos.cercat.apis.mockExam.request.CreateQuestionRequest;
-import com.cos.cercat.mockexam.MockExamInfo;
+import com.cos.cercat.apis.mockExam.request.CreateMockExamRequest;
 import com.cos.cercat.apis.mockExam.response.MockExamResponse;
 import com.cos.cercat.apis.mockExam.response.QuestionResponse;
 import com.cos.cercat.certificate.TargetCertificate;
@@ -11,10 +10,7 @@ import com.cos.cercat.mockexam.TargetMockExam;
 import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -53,11 +49,16 @@ public class MockExamApi implements MockExamApiDocs {
     }
 
     @Override
+    @PostMapping("/mock-exams/{certificateId}")
     public Response<Void> createMockExam(@PathVariable Long certificateId,
-                                         MockExamInfo mockExamInfo,
-                                         CreateQuestionRequest questionRequest) {
+                                         @RequestBody CreateMockExamRequest request) {
+        mockExamService.createMockExam(
+                TargetCertificate.from(certificateId),
+                request.toSession(),
+                request.timeLimit(),
+                request.toContent()
+        );
 
-        mockExamService.createMockExam(TargetCertificate.from(certificateId), mockExamInfo, questionRequest.questions());
         return Response.success("모의고사 생성 성공");
     }
 }

@@ -4,6 +4,8 @@ import com.cos.cercat.dto.MockExamDTO;
 import com.cos.cercat.entity.BaseTimeEntity;
 import com.cos.cercat.mockexam.MockExam;
 import com.cos.cercat.mockexam.MockExamSession;
+import com.cos.cercat.mockexam.NewMockExam;
+import com.cos.cercat.mockexam.TargetMockExam;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,6 +47,21 @@ public class MockExamEntity extends BaseTimeEntity {
                 .timeLimit(timeLimit)
                 .totalScore(totalScore)
                 .certificateEntity(dto.certificateDTO().toEntity())
+                .build();
+    }
+
+    public static MockExamEntity from(NewMockExam newMockExam) {
+        return MockExamEntity.builder()
+                .examYear(newMockExam.session().examYear())
+                .round(newMockExam.session().round())
+                .timeLimit(newMockExam.timeLimit())
+                .certificateEntity(CertificateEntity.from(newMockExam.certificate()))
+                .build();
+    }
+
+    public static MockExamEntity from(TargetMockExam targetMockExam) {
+        return MockExamEntity.builder()
+                .id(targetMockExam.mockExamId())
                 .build();
     }
 

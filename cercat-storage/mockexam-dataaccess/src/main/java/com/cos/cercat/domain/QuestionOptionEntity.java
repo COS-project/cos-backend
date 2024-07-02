@@ -53,4 +53,11 @@ public class QuestionOptionEntity {
     }
 
 
+    public static QuestionOptionEntity from(QuestionEntity question, QuestionOption questionOption) {
+        return QuestionOptionEntity.builder()
+                .questionOptionPK(QuestionOptionPK.from(questionOption.optionSequence()))
+                .questionEntity(question)
+                .optionContent(questionOption.optionText())
+                .build();
+    }
 }

@@ -7,13 +7,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class MockExamService {
 
     private final MockExamFinder mockExamFinder;
+    private final MockExamAppender mockExamAppender;
     private final QuestionFinder questionFinder;
     private final CertificateReader certificateReader;
     private final MockExamReader mockExamReader;
@@ -34,10 +34,11 @@ public class MockExamService {
         return questionFinder.find(mockExam);
     }
 
-    public void createMockExam(TargetCertificate target,
-                               MockExamInfo mockExamInfo,
-                               Map<String, List<String>> questions) {
-
-
+    public void createMockExam(TargetCertificate targetCertificate,
+                               MockExamSession session,
+                               Long timeLimit,
+                               List<QuestionWithSubjectSeq> contents) {
+        Certificate certificate = certificateReader.read(targetCertificate);
+        mockExamAppender.append(certificate, session, timeLimit, contents);
     }
 }

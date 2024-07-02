@@ -2,8 +2,10 @@ package com.cos.cercat.domain;
 
 import com.cos.cercat.entity.ImageEntity;
 import com.cos.cercat.domain.embededId.QuestionOptionPK;
+import com.cos.cercat.mockexam.NewQuestion;
 import com.cos.cercat.mockexam.Question;
 import com.cos.cercat.mockexam.QuestionContent;
+import com.cos.cercat.mockexam.TargetMockExam;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -18,6 +20,7 @@ import java.util.regex.Matcher;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(
         name = "question",
         indexes = @Index(name = "idx_question_seq", columnList = "question_seq")
@@ -48,6 +51,7 @@ public class QuestionEntity {
 
     private int questionSeq;
 
+    @Column(length = 1000)
     private String questionText;
 
     @OneToMany(mappedBy = "questionEntity", cascade = CascadeType.ALL)
@@ -83,6 +87,25 @@ public class QuestionEntity {
         return new QuestionEntity(
                 mockExamEntity
         );
+    }
+
+    public static QuestionEntity from(TargetMockExam targetMockExam, NewQuestion newQuestion) {
+        QuestionEntity questionEntity = QuestionEntity.builder()
+                .mockExamEntity(MockExamEntity.from(targetMockExam))
+                .subjectEntity(SubjectEntity.from(newQuestion.subject()))
+                .questionSeq(newQuestion.questionContent().questionSequence())
+                .questionText(newQuestion.questionContent().questionText())
+                .questionOptions(new ArrayList<>())
+                .correctOption(newQuestion.questionContent().correctOption())
+                .score(newQuestion.questionContent().score())
+                .build();
+
+        questionEntity.getQuestionOptions().addAll(
+                newQuestion.questionContent().questionOptions().stream()
+                        .map(questionOption -> QuestionOptionEntity.from(questionEntity, questionOption))
+                        .toList()
+        );
+        return questionEntity;
     }
 
     public static QuestionEntity from(Question question) {

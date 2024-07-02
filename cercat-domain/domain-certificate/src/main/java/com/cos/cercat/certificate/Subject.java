@@ -1,7 +1,7 @@
 package com.cos.cercat.certificate;
 
 public record Subject(
-        long subjectId,
+        Long subjectId,
         Certificate certificate,
         SubjectInfo subjectInfo
 ) {
