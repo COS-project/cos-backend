@@ -15,6 +15,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
+@Transactional
 public class MockExamRepositoryImpl implements MockExamRepository {
 
     private final QuestionJpaRepository questionJpaRepository;
@@ -22,7 +23,18 @@ public class MockExamRepositoryImpl implements MockExamRepository {
 
     @Override
     public TargetMockExam save(NewMockExam newMockExam) {
-        return null;
+        MockExamEntity entity = mockExamJpaRepository.save(MockExamEntity.from(newMockExam));
+        return TargetMockExam.from(entity.getId());
+    }
+
+    @Override
+    public void saveQuestions(TargetMockExam targetMockExam, List<NewQuestion> newQuestions) {
+
+        List<QuestionEntity> questionEntities = newQuestions.stream()
+                .map(newQuestion -> QuestionEntity.from(targetMockExam, newQuestion))
+                .toList();
+
+        questionJpaRepository.saveAll(questionEntities);
     }
 
     @Override

@@ -21,5 +21,5 @@ public interface MockExamRepository {
 
     MockExam read(TargetMockExam targetMockExam);
 
-    void saveQuestions(MockExam of, List<NewQuestion> newQuestions);
+    void saveQuestions(TargetMockExam targetMockExam, List<NewQuestion> newQuestions);
 }

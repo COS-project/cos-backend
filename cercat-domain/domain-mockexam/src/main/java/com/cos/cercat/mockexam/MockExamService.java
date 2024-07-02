@@ -37,8 +37,8 @@ public class MockExamService {
     public void createMockExam(TargetCertificate targetCertificate,
                                MockExamSession session,
                                Long timeLimit,
-                               List<NewQuestion> newQuestions) {
+                               List<QuestionWithSubjectSeq> contents) {
         Certificate certificate = certificateReader.read(targetCertificate);
-        mockExamAppender.append(certificate, session, timeLimit, newQuestions);
+        mockExamAppender.append(certificate, session, timeLimit, contents);
     }
 }

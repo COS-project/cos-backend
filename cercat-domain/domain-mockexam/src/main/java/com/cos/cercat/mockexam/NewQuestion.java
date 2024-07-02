@@ -1,7 +1,11 @@
 package com.cos.cercat.mockexam;
 
+import com.cos.cercat.certificate.Subject;
+
 public record NewQuestion(
-        Integer subjectSeq,
+        Subject subject,
         QuestionContent questionContent
 ) {
+
+
 }

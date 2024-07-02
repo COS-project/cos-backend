@@ -7,11 +7,13 @@ import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.domain.SubjectEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
+@Transactional
 public class CertificateRepositoryImpl implements CertificateRepository {
 
     private final CertificateJpaRepository certificateJpaRepository;

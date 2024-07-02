@@ -6,7 +6,6 @@ import com.cos.cercat.apis.mockExam.response.QuestionResponse;
 import com.cos.cercat.certificate.TargetCertificate;
 import com.cos.cercat.common.domain.Response;
 import com.cos.cercat.mockexam.MockExamService;
-import com.cos.cercat.mockexam.MockExamSession;
 import com.cos.cercat.mockexam.TargetMockExam;
 import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
@@ -52,12 +51,12 @@ public class MockExamApi implements MockExamApiDocs {
     @Override
     @PostMapping("/mock-exams/{certificateId}")
     public Response<Void> createMockExam(@PathVariable Long certificateId,
-                                         CreateMockExamRequest request) {
+                                         @RequestBody CreateMockExamRequest request) {
         mockExamService.createMockExam(
                 TargetCertificate.from(certificateId),
-                MockExamSession.of(request.examYear(), request.round()),
+                request.toSession(),
                 request.timeLimit(),
-                request.toNewQuestions()
+                request.toContent()
         );
 
         return Response.success("모의고사 생성 성공");

@@ -1,7 +1,6 @@
 package com.cos.cercat.apis.mockExam.api;
 
 import com.cos.cercat.apis.mockExam.request.CreateMockExamRequest;
-import com.cos.cercat.mockexam.MockExamInfo;
 import com.cos.cercat.apis.mockExam.response.MockExamResponse;
 import com.cos.cercat.apis.mockExam.response.QuestionResponse;
 import com.cos.cercat.common.domain.Response;

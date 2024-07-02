@@ -1,8 +1,8 @@
 package com.cos.cercat.apis.mockExam.request;
 
-import com.cos.cercat.mockexam.NewQuestion;
 import com.cos.cercat.mockexam.QuestionContent;
 import com.cos.cercat.mockexam.QuestionOption;
+import com.cos.cercat.mockexam.QuestionWithSubjectSeq;
 
 import java.util.List;
 
@@ -13,8 +13,8 @@ public record CreateQuestionRequest(
         List<String> choices,
         Integer answer
 ) {
-    public NewQuestion toNewQuestion(int score) {
-        return new NewQuestion(
+    public QuestionWithSubjectSeq toQuestionWithSubjectSeq(int score) {
+        return new QuestionWithSubjectSeq(
                 subjectSeq,
                 QuestionContent.of(
                         questionNumber,
@@ -22,7 +22,7 @@ public record CreateQuestionRequest(
                         answer,
                         null,
                         choices.stream()
-                                .map((choice) -> QuestionOption.of(choices.indexOf(choice), choice, null))
+                                .map((choice) -> QuestionOption.of(choices.indexOf(choice) + 1, choice, null))
                                 .toList(),
                         score
                 )

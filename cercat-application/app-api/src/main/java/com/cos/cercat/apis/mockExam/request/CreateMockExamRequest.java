@@ -1,7 +1,8 @@
 package com.cos.cercat.apis.mockExam.request;
 
 
-import com.cos.cercat.mockexam.NewQuestion;
+import com.cos.cercat.mockexam.MockExamSession;
+import com.cos.cercat.mockexam.QuestionWithSubjectSeq;
 
 import java.util.List;
 
@@ -12,9 +13,14 @@ public record CreateMockExamRequest(
         Long timeLimit,
         Integer score
 ) {
-    public List<NewQuestion> toNewQuestions() {
+
+    public MockExamSession toSession() {
+        return new MockExamSession(examYear, round);
+    }
+
+    public List<QuestionWithSubjectSeq> toContent() {
         return questions.stream()
-                .map(question -> question.toNewQuestion(score))
+                .map(question -> question.toQuestionWithSubjectSeq(score))
                 .toList();
     }
 }
