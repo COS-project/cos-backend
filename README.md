@@ -44,7 +44,7 @@
 - Nginx로 리버스 프록시
 - Docker compose로 서버 scale-out
 - ~~Kafka를 통해 비동기 알림 pub/sub~~ -> Redis Pub/Sub으로 SSE 구독 및 비동기 알림 구현
-- Debezium 커넥터를 통해 MySQL의 데이터변경을 캡쳐하여 Kafka로 발행 -> Elastic Search 저장
+- Debezium 커넥터를 통해 MySQL의 데이터변경을 캡쳐하여 Kafka로 발행 -> Elastic Search 동기화
 - Elastic Search의 ngram, nori 분석기등을 통해 검색 최적화
 - Redis를 통해 최근 검색기록 및 모의고사 문제 데이터 캐싱
 - Git Actions의 Cron job을 통해 Batch 서버 실행
