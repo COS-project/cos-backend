@@ -1,6 +1,5 @@
 package com.cos.cercat.domain;
 
-import com.cos.cercat.dto.MockExamDTO;
 import com.cos.cercat.entity.BaseTimeEntity;
 import com.cos.cercat.mockexam.MockExam;
 import com.cos.cercat.mockexam.MockExamSession;
@@ -39,16 +38,6 @@ public class MockExamEntity extends BaseTimeEntity {
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "certificate_id")
     private CertificateEntity certificateEntity;
-
-    public static MockExamEntity of(MockExamDTO dto, long timeLimit, int totalScore) {
-        return MockExamEntity.builder()
-                .examYear(dto.examYear())
-                .round(dto.round())
-                .timeLimit(timeLimit)
-                .totalScore(totalScore)
-                .certificateEntity(dto.certificateDTO().toEntity())
-                .build();
-    }
 
     public static MockExamEntity from(NewMockExam newMockExam) {
         return MockExamEntity.builder()

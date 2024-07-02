@@ -1,7 +1,6 @@
 package com.cos.cercat.domain;
 
 import com.cos.cercat.entity.ImageEntity;
-import com.cos.cercat.domain.embededId.QuestionOptionPK;
 import com.cos.cercat.mockexam.NewQuestion;
 import com.cos.cercat.mockexam.Question;
 import com.cos.cercat.mockexam.QuestionContent;
@@ -14,7 +13,6 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.regex.Matcher;
 
 @Entity
 @Getter
@@ -139,79 +137,11 @@ public class QuestionEntity {
         );
     }
 
-    public void setContent(List<String> content) {
-        if (content.size() <= MAX_OPTION_SIZE) {
-            for (String option : content) {
-                setOption(option);
-            }
-        }
-
-    }
-
-    private void setOption(String option) {
-        char number = option.charAt(0);
-
-        switch ((int) number) {
-            case 0x2460 -> {
-                QuestionOptionEntity questionOptionEntity = QuestionOptionEntity.builder()
-                        .questionOptionPK(QuestionOptionPK.from(1))
-                        .questionEntity(this)
-                        .optionContent(option.substring(1))
-                        .optionImageEntity(null)
-                        .build();
-                questionOptions.add(questionOptionEntity);
-            }
-            case 0x2461 -> {
-                QuestionOptionEntity questionOptionEntity = QuestionOptionEntity.builder()
-                        .questionOptionPK(QuestionOptionPK.from(2))
-                        .questionEntity(this)
-                        .optionContent(option.substring(1))
-                        .optionImageEntity(null)
-                        .build();
-                questionOptions.add(questionOptionEntity);
-            }
-            case 0x2462 -> {
-                QuestionOptionEntity questionOptionEntity = QuestionOptionEntity.builder()
-                        .questionOptionPK(QuestionOptionPK.from(3))
-                        .questionEntity(this)
-                        .optionContent(option.substring(1))
-                        .optionImageEntity(null)
-                        .build();
-                questionOptions.add(questionOptionEntity);
-            }
-            case 0x2463 -> {
-                QuestionOptionEntity questionOptionEntity = QuestionOptionEntity.builder()
-                        .questionOptionPK(QuestionOptionPK.from(4))
-                        .questionEntity(this)
-                        .optionContent(option.substring(1))
-                        .optionImageEntity(null)
-                        .build();
-                questionOptions.add(questionOptionEntity);
-            }
-            case 0x0040 -> score = Integer.parseInt(option.substring(1));
-        }
-    }
-
     public String getImageUrl() {
         if (Objects.nonNull(questionImageEntity)) {
             return questionImageEntity.getImageUrl();
         }
         return "";
-    }
-
-    public void setCorrectOption(String answer) {
-        char answerChar = answer.charAt(0);
-        switch ((int) answerChar) {
-            case 0x2460 -> this.correctOption = 1;
-            case 0x2461 -> this.correctOption = 2;
-            case 0x2462 -> this.correctOption = 3;
-            case 0x2463 -> this.correctOption = 4;
-        }
-    }
-
-    public void setSeqAndTitle(Matcher matcher) {
-        this.questionSeq = Integer.parseInt(matcher.group(1));// 번호
-        this.questionText = matcher.group(2).trim(); // 내용
     }
 }
 
