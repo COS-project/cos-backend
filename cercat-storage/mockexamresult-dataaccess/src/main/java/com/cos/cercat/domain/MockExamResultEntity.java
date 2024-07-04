@@ -6,6 +6,9 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+
+import static org.hibernate.annotations.OnDeleteAction.CASCADE;
 
 @Entity
 @Getter
@@ -23,6 +26,7 @@ public class MockExamResultEntity extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mock_exam_id")
+    @OnDelete(action = CASCADE)
     private MockExamEntity mockExamEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)

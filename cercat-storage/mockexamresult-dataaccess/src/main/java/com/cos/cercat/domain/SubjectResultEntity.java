@@ -4,7 +4,8 @@ import com.cos.cercat.mockexamresult.SubjectResult;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+
+import static org.hibernate.annotations.OnDeleteAction.*;
 
 
 @Entity
@@ -23,11 +24,12 @@ public class SubjectResultEntity {
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mock_exam_result_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = CASCADE)
     private MockExamResultEntity mockExamResultEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id")
+    @OnDelete(action = CASCADE)
     private SubjectEntity subjectEntity;
 
     private Integer score;

@@ -6,6 +6,8 @@ import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import static org.hibernate.annotations.OnDeleteAction.*;
+
 @Builder
 @Entity
 @Getter
@@ -29,11 +31,12 @@ public class UserAnswerEntity {
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_result_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action =  CASCADE)
     private SubjectResultEntity subjectResultEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
+    @OnDelete(action =  CASCADE)
     private QuestionEntity questionEntity;
 
     private int selectOptionSeq;

@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static org.hibernate.annotations.OnDeleteAction.CASCADE;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -34,6 +36,7 @@ public class QuestionEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mock_exam_id")
+    @OnDelete(action = CASCADE)
     private MockExamEntity mockExamEntity;
 
     @Setter

@@ -4,8 +4,11 @@ import com.cos.cercat.learning.ScheduleType;
 import com.cos.cercat.learning.StudySchedule;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
 
 import java.time.DayOfWeek;
+
+import static org.hibernate.annotations.OnDeleteAction.CASCADE;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -23,6 +26,7 @@ public class StudyScheduleEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "goal_id")
+    @OnDelete(action = CASCADE)
     @Setter
     private GoalEntity goalEntity;
 

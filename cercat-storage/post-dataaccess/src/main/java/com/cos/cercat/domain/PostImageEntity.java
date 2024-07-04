@@ -10,6 +10,8 @@ import org.springframework.data.domain.Persistable;
 
 import java.io.Serializable;
 
+import static org.hibernate.annotations.OnDeleteAction.CASCADE;
+
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -24,11 +26,11 @@ public class PostImageEntity implements Persistable<PostImageId> {
     @ManyToOne
     @JoinColumn(name = "post_id")
     @Setter
+    @OnDelete(action =  CASCADE)
     private PostEntity postEntity;
 
     @MapsId("imageId")
     @OneToOne(cascade = CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "image_id")
     private ImageEntity imageEntity;
 

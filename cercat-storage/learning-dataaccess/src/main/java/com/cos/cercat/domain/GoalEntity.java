@@ -6,10 +6,14 @@ import com.cos.cercat.learning.GoalPeriod;
 import com.cos.cercat.learning.NewGoal;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.hibernate.annotations.OnDeleteAction.*;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -25,6 +29,7 @@ public class GoalEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "certificate_id")
+    @OnDelete(action = CASCADE)
     private CertificateEntity certificateEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)

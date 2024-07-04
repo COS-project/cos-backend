@@ -10,6 +10,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+
+import static org.hibernate.annotations.OnDeleteAction.CASCADE;
 
 @Entity
 @Getter
@@ -37,6 +40,7 @@ public class MockExamEntity extends BaseTimeEntity {
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "certificate_id")
+    @OnDelete(action = CASCADE)
     private CertificateEntity certificateEntity;
 
     public static MockExamEntity from(NewMockExam newMockExam) {

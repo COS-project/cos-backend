@@ -9,8 +9,12 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
+
+import static org.hibernate.annotations.OnDeleteAction.*;
 
 @Embeddable
 @Getter
@@ -25,5 +29,6 @@ public class FavoriteBoardPK implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "certificate_id")
+    @OnDelete(action = CASCADE)
     private CertificateEntity certificateEntity;
 }

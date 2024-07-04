@@ -9,6 +9,8 @@ import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import static org.hibernate.annotations.OnDeleteAction.*;
+
 @Entity
 @Builder
 @AllArgsConstructor
@@ -24,11 +26,11 @@ public class ExamReviewEntity extends BaseTimeEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private UserEntity userEntity;
 
     @ManyToOne
     @JoinColumn(name = "certificate_exam_id")
+    @OnDelete(action = CASCADE)
     private CertificateExamEntity certificateExamEntity;
 
     @Enumerated(EnumType.STRING)

@@ -8,6 +8,8 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 
+import static org.hibernate.annotations.OnDeleteAction.CASCADE;
+
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -20,6 +22,7 @@ public class CommentaryPostEntity extends PostEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
+    @OnDelete(action =  CASCADE)
     private QuestionEntity questionEntity;
 
     public CommentaryPostEntity(String title,

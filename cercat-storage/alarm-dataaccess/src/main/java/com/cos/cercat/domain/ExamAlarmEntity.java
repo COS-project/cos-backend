@@ -9,6 +9,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+
+import static org.hibernate.annotations.OnDeleteAction.*;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -18,6 +21,7 @@ public class ExamAlarmEntity extends AlarmEntity {
 
     @ManyToOne
     @JoinColumn(name = "certificate_exam_id")
+    @OnDelete(action = CASCADE)
     private CertificateExamEntity certificateExamEntity;
 
     @Builder

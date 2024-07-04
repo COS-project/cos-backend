@@ -4,6 +4,10 @@ package com.cos.cercat.domain;
 import com.cos.cercat.certificate.CertificateExam;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import static org.hibernate.annotations.OnDeleteAction.*;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -20,6 +24,7 @@ public class CertificateExamEntity {
 
     @ManyToOne
     @JoinColumn(name = "certificate_id")
+    @OnDelete(action = CASCADE)
     private CertificateEntity certificateEntity;
 
     @OneToOne(cascade = CascadeType.ALL)

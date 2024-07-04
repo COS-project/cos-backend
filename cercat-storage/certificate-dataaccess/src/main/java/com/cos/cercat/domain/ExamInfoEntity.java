@@ -1,7 +1,6 @@
 package com.cos.cercat.domain;
 
 import com.cos.cercat.certificate.*;
-import com.cos.cercat.dto.MockExamSession;
 import jakarta.persistence.*;
 import lombok.*;
 

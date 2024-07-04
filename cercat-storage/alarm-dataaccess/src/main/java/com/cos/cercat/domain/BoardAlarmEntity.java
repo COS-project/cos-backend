@@ -8,6 +8,9 @@ import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+
+import static org.hibernate.annotations.OnDeleteAction.*;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -17,6 +20,7 @@ public class BoardAlarmEntity extends AlarmEntity {
 
     @ManyToOne
     @JoinColumn(name = "from_user_id")
+    @OnDelete(action = CASCADE)
     private UserEntity fromUserEntity;
 
     private Long postId;

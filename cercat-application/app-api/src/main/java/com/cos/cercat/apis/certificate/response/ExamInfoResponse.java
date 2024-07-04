@@ -2,7 +2,6 @@ package com.cos.cercat.apis.certificate.response;
 
 
 import com.cos.cercat.certificate.*;
-import com.cos.cercat.dto.MockExamSession;
 
 public record ExamInfoResponse(
         int examYear, //시험 년도

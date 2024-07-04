@@ -5,6 +5,10 @@ import com.cos.cercat.certificate.SubjectInfo;
 import com.cos.cercat.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import static org.hibernate.annotations.OnDeleteAction.*;
 
 @Entity
 @Getter
@@ -22,6 +26,7 @@ public class SubjectEntity extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "certificate_id")
     @Setter
+    @OnDelete(action = CASCADE)
     private CertificateEntity certificateEntity;
 
     private Integer subjectSequence;

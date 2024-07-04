@@ -8,10 +8,13 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.OnDelete;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
+
+import static org.hibernate.annotations.OnDeleteAction.CASCADE;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -35,6 +38,7 @@ public class PostEntity extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "certificate_id")
+    @OnDelete(action =  CASCADE)
     protected CertificateEntity certificateEntity;
 
     @Enumerated(EnumType.STRING)
