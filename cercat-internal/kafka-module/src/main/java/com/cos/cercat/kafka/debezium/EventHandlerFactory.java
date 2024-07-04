@@ -12,6 +12,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class EventHandlerFactory {
 
+    private static final String POST = "post";
+    private static final String POST_COMMENT = "post_comment";
+
     private final PostEventHandler postEventHandler;
     private final PostCommentEventHandler postCommentEventHandler;
 
@@ -19,15 +22,15 @@ public class EventHandlerFactory {
 
     @PostConstruct
     public void init() {
-        handlers.put("post", postEventHandler);
-        handlers.put("post_comment", postCommentEventHandler);
+        handlers.put(POST, postEventHandler);
+        handlers.put(POST_COMMENT, postCommentEventHandler);
     }
 
     public EventHandler getHandler(String topicName) {
         String tableName = substringAfterLast(topicName).toLowerCase();
 
         return Optional.ofNullable(handlers.get(tableName))
-                .orElseThrow(() -> new IllegalArgumentException("No handler found for topic: " + topicName));
+                .orElseThrow(() -> new IllegalArgumentException(topicName + " 토픽에 대한 핸들러가 없습니다."));
     }
 
      private String substringAfterLast(String input) {

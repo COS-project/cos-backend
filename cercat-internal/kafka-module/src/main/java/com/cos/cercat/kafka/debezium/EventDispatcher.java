@@ -20,7 +20,7 @@ public class EventDispatcher {
     @KafkaListener(topics = {"${spring.kafka.topic.debezium_post}", "${spring.kafka.topic.debezium_comment}"})
     public void handleEvents(List<ConsumerRecord<String, DebeziumEvent>> records,
                              Acknowledgment acknowledgment) {
-        log.info("Request to process {} records", records.size());
+        log.info("{}개의 레코드 처리 요청", records.size());
 
         List<ConsumerRecord<String, DebeziumEvent>> sortedRecords = records.stream()
                 .filter(record -> record.value().getPayload().getOperation() != DebeziumEvent.DebeziumEventPayloadOperation.READ)
@@ -28,7 +28,7 @@ public class EventDispatcher {
                 .toList();
 
         sortedRecords.forEach(record -> {
-            log.info("Request to handle {} event in the topic {}", record.value().getPayload().getOperation(), record.topic());
+            log.info("{} 이벤트를 {} 토픽에 처리 요청", record.value().getPayload().getOperation(), record.topic());
             eventHandlerFactory.getHandler(record.topic()).process(record.value());
         });
         acknowledgment.acknowledge();
