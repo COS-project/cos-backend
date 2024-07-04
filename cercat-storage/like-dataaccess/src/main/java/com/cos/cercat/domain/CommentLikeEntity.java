@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import static org.hibernate.annotations.OnDeleteAction.*;
+
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -25,7 +27,7 @@ public class CommentLikeEntity {
     @MapsId("commentId")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = CASCADE)
     private PostCommentEntity comment;
 
     private CommentLikeEntity(UserEntity userEntity, PostCommentEntity comment) {

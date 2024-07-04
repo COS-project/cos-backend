@@ -5,6 +5,10 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import static org.hibernate.annotations.OnDeleteAction.*;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -23,6 +27,7 @@ public class PostLikeEntity {
     @MapsId("postId")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
+    @OnDelete(action = CASCADE)
     private PostEntity postEntity;
 
     private PostLikeEntity(UserEntity userEntity, PostEntity postEntity) {
