@@ -1,9 +1,6 @@
-version: "3.8"
 networks:
   app-tier:
     driver: bridge
-    external: true
-    internal: true
 services:
   cercat-blue:
     extra_hosts:
