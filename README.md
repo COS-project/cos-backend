@@ -77,13 +77,13 @@ Cercat 프로젝트는 단일 모듈 구조에서 시작하여, 코드 간의 �
 📁 cercat-common # 공통
 📁 cercat-domain # Business-Layer, Implementation-Layer
 📁 cercat-storage # Entity, Data-Access-Layer
-📁 cercat-client # 외부 API 기능(GCP Cloud Storage)
+📁 cercat-internal # 그 외의 시스템에 필요한 모듈들(GCS, Kafka...)
 ```
 - [cercat-application](https://github.com/COS-project/cos-backend/blob/main/cercat-application/README.md)
 - [cercat-common](https://github.com/COS-project/cos-backend/blob/main/cercat-common/README.md)
 - [cercat-domain](https://github.com/COS-project/cos-backend/blob/main/cercat-domain/README.md)
 - [cercat-storage](https://github.com/COS-project/cos-backend/blob/main/cercat-storage/README.md)
-- [cercat-client](https://github.com/COS-project/cos-backend/blob/main/cercat-client/README.md)
+- [cercat-internal](https://github.com/COS-project/cos-backend/tree/main/cercat-internal)
 
 # 패키지 구조
 ```
