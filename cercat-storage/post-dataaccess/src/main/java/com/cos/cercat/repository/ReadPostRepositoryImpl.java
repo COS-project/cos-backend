@@ -1,15 +1,13 @@
 package com.cos.cercat.repository;
 
 import com.cos.cercat.certificate.Certificate;
-import com.cos.cercat.certificate.TargetCertificate;
 import com.cos.cercat.common.domain.Cursor;
 import com.cos.cercat.common.domain.Image;
 import com.cos.cercat.common.domain.SliceResult;
-import com.cos.cercat.common.exception.CustomException;
-import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.domain.*;
+import com.cos.cercat.exception.CommentNotFoundException;
+import com.cos.cercat.exception.PostNotFoundException;
 import com.cos.cercat.post.*;
-import com.cos.cercat.user.TargetUser;
 import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -57,7 +55,7 @@ public class ReadPostRepositoryImpl implements ReadPostRepository {
     @Override
     public PostWithComments findDetail(TargetPost targetPost) {
         PostEntity postEntity = postJpaRepository.findById(targetPost.postId()).orElseThrow(
-                () -> new CustomException(ErrorCode.POST_NOT_FOUND));
+                () -> PostNotFoundException.EXCEPTION);
 
         Post post = toPost(postEntity);
 
@@ -116,28 +114,28 @@ public class ReadPostRepositoryImpl implements ReadPostRepository {
     @Transactional
     public Post findWithLock(TargetPost targetPost) {
         PostEntity postEntity = postJpaRepository.findByIdWithPessimisticLock(targetPost.postId()).orElseThrow(
-                () -> new CustomException(ErrorCode.POST_NOT_FOUND));
+                () -> PostNotFoundException.EXCEPTION);
         return toPost(postEntity);
     }
 
     @Override
     public Post find(TargetPost targetPost) {
         PostEntity postEntity = postJpaRepository.findById(targetPost.postId()).orElseThrow(
-                () -> new CustomException(ErrorCode.POST_NOT_FOUND));
+                () -> PostNotFoundException.EXCEPTION);
         return toPost(postEntity);
     }
 
     @Override
     public PostComment find(TargetComment targetComment) {
         return postCommentJpaRepository.findById(targetComment.commentId()).orElseThrow(
-                () -> new CustomException(ErrorCode.COMMENT_NOT_FOUND))
+                () -> CommentNotFoundException.EXCEPTION)
                 .toDomain();
     }
 
     @Override
     public PostComment findCommentWithLock(TargetComment targetComment) {
         return postCommentJpaRepository.findByIdWithPessimisticLock(targetComment.commentId()).orElseThrow(
-                        () -> new CustomException(ErrorCode.COMMENT_NOT_FOUND))
+                        () -> CommentNotFoundException.EXCEPTION)
                 .toDomain();
     }
 

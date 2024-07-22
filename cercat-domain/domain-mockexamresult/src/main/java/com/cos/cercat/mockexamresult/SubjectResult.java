@@ -8,5 +8,6 @@ public record SubjectResult(
         Integer score,
         Integer numberOfCorrect,
         Long totalTakenTime,
-        Integer correctRate) {
+        Integer correctRate
+) {
 }

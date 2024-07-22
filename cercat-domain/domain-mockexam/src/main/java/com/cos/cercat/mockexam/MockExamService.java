@@ -38,7 +38,7 @@ public class MockExamService {
                                MockExamSession session,
                                Long timeLimit,
                                List<QuestionWithSubjectSeq> contents) {
-        Certificate certificate = certificateReader.read(targetCertificate);
+        Certificate certificate = certificateReader.read(targetCertificate); //불필요한 조회? or 검증을 위해 필요?
         mockExamAppender.append(certificate, session, timeLimit, contents);
     }
 }

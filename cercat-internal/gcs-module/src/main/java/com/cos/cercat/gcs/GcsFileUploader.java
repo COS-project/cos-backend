@@ -1,9 +1,8 @@
 package com.cos.cercat.gcs;
 
 import com.cos.cercat.common.domain.File;
-import com.cos.cercat.common.exception.CustomException;
-import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.common.domain.Image;
+import com.cos.cercat.exception.ImageUploadException;
 import com.cos.cercat.global.FileUploader;
 import com.google.api.client.util.ByteStreams;
 import com.google.cloud.storage.BlobInfo;
@@ -40,7 +39,9 @@ public class GcsFileUploader implements FileUploader {
                 images.add(uploadFile(file));
             }
         }
+
         return images;
+
     }
 
     @Override
@@ -64,7 +65,7 @@ public class GcsFileUploader implements FileUploader {
             return Image.from(storagePath + uuid);
         } catch (IOException e) {
             log.warn("ImageEntity upload failed", e);
-            throw new CustomException(ErrorCode.IMAGE_UPLOAD_FAIL_ERROR);
+            throw ImageUploadException.EXCEPTION;
         }
     }
 }

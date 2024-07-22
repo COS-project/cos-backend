@@ -1,12 +1,10 @@
 package com.cos.cercat.repository;
 
 import com.cos.cercat.certificate.Certificate;
-import com.cos.cercat.certificate.TargetCertificate;
 import com.cos.cercat.common.domain.Cursor;
 import com.cos.cercat.common.domain.SliceResult;
-import com.cos.cercat.common.exception.CustomException;
-import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.domain.PostDocument;
+import com.cos.cercat.exception.SearchPostNotFoundException;
 import com.cos.cercat.post.TargetPost;
 import com.cos.cercat.search.PostForSearch;
 import com.cos.cercat.search.PostForSearchRepository;
@@ -33,7 +31,7 @@ public class PostForForSearchRepositoryImpl implements PostForSearchRepository {
     @Override
     public PostForSearch find(TargetPost targetPost) {
         PostDocument postDocument = postSearchElasticRepository.findById(targetPost.postId()).orElseThrow(
-                () -> new CustomException(ErrorCode.POST_NOT_FOUND));
+                () -> SearchPostNotFoundException.EXCEPTION);
         return postDocument.toDomain();
     }
 

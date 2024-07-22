@@ -31,8 +31,13 @@ public class User {
         this.userRole = Role.ROLE_USER;
     }
 
-    public void oauthUpdate(String email, String kakaoProfileImageUrl) {
-        this.email = email;
-        this.userProfileImage.updateProfileImage(null, kakaoProfileImageUrl);
+    public void oauthUpdate(UserInfo userInfo) {
+        this.username = userInfo.username();
+        this.email = userInfo.email();
+        this.userProfileImage.updateProfileImage(null, userInfo.kakaoProfileImage());
+    }
+
+    public boolean isGuest() {
+        return userRole == Role.ROLE_GUEST;
     }
 }

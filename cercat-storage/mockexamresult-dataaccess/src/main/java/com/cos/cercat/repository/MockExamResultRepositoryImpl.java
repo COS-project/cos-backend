@@ -2,22 +2,20 @@ package com.cos.cercat.repository;
 
 
 import com.cos.cercat.certificate.Certificate;
-import com.cos.cercat.certificate.TargetCertificate;
 import com.cos.cercat.common.domain.Cursor;
 import com.cos.cercat.common.domain.PageResult;
 import com.cos.cercat.common.domain.SliceResult;
-import com.cos.cercat.common.exception.CustomException;
-import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.common.util.DateUtils;
 import com.cos.cercat.domain.*;
 import com.cos.cercat.dto.DailyScoreAverage;
 import com.cos.cercat.dto.MonthlyScoreAverage;
 import com.cos.cercat.dto.SubjectResultsAVG;
 import com.cos.cercat.dto.WeeklyScoreAverage;
+import com.cos.cercat.exception.MockExamResultNotFoundException;
+import com.cos.cercat.exception.UserAnswerNotFoundException;
 import com.cos.cercat.learning.GoalPeriod;
 import com.cos.cercat.mockexam.MockExam;
 import com.cos.cercat.mockexamresult.*;
-import com.cos.cercat.user.TargetUser;
 import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -73,7 +71,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
     @Transactional(readOnly = true)
     public UserAnswer findUserAnswer(TargetUserAnswer targetUserAnswer) {
         UserAnswerEntity userAnswerEntity = userAnswerJpaRepository.findById(targetUserAnswer.userAnswerId()).orElseThrow(
-                () -> new CustomException(ErrorCode.USER_ANSWER_NOT_FOUND));
+                () -> UserAnswerNotFoundException.EXCEPTION);
         return userAnswerEntity.toDomain();
     }
 
@@ -123,7 +121,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
     @Override
     public MockExamResult find(TargetMockExamResult targetMockExamResult) {
         return mockExamResultJpaRepository.findById(targetMockExamResult.mockExamResultId())
-                .orElseThrow(() -> new CustomException(ErrorCode.MOCK_EXAM_RESULT_NOT_FOUND))
+                .orElseThrow(() -> MockExamResultNotFoundException.EXCEPTION)
                 .toDomain();
     }
 
@@ -279,7 +277,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
     @Override
     public MockExamResult readRecent(MockExam mockExam, User user) {
         return mockExamResultJpaRepository.findMockExamResultByMockExamIdAndUserId(mockExam.id(), user.getId())
-                .orElseThrow(() -> new CustomException(ErrorCode.MOCK_EXAM_RESULT_NOT_FOUND))
+                .orElseThrow(() -> MockExamResultNotFoundException.EXCEPTION)
                 .toDomain();
     }
 

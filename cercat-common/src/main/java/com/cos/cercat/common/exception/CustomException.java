@@ -7,21 +7,19 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CustomException extends RuntimeException {
 
-    private ErrorCode errorCode;
+    private BaseErrorCode errorCode;
     private String message;
 
-    public CustomException(ErrorCode errorCode) {
+    public CustomException(BaseErrorCode errorCode) {
         this.errorCode = errorCode;
-        this.message = null;
     }
 
     public String getMessage() {
         if (message == null) {
-            return errorCode.getMessage();
+            return errorCode.getErrorReason().message();
         } else {
-            return String.format("%s. %s", errorCode.getMessage(), message);
+            return String.format("%s. %s", errorCode.getErrorReason().message(), message);
         }
-
     }
 
 }

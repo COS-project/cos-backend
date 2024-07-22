@@ -8,19 +8,15 @@ import org.springframework.stereotype.Component;
 public class UserReader {
 
     private final UserRepository userRepository;
-    private final UserCacheManger userCacheManger;
+    private final UserCacheManager userCacheManager;
 
     public User read(TargetUser targetUser) {
-        return userCacheManger.read(targetUser).orElseGet( () ->
+        return userCacheManager.read(targetUser).orElseGet( () ->
                 userRepository.read(targetUser)
         );
     }
 
     public User readBy(String email) {
         return userRepository.readBy(email);
-    }
-
-    public boolean isLoginUser(TargetUser targetUser, String token) {
-        return false;
     }
 }

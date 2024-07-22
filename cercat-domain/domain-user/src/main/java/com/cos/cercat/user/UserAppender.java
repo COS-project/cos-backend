@@ -9,7 +9,7 @@ public class UserAppender {
 
     private final UserRepository userRepository;
 
-    public User append(NewUser newUser) {
-        return userRepository.save(newUser);
+    public User append(UserInfo userInfo) {
+        return userRepository.save(userInfo);
     }
 }

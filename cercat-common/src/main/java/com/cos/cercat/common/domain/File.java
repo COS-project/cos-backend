@@ -1,7 +1,6 @@
 package com.cos.cercat.common.domain;
 
-import com.cos.cercat.common.exception.CustomException;
-import com.cos.cercat.common.exception.ErrorCode;
+import com.cos.cercat.common.exception.FileConvertException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -23,7 +22,7 @@ public record File(
                     multipartFile.getInputStream()
             );
         } catch (IOException e) {
-            throw new CustomException(ErrorCode.FILE_CONVERT_ERROR);
+            throw FileConvertException.EXCEPTION;
         }
     }
 }

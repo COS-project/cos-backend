@@ -13,14 +13,17 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import java.time.Duration;
+
 @Configuration
 @RequiredArgsConstructor
 @EnableRedisRepositories
 public class UserRedisConfig {
 
-    private final RedisConnectionFactory redisConnectionFactory;
+    public final static String BAN_TOKEN_KEY = "BAN_TOKEN_KEY";
+    public final static Duration USER_CACHE_TTL = Duration.ofDays(1);
 
-    // local date time 역직렬화 위해 추가 코드
+    private final RedisConnectionFactory redisConnectionFactory;
     private final ObjectMapper objectMapper;
 
     @Bean

@@ -38,6 +38,7 @@ public class ExamReviewRepositoryImpl implements ExamReviewRepository {
                 .content(content.content())
                 .prepareMonths(prepareMonths)
                 .build();
+
         examReviewJpaRepository.save(examReviewEntity);
     }
 

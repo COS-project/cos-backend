@@ -3,7 +3,7 @@ package com.cos.cercat.domain;
 import com.cos.cercat.common.domain.Image;
 import com.cos.cercat.entity.ImageEntity;
 import com.cos.cercat.entity.BaseTimeEntity;
-import com.cos.cercat.user.NewUser;
+import com.cos.cercat.user.UserInfo;
 import com.cos.cercat.user.Role;
 import com.cos.cercat.user.User;
 import com.cos.cercat.user.UserProfileImage;
@@ -65,12 +65,12 @@ public class UserEntity extends BaseTimeEntity {
         this.createdAt = createdAt;
     }
 
-    public static UserEntity from(NewUser newUser) {
+    public static UserEntity from(UserInfo userInfo) {
         return UserEntity.builder()
-                .username(newUser.username())
-                .email(newUser.email())
-                .kakaoProfileImage(newUser.kakaoProfileImage())
-                .role(newUser.role())
+                .username(userInfo.username())
+                .email(userInfo.email())
+                .kakaoProfileImage(userInfo.kakaoProfileImage())
+                .role(Role.ROLE_GUEST)
                 .build();
     }
 

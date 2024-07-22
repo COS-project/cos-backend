@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 public class UserUpdater {
 
     private final UserRepository userRepository;
-    private final UserCacheManger userCacheManger;
+    private final UserCacheManager userCacheManager;
 
-    public void update(User user) {
-        userRepository.update(user);
-        userCacheManger.refresh(user);
+    public User update(User user) {
+        userCacheManager.refresh(user);
+        return userRepository.update(user);
     }
 }

@@ -1,55 +1,42 @@
 package com.cos.cercat.apis.global.util;
 
+import com.cos.cercat.exception.InvalidTokenException;
 import com.cos.cercat.user.TargetUser;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Optional;
+
+import static com.cos.cercat.apis.global.security.JwtTokenProperties.*;
 
 @Getter
 @Component
 public class JwtTokenizer {
 
-    private static String secretKey;
+    public static String generateAccessToken(TargetUser targetUser) {
 
-    private static int accessTokenExpirationMinutes;
-
-    @Value("${jwt.token.secret-key}")
-    public void setSecretKey(String secretKey) {
-        JwtTokenizer.secretKey = secretKey;
-    }
-
-    @Value("${jwt.access-token.expire-length}")
-    public void setAccessTokenExpirationMinutes(int accessTokenExpirationMinutes) {
-        JwtTokenizer.accessTokenExpirationMinutes = accessTokenExpirationMinutes;
-    }
-
-    public String generateAccessToken(TargetUser targetUser,
-                                      Date expiration) {
-
-        Key key = getKeyFromBase64EncodedKey();
+        Key key = getKeyFromSecretKey(SECRET_KEY);
 
         return Jwts.builder()
                 .setSubject(targetUser.userId().toString())
                 .setIssuedAt(Calendar.getInstance().getTime())
-                .setExpiration(expiration)
+                .setExpiration(getTokenExpiration())
                 .signWith(key)
                 .compact();
     }
 
-    public String generateRefreshToken(TargetUser targetUser) {
+    public static String generateRefreshToken(TargetUser targetUser) {
 
-        Key key = getKeyFromBase64EncodedKey();
+        Key key = getKeyFromSecretKey(SECRET_KEY);
 
         return Jwts.builder()
                 .setSubject(targetUser.userId().toString())
@@ -58,40 +45,47 @@ public class JwtTokenizer {
                 .compact();
     }
 
-    public Jws<Claims> getClaims(String jws) {
-        Key key = getKeyFromBase64EncodedKey();
-
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(jws);
-    }
-
-    public void verifySignature(String jws) {
-        Key key = getKeyFromBase64EncodedKey();
-
-        Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(jws);
-    }
-
-    public Date getTokenExpiration() {
-
+    public static Date getTokenExpiration() {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.SECOND, accessTokenExpirationMinutes);
-
+        calendar.add(Calendar.SECOND, ACCESS_TOKEN_EXPIRATION);
         return calendar.getTime();
     }
 
-    public static Key getKeyFromBase64EncodedKey() {
-        String base64SecretKey = encodeBase64SecretKey(secretKey);
-        byte[] keyBytes = Decoders.BASE64.decode(base64SecretKey);
-        Key key = Keys.hmacShaKeyFor(keyBytes);
-        return key;
+    public static Key getKeyFromSecretKey(String secretKey) {
+        byte[] keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    private static String encodeBase64SecretKey(String secretKey) {
-        return Encoders.BASE64.encode(secretKey.getBytes(StandardCharsets.UTF_8));
+    public static void setInHeader(HttpServletResponse response, String accessToken, String refreshToken) {
+        response.setHeader(ACCESS_TOKEN_HEADER, BEARER + accessToken);
+        response.setHeader(REFRESH_TOKEN_HEADER, BEARER + refreshToken);
+    }
+
+    public static Optional<String> extractAccessToken(HttpServletRequest request) {
+        return Optional.ofNullable(request.getHeader(ACCESS_TOKEN_HEADER))
+                .filter(accessToken -> accessToken.startsWith(BEARER))
+                .map(accessToken -> accessToken.replace(BEARER, ""));
+    }
+
+    public static Optional<String> extractRefreshToken(HttpServletRequest request) {
+        return Optional.ofNullable(request.getHeader(REFRESH_TOKEN_HEADER))
+                .filter(refreshToken -> refreshToken.startsWith(BEARER))
+                .map(refreshToken -> refreshToken.replace(BEARER, ""));
+    }
+
+    public static TargetUser extractTargetUser(String token) {
+        try {
+            Key key = getKeyFromSecretKey(SECRET_KEY);
+
+            String subject = Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .getSubject();
+            return TargetUser.from(Long.valueOf(subject));
+        } catch (ExpiredJwtException e) {
+            throw InvalidTokenException.EXCEPTION;
+        }
     }
 }

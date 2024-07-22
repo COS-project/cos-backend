@@ -44,6 +44,10 @@ public class PostComment implements Ownable {
         likeCount--;
     }
 
+    public boolean isCommentIn(Post post) {
+        return this.postId.equals(post.getId());
+    }
+
     @Override
     public boolean isOwner(User user) {
         return this.user.getId().equals(user.getId());

@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 public class UserRemover {
 
     private final UserRepository userRepository;
-    private final UserCacheManger userCacheManger;
+    private final UserCacheManager userCacheManager;
 
     public void remove(User user) {
         userRepository.delete(user);
-        userCacheManger.remove(user);
+        userCacheManager.remove(user);
     }
 }
