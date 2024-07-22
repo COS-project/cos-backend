@@ -12,9 +12,8 @@ import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import co.elastic.clients.transport.rest_client.RestClientTransport;
 import co.elastic.clients.util.NamedValue;
 import co.elastic.clients.util.ObjectBuilder;
-import com.cos.cercat.common.exception.CustomException;
-import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.domain.PostDocument;
+import com.cos.cercat.exception.ElasticSearchException;
 import com.cos.cercat.search.SearchCond;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -155,7 +154,7 @@ public class CustomPostSearchRepositoryImpl implements CustomPostSearchRepositor
                     .toList();
 
         } catch (IOException e) {
-            throw new CustomException(ErrorCode.ES_SEARCH_ERROR);
+            throw ElasticSearchException.EXCEPTION;
         }
     }
 
@@ -178,7 +177,7 @@ public class CustomPostSearchRepositoryImpl implements CustomPostSearchRepositor
                     .toList();
 
         } catch (IOException e) {
-            throw new CustomException(ErrorCode.ES_SEARCH_ERROR);
+            throw ElasticSearchException.EXCEPTION;
         } catch (ElasticsearchException e) {
             log.error("검색어가 아직 없습니다.");
             return List.of();

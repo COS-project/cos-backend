@@ -1,8 +1,7 @@
 package com.cos.cercat.sse;
 
 import com.cos.cercat.alarm.SseClosedEvent;
-import com.cos.cercat.common.exception.CustomException;
-import com.cos.cercat.common.exception.ErrorCode;
+import com.cos.cercat.sse.exception.SseConnectException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -35,7 +34,7 @@ public class SseEmitterService {
             emitter.send(SseEmitter.event().id("").name(EVENT_NAME).data("connect completed"));
             log.info("SSE 연결 userId - {}", userId);
         } catch (IOException e) {
-            throw new CustomException(ErrorCode.ALARM_CONNECT_ERROR);
+            throw SseConnectException.EXCEPTION;
         }
         return emitter;
     }

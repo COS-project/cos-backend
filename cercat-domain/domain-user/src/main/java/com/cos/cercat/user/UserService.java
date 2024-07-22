@@ -6,9 +6,6 @@ import com.cos.cercat.global.FileUploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -17,7 +14,7 @@ public class UserService {
     private final UserRemover userRemover;
     private final UserUpdater userUpdater;
     private final FileUploader fileUploader;
-    private final TokenCacheManager tokenCacheManager;
+    private final TokenManager tokenManager;
 
 
     public void updateUser(TargetUser targetUser,
@@ -30,7 +27,7 @@ public class UserService {
     }
 
     public void logout(String accessToken) {
-        tokenCacheManager.ban(accessToken);
+        tokenManager.ban(accessToken);
     }
 
     public void deleteUser(TargetUser targetUser) {

@@ -6,6 +6,7 @@ dependencies {
 
     implementation project(':cercat-common');
     api project(':cercat-domain');
+    implementation project(':cercat-internal')
 
 
     //google GCP 버킷

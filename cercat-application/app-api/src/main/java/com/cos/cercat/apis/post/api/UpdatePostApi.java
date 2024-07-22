@@ -1,10 +1,7 @@
 package com.cos.cercat.apis.post.api;
 
 import com.cos.cercat.apis.post.request.PostUpdateRequest;
-import com.cos.cercat.certificate.TargetCertificate;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.common.exception.CustomException;
-import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.post.PostType;
 import com.cos.cercat.post.TargetPost;
 import com.cos.cercat.post.UpdatePostService;

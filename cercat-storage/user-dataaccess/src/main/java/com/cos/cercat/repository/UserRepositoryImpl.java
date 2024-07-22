@@ -1,9 +1,8 @@
 package com.cos.cercat.repository;
 
-import com.cos.cercat.common.exception.CustomException;
-import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.domain.UserEntity;
-import com.cos.cercat.user.NewUser;
+import com.cos.cercat.exception.UserNotFoundException;
+import com.cos.cercat.user.UserInfo;
 import com.cos.cercat.user.TargetUser;
 import com.cos.cercat.user.User;
 import com.cos.cercat.user.UserRepository;
@@ -22,13 +21,13 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User read(TargetUser targetUser) {
         return userJpaRepository.findById(targetUser.userId())
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND))
+                .orElseThrow(() -> UserNotFoundException.EXCEPTION)
                 .toDomain();
     }
 
     @Override
-    public void update(User user) {
-        userJpaRepository.save(UserEntity.from(user));
+    public User update(User user) {
+        return userJpaRepository.save(UserEntity.from(user)).toDomain();
     }
 
     @Override
@@ -37,14 +36,14 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User save(NewUser newUser) {
-        return userJpaRepository.save(UserEntity.from(newUser)).toDomain();
+    public User save(UserInfo userInfo) {
+        return userJpaRepository.save(UserEntity.from(userInfo)).toDomain();
     }
 
     @Override
     public User readBy(String email) {
         return userJpaRepository.findByEmail(email)
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND))
+                .orElseThrow(() -> UserNotFoundException.EXCEPTION)
                 .toDomain();
     }
 }

@@ -5,7 +5,7 @@ import com.cos.cercat.apis.certificate.response.CertificateResponse;
 import com.cos.cercat.mockexam.MockExam;
 
 public record MockExamResponse(
-        Long MockExamId,
+        Long mockExamId,
         Integer examYear,
         Integer round,
         Long timeLimit,

@@ -1,18 +1,15 @@
 package com.cos.cercat.repository;
 
 import com.cos.cercat.certificate.Certificate;
-import com.cos.cercat.certificate.TargetCertificate;
-import com.cos.cercat.common.exception.CustomException;
-import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.domain.GoalEntity;
 import com.cos.cercat.domain.StudyTimeLogEntity;
 import com.cos.cercat.domain.UserEntity;
+import com.cos.cercat.exception.GoalNotFoundException;
 import com.cos.cercat.learning.Goal;
 import com.cos.cercat.learning.LearningRepository;
 import com.cos.cercat.learning.NewGoal;
 import com.cos.cercat.learning.TargetGoal;
-import com.cos.cercat.user.TargetUser;
 import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -51,7 +48,7 @@ public class LearningRepositoryImpl implements LearningRepository {
     @Override
     public Goal getGoal(TargetGoal targetGoal) {
         return goalJpaRepository.findById(targetGoal.goalId()).orElseThrow(
-                () -> new CustomException(ErrorCode.GOAL_NOT_FOUND)).toDomain();
+                () -> GoalNotFoundException.EXCEPTION).toDomain();
     }
 
     @Override
@@ -69,7 +66,7 @@ public class LearningRepositoryImpl implements LearningRepository {
     @Override
     public Goal getRecentGoal(User user, Certificate certificate) {
         return goalJpaRepository.findRecentGoalByUserIdAndCertificateId(user.getId(), certificate.id())
-                .orElseThrow(() -> new CustomException(ErrorCode.GOAL_NOT_FOUND))
+                .orElseThrow(() -> GoalNotFoundException.EXCEPTION)
                 .toDomain();
     }
 

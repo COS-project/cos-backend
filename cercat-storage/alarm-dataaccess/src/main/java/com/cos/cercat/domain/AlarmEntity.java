@@ -1,9 +1,8 @@
 package com.cos.cercat.domain;
 
 import com.cos.cercat.alarm.*;
-import com.cos.cercat.common.exception.CustomException;
-import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.entity.BaseTimeEntity;
+import com.cos.cercat.exception.EntityTypeMismatchException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -49,6 +48,7 @@ public class AlarmEntity extends BaseTimeEntity {
                     boardAlarm.getPostId()
             );
         }
+
         if (this instanceof ExamAlarmEntity examAlarm) {
             return new ExamAlarm(
                     receiveUserEntity.toDomain(),
@@ -56,7 +56,8 @@ public class AlarmEntity extends BaseTimeEntity {
                     examAlarm.getCertificateExamEntity().toDomain()
             );
         }
-        throw new CustomException(ErrorCode.TYPE_MISMATCH);
+
+        throw EntityTypeMismatchException.EXCEPTION;
     }
 
     public static AlarmEntity from(AlarmEvent alarmEvent) {

@@ -1,7 +1,6 @@
 package com.cos.cercat.cache;
 
-import com.cos.cercat.common.exception.CustomException;
-import com.cos.cercat.common.exception.ErrorCode;
+import com.cos.cercat.exception.SearchLogNotExistException;
 import com.cos.cercat.search.SearchLog;
 import com.cos.cercat.search.SearchLogRepository;
 import com.cos.cercat.user.User;
@@ -49,7 +48,7 @@ public class SearchLogRepositoryImpl implements SearchLogRepository {
         String key = getKey(user.getId());
         int count = Objects.requireNonNull(redisTemplate.opsForList().remove(key, 1, searchLog)).intValue();
         if (count == 0) {
-            throw new CustomException(ErrorCode.SEARCH_LOG_NOT_EXIST);
+            throw SearchLogNotExistException.EXCEPTION;
         }
     }
 

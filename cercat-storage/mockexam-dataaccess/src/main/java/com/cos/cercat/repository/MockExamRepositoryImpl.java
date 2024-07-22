@@ -1,11 +1,9 @@
 package com.cos.cercat.repository;
 
 import com.cos.cercat.certificate.Certificate;
-import com.cos.cercat.certificate.TargetCertificate;
-import com.cos.cercat.common.exception.CustomException;
-import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.domain.MockExamEntity;
 import com.cos.cercat.domain.QuestionEntity;
+import com.cos.cercat.exception.MockExamNotFoundException;
 import com.cos.cercat.mockexam.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -47,7 +45,7 @@ public class MockExamRepositoryImpl implements MockExamRepository {
                 certificate.id(),
                 mockExamSession.examYear(),
                 mockExamSession.round()
-        ).orElseThrow(() -> new CustomException(ErrorCode.MOCK_EXAM_NOT_FOUND));
+        ).orElseThrow(() -> MockExamNotFoundException.EXCEPTION);
 
         return questionJpaRepository.findQuestionByMockExamEntityAndQuestionSeq(mockExamEntity, questionSequence).toDomain();
     }
@@ -76,7 +74,7 @@ public class MockExamRepositoryImpl implements MockExamRepository {
     @Override
     public MockExam read(TargetMockExam targetMockExam) {
         return mockExamJpaRepository.findById(targetMockExam.mockExamId())
-                .orElseThrow(() -> new CustomException(ErrorCode.MOCK_EXAM_NOT_FOUND))
+                .orElseThrow(() -> MockExamNotFoundException.EXCEPTION)
                 .toDomain();
     }
 }

@@ -10,7 +10,6 @@ import java.util.List;
 
 public interface AlarmJpaRepository extends JpaRepository<AlarmEntity, Long> {
 
-
     @Query("""
         SELECT a
         FROM AlarmEntity a

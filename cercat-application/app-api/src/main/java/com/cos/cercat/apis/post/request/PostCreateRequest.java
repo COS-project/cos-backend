@@ -17,7 +17,6 @@ public record PostCreateRequest(
         Integer round,
         Integer questionSequence
 ) {
-
     public NewPost toNewPost(PostType postType) {
         return new NewPost(
                 postType,

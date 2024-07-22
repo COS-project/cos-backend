@@ -1,10 +1,9 @@
 package com.cos.cercat.repository;
 
 import com.cos.cercat.certificate.*;
-import com.cos.cercat.common.exception.CustomException;
-import com.cos.cercat.common.exception.ErrorCode;
 import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.domain.SubjectEntity;
+import com.cos.cercat.exception.CertificateNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +28,7 @@ public class CertificateRepositoryImpl implements CertificateRepository {
     @Override
     public Certificate findById(TargetCertificate targetCertificate) {
         CertificateEntity certificateEntity = certificateJpaRepository.findById(targetCertificate.certificateId())
-                .orElseThrow(() -> new CustomException(ErrorCode.CERTIFICATE_NOT_FOUND));
+                .orElseThrow(() -> CertificateNotFoundException.EXCEPTION);
 
         return certificateEntity.toDomain();
     }

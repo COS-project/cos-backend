@@ -2,8 +2,7 @@ package com.cos.cercat.post;
 
 import com.cos.cercat.alarm.AlarmPublisher;
 import com.cos.cercat.alarm.AlarmType;
-import com.cos.cercat.common.exception.CustomException;
-import com.cos.cercat.common.exception.ErrorCode;
+import com.cos.cercat.exception.InvalidCommentException;
 import com.cos.cercat.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -28,8 +27,8 @@ public class CommentAppender {
     private void appendChild(User user, Post post, CommentContent content) {
         PostComment parentComment = commentReader.read(TargetComment.from(content.parentId()));
 
-        if (!parentComment.getPostId().equals(post.getId())) {
-            throw new CustomException(ErrorCode.BAD_REQUEST);
+        if (!parentComment.isCommentIn(post)) {
+            throw InvalidCommentException.EXCEPTION;
         }
 
         createPostRepository.saveComment(user, post, content);

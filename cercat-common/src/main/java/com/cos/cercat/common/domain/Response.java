@@ -1,6 +1,7 @@
 package com.cos.cercat.common.domain;
 
-import com.cos.cercat.common.exception.ErrorCode;
+import com.cos.cercat.common.exception.BaseErrorCode;
+import com.cos.cercat.common.exception.GlobalErrorCode;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,8 +41,8 @@ public class Response<T> {
         return new Response<>("SUCCESS", message);
     }
 
-    public static Response<Void> error(ErrorCode errorCode, String message) {
-        return new Response<>(errorCode.name(), message,null);
+    public static Response<Void> error(BaseErrorCode errorCode, String message) {
+        return new Response<>(errorCode.getErrorReason().status().toString(), message,null);
     }
 
 }
