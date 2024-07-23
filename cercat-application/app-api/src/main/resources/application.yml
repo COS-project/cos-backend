@@ -104,11 +104,10 @@ spring:
             user-name-attribute: id
 
 jwt:
-  token:
-    secret-key: ${SECRET_KEY}
+  secret-key: ${SECRET_KEY}
   access-token:
     header: Access-token
-    expire-length: 259200 #3일
+    expiration: 259200 #3일
   refresh-token:
     header: Refresh-token
 
