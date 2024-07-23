@@ -23,5 +23,4 @@ public abstract class BaseTimeEntity {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @LastModifiedDate
     protected LocalDateTime modifiedAt;
-
 }

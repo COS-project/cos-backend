@@ -1,7 +1,6 @@
 package com.cos.cercat.common.domain;
 
 import com.cos.cercat.common.exception.BaseErrorCode;
-import com.cos.cercat.common.exception.GlobalErrorCode;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
