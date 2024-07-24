@@ -1,6 +1,6 @@
 package com.cos.cercat.domain;
 
-import com.cos.cercat.post.PostType;
+import com.cos.cercat.domain.post.PostType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;

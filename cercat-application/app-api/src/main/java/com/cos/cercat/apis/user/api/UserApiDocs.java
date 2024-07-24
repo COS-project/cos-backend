@@ -3,7 +3,7 @@ package com.cos.cercat.apis.user.api;
 import com.cos.cercat.apis.user.request.UserCreateRequest;
 import com.cos.cercat.apis.user.response.UserResponse;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.user.User;
+import com.cos.cercat.domain.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartFile;

@@ -1,9 +1,9 @@
 package com.cos.cercat.cache;
 
-import com.cos.cercat.mockexam.MockExam;
-import com.cos.cercat.mockexam.MockExamCacheRepository;
-import com.cos.cercat.mockexam.Question;
-import com.cos.cercat.mockexam.TargetMockExam;
+import com.cos.cercat.domain.mockexam.MockExam;
+import com.cos.cercat.domain.mockexam.MockExamCacheRepository;
+import com.cos.cercat.domain.mockexam.Question;
+import com.cos.cercat.domain.mockexam.TargetMockExam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;

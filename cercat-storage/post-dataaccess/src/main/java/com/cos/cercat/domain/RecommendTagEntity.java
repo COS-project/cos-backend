@@ -1,11 +1,10 @@
 package com.cos.cercat.domain;
 
-import com.cos.cercat.post.RecommendTag;
-import com.cos.cercat.post.TagType;
+import com.cos.cercat.domain.post.RecommendTag;
+import com.cos.cercat.domain.post.TagType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import static org.hibernate.annotations.OnDeleteAction.*;
 

@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.global.oauth2;
 
-import com.cos.cercat.apis.global.util.JwtTokenizer;
-import com.cos.cercat.user.*;
+import com.cos.cercat.domain.user.*;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
-import java.util.List;
 
 import static com.cos.cercat.apis.global.util.JwtTokenizer.*;
 import static com.cos.cercat.apis.global.util.JwtTokenizer.generateRefreshToken;

@@ -1,6 +1,6 @@
 package com.cos.cercat.sse;
 
-import com.cos.cercat.alarm.SseClosedEvent;
+import com.cos.cercat.domain.alarm.SseClosedEvent;
 import com.cos.cercat.sse.exception.SseConnectException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

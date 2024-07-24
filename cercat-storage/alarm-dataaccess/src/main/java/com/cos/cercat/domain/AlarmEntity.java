@@ -1,6 +1,7 @@
 package com.cos.cercat.domain;
 
-import com.cos.cercat.alarm.*;
+
+import com.cos.cercat.domain.alarm.*;
 import com.cos.cercat.entity.BaseTimeEntity;
 import com.cos.cercat.exception.EntityTypeMismatchException;
 import jakarta.persistence.*;

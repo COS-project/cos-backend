@@ -1,12 +1,12 @@
 package com.cos.cercat.repository;
 
-import com.cos.cercat.board.FavoriteBoardRepository;
-import com.cos.cercat.certificate.Certificate;
+import com.cos.cercat.domain.board.FavoriteBoardRepository;
+import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.domain.FavoriteBoardEntity;
 import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.domain.embededId.FavoriteBoardPK;
-import com.cos.cercat.user.User;
+import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

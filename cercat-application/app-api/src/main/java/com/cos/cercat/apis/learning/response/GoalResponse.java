@@ -2,7 +2,7 @@ package com.cos.cercat.apis.learning.response;
 
 
 
-import com.cos.cercat.learning.Goal;
+import com.cos.cercat.domain.learning.Goal;
 
 import java.time.LocalDate;
 

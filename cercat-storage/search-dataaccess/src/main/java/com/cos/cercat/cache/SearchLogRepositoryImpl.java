@@ -1,9 +1,9 @@
 package com.cos.cercat.cache;
 
 import com.cos.cercat.exception.SearchLogNotExistException;
-import com.cos.cercat.search.SearchLog;
-import com.cos.cercat.search.SearchLogRepository;
-import com.cos.cercat.user.User;
+import com.cos.cercat.domain.search.SearchLog;
+import com.cos.cercat.domain.search.SearchLogRepository;
+import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;

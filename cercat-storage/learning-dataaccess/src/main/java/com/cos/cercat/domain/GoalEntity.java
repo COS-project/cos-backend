@@ -1,13 +1,12 @@
 package com.cos.cercat.domain;
 
-import com.cos.cercat.learning.Goal;
-import com.cos.cercat.learning.GoalContent;
-import com.cos.cercat.learning.GoalPeriod;
-import com.cos.cercat.learning.NewGoal;
+import com.cos.cercat.domain.learning.Goal;
+import com.cos.cercat.domain.learning.GoalContent;
+import com.cos.cercat.domain.learning.GoalPeriod;
+import com.cos.cercat.domain.learning.NewGoal;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

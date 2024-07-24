@@ -1,7 +1,7 @@
 package com.cos.cercat.domain;
 
-import com.cos.cercat.post.PostType;
-import com.cos.cercat.post.TipPost;
+import com.cos.cercat.domain.post.PostType;
+import com.cos.cercat.domain.post.TipPost;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

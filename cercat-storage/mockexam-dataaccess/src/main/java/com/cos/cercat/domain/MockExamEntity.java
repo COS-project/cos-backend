@@ -1,10 +1,10 @@
 package com.cos.cercat.domain;
 
 import com.cos.cercat.entity.BaseTimeEntity;
-import com.cos.cercat.mockexam.MockExam;
-import com.cos.cercat.mockexam.MockExamSession;
-import com.cos.cercat.mockexam.NewMockExam;
-import com.cos.cercat.mockexam.TargetMockExam;
+import com.cos.cercat.domain.mockexam.MockExam;
+import com.cos.cercat.domain.mockexam.MockExamSession;
+import com.cos.cercat.domain.mockexam.NewMockExam;
+import com.cos.cercat.domain.mockexam.TargetMockExam;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

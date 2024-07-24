@@ -1,7 +1,7 @@
 package com.cos.cercat.domain;
 
 import com.cos.cercat.entity.BaseTimeEntity;
-import com.cos.cercat.mockexamresult.MockExamResult;
+import com.cos.cercat.domain.mockexamresult.MockExamResult;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

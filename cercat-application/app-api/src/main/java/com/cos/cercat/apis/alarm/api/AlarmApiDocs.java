@@ -2,7 +2,7 @@ package com.cos.cercat.apis.alarm.api;
 
 import com.cos.cercat.apis.alarm.Response.AlarmResponse;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.user.User;
+import com.cos.cercat.domain.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;

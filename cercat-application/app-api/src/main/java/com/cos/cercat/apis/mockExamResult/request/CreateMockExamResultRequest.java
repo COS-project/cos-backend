@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.mockExamResult.request;
 
 
-import com.cos.cercat.mockexamresult.NewSubjectResult;
+import com.cos.cercat.domain.mockexamresult.NewSubjectResult;
 
 import java.util.List;
 

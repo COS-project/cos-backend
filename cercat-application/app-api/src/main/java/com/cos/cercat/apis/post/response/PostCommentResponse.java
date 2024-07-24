@@ -1,8 +1,8 @@
 package com.cos.cercat.apis.post.response;
 
 import com.cos.cercat.apis.user.response.UserResponse;
-import com.cos.cercat.post.DateTime;
-import com.cos.cercat.post.PostComment;
+import com.cos.cercat.domain.post.DateTime;
+import com.cos.cercat.domain.post.PostComment;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;

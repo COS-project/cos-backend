@@ -1,16 +1,7 @@
-buildscript {
-	ext {
-		springBootVersion = '3.2.1'
-	}
-
-	repositories {
-		mavenCentral()
-	}
-
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-		classpath "io.spring.gradle:dependency-management-plugin:1.1.4"
-	}
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.7'
+	id 'io.spring.dependency-management' version '1.1.5'
 }
 
 allprojects {
@@ -21,7 +12,7 @@ allprojects {
 
 subprojects {
 
-	group = 'com.cos'
+	group = 'com.cos.cercat'
 	version = '0.0.2'
 
 	apply plugin: 'java'
@@ -54,7 +45,7 @@ subprojects {
 		testImplementation 'org.springframework.security:spring-security-test'
 	}
 
-	tasks.named('test') {
+	test {
 		useJUnitPlatform()
 	}
 

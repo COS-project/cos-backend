@@ -1,7 +1,7 @@
 package com.cos.cercat.domain;
 
-import com.cos.cercat.learning.ScheduleType;
-import com.cos.cercat.learning.StudySchedule;
+import com.cos.cercat.domain.learning.ScheduleType;
+import com.cos.cercat.domain.learning.StudySchedule;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;

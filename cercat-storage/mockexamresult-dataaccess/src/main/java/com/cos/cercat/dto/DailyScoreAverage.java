@@ -1,8 +1,8 @@
 package com.cos.cercat.dto;
 
 import com.cos.cercat.common.util.ScoreFormatter;
-import com.cos.cercat.mockexamresult.DailyScoreData;
-import com.cos.cercat.mockexamresult.ScoreData;
+import com.cos.cercat.domain.mockexamresult.DailyScoreData;
+import com.cos.cercat.domain.mockexamresult.ScoreData;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 

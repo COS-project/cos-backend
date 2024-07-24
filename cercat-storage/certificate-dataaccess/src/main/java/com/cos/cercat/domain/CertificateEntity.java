@@ -1,6 +1,6 @@
 package com.cos.cercat.domain;
 
-import com.cos.cercat.certificate.Certificate;
+import com.cos.cercat.domain.certificate.Certificate;
 import jakarta.persistence.*;
 import lombok.*;
 

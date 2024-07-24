@@ -1,10 +1,10 @@
 package com.cos.cercat.domain;
 
 import com.cos.cercat.entity.ImageEntity;
-import com.cos.cercat.mockexam.NewQuestion;
-import com.cos.cercat.mockexam.Question;
-import com.cos.cercat.mockexam.QuestionContent;
-import com.cos.cercat.mockexam.TargetMockExam;
+import com.cos.cercat.domain.mockexam.NewQuestion;
+import com.cos.cercat.domain.mockexam.Question;
+import com.cos.cercat.domain.mockexam.QuestionContent;
+import com.cos.cercat.domain.mockexam.TargetMockExam;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;

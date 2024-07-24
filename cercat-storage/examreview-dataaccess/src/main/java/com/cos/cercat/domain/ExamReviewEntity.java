@@ -1,13 +1,12 @@
 package com.cos.cercat.domain;
 
 import com.cos.cercat.entity.BaseTimeEntity;
-import com.cos.cercat.examreview.ExamDifficulty;
-import com.cos.cercat.examreview.ExamReview;
-import com.cos.cercat.examreview.ExamReviewContent;
+import com.cos.cercat.domain.examreview.ExamDifficulty;
+import com.cos.cercat.domain.examreview.ExamReview;
+import com.cos.cercat.domain.examreview.ExamReviewContent;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import static org.hibernate.annotations.OnDeleteAction.*;
 

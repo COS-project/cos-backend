@@ -4,7 +4,7 @@ import com.cos.cercat.apis.mockExam.request.CreateMockExamRequest;
 import com.cos.cercat.apis.mockExam.response.MockExamResponse;
 import com.cos.cercat.apis.mockExam.response.QuestionResponse;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.user.User;
+import com.cos.cercat.domain.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.PathVariable;

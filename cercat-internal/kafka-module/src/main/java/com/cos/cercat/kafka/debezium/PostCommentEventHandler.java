@@ -1,7 +1,7 @@
 package com.cos.cercat.kafka.debezium;
 
-import com.cos.cercat.search.PostForSearchAppender;
-import com.cos.cercat.search.PostForSearchRemover;
+import com.cos.cercat.domain.search.PostForSearchAppender;
+import com.cos.cercat.domain.search.PostForSearchRemover;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;

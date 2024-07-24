@@ -1,7 +1,6 @@
 package com.cos.cercat.apis.global.oauth2;
 
-import com.cos.cercat.user.UserInfo;
-import com.cos.cercat.user.Role;
+import com.cos.cercat.domain.user.UserInfo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;

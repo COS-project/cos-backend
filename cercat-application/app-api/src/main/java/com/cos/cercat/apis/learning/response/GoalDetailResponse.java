@@ -1,10 +1,10 @@
 package com.cos.cercat.apis.learning.response;
 
 import com.cos.cercat.apis.certificate.response.CertificateResponse;
-import com.cos.cercat.learning.Goal;
-import com.cos.cercat.learning.GoalContent;
-import com.cos.cercat.learning.GoalPeriod;
-import com.cos.cercat.learning.StudySchedule;
+import com.cos.cercat.domain.learning.Goal;
+import com.cos.cercat.domain.learning.GoalContent;
+import com.cos.cercat.domain.learning.GoalPeriod;
+import com.cos.cercat.domain.learning.StudySchedule;
 
 import java.time.LocalDateTime;
 import java.util.List;

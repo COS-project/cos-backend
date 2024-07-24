@@ -1,6 +1,6 @@
 package com.cos.cercat.domain;
 
-import com.cos.cercat.alarm.AlarmType;
+import com.cos.cercat.domain.alarm.AlarmType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;

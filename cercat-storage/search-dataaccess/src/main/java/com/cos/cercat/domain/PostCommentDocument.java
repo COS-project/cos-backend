@@ -1,6 +1,6 @@
 package com.cos.cercat.domain;
 
-import com.cos.cercat.search.PostCommentForSearch;
+import com.cos.cercat.domain.search.PostCommentForSearch;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.elasticsearch.annotations.DateFormat;

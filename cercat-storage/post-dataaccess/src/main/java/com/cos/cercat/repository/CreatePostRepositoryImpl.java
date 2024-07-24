@@ -1,10 +1,11 @@
 package com.cos.cercat.repository;
 
-import com.cos.cercat.certificate.Certificate;
+import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.domain.*;
-import com.cos.cercat.mockexam.Question;
-import com.cos.cercat.post.*;
-import com.cos.cercat.user.User;
+import com.cos.cercat.domain.mockexam.Question;
+import com.cos.cercat.domain.post.*;
+
+import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

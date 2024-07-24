@@ -5,8 +5,8 @@ import com.cos.cercat.domain.PostImageEntity;
 import com.cos.cercat.domain.RecommendTagEntity;
 import com.cos.cercat.domain.TipPostEntity;
 import com.cos.cercat.entity.ImageEntity;
-import com.cos.cercat.post.PostContent;
-import com.cos.cercat.post.RecommendTag;
+import com.cos.cercat.domain.post.PostContent;
+import com.cos.cercat.domain.post.RecommendTag;
 
 import java.util.List;
 import java.util.Set;

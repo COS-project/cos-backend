@@ -1,11 +1,11 @@
 package com.cos.cercat.apis.alarm.api;
 
-import com.cos.cercat.alarm.AlarmService;
+import com.cos.cercat.domain.alarm.AlarmService;
 import com.cos.cercat.apis.alarm.Response.AlarmResponse;
 import com.cos.cercat.common.domain.Response;
 import com.cos.cercat.sse.SseEmitterService;
-import com.cos.cercat.user.TargetUser;
-import com.cos.cercat.user.User;
+import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

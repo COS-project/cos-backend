@@ -4,7 +4,7 @@ import com.cos.cercat.apis.certificate.request.CertificateCreateRequest;
 import com.cos.cercat.apis.certificate.request.CertificateExamCreateRequest;
 import com.cos.cercat.apis.certificate.request.InterestCertificateCreateRequest;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.user.User;
+import com.cos.cercat.domain.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 

@@ -1,8 +1,9 @@
 package com.cos.cercat.domain;
 
 import com.cos.cercat.common.domain.Image;
+import com.cos.cercat.domain.post.*;
 import com.cos.cercat.entity.BaseTimeEntity;
-import com.cos.cercat.post.*;
+
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

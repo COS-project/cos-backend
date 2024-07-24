@@ -1,11 +1,11 @@
 package com.cos.cercat.apis.post.request;
 
 
-import com.cos.cercat.mockexam.MockExamSession;
-import com.cos.cercat.post.NewPost;
-import com.cos.cercat.post.PostContent;
-import com.cos.cercat.post.PostType;
-import com.cos.cercat.post.RecommendTag;
+import com.cos.cercat.domain.mockexam.MockExamSession;
+import com.cos.cercat.domain.post.NewPost;
+import com.cos.cercat.domain.post.PostContent;
+import com.cos.cercat.domain.post.PostType;
+import com.cos.cercat.domain.post.RecommendTag;
 
 import java.util.Set;
 

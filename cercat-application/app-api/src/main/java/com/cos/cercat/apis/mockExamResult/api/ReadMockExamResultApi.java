@@ -1,19 +1,18 @@
 package com.cos.cercat.apis.mockExamResult.api;
 
 import com.cos.cercat.apis.mockExamResult.response.*;
-import com.cos.cercat.certificate.TargetCertificate;
+import com.cos.cercat.domain.certificate.TargetCertificate;
 import com.cos.cercat.common.annotation.CursorDefault;
 import com.cos.cercat.common.domain.Cursor;
 import com.cos.cercat.common.domain.PageResult;
 import com.cos.cercat.common.domain.Response;
 import com.cos.cercat.common.domain.SliceResult;
-import com.cos.cercat.mockexam.TargetMockExam;
-import com.cos.cercat.mockexamresult.*;
-import com.cos.cercat.user.TargetUser;
-import com.cos.cercat.user.User;
+import com.cos.cercat.domain.mockexam.TargetMockExam;
+import com.cos.cercat.domain.mockexamresult.*;
+
+import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 

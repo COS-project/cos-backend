@@ -1,11 +1,15 @@
 package com.cos.cercat.repository;
 
-import com.cos.cercat.certificate.*;
+
 import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.domain.InterestCertificateEntity;
 import com.cos.cercat.domain.UserEntity;
+import com.cos.cercat.domain.certificate.Certificate;
+import com.cos.cercat.domain.certificate.InterestCertificate;
+import com.cos.cercat.domain.certificate.InterestCertificateRepository;
+import com.cos.cercat.domain.certificate.NewInterestCertificate;
 import com.cos.cercat.domain.embededId.InterestCertificatePK;
-import com.cos.cercat.user.User;
+import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

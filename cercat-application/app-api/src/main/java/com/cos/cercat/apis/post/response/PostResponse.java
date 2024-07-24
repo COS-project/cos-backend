@@ -2,7 +2,8 @@ package com.cos.cercat.apis.post.response;
 
 import com.cos.cercat.apis.mockExam.response.QuestionResponse;
 import com.cos.cercat.apis.user.response.UserResponse;
-import com.cos.cercat.post.*;
+import com.cos.cercat.domain.post.*;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 

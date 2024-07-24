@@ -1,22 +1,23 @@
 package com.cos.cercat.repository;
 
 
-import com.cos.cercat.certificate.Certificate;
+import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.common.domain.Cursor;
 import com.cos.cercat.common.domain.PageResult;
 import com.cos.cercat.common.domain.SliceResult;
 import com.cos.cercat.common.util.DateUtils;
 import com.cos.cercat.domain.*;
+import com.cos.cercat.domain.mockexamresult.*;
 import com.cos.cercat.dto.DailyScoreAverage;
 import com.cos.cercat.dto.MonthlyScoreAverage;
 import com.cos.cercat.dto.SubjectResultsAVG;
 import com.cos.cercat.dto.WeeklyScoreAverage;
 import com.cos.cercat.exception.MockExamResultNotFoundException;
 import com.cos.cercat.exception.UserAnswerNotFoundException;
-import com.cos.cercat.learning.GoalPeriod;
-import com.cos.cercat.mockexam.MockExam;
-import com.cos.cercat.mockexamresult.*;
-import com.cos.cercat.user.User;
+import com.cos.cercat.domain.learning.GoalPeriod;
+import com.cos.cercat.domain.mockexam.MockExam;
+
+import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

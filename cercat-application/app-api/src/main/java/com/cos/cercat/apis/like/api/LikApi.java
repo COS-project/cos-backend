@@ -2,9 +2,9 @@ package com.cos.cercat.apis.like.api;
 
 import com.cos.cercat.apis.like.request.LikeRequest;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.like.LikeService;
-import com.cos.cercat.user.TargetUser;
-import com.cos.cercat.user.User;
+import com.cos.cercat.domain.like.LikeService;
+import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;

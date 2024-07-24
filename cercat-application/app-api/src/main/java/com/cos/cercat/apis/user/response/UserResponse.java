@@ -1,6 +1,6 @@
 package com.cos.cercat.apis.user.response;
 
-import com.cos.cercat.user.User;
+import com.cos.cercat.domain.user.User;
 
 public record UserResponse(
         Long userId,

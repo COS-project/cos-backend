@@ -3,7 +3,7 @@ package com.cos.cercat.repository;
 import com.cos.cercat.dto.DailyScoreAverage;
 import com.cos.cercat.dto.MonthlyScoreAverage;
 import com.cos.cercat.dto.WeeklyScoreAverage;
-import com.cos.cercat.mockexamresult.DateCond;
+import com.cos.cercat.domain.mockexamresult.DateCond;
 
 import java.util.List;
 

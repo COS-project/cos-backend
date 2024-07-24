@@ -1,7 +1,7 @@
 package com.cos.cercat.repository;
 
 import com.cos.cercat.domain.PostDocument;
-import com.cos.cercat.search.SearchCond;
+import com.cos.cercat.domain.search.SearchCond;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 

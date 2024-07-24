@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.certificate.response;
 
 
-import com.cos.cercat.certificate.Subject;
+import com.cos.cercat.domain.certificate.Subject;
 
 public record SubjectResponse(
         Long subjectId,

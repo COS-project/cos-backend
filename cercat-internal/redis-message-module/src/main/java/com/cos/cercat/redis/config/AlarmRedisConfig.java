@@ -1,6 +1,6 @@
 package com.cos.cercat.redis.config;
 
-import com.cos.cercat.alarm.AlarmEvent;
+import com.cos.cercat.domain.alarm.AlarmEvent;
 import com.cos.cercat.redis.AlarmMessageListener;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

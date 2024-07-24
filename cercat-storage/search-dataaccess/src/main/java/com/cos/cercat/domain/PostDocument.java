@@ -1,7 +1,7 @@
 package com.cos.cercat.domain;
 
-import com.cos.cercat.post.PostType;
-import com.cos.cercat.search.PostForSearch;
+import com.cos.cercat.domain.post.PostType;
+import com.cos.cercat.domain.search.PostForSearch;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.*;

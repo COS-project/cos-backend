@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.certificate.response;
 
 
-import com.cos.cercat.certificate.CertificateExam;
+import com.cos.cercat.domain.certificate.CertificateExam;
 
 public record CertificateExamResponse(
         CertificateResponse certificate,

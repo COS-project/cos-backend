@@ -1,14 +1,13 @@
 package com.cos.cercat.cache;
 
-import com.cos.cercat.user.TargetUser;
-import com.cos.cercat.user.User;
-import com.cos.cercat.user.UserCacheRepository;
+import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.User;
+import com.cos.cercat.domain.user.UserCacheRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.time.Duration;
 import java.util.Optional;
 
 import static com.cos.cercat.config.UserRedisConfig.USER_CACHE_TTL;

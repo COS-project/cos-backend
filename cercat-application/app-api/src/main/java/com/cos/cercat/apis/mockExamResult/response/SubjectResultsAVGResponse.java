@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.mockExamResult.response;
 
 import com.cos.cercat.apis.certificate.response.SubjectResponse;
-import com.cos.cercat.mockexamresult.SubjectResultStatistics;
+import com.cos.cercat.domain.mockexamresult.SubjectResultStatistics;
 
 public record SubjectResultsAVGResponse(
         SubjectResponse subject,

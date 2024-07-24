@@ -1,6 +1,6 @@
 package com.cos.cercat.apis.global.oauth2;
 
-import com.cos.cercat.user.Role;
+import com.cos.cercat.domain.user.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;

@@ -2,7 +2,7 @@ package com.cos.cercat.repository;
 
 import com.cos.cercat.common.util.DateUtils;
 import com.cos.cercat.dto.*;
-import com.cos.cercat.mockexamresult.DateCond;
+import com.cos.cercat.domain.mockexamresult.DateCond;
 import com.querydsl.core.types.dsl.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

@@ -28,7 +28,7 @@ public class QStudyScheduleEntity extends EntityPathBase<StudyScheduleEntity> {
 
     public final EnumPath<java.time.DayOfWeek> repeatDayOfWeek = createEnum("repeatDayOfWeek", java.time.DayOfWeek.class);
 
-    public final EnumPath<com.cos.cercat.learning.ScheduleType> scheduleType = createEnum("scheduleType", com.cos.cercat.learning.ScheduleType.class);
+    public final EnumPath<com.cos.cercat.domain.learning.ScheduleType> scheduleType = createEnum("scheduleType", com.cos.cercat.domain.learning.ScheduleType.class);
 
     public QStudyScheduleEntity(String variable) {
         this(StudyScheduleEntity.class, forVariable(variable), INITS);

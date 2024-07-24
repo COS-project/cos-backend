@@ -1,7 +1,7 @@
 package com.cos.cercat.redis;
 
-import com.cos.cercat.alarm.AlarmEvent;
-import com.cos.cercat.alarm.AlarmManager;
+import com.cos.cercat.domain.alarm.AlarmEvent;
+import com.cos.cercat.domain.alarm.AlarmManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,14 +1,14 @@
 package com.cos.cercat.repository;
 
-import com.cos.cercat.certificate.Certificate;
+import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.common.domain.Cursor;
 import com.cos.cercat.common.domain.SliceResult;
 import com.cos.cercat.domain.PostDocument;
 import com.cos.cercat.exception.SearchPostNotFoundException;
-import com.cos.cercat.post.TargetPost;
-import com.cos.cercat.search.PostForSearch;
-import com.cos.cercat.search.PostForSearchRepository;
-import com.cos.cercat.search.SearchCond;
+import com.cos.cercat.domain.post.TargetPost;
+import com.cos.cercat.domain.search.PostForSearch;
+import com.cos.cercat.domain.search.PostForSearchRepository;
+import com.cos.cercat.domain.search.SearchCond;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;

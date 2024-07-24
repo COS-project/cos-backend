@@ -1,8 +1,8 @@
 package com.cos.cercat.apis.like.request;
 
 
-import com.cos.cercat.like.Like;
-import com.cos.cercat.like.LikeTargetType;
+import com.cos.cercat.domain.like.Like;
+import com.cos.cercat.domain.like.LikeTargetType;
 
 public record LikeRequest(
         LikeTargetType likeTargetType,

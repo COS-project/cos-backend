@@ -3,8 +3,8 @@ package com.cos.cercat.apis.mockExamResult.api;
 
 import com.cos.cercat.apis.mockExamResult.request.CreateMockExamResultRequest;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.mockexamresult.TargetMockExamResult;
-import com.cos.cercat.user.User;
+import com.cos.cercat.domain.mockexamresult.TargetMockExamResult;
+import com.cos.cercat.domain.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 

@@ -1,11 +1,10 @@
 package com.cos.cercat.domain;
 
 
-import com.cos.cercat.certificate.CertificateExam;
+import com.cos.cercat.domain.certificate.CertificateExam;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import static org.hibernate.annotations.OnDeleteAction.*;
 

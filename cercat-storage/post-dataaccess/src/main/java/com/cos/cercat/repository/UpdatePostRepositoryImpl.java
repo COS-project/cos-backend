@@ -4,10 +4,10 @@ import com.cos.cercat.domain.PostCommentEntity;
 import com.cos.cercat.domain.PostEntity;
 import com.cos.cercat.domain.RecommendTagEntity;
 import com.cos.cercat.domain.TipPostEntity;
-import com.cos.cercat.post.Post;
-import com.cos.cercat.post.PostComment;
-import com.cos.cercat.post.TipPost;
-import com.cos.cercat.post.UpdatePostRepository;
+import com.cos.cercat.domain.post.Post;
+import com.cos.cercat.domain.post.PostComment;
+import com.cos.cercat.domain.post.TipPost;
+import com.cos.cercat.domain.post.UpdatePostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

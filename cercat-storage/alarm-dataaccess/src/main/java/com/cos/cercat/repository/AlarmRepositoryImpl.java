@@ -1,10 +1,10 @@
 package com.cos.cercat.repository;
 
-import com.cos.cercat.alarm.Alarm;
-import com.cos.cercat.alarm.AlarmEvent;
-import com.cos.cercat.alarm.AlarmRepository;
+import com.cos.cercat.domain.alarm.Alarm;
+import com.cos.cercat.domain.alarm.AlarmEvent;
+import com.cos.cercat.domain.alarm.AlarmRepository;
 import com.cos.cercat.domain.AlarmEntity;
-import com.cos.cercat.user.User;
+import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

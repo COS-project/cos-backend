@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.certificate.response;
 
-import com.cos.cercat.certificate.InterestCertificate;
-import com.cos.cercat.certificate.InterestPriority;
+import com.cos.cercat.domain.certificate.InterestCertificate;
+import com.cos.cercat.domain.certificate.InterestPriority;
 
 public record InterestCertificateResponse(
         CertificateResponse certificate,

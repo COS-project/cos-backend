@@ -2,10 +2,10 @@ package com.cos.cercat.repository;
 
 import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.exception.UserNotFoundException;
-import com.cos.cercat.user.UserInfo;
-import com.cos.cercat.user.TargetUser;
-import com.cos.cercat.user.User;
-import com.cos.cercat.user.UserRepository;
+import com.cos.cercat.domain.user.UserInfo;
+import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.User;
+import com.cos.cercat.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

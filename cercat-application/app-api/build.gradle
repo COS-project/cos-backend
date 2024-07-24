@@ -42,8 +42,13 @@ dependencies {
     //인증 & 인가
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
     //API 문서화 Swagger-UI
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+
+    //spring-aop
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework.boot:spring-boot-configuration-processor'
 
     //JWT
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'

@@ -1,6 +1,6 @@
 package com.cos.cercat.common.exception;
 
-public class FileConvertException extends CommonException {
+public class FileConvertException extends CustomException {
 
     public static final CustomException EXCEPTION = new FileConvertException();
 

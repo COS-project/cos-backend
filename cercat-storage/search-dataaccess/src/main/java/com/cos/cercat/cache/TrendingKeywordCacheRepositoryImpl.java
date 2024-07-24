@@ -1,8 +1,8 @@
 package com.cos.cercat.cache;
 
-import com.cos.cercat.certificate.Certificate;
-import com.cos.cercat.search.TrendingKeyword;
-import com.cos.cercat.search.TrendingKeywordRepository;
+import com.cos.cercat.domain.certificate.Certificate;
+import com.cos.cercat.domain.search.TrendingKeyword;
+import com.cos.cercat.domain.search.TrendingKeywordRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;

@@ -2,7 +2,7 @@ package com.cos.cercat.repository;
 
 import com.cos.cercat.domain.*;
 import com.cos.cercat.domain.CommentaryPostEntity;
-import com.cos.cercat.post.CommentaryPostSearchCond;
+import com.cos.cercat.domain.post.CommentaryPostSearchCond;
 import com.cos.cercat.util.PagingUtil;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;

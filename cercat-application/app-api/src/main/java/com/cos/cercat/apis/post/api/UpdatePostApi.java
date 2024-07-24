@@ -2,11 +2,11 @@ package com.cos.cercat.apis.post.api;
 
 import com.cos.cercat.apis.post.request.PostUpdateRequest;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.post.PostType;
-import com.cos.cercat.post.TargetPost;
-import com.cos.cercat.post.UpdatePostService;
-import com.cos.cercat.user.TargetUser;
-import com.cos.cercat.user.User;
+import com.cos.cercat.domain.post.PostType;
+import com.cos.cercat.domain.post.TargetPost;
+import com.cos.cercat.domain.post.UpdatePostService;
+import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

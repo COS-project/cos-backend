@@ -1,8 +1,8 @@
 package com.cos.cercat.repository;
 
 import com.cos.cercat.domain.*;
-import com.cos.cercat.examreview.ExamDifficulty;
-import com.cos.cercat.examreview.ExamReviewSearchCond;
+import com.cos.cercat.domain.examreview.ExamDifficulty;
+import com.cos.cercat.domain.examreview.ExamReviewSearchCond;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;

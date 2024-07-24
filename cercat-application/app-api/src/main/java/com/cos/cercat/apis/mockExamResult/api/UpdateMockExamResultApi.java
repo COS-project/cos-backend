@@ -1,10 +1,10 @@
 package com.cos.cercat.apis.mockExamResult.api;
 
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.mockexamresult.TargetUserAnswer;
-import com.cos.cercat.mockexamresult.UpdateMockExamResultService;
-import com.cos.cercat.user.TargetUser;
-import com.cos.cercat.user.User;
+import com.cos.cercat.domain.mockexamresult.TargetUserAnswer;
+import com.cos.cercat.domain.mockexamresult.UpdateMockExamResultService;
+import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PatchMapping;

@@ -1,8 +1,8 @@
 package com.cos.cercat.apis.mockExam.request;
 
-import com.cos.cercat.mockexam.QuestionContent;
-import com.cos.cercat.mockexam.QuestionOption;
-import com.cos.cercat.mockexam.QuestionWithSubjectSeq;
+import com.cos.cercat.domain.mockexam.QuestionContent;
+import com.cos.cercat.domain.mockexam.QuestionOption;
+import com.cos.cercat.domain.mockexam.QuestionWithSubjectSeq;
 
 import java.util.List;
 

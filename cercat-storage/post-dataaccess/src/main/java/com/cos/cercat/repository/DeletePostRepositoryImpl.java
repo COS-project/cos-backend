@@ -2,10 +2,9 @@ package com.cos.cercat.repository;
 
 import com.cos.cercat.domain.PostCommentEntity;
 import com.cos.cercat.domain.PostEntity;
-import com.cos.cercat.post.DeletePostRepository;
-import com.cos.cercat.post.Post;
-import com.cos.cercat.post.PostComment;
-import com.cos.cercat.post.TargetPost;
+import com.cos.cercat.domain.post.DeletePostRepository;
+import com.cos.cercat.domain.post.Post;
+import com.cos.cercat.domain.post.PostComment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

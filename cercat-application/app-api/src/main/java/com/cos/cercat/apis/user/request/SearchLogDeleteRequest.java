@@ -1,6 +1,6 @@
 package com.cos.cercat.apis.user.request;
 
-import com.cos.cercat.search.SearchLog;
+import com.cos.cercat.domain.search.SearchLog;
 
 import java.time.LocalDateTime;
 

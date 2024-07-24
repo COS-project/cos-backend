@@ -3,8 +3,8 @@ package com.cos.cercat.apis.learning.api;
 import com.cos.cercat.apis.learning.response.GoalDetailResponse;
 import com.cos.cercat.apis.learning.response.GoalResponse;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.learning.GoalAchievement;
-import com.cos.cercat.user.User;
+import com.cos.cercat.domain.learning.GoalAchievement;
+import com.cos.cercat.domain.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 

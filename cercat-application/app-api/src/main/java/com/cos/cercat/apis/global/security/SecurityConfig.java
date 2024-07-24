@@ -62,6 +62,9 @@ public class SecurityConfig {
                 .oauth2Login(
                         oauth2 -> oauth2
                                 .loginPage("/oauth2/authorization/kakao")
+                                .redirectionEndpoint(
+                                        redirectionEndpointConfig -> redirectionEndpointConfig
+                                                .baseUri("/api/v1/auth/login/oauth2/code/*"))
                                 .authorizationEndpoint(
                                         authorizationEndpointConfig -> authorizationEndpointConfig
                                                 .authorizationRequestRepository(cookieOAuth2AuthorizationRequestRepository)

@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.mockExamResult.response;
 
 import com.cos.cercat.apis.mockExam.response.QuestionResponse;
-import com.cos.cercat.mockexamresult.UserAnswer;
+import com.cos.cercat.domain.mockexamresult.UserAnswer;
 
 public record UserAnswerResponse(
         QuestionResponse question,

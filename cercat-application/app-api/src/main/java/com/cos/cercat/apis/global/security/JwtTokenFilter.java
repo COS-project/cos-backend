@@ -2,7 +2,8 @@ package com.cos.cercat.apis.global.security;
 
 import com.cos.cercat.apis.global.security.exception.InvalidTokenException;
 import com.cos.cercat.apis.global.util.JwtTokenizer;
-import com.cos.cercat.user.*;
+import com.cos.cercat.domain.user.*;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

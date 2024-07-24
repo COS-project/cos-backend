@@ -1,8 +1,8 @@
 package com.cos.cercat.apis.examReview.request;
 
 
-import com.cos.cercat.examreview.ExamDifficulty;
-import com.cos.cercat.examreview.ExamReviewContent;
+import com.cos.cercat.domain.examreview.ExamDifficulty;
+import com.cos.cercat.domain.examreview.ExamReviewContent;
 
 public record ExamReviewCreateRequest(
         ExamDifficulty examDifficulty,

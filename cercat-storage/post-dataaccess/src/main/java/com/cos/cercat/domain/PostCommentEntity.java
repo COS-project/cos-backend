@@ -1,9 +1,9 @@
 package com.cos.cercat.domain;
 
 import com.cos.cercat.entity.BaseTimeEntity;
-import com.cos.cercat.post.CommentContent;
-import com.cos.cercat.post.DateTime;
-import com.cos.cercat.post.PostComment;
+import com.cos.cercat.domain.post.CommentContent;
+import com.cos.cercat.domain.post.DateTime;
+import com.cos.cercat.domain.post.PostComment;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;

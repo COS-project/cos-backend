@@ -1,6 +1,6 @@
 package com.cos.cercat.kafka.debezium;
 
-import com.cos.cercat.search.PostCommentForSearch;
+import com.cos.cercat.domain.search.PostCommentForSearch;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 

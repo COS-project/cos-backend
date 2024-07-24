@@ -1,9 +1,9 @@
 package com.cos.cercat.apis.learning.request;
 
 
-import com.cos.cercat.learning.GoalContent;
-import com.cos.cercat.learning.GoalPeriod;
-import com.cos.cercat.learning.NewGoal;
+import com.cos.cercat.domain.learning.GoalContent;
+import com.cos.cercat.domain.learning.GoalPeriod;
+import com.cos.cercat.domain.learning.NewGoal;
 
 import java.time.LocalDateTime;
 import java.util.List;

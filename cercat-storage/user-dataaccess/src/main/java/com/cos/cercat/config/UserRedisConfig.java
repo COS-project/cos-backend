@@ -1,7 +1,7 @@
 package com.cos.cercat.config;
 
-import com.cos.cercat.user.RefreshToken;
-import com.cos.cercat.user.User;
+import com.cos.cercat.domain.user.RefreshToken;
+import com.cos.cercat.domain.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.RequiredArgsConstructor;

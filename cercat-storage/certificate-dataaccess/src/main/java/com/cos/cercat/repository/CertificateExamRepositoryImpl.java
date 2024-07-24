@@ -1,9 +1,13 @@
 package com.cos.cercat.repository;
 
-import com.cos.cercat.certificate.*;
+
 import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.domain.CertificateExamEntity;
 import com.cos.cercat.domain.ExamInfoEntity;
+import com.cos.cercat.domain.certificate.Certificate;
+import com.cos.cercat.domain.certificate.CertificateExam;
+import com.cos.cercat.domain.certificate.CertificateExamRepository;
+import com.cos.cercat.domain.certificate.NewExamInformation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

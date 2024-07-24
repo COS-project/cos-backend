@@ -1,6 +1,6 @@
 package com.cos.cercat.config;
 
-import com.cos.cercat.mockexam.Question;
+import com.cos.cercat.domain.mockexam.Question;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import lombok.RequiredArgsConstructor;

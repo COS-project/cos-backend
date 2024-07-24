@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.mockExamResult.response;
 
 import com.cos.cercat.apis.mockExam.response.MockExamResponse;
-import com.cos.cercat.mockexamresult.MockExamResult;
+import com.cos.cercat.domain.mockexamresult.MockExamResult;
 
 import java.time.LocalDateTime;
 

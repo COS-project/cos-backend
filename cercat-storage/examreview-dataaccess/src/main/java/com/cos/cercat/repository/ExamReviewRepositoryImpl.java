@@ -1,16 +1,16 @@
 package com.cos.cercat.repository;
 
-import com.cos.cercat.certificate.CertificateExam;
+import com.cos.cercat.domain.certificate.CertificateExam;
 import com.cos.cercat.common.domain.Cursor;
 import com.cos.cercat.common.domain.SliceResult;
 import com.cos.cercat.domain.CertificateExamEntity;
 import com.cos.cercat.domain.ExamReviewEntity;
 import com.cos.cercat.domain.UserEntity;
-import com.cos.cercat.examreview.ExamReview;
-import com.cos.cercat.examreview.ExamReviewContent;
-import com.cos.cercat.examreview.ExamReviewRepository;
-import com.cos.cercat.examreview.ExamReviewSearchCond;
-import com.cos.cercat.user.User;
+import com.cos.cercat.domain.examreview.ExamReview;
+import com.cos.cercat.domain.examreview.ExamReviewContent;
+import com.cos.cercat.domain.examreview.ExamReviewRepository;
+import com.cos.cercat.domain.examreview.ExamReviewSearchCond;
+import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;

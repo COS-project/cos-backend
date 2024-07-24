@@ -1,10 +1,9 @@
 package com.cos.cercat.domain;
 
-import com.cos.cercat.mockexamresult.UserAnswer;
+import com.cos.cercat.domain.mockexamresult.UserAnswer;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import static org.hibernate.annotations.OnDeleteAction.*;
 

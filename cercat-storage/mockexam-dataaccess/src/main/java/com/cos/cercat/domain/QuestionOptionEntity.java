@@ -2,7 +2,7 @@ package com.cos.cercat.domain;
 
 import com.cos.cercat.entity.ImageEntity;
 import com.cos.cercat.domain.embededId.QuestionOptionPK;
-import com.cos.cercat.mockexam.QuestionOption;
+import com.cos.cercat.domain.mockexam.QuestionOption;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;

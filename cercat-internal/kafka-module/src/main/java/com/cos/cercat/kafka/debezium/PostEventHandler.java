@@ -1,8 +1,8 @@
 package com.cos.cercat.kafka.debezium;
 
-import com.cos.cercat.search.PostForSearchAppender;
-import com.cos.cercat.search.PostForSearchRemover;
-import com.cos.cercat.search.PostForSearchUpdator;
+import com.cos.cercat.domain.search.PostForSearchAppender;
+import com.cos.cercat.domain.search.PostForSearchRemover;
+import com.cos.cercat.domain.search.PostForSearchUpdator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;

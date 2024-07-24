@@ -1,16 +1,16 @@
 package com.cos.cercat.repository;
 
-import com.cos.cercat.certificate.Certificate;
+import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.domain.CertificateEntity;
 import com.cos.cercat.domain.GoalEntity;
 import com.cos.cercat.domain.StudyTimeLogEntity;
 import com.cos.cercat.domain.UserEntity;
 import com.cos.cercat.exception.GoalNotFoundException;
-import com.cos.cercat.learning.Goal;
-import com.cos.cercat.learning.LearningRepository;
-import com.cos.cercat.learning.NewGoal;
-import com.cos.cercat.learning.TargetGoal;
-import com.cos.cercat.user.User;
+import com.cos.cercat.domain.learning.Goal;
+import com.cos.cercat.domain.learning.LearningRepository;
+import com.cos.cercat.domain.learning.NewGoal;
+import com.cos.cercat.domain.learning.TargetGoal;
+import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
