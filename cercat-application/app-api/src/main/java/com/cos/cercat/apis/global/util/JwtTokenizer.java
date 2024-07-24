@@ -1,6 +1,6 @@
 package com.cos.cercat.apis.global.util;
 
-import com.cos.cercat.exception.InvalidTokenException;
+import com.cos.cercat.apis.global.security.exception.InvalidTokenException;
 import com.cos.cercat.user.TargetUser;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;

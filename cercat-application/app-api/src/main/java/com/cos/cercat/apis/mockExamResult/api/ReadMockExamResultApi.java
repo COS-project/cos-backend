@@ -80,10 +80,12 @@ public class ReadMockExamResultApi implements ReadMockExamResultApiDocs {
     @GetMapping("/certificates/{certificateId}/mock-exam-results/average")
     public Response<List<SubjectResultsAVGResponse>> subjectResultsAVG(@PathVariable Long certificateId,
                                                                        @AuthenticationPrincipal User currentUser) {
-        List<SubjectResultsAVGResponse> responses = readMockExamResultService.getSubjectResultsStatistics(
+        List<SubjectResultStatistics> subjectResultsStatistics = readMockExamResultService.getSubjectResultsStatistics(
                 TargetUser.from(currentUser.getId()),
                 TargetCertificate.from(certificateId)
-                ).stream()
+        );
+
+        List<SubjectResultsAVGResponse> responses = subjectResultsStatistics.stream()
                 .map(SubjectResultsAVGResponse::from)
                 .toList();
 

@@ -1,4 +1,4 @@
-package com.cos.cercat.exception;
+package com.cos.cercat.apis.global.security.exception;
 
 import com.cos.cercat.common.exception.BaseErrorCode;
 import com.cos.cercat.common.exception.ErrorReason;
@@ -7,9 +7,12 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum UserErrorCode implements BaseErrorCode {
+public enum SecurityErrorCode implements BaseErrorCode {
 
-    NO_PERMISSION_ERROR(403, "권한이 없습니다.");
+
+    UNAUTHORIZED_USER(401, "인증되지 않은 사용자입니다."),
+    INVALID_TOKEN(401, "유효하지 않은 토큰입니다."),
+    UNAUTHORIZED_ERROR(401, "인증되지 않은 사용자입니다.");
 
     private final Integer status;
     private final String message;

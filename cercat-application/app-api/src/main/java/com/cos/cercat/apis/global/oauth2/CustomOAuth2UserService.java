@@ -25,8 +25,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     @Override // 로그인 로직 담당
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        log.info("CustomOAuth2UserService 진입 - 소셜 로그인 로직");
-
         OAuth2UserService<OAuth2UserRequest, OAuth2User> service = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = service.loadUser(userRequest);  // 어떤 플랫폼의 유저정보도 담을수있도록 추상화한 클래스 OAuth2 정보를 가져옵니다.
 
@@ -38,8 +36,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, originAttributes);
         User user = saveOrUpdate(attributes);
-        log.info("소셜 로그인 유저 정보 또는 업데이트");
-
         return new OAuth2CustomUser(registrationId, originAttributes, user.getUserRole(), user.getEmail(), user.getId());
     }
 
