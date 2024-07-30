@@ -1,0 +1,16 @@
+bootJar {
+    enabled = false
+}
+
+dependencies {
+
+    implementation project(':cercat-infra')
+
+    implementation project(':cercat-domain:domain-alarm')
+    implementation project(':cercat-domain:domain-user')
+    implementation project(':cercat-infra:redis-dataaccess')
+
+    //직렬화 및 역직렬화 관련
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.17.0'
+}

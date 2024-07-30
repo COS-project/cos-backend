@@ -24,26 +24,24 @@
             <option value="$PROJECT_DIR$/cercat-domain/domain-post" />
             <option value="$PROJECT_DIR$/cercat-domain/domain-search" />
             <option value="$PROJECT_DIR$/cercat-domain/domain-user" />
-            <option value="$PROJECT_DIR$/cercat-internal" />
-            <option value="$PROJECT_DIR$/cercat-internal/gcs-module" />
-            <option value="$PROJECT_DIR$/cercat-internal/kafka-module" />
-            <option value="$PROJECT_DIR$/cercat-internal/redis-message-module" />
-            <option value="$PROJECT_DIR$/cercat-internal/sse-module" />
-            <option value="$PROJECT_DIR$/cercat-storage" />
-            <option value="$PROJECT_DIR$/cercat-storage/alarm-dataaccess" />
-            <option value="$PROJECT_DIR$/cercat-storage/board-dataaccess" />
-            <option value="$PROJECT_DIR$/cercat-storage/certificate-dataaccess" />
-            <option value="$PROJECT_DIR$/cercat-storage/elasticsearch-dataaccess" />
-            <option value="$PROJECT_DIR$/cercat-storage/examreview-dataaccess" />
-            <option value="$PROJECT_DIR$/cercat-storage/jpa-dataaccess" />
-            <option value="$PROJECT_DIR$/cercat-storage/learning-dataaccess" />
-            <option value="$PROJECT_DIR$/cercat-storage/like-dataaccess" />
-            <option value="$PROJECT_DIR$/cercat-storage/mockexam-dataaccess" />
-            <option value="$PROJECT_DIR$/cercat-storage/mockexamresult-dataaccess" />
-            <option value="$PROJECT_DIR$/cercat-storage/post-dataaccess" />
-            <option value="$PROJECT_DIR$/cercat-storage/redis-dataaccess" />
-            <option value="$PROJECT_DIR$/cercat-storage/search-dataaccess" />
-            <option value="$PROJECT_DIR$/cercat-storage/user-dataaccess" />
+            <option value="$PROJECT_DIR$/cercat-infra" />
+            <option value="$PROJECT_DIR$/cercat-infra/alarm-dataaccess" />
+            <option value="$PROJECT_DIR$/cercat-infra/board-dataaccess" />
+            <option value="$PROJECT_DIR$/cercat-infra/certificate-dataaccess" />
+            <option value="$PROJECT_DIR$/cercat-infra/elasticsearch-dataaccess" />
+            <option value="$PROJECT_DIR$/cercat-infra/examreview-dataaccess" />
+            <option value="$PROJECT_DIR$/cercat-infra/gcs-module" />
+            <option value="$PROJECT_DIR$/cercat-infra/jpa-dataaccess" />
+            <option value="$PROJECT_DIR$/cercat-infra/kafka-module" />
+            <option value="$PROJECT_DIR$/cercat-infra/learning-dataaccess" />
+            <option value="$PROJECT_DIR$/cercat-infra/like-dataaccess" />
+            <option value="$PROJECT_DIR$/cercat-infra/mockexam-dataaccess" />
+            <option value="$PROJECT_DIR$/cercat-infra/mockexamresult-dataaccess" />
+            <option value="$PROJECT_DIR$/cercat-infra/post-dataaccess" />
+            <option value="$PROJECT_DIR$/cercat-infra/redis-dataaccess" />
+            <option value="$PROJECT_DIR$/cercat-infra/redis-message-module" />
+            <option value="$PROJECT_DIR$/cercat-infra/search-dataaccess" />
+            <option value="$PROJECT_DIR$/cercat-infra/user-dataaccess" />
           </set>
         </option>
       </GradleProjectSettings>

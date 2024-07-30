@@ -1,4 +1,4 @@
-package com.cos.cercat.apis.alarm.Response;
+package com.cos.cercat.apis.alarm.response;
 
 import com.cos.cercat.domain.alarm.Alarm;
 import com.cos.cercat.domain.alarm.AlarmType;

@@ -16,25 +16,24 @@ dependencies {
     implementation project(':cercat-domain:domain-user')
 
     //persistent modules
-    implementation project(':cercat-storage:alarm-dataaccess')
-    implementation project(':cercat-storage:board-dataaccess')
-    implementation project(':cercat-storage:certificate-dataaccess')
-    implementation project(':cercat-storage:examreview-dataaccess')
-    implementation project(':cercat-storage:learning-dataaccess')
-    implementation project(':cercat-storage:like-dataaccess')
-    implementation project(':cercat-storage:mockexam-dataaccess')
-    implementation project(':cercat-storage:mockexamresult-dataaccess')
-    implementation project(':cercat-storage:post-dataaccess')
-    implementation project(':cercat-storage:search-dataaccess')
-    implementation project(':cercat-storage:user-dataaccess')
-    implementation project(':cercat-storage:redis-dataaccess')
-    implementation project(':cercat-storage:elasticsearch-dataaccess')
+    implementation project(':cercat-infra:alarm-dataaccess')
+    implementation project(':cercat-infra:board-dataaccess')
+    implementation project(':cercat-infra:certificate-dataaccess')
+    implementation project(':cercat-infra:examreview-dataaccess')
+    implementation project(':cercat-infra:learning-dataaccess')
+    implementation project(':cercat-infra:like-dataaccess')
+    implementation project(':cercat-infra:mockexam-dataaccess')
+    implementation project(':cercat-infra:mockexamresult-dataaccess')
+    implementation project(':cercat-infra:post-dataaccess')
+    implementation project(':cercat-infra:search-dataaccess')
+    implementation project(':cercat-infra:user-dataaccess')
+    implementation project(':cercat-infra:redis-dataaccess')
+    implementation project(':cercat-infra:elasticsearch-dataaccess')
 
 
-    implementation project(':cercat-internal:gcs-module')
-    implementation project(':cercat-internal:redis-message-module')
-    implementation project(':cercat-internal:sse-module')
-    implementation project(':cercat-internal:kafka-module')
+    implementation project(':cercat-infra:gcs-module')
+    implementation project(':cercat-infra:redis-message-module')
+    implementation project(':cercat-infra:kafka-module')
 
 
     implementation 'org.springframework.boot:spring-boot-starter-web'

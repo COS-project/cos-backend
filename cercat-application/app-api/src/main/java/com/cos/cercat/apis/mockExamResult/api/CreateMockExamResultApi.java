@@ -14,22 +14,21 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v2")
-public class CreateMockExamResultApi implements MockExamResultApiDocs{
+public class CreateMockExamResultApi implements MockExamResultApiDocs {
 
-    private final CreateMockExamResultService createMockExamResultService;
+  private final CreateMockExamResultService createMockExamResultService;
 
-    @PostMapping("/mock-exams/{mockExamId}/mock-exam-results")
-    public Response<TargetMockExamResult> createMockExamResult(@PathVariable Long mockExamId,
-                                                               @RequestBody CreateMockExamResultRequest request,
-                                                               @AuthenticationPrincipal User currentUser) {
-
-        TargetMockExamResult targetMockExamResult = createMockExamResultService.createMockExamResult(
-                TargetUser.from(currentUser.getId()),
-                TargetMockExam.from(mockExamId),
-                request.toNewSubjectResults()
-        );
-        return Response.success(targetMockExamResult);
-    }
+  @PostMapping("/mock-exams/{mockExamId}/mock-exam-results")
+  public Response<TargetMockExamResult> createMockExamResult(@PathVariable Long mockExamId,
+      @RequestBody CreateMockExamResultRequest request,
+      @AuthenticationPrincipal User currentUser) {
+    TargetMockExamResult targetMockExamResult = createMockExamResultService.createMockExamResult(
+        TargetUser.from(currentUser.getId()),
+        TargetMockExam.from(mockExamId),
+        request.toNewSubjectResults()
+    );
+    return Response.success(targetMockExamResult);
+  }
 
 
 }

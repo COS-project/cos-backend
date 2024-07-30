@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MockExamReader {
 
-    private final MockExamRepository mockExamRepository;
+  private final MockExamRepository mockExamRepository;
 
-    public MockExam read(TargetMockExam targetMockExam) {
-        return mockExamRepository.read(targetMockExam);
-    }
+  public MockExam read(TargetMockExam targetMockExam) {
+    return mockExamRepository.find(targetMockExam);
+  }
 }

@@ -12,12 +12,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SubjectResultReader {
 
-    private final MockExamResultRepository mockExamResultRepository;
+  private final MockExamResultRepository mockExamResultRepository;
 
-    public List<SubjectResultStatistics> readStatistics(User user,
-                                                        Certificate certificate,
-                                                        GoalPeriod goalDate) {
-        return mockExamResultRepository.getSubjectResultStatistics(user, certificate, goalDate);
-    }
+  public List<SubjectResultStatistics> readStatistics(User user,
+      Certificate certificate,
+      GoalPeriod goalDate) {
+    return mockExamResultRepository.getSubjectResultStatistics(user, certificate, goalDate);
+  }
 
 }

@@ -1,72 +1,88 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.2.7'
-	id 'io.spring.dependency-management' version '1.1.5'
+    id 'java'
+    id 'org.springframework.boot' version '3.2.7'
+    id 'io.spring.dependency-management' version '1.1.5'
 }
 
 allprojects {
-	repositories {
-		mavenCentral()
-	}
+    repositories {
+        mavenCentral()
+    }
 }
 
 subprojects {
 
-	group = 'com.cos.cercat'
-	version = '0.0.2'
+    group = 'com.cos.cercat'
+    version = '0.0.2'
 
-	apply plugin: 'java'
-	apply plugin: 'java-library'
-	apply plugin: 'org.springframework.boot'
-	apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: 'java-test-fixtures'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
 
-	configurations {
-		compileOnly {
-			extendsFrom annotationProcessor
-		}
-	}
-	sourceCompatibility = '17'
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+    sourceCompatibility = '17'
 
-	repositories {
-		mavenCentral()
-	}
+    repositories {
+        mavenCentral()
+    }
 
-	dependencies {
+    dependencies {
 
-		//lombok
-		compileOnly 'org.projectlombok:lombok:1.18.30'
-		annotationProcessor 'org.projectlombok:lombok:1.18.30'
+        //lombok
+        compileOnly 'org.projectlombok:lombok:1.18.30'
+        annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
-		annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-		annotationProcessor 'org.projectlombok:lombok'
-		testCompileOnly 'org.projectlombok:lombok'
-		testAnnotationProcessor 'org.projectlombok:lombok'
-		testImplementation 'org.springframework.boot:spring-boot-starter-test'
-		testImplementation 'org.springframework.security:spring-security-test'
-	}
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+        annotationProcessor 'org.projectlombok:lombok'
+        testCompileOnly 'org.projectlombok:lombok'
+        testAnnotationProcessor 'org.projectlombok:lombok'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation 'org.springframework.security:spring-security-test'
+    }
 
-	test {
-		useJUnitPlatform()
-	}
+    test {
+        useJUnitPlatform()
+        jvmArgs '-Xshare:off'
+    }
 
 }
 
-project(':cercat-storage') {
-	bootJar {
-		enabled = false
-	}
+project(':cercat-domain') {
+    bootJar {
+        enabled = false
+    }
 
-	jar {
-		enabled = false
-	}
+    jar {
+        enabled = false
+    }
+}
+
+project(':cercat-infra') {
+    bootJar {
+        enabled = false
+    }
+
+    jar {
+        enabled = false
+    }
 }
 
 project(':cercat-application') {
-	bootJar {
-		enabled = false
-	}
+    bootJar {
+        enabled = false
+    }
 
-	jar {
-		enabled = false
-	}
+    jar {
+        enabled = false
+    }
+}
+
+bootJar {
+    enabled = false
 }

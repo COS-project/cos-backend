@@ -1,9 +1,9 @@
 package com.cos.cercat.apis.alarm.api;
 
 import com.cos.cercat.domain.alarm.AlarmService;
-import com.cos.cercat.apis.alarm.Response.AlarmResponse;
+import com.cos.cercat.apis.alarm.response.AlarmResponse;
 import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.sse.SseEmitterService;
+import com.cos.cercat.apis.alarm.sse.SseEmitterConnector;
 import com.cos.cercat.domain.user.TargetUser;
 import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
@@ -23,11 +23,11 @@ import java.util.List;
 public class AlarmApi implements AlarmApiDocs {
 
     private final AlarmService alarmService;
-    private final SseEmitterService sseEmitterService;
+    private final SseEmitterConnector sseEmitterConnector;
 
     @GetMapping(value = "/alarms/subscribe", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public ResponseEntity<SseEmitter> subscribeAlarm(@AuthenticationPrincipal User currentUser) {
-        SseEmitter connected = sseEmitterService.connect(currentUser.getId());
+        SseEmitter connected = sseEmitterConnector.connect(currentUser.getId());
         return ResponseEntity.ok(connected);
     }
 

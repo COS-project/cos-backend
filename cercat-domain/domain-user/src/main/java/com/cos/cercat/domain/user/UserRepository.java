@@ -2,13 +2,13 @@ package com.cos.cercat.domain.user;
 
 public interface UserRepository {
 
-    User read(TargetUser targetUser);
+  User find(TargetUser targetUser);
 
-    User update(User user);
+  User update(User user);
 
-    void delete(User user);
+  void delete(User user);
 
-    User save(UserInfo userInfo);
+  User save(UserInfo userInfo);
 
-    User readBy(String email);
+  User readByEmail(String email);
 }

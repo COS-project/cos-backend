@@ -26,6 +26,4 @@ public class AlarmService {
         User user = userReader.read(targetUser);
         return alarmManager.countUnread(user);
     }
-
-
 }

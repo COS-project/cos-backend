@@ -3,13 +3,13 @@ spring:
     group:
       local: common, domain, infra
       prod: common, domain, infra
+      test: common, domain, infra
     include:
       - elasticsearch
       - jpa
       - redis
       - gcs
       - kafka
-      - sse
 
   servlet:
     multipart:

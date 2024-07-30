@@ -7,19 +7,19 @@ import java.util.List;
 
 public interface MockExamRepository {
 
-    TargetMockExam save(NewMockExam newMockExam);
+  TargetMockExam save(NewMockExam newMockExam);
 
-    Question readQuestion(Certificate certificate,
-                          MockExamSession mockExamSession,
-                          int questionSequence);
+  Question readQuestion(Certificate certificate,
+      MockExamSession mockExamSession,
+      int questionSequence);
 
-    List<MockExam> find(Certificate certificate, Integer examYear);
+  List<MockExam> find(Certificate certificate, Integer examYear);
 
-    List<Question> findQuestions(MockExam mockExam);
+  List<Question> findQuestions(MockExam mockExam);
 
-    List<Integer> findExamYears(Certificate certificate);
+  List<Integer> findExamYears(Certificate certificate);
 
-    MockExam read(TargetMockExam targetMockExam);
+  MockExam find(TargetMockExam targetMockExam);
 
-    void saveQuestions(TargetMockExam targetMockExam, List<NewQuestion> newQuestions);
+  void saveQuestions(TargetMockExam targetMockExam, List<NewQuestion> newQuestions);
 }

@@ -1,0 +1,58 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+}
+bootJar {
+    enabled = false
+}
+
+dependencies {
+
+    implementation project(':cercat-common');
+    implementation project(':cercat-domain:domain-post');
+    implementation project(':cercat-domain:domain-search');
+    implementation project(':cercat-domain:domain-certificate')
+    implementation project(':cercat-domain:domain-user');
+    implementation project(':cercat-infra:post-dataaccess');
+    implementation project(':cercat-infra:user-dataaccess');
+    implementation project(':cercat-infra:certificate-dataaccess');
+    implementation project(':cercat-infra:jpa-dataaccess');
+    implementation project(':cercat-infra:redis-dataaccess');
+    implementation project(':cercat-infra:elasticsearch-dataaccess');
+
+    // shedlock - schedule lock
+    implementation 'net.javacrumbs.shedlock:shedlock-spring:5.10.0'
+    implementation 'net.javacrumbs.shedlock:shedlock-provider-jdbc-template:5.10.0'
+
+    //elastic search
+    api 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+    api 'co.elastic.clients:elasticsearch-java:8.9.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+}
+
+bootJar {
+    enabled = false
+}
+
+// Querydsl 설정부
+def generated = 'src/main/generated'
+
+// querydsl QClass 파일 생성 위치를 지정
+tasks.withType(JavaCompile) {
+    options.getGeneratedSourceOutputDirectory().set(file(generated))
+}
+
+// java source set 에 querydsl QClass 위치 추가
+sourceSets {
+    main.java.srcDirs += [ generated ]
+}
+
+// gradle clean 시에 QClass 디렉토리 삭제
+clean {
+    delete file(generated)
+}
+repositories {
+    mavenCentral()
+}
+kotlin {
+    jvmToolchain(17)
+}

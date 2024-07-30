@@ -1,7 +1,0 @@
-bootJar {
-    enabled = false
-}
-
-dependencies {
-    implementation project(':cercat-common')
-}
