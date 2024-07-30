@@ -40,6 +40,11 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_TOKEN }}
+      - name: Copy secret
+        env:
+          BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
+          GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+          GCS_KEY: ${{ secrets.GCS_KEY }}
 
       - name: Build and push
         id: docker_build
