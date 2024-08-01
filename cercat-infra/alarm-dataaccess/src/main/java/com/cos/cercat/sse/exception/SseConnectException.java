@@ -1,7 +1,6 @@
-package com.cos.cercat.apis.alarm.sse.exception;
+package com.cos.cercat.sse.exception;
 
 import com.cos.cercat.common.exception.GlobalErrorCode;
-import com.cos.cercat.common.exception.InfraException;
 import com.cos.cercat.common.exception.WebException;
 
 public class SseConnectException extends WebException {

@@ -33,8 +33,7 @@ public class CreatePostService {
     User user = userReader.read(targetUser);
     Certificate certificate = certificateReader.read(targetCertificate);
     List<Image> images = fileUploader.upload(uploadFiles);
-    newPost.content().addImages(images);
-    return postAppender.append(user, certificate, newPost);
+    return postAppender.append(user, certificate, newPost, images);
   }
 
   public void createPostComment(TargetUser targetUser,

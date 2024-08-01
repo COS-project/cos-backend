@@ -11,27 +11,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AlarmManager {
 
-    private final AlarmRepository alarmRepository;
-    private final EventSender eventSender;
+  private final AlarmRepository alarmRepository;
+  private final EventSender eventSender;
 
 
-    public List<Alarm> read(User user) {
-        return alarmRepository.findUnreadAlarms(user);
-    }
+  public List<Alarm> read(User user) {
+    return alarmRepository.findUnreadAlarms(user);
+  }
 
-    @Transactional
-    public void markAsRead(User user) {
-        alarmRepository.markAsRead(user);
-    }
+  @Transactional
+  public void markAsRead(User user) {
+    alarmRepository.markAsRead(user);
+  }
 
-    public int countUnread(User user) {
-        return alarmRepository.countUnreadAlarms(user);
-    }
+  public int countUnread(User user) {
+    return alarmRepository.countUnreadAlarms(user);
+  }
 
-    public void send(AlarmEvent alarmEvent) {
-        alarmRepository.save(alarmEvent);
-        eventSender.send(alarmEvent);
-    }
-
-
+  public void send(AlarmEvent alarmEvent) {
+    alarmRepository.save(alarmEvent);
+    eventSender.send(alarmEvent);
+  }
 }

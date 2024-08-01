@@ -1,4 +1,4 @@
-package com.cos.cercat.apis.alarm.sse;
+package com.cos.cercat.sse;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

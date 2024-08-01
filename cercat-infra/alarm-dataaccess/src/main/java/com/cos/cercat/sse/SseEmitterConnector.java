@@ -1,6 +1,6 @@
-package com.cos.cercat.apis.alarm.sse;
+package com.cos.cercat.sse;
 
-import com.cos.cercat.apis.alarm.sse.exception.SseConnectException;
+import com.cos.cercat.sse.exception.SseConnectException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
 
-import static com.cos.cercat.apis.alarm.sse.SseEventSender.EVENT_NAME;
+import static com.cos.cercat.sse.SseEventSender.EVENT_NAME;
 
 @Service
 @RequiredArgsConstructor

@@ -1,4 +1,4 @@
-package com.cos.cercat.apis.alarm.sse;
+package com.cos.cercat.sse;
 
 import com.cos.cercat.domain.alarm.AlarmEvent;
 import lombok.RequiredArgsConstructor;

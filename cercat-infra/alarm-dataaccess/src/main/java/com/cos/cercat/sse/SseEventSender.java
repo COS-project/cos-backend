@@ -1,8 +1,8 @@
-package com.cos.cercat.apis.alarm.sse;
+package com.cos.cercat.sse;
 
 import com.cos.cercat.domain.alarm.AlarmEvent;
 import com.cos.cercat.domain.alarm.EventSender;
-import com.cos.cercat.apis.alarm.sse.exception.AlarmSendException;
+import com.cos.cercat.sse.exception.AlarmSendException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
