@@ -5,9 +5,9 @@ import com.cos.cercat.common.exception.WebException;
 
 public class SseConnectException extends WebException {
 
-        public static final SseConnectException EXCEPTION = new SseConnectException();
+    public static final SseConnectException EXCEPTION = new SseConnectException();
 
-        private SseConnectException() {
-            super(GlobalErrorCode.SSE_CONNECT_ERROR);
-        }
+    private SseConnectException() {
+        super(GlobalErrorCode.SSE_CONNECT_ERROR);
+    }
 }

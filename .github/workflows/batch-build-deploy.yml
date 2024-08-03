@@ -5,9 +5,9 @@ on:
   push:
     paths:
       - 'cercat-application/app-batch/**'
-      - 'cercat-storage/user-dataaccess/**'
-      - 'cercat-storage/domain-alarm/**'
-      - 'cercat-storage/certificate-dataaccess/**'
+      - 'cercat-infra/user-dataaccess/**'
+      - 'cercat-infra/alarm-dataaccess/**'
+      - 'cercat-infra/certificate-dataaccess/**'
       - 'cercat-common/**'
     branches: [ main ]
 

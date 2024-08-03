@@ -14,10 +14,9 @@ import static com.cos.cercat.sse.SseEventSender.EVENT_NAME;
 @RequiredArgsConstructor
 @Slf4j
 public class SseEmitterConnector {
-
-    private final SseEmitterManager sseEmitterManager;
-
+    
     final static long DEFAULT_TIMEOUT = 60 * 500L;
+    private final SseEmitterManager sseEmitterManager;
 
     public SseEmitter connect(Long userId) {
         SseEmitter emitter = new SseEmitter(DEFAULT_TIMEOUT);
