@@ -51,7 +51,9 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                         authorizationManagerRequestMatcherRegistry
-                                .requestMatchers("/","/health", "/api/v2/alarms/subscribe", "/error", "/error/**", "/css/**", "/images/**", "/js/**", "/favicon.ico", "/h2-console/**").permitAll()
+                                .requestMatchers("/", "/health", "/api/v2/alarms/subscribe",
+                                        "/error", "/error/**", "/css/**", "/images/**", "/js/**",
+                                        "/favicon.ico", "/h2-console/**").permitAll()
                                 .requestMatchers(SWAGGER_URIS).permitAll()
                                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                                 .anyRequest().authenticated())
@@ -62,12 +64,10 @@ public class SecurityConfig {
                 .oauth2Login(
                         oauth2 -> oauth2
                                 .loginPage("/oauth2/authorization/kakao")
-                                .redirectionEndpoint(
-                                        redirectionEndpointConfig -> redirectionEndpointConfig
-                                                .baseUri("/api/v1/auth/login/oauth2/code/*"))
                                 .authorizationEndpoint(
                                         authorizationEndpointConfig -> authorizationEndpointConfig
-                                                .authorizationRequestRepository(cookieOAuth2AuthorizationRequestRepository)
+                                                .authorizationRequestRepository(
+                                                        cookieOAuth2AuthorizationRequestRepository)
                                 )
                                 .successHandler(oAuth2MemberSuccessHandler)
                                 .failureHandler(oAuth2LoginFailureHandler)

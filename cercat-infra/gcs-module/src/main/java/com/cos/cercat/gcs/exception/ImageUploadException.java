@@ -1,4 +1,4 @@
-package com.cos.cercat.exception;
+package com.cos.cercat.gcs.exception;
 
 import com.cos.cercat.common.exception.GlobalErrorCode;
 import com.cos.cercat.common.exception.InfraException;

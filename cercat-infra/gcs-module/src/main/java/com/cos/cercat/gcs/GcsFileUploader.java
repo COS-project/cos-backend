@@ -3,7 +3,7 @@ package com.cos.cercat.gcs;
 import com.cos.cercat.common.domain.File;
 import com.cos.cercat.common.domain.FileUploader;
 import com.cos.cercat.common.domain.Image;
-import com.cos.cercat.exception.ImageUploadException;
+import com.cos.cercat.gcs.exception.ImageUploadException;
 import com.google.api.client.util.ByteStreams;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
@@ -23,49 +23,49 @@ import java.util.UUID;
 @Slf4j
 public class GcsFileUploader implements FileUploader {
 
-  private final Storage storage;
+    private final Storage storage;
 
-  @Value("${spring.cloud.gcp.storage.bucket}")
-  private String bucketName;
+    @Value("${spring.cloud.gcp.storage.bucket}")
+    private String bucketName;
 
-  @Value("${spring.cloud.gcp.storage.url}")
-  private String storagePath;
+    @Value("${spring.cloud.gcp.storage.url}")
+    private String storagePath;
 
-  @Override
-  public List<Image> upload(List<File> files) {
-    List<Image> images = new ArrayList<>();
-    for (File file : files) {
-      if (file != null) {
-        images.add(uploadFile(file));
-      }
+    @Override
+    public List<Image> upload(List<File> files) {
+        List<Image> images = new ArrayList<>();
+        for (File file : files) {
+            if (file != null) {
+                images.add(uploadFile(file));
+            }
+        }
+
+        return images;
+
     }
 
-    return images;
-
-  }
-
-  @Override
-  public Image upload(File file) {
-    return (file != null) ? uploadFile(file) : null;
-  }
-
-  private Image uploadFile(File file) {
-    String ext = file.contentType();
-    String uuid = UUID.randomUUID().toString();
-
-    BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, uuid)
-        .setContentType(ext)
-        .build();
-
-    try (var writer = storage.writer(blobInfo)) {
-      try (var input = file.inputStream()) {
-        ByteStreams.copy(input, Channels.newOutputStream(writer));
-      }
-      log.info("이미지 업로드 성공 - {}", storagePath + uuid);
-      return Image.from(storagePath + uuid);
-    } catch (IOException e) {
-      log.warn("ImageEntity upload failed", e);
-      throw ImageUploadException.EXCEPTION;
+    @Override
+    public Image upload(File file) {
+        return (file != null) ? uploadFile(file) : null;
     }
-  }
+
+    private Image uploadFile(File file) {
+        String ext = file.contentType();
+        String uuid = UUID.randomUUID().toString();
+
+        BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, uuid)
+                .setContentType(ext)
+                .build();
+
+        try (var writer = storage.writer(blobInfo)) {
+            try (var input = file.inputStream()) {
+                ByteStreams.copy(input, Channels.newOutputStream(writer));
+            }
+            log.info("이미지 업로드 성공 - {}", storagePath + uuid);
+            return Image.from(storagePath + uuid);
+        } catch (IOException e) {
+            log.warn("ImageEntity upload failed", e);
+            throw ImageUploadException.EXCEPTION;
+        }
+    }
 }

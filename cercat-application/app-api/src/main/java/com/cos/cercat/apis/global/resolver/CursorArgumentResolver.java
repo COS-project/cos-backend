@@ -23,7 +23,7 @@ public class CursorArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-                                  NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
+            NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         CursorDefault cursorDefault = parameter.getParameterAnnotation(CursorDefault.class);
 
         String pageParam = webRequest.getParameter("page");
@@ -36,12 +36,12 @@ public class CursorArgumentResolver implements HandlerMethodArgumentResolver {
         String sortFieldsParam = webRequest.getParameter("sortFields");
         String sortDirectionsParam = webRequest.getParameter("sortDirections");
 
-        String[] fields = (sortFieldsParam != null) ? sortFieldsParam.split(",") : cursorDefault.sortFields().split(",");
-        String[] directions = (sortDirectionsParam != null) ? sortDirectionsParam.split(",") : cursorDefault.sortDirections().split(",");
+        String[] fields = (sortFieldsParam != null) ? sortFieldsParam.split(",")
+                : cursorDefault.sortFields().split(",");
+        String[] directions = (sortDirectionsParam != null) ? sortDirectionsParam.split(",")
+                : cursorDefault.sortDirections().split(",");
 
-        // 필드와 방향 배열의 길이가 일치하지 않는 경우, 짧은 배열의 길이에 맞춰 정렬
-        int length = Math.min(fields.length, directions.length);
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < Math.min(fields.length, directions.length); i++) {
             SortDirection direction = SortDirection.valueOf(directions[i].trim().toUpperCase());
             sortOrders.add(new SortOrder(fields[i].trim(), direction));
         }
