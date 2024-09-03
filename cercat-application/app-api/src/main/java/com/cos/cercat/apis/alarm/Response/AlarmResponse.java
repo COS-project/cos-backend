@@ -1,4 +1,4 @@
-package com.cos.cercat.apis.alarm.response;
+package com.cos.cercat.apis.alarm.Response;
 
 import com.cos.cercat.domain.alarm.Alarm;
 import com.cos.cercat.domain.alarm.AlarmType;
@@ -7,19 +7,22 @@ import com.cos.cercat.domain.alarm.ExamAlarm;
 import com.cos.cercat.domain.certificate.CertificateExam;
 import com.cos.cercat.domain.user.User;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record AlarmResponse(
         Long targetPostId,
         AlarmType alarmType,
-        String alarmText
+        String alarmText,
+        LocalDateTime alarmTime
 ) {
 
     public static AlarmResponse from(Alarm alarm) {
         return new AlarmResponse(
                 alarm instanceof BoardAlarm boardAlarm ? boardAlarm.getPostId() : null,
                 alarm.getAlarmType(),
-                makeAlarmText(alarm)
+                makeAlarmText(alarm),
+                alarm.getAlarmTime()
         );
     }
 
@@ -43,9 +46,13 @@ public record AlarmResponse(
 
     private static String makeExamAlarmText(AlarmType alarmType, CertificateExam certificateExam) {
         return switch (alarmType) {
-            case BEFORE_APPLICATION -> "회원님의 관심자격증 " + certificateExam.certificate().certificateName() + " 접수 하루 남았어요!";
-            case DEADLINE -> "회원님의 관심자격증 " + certificateExam.certificate().certificateName() + " 마감 하루 남았어요!";
-            case START_APPLICATION -> "회원님의 관심자격증 " + certificateExam.certificate().certificateName() + " 접수를 시작했어요!";
+            case BEFORE_APPLICATION ->
+                    "회원님의 관심자격증 " + certificateExam.certificate().certificateName()
+                            + " 접수 하루 남았어요!";
+            case DEADLINE -> "회원님의 관심자격증 " + certificateExam.certificate().certificateName()
+                    + " 마감 하루 남았어요!";
+            case START_APPLICATION ->
+                    "회원님의 관심자격증 " + certificateExam.certificate().certificateName() + " 접수를 시작했어요!";
             default -> null;
         };
     }

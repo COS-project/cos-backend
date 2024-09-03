@@ -1,10 +1,14 @@
 package com.cos.cercat.batch.alarm.job;
 
+import com.cos.cercat.infra.entity.CertificateEntity;
+import com.cos.cercat.infra.entity.CertificateExamEntity;
+import com.cos.cercat.infra.entity.ExamAlarmEntity;
+import com.cos.cercat.infra.entity.InterestCertificateEntity;
+import com.cos.cercat.infra.entity.UserEntity;
 import com.cos.cercat.domain.alarm.AlarmType;
-import com.cos.cercat.domain.*;
-import com.cos.cercat.repository.AlarmJpaRepository;
-import com.cos.cercat.repository.CertificateExamJpaRepository;
-import com.cos.cercat.repository.InterestCertificateJpaRepository;
+import com.cos.cercat.infra.repository.AlarmJpaRepository;
+import com.cos.cercat.infra.repository.CertificateExamJpaRepository;
+import com.cos.cercat.infra.repository.InterestCertificateJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.StepContribution;
@@ -26,29 +30,37 @@ public class AlarmBeforeExamDeadlineTasklet implements Tasklet {
     private final AlarmJpaRepository alarmJpaRepository;
 
     @Override
-    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext)
+            throws Exception {
 
         LocalDateTime currentDateTime = LocalDateTime.now();
         LocalDateTime oneDayAfter = currentDateTime.plusDays(1);
         int count = 0;
 
-        List<CertificateExamEntity> certificateExamEntities = certificateExamJpaRepository.findTomorrowDeadlineCertificateExams(oneDayAfter);
+        List<CertificateExamEntity> certificateExamEntities = certificateExamJpaRepository.findTomorrowDeadlineCertificateExams(
+                oneDayAfter);
 
         for (CertificateExamEntity certificateExamEntity : certificateExamEntities) {
             CertificateEntity certificateEntity = certificateExamEntity.getCertificateEntity();
-            List<InterestCertificateEntity> interestCertificateEntities = interestCertificateJpaRepository.findInterestCertificatesByCertificateId(certificateEntity.getId());
+            List<InterestCertificateEntity> interestCertificateEntities = interestCertificateJpaRepository.findInterestCertificatesByCertificateId(
+                    certificateEntity.getId());
 
-            List<UserEntity> userEntities = interestCertificateEntities.stream().map(interestCertificateEntity ->
+            List<UserEntity> userEntities = interestCertificateEntities.stream()
+                    .map(interestCertificateEntity ->
                             interestCertificateEntity.getInterestCertificatePK().getUserEntity())
                     .toList();
 
             count += sendDeadlineAlarm(userEntities, certificateExamEntity);
         }
-        log.info("AlarmBeforeExamDeadlineTasklet - execute: 자격증 시험 마감 기간 알람 {}건 전송 완료, DeadlineDate : {}년 {}월 {}일", count, oneDayAfter.getYear(), oneDayAfter.getMonthValue(), oneDayAfter.getDayOfMonth());
+        log.info(
+                "AlarmBeforeExamDeadlineTasklet - execute: 자격증 시험 마감 기간 알람 {}건 전송 완료, DeadlineDate : {}년 {}월 {}일",
+                count, oneDayAfter.getYear(), oneDayAfter.getMonthValue(),
+                oneDayAfter.getDayOfMonth());
         return RepeatStatus.FINISHED;
     }
 
-    private int sendDeadlineAlarm(List<UserEntity> userEntities, CertificateExamEntity certificateExamEntity) {
+    private int sendDeadlineAlarm(List<UserEntity> userEntities,
+            CertificateExamEntity certificateExamEntity) {
         List<ExamAlarmEntity> alarmList = userEntities.stream()
                 .map(user -> ExamAlarmEntity.builder()
                         .receiveUserEntity(user)

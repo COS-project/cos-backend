@@ -17,9 +17,11 @@ public class AlarmService {
 
     public List<Alarm> readAlarms(TargetUser targetUser) {
         User user = userReader.read(targetUser);
-        List<Alarm> alarmList = alarmManager.read(user);
-        alarmManager.markAsRead(user);
-        return alarmList;
+        return alarmManager.read(user);
+    }
+
+    public void markAsRead(List<Long> alarmIds) {
+        alarmManager.markAsRead(alarmIds);
     }
 
     public int countUnreadAlarms(TargetUser targetUser) {

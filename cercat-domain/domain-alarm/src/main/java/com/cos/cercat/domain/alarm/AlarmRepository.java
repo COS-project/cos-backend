@@ -11,7 +11,7 @@ public interface AlarmRepository {
 
     int countUnreadAlarms(User user);
 
-    void markAsRead(User user);
+    void markAsRead(List<Long> alarmIds);
 
     void save(AlarmEvent alarmEvent);
 }

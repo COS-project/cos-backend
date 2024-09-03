@@ -1,5 +1,6 @@
 package com.cos.cercat.domain.like;
 
+import com.cos.cercat.domain.alarm.AlarmManager;
 import com.cos.cercat.domain.alarm.AlarmPublisher;
 import com.cos.cercat.domain.alarm.AlarmType;
 import com.cos.cercat.domain.post.*;
@@ -15,7 +16,7 @@ public class LikeManager {
     private final PostReader postReader;
     private final PostUpdator postUpdator;
     private final CommentUpdator commentUpdator;
-    private final AlarmPublisher alarmPublisher;
+    private final AlarmManager alarmManager;
     private final CommentReader commentReader;
 
     public void like(User user, Like like) {
@@ -25,14 +26,16 @@ public class LikeManager {
                 post.like();
                 postUpdator.update(post);
                 likeRepository.save(user, like);
-                alarmPublisher.publish(post.getUser(), user, post.getId(), AlarmType.NEW_LIKE_ON_POST);
+                alarmManager.publish(post.getUser(), user, post.getId(),
+                        AlarmType.NEW_LIKE_ON_POST);
             }
             case COMMENT -> {
                 PostComment comment = commentReader.readToLike(TargetComment.from(like.targetId()));
                 comment.like();
                 commentUpdator.update(comment);
                 likeRepository.save(user, like);
-                alarmPublisher.publish(comment.getUser(), user, comment.getId(), AlarmType.NEW_LIKE_ON_POST);
+                alarmManager.publish(comment.getUser(), user, comment.getId(),
+                        AlarmType.NEW_LIKE_ON_POST);
             }
         }
     }

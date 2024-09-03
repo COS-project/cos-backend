@@ -4,7 +4,7 @@ import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserAppender;
 import com.cos.cercat.domain.user.UserReader;
 import com.cos.cercat.domain.user.UserUpdater;
-import com.cos.cercat.exception.UserNotFoundException;
+import com.cos.cercat.infra.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;

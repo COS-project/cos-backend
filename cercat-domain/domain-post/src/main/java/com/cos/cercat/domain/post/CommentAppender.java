@@ -1,5 +1,6 @@
 package com.cos.cercat.domain.post;
 
+import com.cos.cercat.domain.alarm.AlarmManager;
 import com.cos.cercat.domain.alarm.AlarmPublisher;
 import com.cos.cercat.domain.alarm.AlarmType;
 import com.cos.cercat.domain.exception.InvalidCommentException;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class CommentAppender {
 
     private final CreatePostRepository createPostRepository;
-    private final AlarmPublisher alarmPublisher;
+    private final AlarmManager alarmManager;
     private final CommentReader commentReader;
 
     public void append(User user, Post post, CommentContent comment) {
@@ -21,7 +22,7 @@ public class CommentAppender {
             return;
         }
         createPostRepository.saveComment(user, post, comment);
-        alarmPublisher.publish(post.getUser(), user, post.getId(), AlarmType.NEW_COMMENT_ON_POST);
+        alarmManager.publish(post.getUser(), user, post.getId(), AlarmType.NEW_COMMENT_ON_POST);
     }
 
     private void appendChild(User user, Post post, CommentContent content) {
@@ -32,7 +33,8 @@ public class CommentAppender {
         }
 
         createPostRepository.saveComment(user, post, content);
-        alarmPublisher.publish(post.getUser(), user, post.getId(), AlarmType.NEW_COMMENT_ON_POST);
-        alarmPublisher.publish(parentComment.getUser(), user, post.getId(), AlarmType.REPLY_ON_COMMENT);
+        alarmManager.publish(post.getUser(), user, post.getId(), AlarmType.NEW_COMMENT_ON_POST);
+        alarmManager.publish(parentComment.getUser(), user, post.getId(),
+                AlarmType.REPLY_ON_COMMENT);
     }
 }
