@@ -1,4 +1,4 @@
-package com.cos.cercat;
+package com.cos.cercat.infra;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;

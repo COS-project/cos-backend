@@ -1,12 +1,9 @@
 spring:
   profiles:
     group:
-      local: common, domain
-      prod: common, domain
+      batch: common, domain
     include:
       - jpa
-      - gcs
-      - redis
 
   main:
     web-application-type: none

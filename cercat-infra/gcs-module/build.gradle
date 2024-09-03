@@ -5,7 +5,7 @@ bootJar {
 dependencies {
 
     implementation project(':cercat-common');
-    api project(':cercat-domain');
+    implementation project(':cercat-domain');
     implementation project(':cercat-infra')
 
 

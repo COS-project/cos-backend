@@ -1,4 +1,4 @@
-package com.cos.cercat.infra.cache;
+package com.cos.cercat.infra.repository;
 
 import com.cos.cercat.domain.user.RefreshToken;
 import com.cos.cercat.domain.user.TargetUser;
@@ -42,7 +42,8 @@ public class RedisTokenRepository implements TokenRepository {
 
     @Override
     public boolean isAlreadyLogin(String token) {
-        return Boolean.FALSE.equals(banTokenRedisTemplate.opsForSet().isMember(BAN_TOKEN_KEY, token));
+        return Boolean.FALSE.equals(
+                banTokenRedisTemplate.opsForSet().isMember(BAN_TOKEN_KEY, token));
     }
 
     public String getKey(Long userId) {

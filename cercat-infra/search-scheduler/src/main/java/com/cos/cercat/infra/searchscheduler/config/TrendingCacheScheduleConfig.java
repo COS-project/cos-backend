@@ -1,4 +1,4 @@
-package com.cos.cercat.infra.config;
+package com.cos.cercat.infra.searchscheduler.config;
 
 import net.javacrumbs.shedlock.core.LockProvider;
 import net.javacrumbs.shedlock.provider.jdbctemplate.JdbcTemplateLockProvider;

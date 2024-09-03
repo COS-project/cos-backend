@@ -30,8 +30,7 @@ public class AlarmBeforeExamDeadlineTasklet implements Tasklet {
     private final AlarmJpaRepository alarmJpaRepository;
 
     @Override
-    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext)
-            throws Exception {
+    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) {
 
         LocalDateTime currentDateTime = LocalDateTime.now();
         LocalDateTime oneDayAfter = currentDateTime.plusDays(1);

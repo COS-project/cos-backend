@@ -32,8 +32,7 @@ public class AlarmExamApplicationStartTasklet implements Tasklet {
 
 
     @Override
-    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext)
-            throws Exception {
+    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) {
 
         int count = 0;
         List<CertificateExamEntity> certificateExamEntities = certificateExamJpaRepository.findTodayApplicationCertificateExams();

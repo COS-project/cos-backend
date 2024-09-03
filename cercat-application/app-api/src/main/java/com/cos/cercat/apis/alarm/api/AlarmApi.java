@@ -7,7 +7,6 @@ import com.cos.cercat.infra.sse.SseEmitterConnector;
 import com.cos.cercat.domain.user.TargetUser;
 import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
-import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,7 +26,6 @@ public class AlarmApi implements AlarmApiDocs {
 
     private final AlarmService alarmService;
     private final SseEmitterConnector sseEmitterConnector;
-    private final GroupedOpenApi alarm;
 
     @GetMapping(value = "/alarms/subscribe", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public ResponseEntity<SseEmitter> subscribeAlarm(@AuthenticationPrincipal User currentUser) {

@@ -6,19 +6,16 @@ bootJar {
 dependencies {
 
     implementation project(':cercat-common');
-    implementation project(':cercat-domain');
     implementation project(':cercat-domain:domain-mockexamresult');
     implementation project(':cercat-domain:domain-learning');
     implementation project(':cercat-domain:domain-user');
     implementation project(':cercat-domain:domain-certificate');
     implementation project(':cercat-domain:domain-mockexam');
-    implementation project(':cercat-infra:jpa-dataaccess');
+    implementation project(':cercat-infra:jpa-module');
     implementation project(':cercat-infra:user-dataaccess');
     implementation project(':cercat-infra:certificate-dataaccess');
     implementation project(':cercat-infra:learning-dataaccess');
     implementation project(':cercat-infra:mockexam-dataaccess');
-    implementation project(':cercat-infra:redis-dataaccess');
-    implementation project(':cercat-infra:gcs-module');
 
     testImplementation testFixtures(project(':cercat-domain:domain-mockexamresult'))
     testImplementation testFixtures(project(':cercat-domain:domain-mockexam'))

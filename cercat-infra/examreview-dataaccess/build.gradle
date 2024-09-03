@@ -10,7 +10,7 @@ dependencies {
     implementation project(':cercat-domain:domain-certificate');
     implementation project(':cercat-infra:user-dataaccess');
     implementation project(':cercat-infra:certificate-dataaccess');
-    implementation project(':cercat-infra:jpa-dataaccess');
+    implementation project(':cercat-infra:jpa-module');
 
     //Querydsl 추가
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'

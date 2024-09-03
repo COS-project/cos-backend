@@ -6,12 +6,14 @@ dependencies {
 
     implementation project(':cercat-common');
     implementation project(':cercat-domain:domain-mockexam');
+    implementation project(':cercat-domain:domain-certificate');
+
     implementation project(':cercat-infra:certificate-dataaccess');
     implementation project(':cercat-infra:user-dataaccess');
-    implementation project(':cercat-infra:jpa-dataaccess');
+    implementation project(':cercat-infra:jpa-module');
 
     //redis-dataaccess
-    implementation project(':cercat-infra:redis-dataaccess')
+    implementation project(':cercat-infra:redis-module')
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'

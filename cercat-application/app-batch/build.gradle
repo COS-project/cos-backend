@@ -3,7 +3,6 @@ dependencies {
 
     //domain modules
     implementation project(':cercat-domain:domain-alarm')
-    implementation project(':cercat-domain:domain-board')
     implementation project(':cercat-domain:domain-certificate')
     implementation project(':cercat-domain:domain-user')
 
@@ -11,11 +10,7 @@ dependencies {
     implementation project(':cercat-infra:alarm-dataaccess')
     implementation project(':cercat-infra:user-dataaccess')
     implementation project(':cercat-infra:certificate-dataaccess')
-    implementation project(':cercat-infra:board-dataaccess')
-    implementation project(':cercat-infra:jpa-dataaccess')
-    implementation project(':cercat-infra:redis-dataaccess')
-    implementation project(':cercat-infra:redis-message-module')
-    implementation project(':cercat-infra:gcs-module')
+    implementation project(':cercat-infra:jpa-module')
 
     implementation 'org.springframework.boot:spring-boot-starter-batch'
     runtimeOnly 'com.mysql:mysql-connector-j'

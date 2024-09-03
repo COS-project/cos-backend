@@ -54,6 +54,7 @@ public class QuestionEntity {
     @Column(length = 1000)
     private String questionText;
 
+    @Builder.Default
     @OneToMany(mappedBy = "questionEntity", cascade = CascadeType.ALL)
     private List<QuestionOptionEntity> questionOptions = new ArrayList<>();
 
@@ -62,13 +63,13 @@ public class QuestionEntity {
     private int score;
 
     public QuestionEntity(Long id,
-                          MockExamEntity mockExamEntity,
-                          SubjectEntity subjectEntity,
-                          ImageEntity questionImageEntity,
-                          int questionSeq,
-                          String questionText,
-                          int correctOption,
-                          int score) {
+            MockExamEntity mockExamEntity,
+            SubjectEntity subjectEntity,
+            ImageEntity questionImageEntity,
+            int questionSeq,
+            String questionText,
+            int correctOption,
+            int score) {
         this.id = id;
         this.mockExamEntity = mockExamEntity;
         this.subjectEntity = subjectEntity;
@@ -102,7 +103,8 @@ public class QuestionEntity {
 
         questionEntity.getQuestionOptions().addAll(
                 newQuestion.questionContent().questionOptions().stream()
-                        .map(questionOption -> QuestionOptionEntity.from(questionEntity, questionOption))
+                        .map(questionOption -> QuestionOptionEntity.from(questionEntity,
+                                questionOption))
                         .toList()
         );
         return questionEntity;

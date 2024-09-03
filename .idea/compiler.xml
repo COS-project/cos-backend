@@ -11,43 +11,44 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.30/f195ee86e6c896ea47a1d39defbe20eb59cd149d/lombok-1.18.30.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-configuration-processor/3.2.7/2e4b9567bf984264c7ed69d633becdeea2345cc1/spring-boot-configuration-processor-3.2.7.jar" />
         </processorPath>
-        <module name="cercat.cercat-application.app-api.main" />
         <module name="cercat.cercat-domain.domain-board.main" />
         <module name="cercat.cercat-application.app-batch.main" />
-        <module name="cercat.cercat-domain.domain-mockexamresult.main" />
         <module name="cercat.cercat-infra.alarm-dataaccess.main" />
+        <module name="cercat.cercat-infra.redis-module.main" />
+        <module name="cercat.cercat-infra.search-scheduler.main" />
         <module name="cercat.cercat-domain.domain-user.main" />
-        <module name="cercat.cercat-infra.main" />
         <module name="cercat.cercat-domain.domain-certificate.main" />
-        <module name="cercat.cercat-domain.main" />
-        <module name="cercat.cercat-infra.elasticsearch-dataaccess.main" />
-        <module name="cercat.cercat-domain.domain-post.main" />
-        <module name="cercat.cercat-infra.kafka-module.main" />
         <module name="cercat.cercat-infra.search-dataaccess.main" />
         <module name="cercat.cercat-domain.domain-learning.main" />
-        <module name="cercat.cercat-application.main" />
-        <module name="cercat.cercat-infra.gcs-module.main" />
+        <module name="cercat.cercat-infra.elasticsearch-module.main" />
         <module name="cercat.cercat-common.main" />
-        <module name="cercat.cercat-domain.domain-examreview.main" />
         <module name="cercat.cercat-domain.domain-like.main" />
         <module name="cercat.cercat-infra.redis-message-module.main" />
-        <module name="cercat.cercat-domain.domain-mockexam.main" />
-        <module name="cercat.cercat-infra.redis-dataaccess.main" />
-        <module name="cercat.cercat-domain.domain-alarm.main" />
+        <module name="cercat.cercat-infra.search-cache.main" />
         <module name="cercat.cercat-domain.domain-search.main" />
+        <module name="cercat.cercat-application.app-api.main" />
+        <module name="cercat.cercat-domain.domain-mockexamresult.main" />
+        <module name="cercat.cercat-infra.main" />
+        <module name="cercat.cercat-domain.main" />
+        <module name="cercat.cercat-domain.domain-post.main" />
+        <module name="cercat.cercat-infra.kafka-module.main" />
+        <module name="cercat.cercat-application.main" />
+        <module name="cercat.cercat-infra.gcs-module.main" />
+        <module name="cercat.cercat-domain.domain-examreview.main" />
+        <module name="cercat.cercat-domain.domain-mockexam.main" />
+        <module name="cercat.cercat-domain.domain-alarm.main" />
+        <module name="cercat.cercat-infra.user-cache.main" />
       </profile>
       <profile name="Gradle Imported" enabled="true">
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.32/17d46b3e205515e1e8efd3ee4d57ce8018914163/lombok-1.18.32.jar" />
         </processorPath>
-        <module name="cercat.cercat-infra.jpa-dataaccess.test" />
         <module name="cercat.cercat-domain.domain-post.test" />
         <module name="cercat.cercat-domain.domain-search.test" />
         <module name="cercat.cercat-infra.redis-message-module.test" />
         <module name="cercat.cercat-infra.gcs-module.test" />
         <module name="cercat.cercat-domain.domain-alarm.test" />
-        <module name="cercat.cercat-infra.elasticsearch-dataaccess.test" />
         <module name="cercat.cercat-infra.learning-dataaccess.test" />
         <module name="cercat.cercat-infra.certificate-dataaccess.test" />
         <module name="cercat.cercat-domain.domain-like.test" />
@@ -56,12 +57,14 @@
         <module name="cercat.cercat-application.app-api.test" />
         <module name="cercat.cercat-infra.mockexamresult-dataaccess.test" />
         <module name="cercat.cercat-domain.domain-board.test" />
-        <module name="cercat.cercat-infra.redis-dataaccess.test" />
         <module name="cercat.cercat-infra.test" />
         <module name="cercat.cercat-infra.alarm-dataaccess.test" />
         <module name="cercat.cercat-domain.domain-learning.test" />
+        <module name="cercat.cercat-infra.elasticsearch-module.test" />
+        <module name="cercat.cercat-infra.jpa-module.test" />
         <module name="cercat.cercat-common.test" />
         <module name="cercat.cercat-infra.board-dataaccess.test" />
+        <module name="cercat.cercat-infra.user-cache.test" />
         <module name="cercat.cercat-domain.domain-certificate.test" />
         <module name="cercat.cercat-domain.domain-examreview.test" />
         <module name="cercat.cercat-domain.domain-user.test" />
@@ -70,8 +73,11 @@
         <module name="cercat.cercat-infra.search-dataaccess.test" />
         <module name="cercat.cercat-infra.kafka-module.test" />
         <module name="cercat.cercat-application.app-batch.test" />
+        <module name="cercat.cercat-infra.redis-module.test" />
+        <module name="cercat.cercat-infra.search-scheduler.test" />
         <module name="cercat.cercat-domain.test" />
         <module name="cercat.cercat-infra.user-dataaccess.test" />
+        <module name="cercat.cercat-infra.search-cache.test" />
         <module name="cercat.cercat-infra.like-dataaccess.test" />
         <module name="cercat.cercat-domain.domain-mockexamresult.test" />
         <module name="cercat.cercat-infra.mockexam-dataaccess.test" />
@@ -100,8 +106,8 @@
         <module name="cercat.cercat-infra.certificate-dataaccess.main" />
         <module name="cercat.cercat-infra.user-dataaccess.main" />
         <module name="cercat.cercat-infra.examreview-dataaccess.main" />
-        <module name="cercat.cercat-infra.jpa-dataaccess.main" />
         <module name="cercat.cercat-infra.board-dataaccess.main" />
+        <module name="cercat.cercat-infra.jpa-module.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="17" />

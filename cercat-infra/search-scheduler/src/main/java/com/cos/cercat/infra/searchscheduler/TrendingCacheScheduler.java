@@ -1,4 +1,4 @@
-package com.cos.cercat.infra.schedule;
+package com.cos.cercat.infra.searchscheduler;
 
 import com.cos.cercat.infra.cache.TrendingKeywordCacheRepositoryImpl;
 import com.cos.cercat.domain.certificate.Certificate;
@@ -18,7 +18,7 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class TrendingCacheSchedule {
+public class TrendingCacheScheduler {
 
     private final PostForForSearchRepositoryImpl postForSearchRepository;
     private final TrendingKeywordCacheRepositoryImpl trendingKeywordCacheRepository;

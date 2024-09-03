@@ -26,9 +26,10 @@ dependencies {
     implementation project(':cercat-infra:mockexamresult-dataaccess')
     implementation project(':cercat-infra:post-dataaccess')
     implementation project(':cercat-infra:search-dataaccess')
+    implementation project(':cercat-infra:search-cache')
+    implementation project(':cercat-infra:search-scheduler')
     implementation project(':cercat-infra:user-dataaccess')
-    implementation project(':cercat-infra:redis-dataaccess')
-    implementation project(':cercat-infra:elasticsearch-dataaccess')
+    implementation project(':cercat-infra:user-cache')
 
 
     implementation project(':cercat-infra:gcs-module')
