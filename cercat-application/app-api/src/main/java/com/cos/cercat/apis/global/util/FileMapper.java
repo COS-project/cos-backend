@@ -19,4 +19,8 @@ public class FileMapper {
                 .toList();
     }
 
+    public static File toFile(MultipartFile file) {
+        return File.from(file);
+    }
+
 }

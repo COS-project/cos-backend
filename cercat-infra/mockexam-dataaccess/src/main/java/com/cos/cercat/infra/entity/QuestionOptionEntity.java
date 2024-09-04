@@ -28,15 +28,17 @@ public class QuestionOptionEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private QuestionEntity questionEntity;
 
-    @OneToOne
-    @JoinColumn(name = "image_id")
-    @Setter
-    private ImageEntity optionImageEntity;
+    private String optionImageUrl;
 
     private String optionContent;
 
-    public String getImageUrl() {
-        return (this.optionImageEntity != null) ? optionImageEntity.getImageUrl() : "";
+    public static QuestionOptionEntity from(QuestionEntity question,
+            QuestionOption questionOption) {
+        return QuestionOptionEntity.builder()
+                .questionOptionPK(QuestionOptionPK.from(questionOption.getOptionSequence()))
+                .questionEntity(question)
+                .optionContent(questionOption.getOptionText())
+                .build();
     }
 
     public Integer getOptionSequence() {
@@ -47,16 +49,12 @@ public class QuestionOptionEntity {
         return new QuestionOption(
                 questionOptionPK.getOptionSequence(),
                 optionContent,
-                (optionImageEntity != null) ? optionImageEntity.getImageUrl() : ""
+                optionImageUrl
         );
     }
 
-
-    public static QuestionOptionEntity from(QuestionEntity question, QuestionOption questionOption) {
-        return QuestionOptionEntity.builder()
-                .questionOptionPK(QuestionOptionPK.from(questionOption.optionSequence()))
-                .questionEntity(question)
-                .optionContent(questionOption.optionText())
-                .build();
+    public void updateOptionImageUrl(String optionImageUrl) {
+        this.optionImageUrl = optionImageUrl;
     }
+
 }

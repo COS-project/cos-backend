@@ -1,6 +1,6 @@
 package com.cos.cercat.apis.alarm.api;
 
-import com.cos.cercat.apis.alarm.Response.AlarmResponse;
+import com.cos.cercat.apis.alarm.response.AlarmResponse;
 import com.cos.cercat.common.domain.Response;
 import com.cos.cercat.domain.user.User;
 import io.swagger.v3.oas.annotations.Operation;

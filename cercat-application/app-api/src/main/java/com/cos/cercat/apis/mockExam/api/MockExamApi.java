@@ -1,5 +1,7 @@
 package com.cos.cercat.apis.mockExam.api;
 
+
+import com.cos.cercat.apis.mockExam.request.QuestionImageRequest;
 import com.cos.cercat.apis.mockExam.request.CreateMockExamRequest;
 import com.cos.cercat.apis.mockExam.response.MockExamResponse;
 import com.cos.cercat.apis.mockExam.response.QuestionResponse;
@@ -23,9 +25,10 @@ public class MockExamApi implements MockExamApiDocs {
 
     @GetMapping("/certificates/{certificateId}/mock-exams")
     public Response<List<MockExamResponse>> findMockExams(@PathVariable Long certificateId,
-                                                          Integer examYear,
-                                                          @AuthenticationPrincipal User currentUser) {
-        List<MockExamResponse> mockExamResponses = mockExamService.find(TargetCertificate.from(certificateId), examYear).stream()
+            Integer examYear,
+            @AuthenticationPrincipal User currentUser) {
+        List<MockExamResponse> mockExamResponses = mockExamService.find(
+                        TargetCertificate.from(certificateId), examYear).stream()
                 .map(MockExamResponse::from)
                 .toList();
 
@@ -34,14 +37,16 @@ public class MockExamApi implements MockExamApiDocs {
 
     @Override
     @GetMapping("/certificates/{certificateId}/exam-years")
-    public Response<List<Integer>> findExamYears(@PathVariable  Long certificateId) {
-        return Response.success(mockExamService.findExamYears(TargetCertificate.from(certificateId)));
+    public Response<List<Integer>> findExamYears(@PathVariable Long certificateId) {
+        return Response.success(
+                mockExamService.findExamYears(TargetCertificate.from(certificateId)));
     }
 
     @Override
     @GetMapping("/mock-exams/{mockExamId}/questions")
     public Response<List<QuestionResponse>> findQuestions(@PathVariable Long mockExamId) {
-        List<QuestionResponse> questionResponses = mockExamService.findQuestions(TargetMockExam.from(mockExamId)).stream()
+        List<QuestionResponse> questionResponses = mockExamService.findQuestions(
+                        TargetMockExam.from(mockExamId)).stream()
                 .map(QuestionResponse::from)
                 .toList();
 
@@ -51,14 +56,24 @@ public class MockExamApi implements MockExamApiDocs {
     @Override
     @PostMapping("/mock-exams/{certificateId}")
     public Response<Void> createMockExam(@PathVariable Long certificateId,
-                                         @RequestBody CreateMockExamRequest request) {
+            @RequestBody CreateMockExamRequest request) {
         mockExamService.createMockExam(
                 TargetCertificate.from(certificateId),
-                request.toSession(),
+                request.toExamSession(),
                 request.timeLimit(),
                 request.toContent()
         );
 
         return Response.success("모의고사 생성 성공");
     }
+
+    @Override
+    @PostMapping("/mock-exams/{questionId}/question-images")
+    public Response<Void> insertQuestionImage(@PathVariable Long questionId,
+            @ModelAttribute QuestionImageRequest request) {
+        mockExamService.insertQuestionImage(questionId, request.toQuestionImageFile(),
+                request.toOptionImages());
+        return Response.success("이미지 업로드 성공");
+    }
+
 }

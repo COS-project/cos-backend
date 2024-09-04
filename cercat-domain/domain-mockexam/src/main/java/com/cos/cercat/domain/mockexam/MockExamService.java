@@ -1,5 +1,6 @@
 package com.cos.cercat.domain.mockexam;
 
+import com.cos.cercat.common.domain.File;
 import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.domain.certificate.CertificateReader;
 import com.cos.cercat.domain.certificate.TargetCertificate;
@@ -14,12 +15,13 @@ public class MockExamService {
 
     private final MockExamFinder mockExamFinder;
     private final MockExamAppender mockExamAppender;
-    private final QuestionFinder questionFinder;
+    private final QuestionReader questionReader;
     private final CertificateReader certificateReader;
     private final MockExamReader mockExamReader;
+    private final QuestionUpdater questionUpdater;
 
     public List<MockExam> find(TargetCertificate targetCertificate,
-                               Integer examYear) {
+            Integer examYear) {
         Certificate certificate = certificateReader.read(targetCertificate);
         return mockExamFinder.find(certificate, examYear);
     }
@@ -31,14 +33,20 @@ public class MockExamService {
 
     public List<Question> findQuestions(TargetMockExam targetMockExam) {
         MockExam mockExam = mockExamReader.read(targetMockExam);
-        return questionFinder.find(mockExam);
+        return questionReader.read(mockExam);
     }
 
     public void createMockExam(TargetCertificate targetCertificate,
-                               MockExamSession session,
-                               Long timeLimit,
-                               List<QuestionWithSubjectSeq> contents) {
-        Certificate certificate = certificateReader.read(targetCertificate); //불필요한 조회? or 검증을 위해 필요?
+            MockExamSession session,
+            Long timeLimit,
+            List<QuestionWithSubjectSeq> contents) {
+        Certificate certificate = certificateReader.read(targetCertificate);
         mockExamAppender.append(certificate, session, timeLimit, contents);
+    }
+
+    public void insertQuestionImage(Long questionId, File questionImageFile,
+            List<UploadingOptionImageFile> optionImageFiles) {
+        Question question = questionReader.read(questionId);
+        questionUpdater.updateImage(question, questionImageFile, optionImageFiles);
     }
 }

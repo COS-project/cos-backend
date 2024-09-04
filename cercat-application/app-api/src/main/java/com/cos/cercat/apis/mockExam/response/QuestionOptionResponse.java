@@ -12,9 +12,9 @@ public record QuestionOptionResponse(
 
     public static QuestionOptionResponse from(QuestionOption questionOption) {
         return new QuestionOptionResponse(
-                questionOption.optionSequence(),
-                questionOption.optionText(),
-                questionOption.optionImageUrl()
+                questionOption.getOptionSequence(),
+                questionOption.getOptionText(),
+                questionOption.getOptionImageUrl()
         );
     }
 

@@ -22,17 +22,17 @@ public record QuestionResponse(
 
     public static QuestionResponse from(Question question) {
         return new QuestionResponse(
-                question.id(),
-                MockExamResponse.from(question.mockExam()),
-                SubjectResponse.from(question.subject()),
-                question.questionContent().questionSequence(),
-                question.questionContent().questionText(),
-                question.questionContent().questionImage(),
-                question.questionContent().questionOptions().stream()
+                question.getQuestionId(),
+                MockExamResponse.from(question.getMockExam()),
+                SubjectResponse.from(question.getSubject()),
+                question.getQuestionContent().questionSequence(),
+                question.getQuestionContent().questionText(),
+                question.getQuestionImage(),
+                question.getQuestionOptions().stream()
                         .map(QuestionOptionResponse::from)
                         .toList(),
-                question.questionContent().correctOption(),
-                question.questionContent().score()
+                question.getQuestionContent().correctOption(),
+                question.getQuestionContent().score()
         );
     }
 }

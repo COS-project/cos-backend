@@ -1,4 +1,4 @@
-package com.cos.cercat.apis.alarm.Response;
+package com.cos.cercat.apis.alarm.response;
 
 import com.cos.cercat.domain.alarm.Alarm;
 import com.cos.cercat.domain.alarm.AlarmType;
@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record AlarmResponse(
+        Long alarmId,
         Long targetPostId,
         AlarmType alarmType,
         String alarmText,
@@ -19,6 +20,7 @@ public record AlarmResponse(
 
     public static AlarmResponse from(Alarm alarm) {
         return new AlarmResponse(
+                alarm.getAlarmId(),
                 alarm instanceof BoardAlarm boardAlarm ? boardAlarm.getPostId() : null,
                 alarm.getAlarmType(),
                 makeAlarmText(alarm),
