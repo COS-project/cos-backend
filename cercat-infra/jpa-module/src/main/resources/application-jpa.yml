@@ -32,7 +32,7 @@ spring:
 spring:
   config:
     activate:
-      on-profile: prod
+      on-profile: prod,batch
 
   datasource:
     url: jdbc:mysql://${SPRING_DATABASE_HOST}:${SPRING_DATABASE_PORT}/cercat
@@ -41,7 +41,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         default_batch_fetch_size: 100

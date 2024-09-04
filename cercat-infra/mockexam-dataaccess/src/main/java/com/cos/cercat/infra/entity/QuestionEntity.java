@@ -3,6 +3,7 @@ package com.cos.cercat.infra.entity;
 import com.cos.cercat.domain.mockexam.NewQuestion;
 import com.cos.cercat.domain.mockexam.Question;
 import com.cos.cercat.domain.mockexam.QuestionContent;
+import com.cos.cercat.domain.mockexam.QuestionOption;
 import com.cos.cercat.domain.mockexam.TargetMockExam;
 import jakarta.persistence.*;
 import lombok.*;
@@ -44,7 +45,7 @@ public class QuestionEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private SubjectEntity subjectEntity;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "image_id")
     @Setter
     private ImageEntity questionImageEntity;
@@ -101,25 +102,20 @@ public class QuestionEntity {
                 .score(newQuestion.questionContent().score())
                 .build();
 
-        questionEntity.getQuestionOptions().addAll(
-                newQuestion.questionContent().questionOptions().stream()
-                        .map(questionOption -> QuestionOptionEntity.from(questionEntity,
-                                questionOption))
-                        .toList()
-        );
+        addQuestionOptions(newQuestion.questionOptions(), questionEntity);
         return questionEntity;
     }
 
     public static QuestionEntity from(Question question) {
         return new QuestionEntity(
-                question.id(),
-                MockExamEntity.from(question.mockExam()),
-                SubjectEntity.from(question.subject()),
-                ImageEntity.from(question.questionContent().questionImage()),
-                question.questionContent().questionSequence(),
-                question.questionContent().questionText(),
-                question.questionContent().correctOption(),
-                question.questionContent().score()
+                question.getQuestionId(),
+                MockExamEntity.from(question.getMockExam()),
+                SubjectEntity.from(question.getSubject()),
+                ImageEntity.from(question.getQuestionImage()),
+                question.getQuestionContent().questionSequence(),
+                question.getQuestionContent().questionText(),
+                question.getQuestionContent().correctOption(),
+                question.getQuestionContent().score()
         );
     }
 
@@ -128,24 +124,46 @@ public class QuestionEntity {
                 id,
                 mockExamEntity.toDomain(),
                 subjectEntity.toDomain(),
+                questionImageEntity != null ? questionImageEntity.toImage() : null,
+                questionOptions.stream()
+                        .map(QuestionOptionEntity::toDomain)
+                        .toList(),
                 new QuestionContent(
                         questionSeq,
                         questionText,
                         correctOption,
-                        questionImageEntity != null ? questionImageEntity.toImage() : null,
-                        questionOptions.stream()
-                                .map(QuestionOptionEntity::toDomain)
-                                .toList(),
                         score
                 )
         );
     }
 
-    public String getImageUrl() {
-        if (Objects.nonNull(questionImageEntity)) {
-            return questionImageEntity.getImageUrl();
+    private static void addQuestionOptions(List<QuestionOption> options,
+            QuestionEntity questionEntity) {
+        questionEntity.getQuestionOptions().addAll(
+                options.stream()
+                        .map(questionOption -> QuestionOptionEntity.from(questionEntity,
+                                questionOption))
+                        .toList()
+        );
+    }
+
+    public void updateQuestionOptions(List<QuestionOption> options) {
+        for (QuestionOption option : options) {
+            QuestionOptionEntity questionOptionEntity = questionOptions.stream()
+                    .filter(questionOption -> questionOption.getOptionSequence()
+                            .equals(option.getOptionSequence()))
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException(
+                            "유효하지 않은 선택지입니다." + option.getOptionSequence()));
+            
+            questionOptionEntity.updateOptionImageUrl(option.getOptionImageUrl());
         }
-        return "";
+
+    }
+
+    public void update(Question question) {
+        this.questionImageEntity = ImageEntity.from(question.getQuestionImage());
+        updateQuestionOptions(question.getQuestionOptions());
     }
 }
 

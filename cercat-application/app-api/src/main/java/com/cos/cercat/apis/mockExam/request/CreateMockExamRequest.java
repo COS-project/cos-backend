@@ -14,7 +14,7 @@ public record CreateMockExamRequest(
         Integer score
 ) {
 
-    public MockExamSession toSession() {
+    public MockExamSession toExamSession() {
         return new MockExamSession(examYear, round);
     }
 

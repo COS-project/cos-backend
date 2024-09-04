@@ -23,7 +23,7 @@ public class MockExamCacheRepositoryImpl implements MockExamCacheRepository {
 
     @Override
     public void setQuestions(List<Question> questions) {
-        String key = getKey(questions.get(0).mockExam().id());
+        String key = getKey(questions.get(0).getMockExam().id());
         log.info("Set Questions from {}", key);
         redisTemplate.opsForValue().setIfAbsent(key, questions, USER_CACHE_TTL);
     }

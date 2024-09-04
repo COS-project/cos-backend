@@ -29,17 +29,19 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     @Override // 로그인 로직 담당
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2UserService<OAuth2UserRequest, OAuth2User> service = new DefaultOAuth2UserService();
-        OAuth2User oAuth2User = service.loadUser(userRequest);  // 어떤 플랫폼의 유저정보도 담을수있도록 추상화한 클래스 OAuth2 정보를 가져옵니다.
+        OAuth2User oAuth2User = service.loadUser(
+                userRequest);  // 어떤 플랫폼의 유저정보도 담을수있도록 추상화한 클래스 OAuth2 정보를 가져옵니다.
 
         Map<String, Object> originAttributes = oAuth2User.getAttributes();  // OAuth2User의 attribute
 
-        // OAuth2 서비스 id (google, kakao, naver)
+        // OAuth2 서비스 questionId (google, kakao, naver)
         // 소셜 정보를 가져옵니다. oauth2/atholization/{kakao} 이부분에 해당
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
 
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, originAttributes);
         User user = saveOrUpdate(attributes);
-        return new OAuth2CustomUser(registrationId, originAttributes, user.getUserRole(), user.getEmail(), user.getId());
+        return new OAuth2CustomUser(registrationId, originAttributes, user.getUserRole(),
+                user.getEmail(), user.getId());
     }
 
     private User saveOrUpdate(OAuthAttributes authAttributes) {

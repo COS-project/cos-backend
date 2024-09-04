@@ -13,17 +13,19 @@ public record CreateQuestionRequest(
         List<String> choices,
         Integer answer
 ) {
+
     public QuestionWithSubjectSeq toQuestionWithSubjectSeq(int score) {
         return new QuestionWithSubjectSeq(
                 subjectSeq,
+                null,
+                choices.stream()
+                        .map((choice) -> QuestionOption.of(choices.indexOf(choice) + 1, choice,
+                                null))
+                        .toList(),
                 QuestionContent.of(
                         questionNumber,
                         question,
                         answer,
-                        null,
-                        choices.stream()
-                                .map((choice) -> QuestionOption.of(choices.indexOf(choice) + 1, choice, null))
-                                .toList(),
                         score
                 )
         );

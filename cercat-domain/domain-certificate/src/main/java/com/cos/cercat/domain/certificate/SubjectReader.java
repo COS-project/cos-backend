@@ -7,11 +7,11 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class SubjectFinder {
+public class SubjectReader {
 
     private final CertificateRepository certificateRepository;
 
-    public List<Subject> find(Certificate certificate) {
+    public List<Subject> read(Certificate certificate) {
         return certificateRepository.findSubject(certificate);
     }
 
