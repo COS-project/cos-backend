@@ -5,6 +5,7 @@ bootJar {
 dependencies {
     implementation project(':cercat-common')
 
+
     implementation project(':cercat-domain:domain-search');
     implementation project(':cercat-infra:search-cache')
     implementation project(':cercat-infra:search-dataaccess')
