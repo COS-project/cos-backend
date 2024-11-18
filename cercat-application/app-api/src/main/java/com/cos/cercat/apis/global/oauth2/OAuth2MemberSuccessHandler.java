@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -24,11 +25,11 @@ import static com.cos.cercat.apis.global.util.JwtTokenizer.generateRefreshToken;
 @Component
 public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
+    @Value("${front.scheme}")
+    private String FRONT_SCHEME;
+
     @Value("${front.host}")
     private String FRONT_HOST;
-
-    @Value("${front.port}")
-    private String FRONT_PORT;
 
     @Value("${front.home-path}")
     private String HOME_PATH;
@@ -41,7 +42,8 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
     private final TokenManager tokenManager;
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                        Authentication authentication) throws IOException {
         OAuth2CustomUser oAuth2User = (OAuth2CustomUser) authentication.getPrincipal();
         TargetUser targetUser = TargetUser.from(oAuth2User.getUserId());
         User user = userReader.read(targetUser);
@@ -52,7 +54,8 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         redirect(response, accessToken, refreshToken, user);
     }
 
-    private void redirect(HttpServletResponse response, String accessToken, String refreshToken, User user) throws IOException {
+    private void redirect(HttpServletResponse response, String accessToken, String refreshToken, User user)
+            throws IOException {
         if (user.isGuest()) {
             response.sendRedirect(getURIString(accessToken, refreshToken, SIGN_UP_PATH));
             return;
@@ -67,9 +70,8 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
         return UriComponentsBuilder
                 .newInstance()
-                .scheme("http")
+                .scheme(FRONT_SCHEME)
                 .host(FRONT_HOST)
-                .port(FRONT_PORT)
                 .path(path)
                 .queryParams(queryParam)
                 .build()
