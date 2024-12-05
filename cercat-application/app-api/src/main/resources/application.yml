@@ -112,7 +112,7 @@ jwt:
     header: Refresh-token
 
 front:
-  scheme: https
+  scheme: http
   host: ${FRONT_HOST}
   home-path: /home
   sign-up-path: /onboarding
