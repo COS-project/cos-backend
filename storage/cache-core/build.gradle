@@ -1,0 +1,16 @@
+dependencies {
+    implementation project(':supports')
+    compileOnly project(':core-domain')
+
+
+
+    // 직렬화/역직렬화
+    implementation 'org.springframework.boot:spring-boot-starter-json'
+
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+}
+
+bootJar {
+    enabled = false
+}

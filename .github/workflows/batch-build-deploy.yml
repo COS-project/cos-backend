@@ -4,11 +4,11 @@ name: Cercat-Batch Build and Deploy
 on:
   push:
     paths:
-      - 'cercat-application/app-batch/**'
+      - '../../applications/app-batch/**'
       - 'cercat-infra/user-dataaccess/**'
       - 'cercat-infra/alarm-dataaccess/**'
       - 'cercat-infra/certificate-dataaccess/**'
-      - 'cercat-common/**'
+      - 'supports/**'
     branches: [ main ]
 
 env:

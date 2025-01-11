@@ -53,7 +53,7 @@ subprojects {
 
 }
 
-project(':cercat-domain') {
+project(':applications') {
     bootJar {
         enabled = false
     }
@@ -63,7 +63,13 @@ project(':cercat-domain') {
     }
 }
 
-project(':cercat-infra') {
+project(':core-domain') {
+    bootJar {
+        enabled = false
+    }
+}
+
+project(':storage') {
     bootJar {
         enabled = false
     }
@@ -73,7 +79,9 @@ project(':cercat-infra') {
     }
 }
 
-project(':cercat-application') {
+
+
+project(':clients') {
     bootJar {
         enabled = false
     }

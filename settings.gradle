@@ -7,43 +7,23 @@ plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
 }
 rootProject.name = 'cercat'
-include('cercat-application')
-include('cercat-application:app-api')
-include('cercat-application:app-batch')
-include('cercat-domain:domain-alarm')
-include('cercat-domain:domain-board')
-include('cercat-domain:domain-certificate')
-include('cercat-domain:domain-examreview')
-include('cercat-domain:domain-learning')
-include('cercat-domain:domain-like')
-include('cercat-domain:domain-mockexam')
-include('cercat-domain:domain-mockexamresult')
-include('cercat-domain:domain-post')
-include('cercat-domain:domain-search')
-include('cercat-domain:domain-user')
+include('applications')
+include('applications:app-api')
+include('applications:app-batch')
 
-include('cercat-infra')
-include('cercat-infra:search-scheduler')
+include('supports')
 
-include('cercat-infra:alarm-dataaccess')
-include('cercat-infra:board-dataaccess')
-include('cercat-infra:certificate-dataaccess')
-include('cercat-infra:examreview-dataaccess')
-include('cercat-infra:learning-dataaccess')
-include('cercat-infra:like-dataaccess')
-include('cercat-infra:mockexam-dataaccess')
-include('cercat-infra:mockexamresult-dataaccess')
-include('cercat-infra:post-dataaccess')
-include('cercat-infra:search-dataaccess')
-include('cercat-infra:user-dataaccess')
+include('core-domain')
 
-include('cercat-infra:search-cache')
-include('cercat-infra:user-cache')
+include(
+        'storage',
+        'storage:db-core',
+        'storage:cache-core',
+        'storage:search-core',
+)
 
-include('cercat-infra:redis-message-module')
-include('cercat-infra:kafka-module')
-include('cercat-infra:gcs-module')
-include('cercat-infra:elasticsearch-module')
-include('cercat-infra:jpa-module')
-include('cercat-infra:redis-module')
-include('cercat-common')
+include(
+        'clients',
+        'clients:gcs-client',
+        'clients:messaging-client',
+)

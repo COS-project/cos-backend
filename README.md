@@ -76,13 +76,13 @@ Cercat 프로젝트는 단일 모듈 구조에서 시작하여, 코드 간의 �
 
 ```
 📁 cercat-application # Runnable
-📁 cercat-common # 공통
+📁 supports # 공통
 📁 cercat-domain # Business-Layer, Implementation-Layer
 📁 cercat-infra # Data-Access-Layer, GCS, Kafka, Redis
 ```
 
 - [cercat-application](https://github.com/COS-project/cos-backend/blob/main/cercat-application/README.md)
-- [cercat-common](https://github.com/COS-project/cos-backend/blob/main/cercat-common/README.md)
+- [supports](https://github.com/COS-project/cos-backend/blob/main/supports/README.md)
 - [cercat-domain](https://github.com/COS-project/cos-backend/blob/main/cercat-domain/README.md)
 - [cercat-infra](https://github.com/COS-project/cos-backend/blob/main/cercat-infra/README.md)
 

@@ -1,0 +1,31 @@
+dependencies {
+
+    implementation project(':supports')
+    implementation project(':core-domain')
+
+    implementation project(':storage:cache-core')
+    implementation project(':storage:db-core')
+    implementation project(':storage:search-core')
+
+    implementation project(':clients:gcs-client')
+    implementation project(':clients:messaging-client')
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    //인증 & 인가
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    //API 문서화 Swagger-UI
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+
+    //spring-aop
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework.boot:spring-boot-configuration-processor'
+
+    //JWT
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'com.auth0:java-jwt:4.2.1'
+}

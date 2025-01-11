@@ -3,7 +3,7 @@ name: Cercat-Application Deploy with Docker
 on:
   push:
     paths-ignore:
-      - 'cercat-application/app-batch/**'
+      - '../../applications/app-batch/**'
       - '.github/workflows/**'
       - 'README.md'
     branches: [ main ]

@@ -1,8 +1,0 @@
-bootJar { enabled = false }
-
-dependencies {
-    api(project(':cercat-common'))
-    api(project(':cercat-domain:domain-certificate'))
-    implementation 'org.springframework:spring-context'
-    implementation 'org.springframework:spring-tx'
-}

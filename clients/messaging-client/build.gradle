@@ -1,0 +1,18 @@
+dependencies {
+    implementation project(':core-domain')
+    implementation project(':supports')
+
+    //kakfa
+    implementation 'org.springframework.kafka:spring-kafka'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
+
+    //guava
+    implementation("com.google.guava:guava:33.1.0-jre")
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-json'
+}
+
+bootJar {
+    enabled = false
+}
