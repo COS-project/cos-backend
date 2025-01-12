@@ -4,8 +4,10 @@ import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.domain.user.Ownable;
 import com.cos.cercat.domain.user.User;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor(force = true)
 public class Post implements Ownable {
 
     private final Long id;

@@ -1,7 +1,8 @@
 package com.cos.cercat.redis.config;
 
-import com.cos.cercat.domain.alarm.AlarmEvent;
-import com.cos.cercat.redis.AlarmMessageListener;
+import com.cos.cercat.domain.alarm.Alarm;
+import com.cos.cercat.domain.user.User;
+import com.cos.cercat.redis.RedisSSEListener;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -32,16 +33,16 @@ public class AlarmRedisConfig {
     }
 
     @Bean
-    public MessageListenerAdapter listenerAdapter(AlarmMessageListener listener) {
+    public MessageListenerAdapter listenerAdapter(RedisSSEListener listener) {
         return new MessageListenerAdapter(listener, "onMessage");
     }
 
     @Bean
-    public RedisTemplate<String, AlarmEvent> alarmEventRedisTemplate() {
-        RedisTemplate<String, AlarmEvent> redisTemplate = new RedisTemplate<>();
+    public RedisTemplate<String, Alarm> redisTemplate() {
+        RedisTemplate<String, Alarm> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(objectMapper, AlarmEvent.class));
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(objectMapper, Alarm.class));
         return redisTemplate;
     }
 

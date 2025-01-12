@@ -1,7 +1,7 @@
 package com.cos.cercat.database.user.repository;
 
 import com.cos.cercat.database.user.entity.UserEntity;
-import com.cos.cercat.database.user.exception.UserNotFoundException;
+import com.cos.cercat.domain.user.exception.UserNotFoundException;
 import com.cos.cercat.domain.user.UserInfo;
 import com.cos.cercat.domain.user.TargetUser;
 import com.cos.cercat.domain.user.User;

@@ -33,7 +33,7 @@ public class ExamReviewService {
 
         User user = userReader.read(targetUser);
         Certificate certificate = certificateReader.read(targetCertificate);
-        CertificateExam recentExam = certificateExamReader.readRecent(certificate);
+        CertificateExam recentExam = certificateExamReader.readPrevious(certificate);
         Goal goal = goalReader.readRecentGoal(user, certificate);
         examReviewAppender.append(user, recentExam, content, goal.getPrepareMonths());
 
@@ -43,7 +43,7 @@ public class ExamReviewService {
                                       ExamReviewSearchCond cond,
                                       Cursor cursor) {
         Certificate certificate = certificateReader.read(targetCertificate);
-        CertificateExam certificateExam = certificateExamReader.readRecent(certificate);
+        CertificateExam certificateExam = certificateExamReader.readPrevious(certificate);
         return examReviewFinder.find(certificateExam, cond, cursor);
 
     }
@@ -53,14 +53,10 @@ public class ExamReviewService {
         User user = userReader.read(targetUser);
         Certificate certificate = certificateReader.read(targetCertificate);
         List<Certificate> interesting = interestCertificateManager.findCertificate(user);
-
         boolean isInterest = interesting.contains(certificate);
-        CertificateExam certificateExam = certificateExamReader.readRecent(certificate);
-
-        boolean isDatePassed = certificateExamReader.isExamDatePassed(certificateExam);
+        CertificateExam certificateExam = certificateExamReader.readPrevious(certificate);
         boolean existReview = examReviewReader.existReview(user, certificateExam);
-
-        return isInterest && isDatePassed && !existReview;
+        return isInterest && !existReview;
     }
 
 }

@@ -175,7 +175,6 @@ public class CustomPostSearchRepositoryImpl implements CustomPostSearchRepositor
                     .map(StringTermsBucket::key)
                     .map(FieldValue::stringValue)
                     .toList();
-
         } catch (IOException e) {
             throw ElasticSearchException.EXCEPTION;
         } catch (ElasticsearchException e) {

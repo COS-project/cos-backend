@@ -1,7 +1,6 @@
 package com.cos.cercat.database.alarm.repository;
 
 import com.cos.cercat.domain.alarm.Alarm;
-import com.cos.cercat.domain.alarm.AlarmEvent;
 import com.cos.cercat.domain.alarm.AlarmRepository;
 import com.cos.cercat.database.alarm.entity.AlarmEntity;
 import com.cos.cercat.domain.user.User;
@@ -17,6 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class AlarmRepositoryImpl implements AlarmRepository {
 
     private final AlarmJpaRepository alarmJpaRepository;
+
+    @Override
+    public Alarm save(Alarm alarm) {
+        AlarmEntity saved = alarmJpaRepository.save(AlarmEntity.from(alarm));
+        return saved.toDomain();
+    }
 
     @Override
     public List<Alarm> findUnreadAlarms(User user) {
@@ -35,9 +40,4 @@ public class AlarmRepositoryImpl implements AlarmRepository {
         alarmJpaRepository.markAllAsReadByIds(alarmIds);
     }
 
-    @Override
-    public void save(AlarmEvent alarmEvent) {
-        AlarmEntity alarmEntity = AlarmEntity.from(alarmEvent);
-        alarmJpaRepository.save(alarmEntity);
-    }
 }

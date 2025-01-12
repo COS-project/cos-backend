@@ -14,6 +14,7 @@ public interface CertificateExamJpaRepository extends JpaRepository<CertificateE
             SELECT ce FROM CertificateExamEntity ce
             JOIN FETCH ce.examInfoEntity ei
             WHERE ce.certificateEntity.id = :certificateId
+            AND ei.examDateTime < CURRENT_TIMESTAMP
             ORDER BY ei.examDateTime DESC
             LIMIT 1
             """)
@@ -23,22 +24,15 @@ public interface CertificateExamJpaRepository extends JpaRepository<CertificateE
             SELECT ce from CertificateExamEntity ce
             JOIN FETCH ce.examInfoEntity ei
             WHERE FUNCTION('DATE_FORMAT', ei.applicationStartDateTime, '%Y-%m-%d')
-            = FUNCTION('DATE_FORMAT', :oneDayAfter, '%Y-%m-%d')
+            = FUNCTION('DATE_FORMAT', :applicationStartDate, '%Y-%m-%d')
             """)
-    List<CertificateExamEntity> findTomorrowApplicationCertificateExams(LocalDateTime oneDayAfter);
+    List<CertificateExamEntity> findCertificateExamsByApplicationStartDate(LocalDateTime applicationStartDate);
 
     @Query("""
             SELECT ce from CertificateExamEntity ce
             JOIN FETCH ce.examInfoEntity ei
             WHERE FUNCTION('DATE_FORMAT', ei.applicationDeadlineDateTime, '%Y-%m-%d')
-            = FUNCTION('DATE_FORMAT', :oneDayAfter, '%Y-%m-%d')
+            = FUNCTION('DATE_FORMAT', :deadlineDate, '%Y-%m-%d')
             """)
-    List<CertificateExamEntity> findTomorrowDeadlineCertificateExams(LocalDateTime oneDayAfter);
-
-    @Query("""
-            SELECT ce from CertificateExamEntity ce
-            JOIN FETCH ce.examInfoEntity ei
-            WHERE FUNCTION('DATE_FORMAT', ei.applicationStartDateTime, '%Y-%m-%d') = CURRENT_DATE
-            """)
-    List<CertificateExamEntity> findTodayApplicationCertificateExams();
+    List<CertificateExamEntity> findCertificateExamsByDeadlineDate(LocalDateTime deadlineDate);
 }

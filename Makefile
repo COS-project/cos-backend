@@ -1,13 +1,13 @@
 up:
-	docker compose -f docker-compose/common.yml \
-		-f docker-compose/connect/connect.yml \
-		-f docker-compose/es/docker-compose.yml \
-		-f docker-compose/kafka/kafka_cluster.yml \
-		-f docker-compose/kafka/zookeeper.yml up -d
+	docker compose -f docker/common.yml \
+		-f docker/connect/connect.yml \
+		-f docker/es/docker-compose.yml \
+		-f docker/kafka/kafka_cluster.yml \
+		-f docker/kafka/zookeeper.yml up -d
 
 down:
-	docker compose -f docker-compose/common.yml \
-		-f docker-compose/connect/connect.yml \
-		-f docker-compose/es/docker-compose.yml \
-		-f docker-compose/kafka/kafka_cluster.yml \
-		-f docker-compose/kafka/zookeeper.yml down -v
+	docker compose -f docker/common.yml \
+		-f docker/connect/connect.yml \
+		-f docker/es/docker-compose.yml \
+		-f docker/kafka/kafka_cluster.yml \
+		-f docker/kafka/zookeeper.yml down -v

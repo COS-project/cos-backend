@@ -12,9 +12,10 @@ import java.util.List;
 public class AlarmManager {
 
     private final AlarmRepository alarmRepository;
-    private final EventSender eventSender;
-    private final AlarmPublisher alarmPublisher;
 
+    public Alarm save(Alarm alarm) {
+        return alarmRepository.save(alarm);
+    }
 
     public List<Alarm> read(User user) {
         return alarmRepository.findUnreadAlarms(user);
@@ -26,20 +27,5 @@ public class AlarmManager {
 
     public int countUnread(User user) {
         return alarmRepository.countUnreadAlarms(user);
-    }
-
-    @Transactional
-    public void publish(User receiver, User sender, Long targetId, AlarmType alarmType) {
-        AlarmEvent alarmEvent = createAlarm(receiver, sender, targetId, alarmType);
-        alarmRepository.save(alarmEvent);
-        alarmPublisher.publish(alarmEvent);
-    }
-
-    public void send(AlarmEvent alarmEvent) {
-        eventSender.send(alarmEvent);
-    }
-
-    private AlarmEvent createAlarm(User receiver, User sender, Long targetId, AlarmType alarmType) {
-        return AlarmEvent.of(receiver, AlarmArg.of(sender, targetId), alarmType);
     }
 }

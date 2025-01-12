@@ -1,5 +1,9 @@
 dependencies {
-    implementation project(':supports')
+    implementation project(':supports:common')
     implementation 'org.springframework:spring-tx'
     implementation 'org.springframework:spring-context'
+}
+
+bootJar {
+    enabled = false
 }

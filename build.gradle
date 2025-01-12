@@ -63,12 +63,6 @@ project(':applications') {
     }
 }
 
-project(':core-domain') {
-    bootJar {
-        enabled = false
-    }
-}
-
 project(':storage') {
     bootJar {
         enabled = false
@@ -79,9 +73,17 @@ project(':storage') {
     }
 }
 
-
-
 project(':clients') {
+    bootJar {
+        enabled = false
+    }
+
+    jar {
+        enabled = false
+    }
+}
+
+project(':supports') {
     bootJar {
         enabled = false
     }

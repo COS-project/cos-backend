@@ -1,6 +1,6 @@
 package com.cos.cercat.cache.user;
 
-import static com.cos.cercat.cache.common.config.UserRedisConfig.USER_CACHE_TTL;
+import static com.cos.cercat.cache.user.config.UserRedisConfig.USER_CACHE_TTL;
 
 import com.cos.cercat.domain.user.TargetUser;
 import com.cos.cercat.domain.user.User;

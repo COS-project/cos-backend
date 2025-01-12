@@ -1,6 +1,7 @@
 dependencies {
     implementation project(':core-domain')
-    implementation project(':supports')
+    implementation project(':supports:common')
+    implementation project(':supports:alarm')
 
     //kakfa
     implementation 'org.springframework.kafka:spring-kafka'

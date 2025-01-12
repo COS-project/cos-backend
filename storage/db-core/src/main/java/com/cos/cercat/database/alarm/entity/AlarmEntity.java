@@ -1,17 +1,18 @@
 package com.cos.cercat.database.alarm.entity;
 
 
-import com.cos.cercat.database.alarm.exception.EntityTypeMismatchException;
+import com.cos.cercat.database.common.exception.EntityTypeMismatchException;
 import com.cos.cercat.database.common.entity.BaseTimeEntity;
 import com.cos.cercat.database.user.entity.UserEntity;
 import com.cos.cercat.domain.alarm.Alarm;
-import com.cos.cercat.domain.alarm.AlarmEvent;
 import com.cos.cercat.domain.alarm.AlarmType;
-import com.cos.cercat.domain.alarm.BoardAlarm;
+import com.cos.cercat.domain.alarm.LikeAlarm;
 import com.cos.cercat.domain.alarm.ExamAlarm;
+import com.cos.cercat.domain.certificate.Certificate;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -21,6 +22,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn
 @Table(name = "alarm")
+@SuperBuilder
 @DiscriminatorValue("Alarm")
 public class AlarmEntity extends BaseTimeEntity {
 
@@ -32,52 +34,82 @@ public class AlarmEntity extends BaseTimeEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private UserEntity receiveUserEntity;
+    private UserEntity receiver;
 
     @Enumerated(EnumType.STRING)
     private AlarmType alarmType;
 
+    private Long originId;
+
     private Boolean isRead;
 
-    public AlarmEntity(UserEntity receiveUserEntity, AlarmType alarmType, Boolean isRead) {
-        this.receiveUserEntity = receiveUserEntity;
+    public AlarmEntity(UserEntity receiver, AlarmType alarmType, Boolean isRead) {
+        this.receiver = receiver;
         this.alarmType = alarmType;
         this.isRead = isRead;
     }
 
-    public Alarm toDomain() {
-        if (this instanceof BoardAlarmEntity boardAlarm) {
-            return new BoardAlarm(
-                    id,
-                    receiveUserEntity.toDomain(),
-                    alarmType,
-                    boardAlarm.getFromUserEntity().toDomain(),
-                    boardAlarm.getPostId(),
-                    boardAlarm.getCreatedAt()
-            );
+    public static AlarmEntity from(Alarm domain) {
+        if (domain instanceof LikeAlarm likeAlarm) {
+            return LikeAlarmEntity.builder()
+                    .id(likeAlarm.getId())
+                    .receiver(UserEntity.from(likeAlarm.getReceiver()))
+                    .alarmType(likeAlarm.getAlarmType())
+                    .originId(likeAlarm.getOriginId())
+                    .isRead(domain.isRead())
+                    .likerId(likeAlarm.getLikerId())
+                    .likerNickname(likeAlarm.getLikerNickname())
+                    .likeTargetType(likeAlarm.getLikeTargetType())
+                    .build();
         }
 
-        if (this instanceof ExamAlarmEntity examAlarm) {
-            return new ExamAlarm(
-                    id,
-                    receiveUserEntity.toDomain(),
-                    alarmType,
-                    examAlarm.getCertificateExamEntity().toDomain(),
-                    examAlarm.getCreatedAt()
-            );
+        if (domain instanceof ExamAlarm examAlarm) {
+            return ExamAlarmEntity.builder()
+                    .id(examAlarm.getId())
+                    .receiver(UserEntity.from(examAlarm.getReceiver()))
+                    .alarmType(examAlarm.getAlarmType())
+                    .originId(examAlarm.getOriginId())
+                    .isRead(examAlarm.isRead())
+                    .build();
+        }
+
+        return AlarmEntity.builder()
+                .id(domain.getId())
+                .receiver(UserEntity.from(domain.getReceiver()))
+                .alarmType(domain.getAlarmType())
+                .originId(domain.getOriginId())
+                .isRead(domain.isRead())
+                .build();
+    }
+
+    public Alarm toDomain() {
+        if (this instanceof LikeAlarmEntity likeAlarmEntity) {
+            return LikeAlarm.builder()
+                    .id(id)
+                    .receiver(receiver.toDomain())
+                    .alarmType(alarmType)
+                    .originId(likeAlarmEntity.getOriginId())
+                    .alarmTime(getCreatedAt())
+                    .likerId(likeAlarmEntity.getLikerId())
+                    .likerNickname(likeAlarmEntity.getLikerNickname())
+                    .likeTargetType(likeAlarmEntity.getLikeTargetType())
+                    .build();
+        }
+
+        if (this instanceof ExamAlarmEntity examAlarmEntity) {
+            return ExamAlarm.builder()
+                    .id(id)
+                    .receiver(receiver.toDomain())
+                    .alarmType(alarmType)
+                    .originId(examAlarmEntity.getOriginId())
+                    .alarmTime(getCreatedAt())
+                    .certificateExamId(examAlarmEntity.getCertificateExamId())
+                    .certificate(new Certificate(examAlarmEntity.getCertificateId(), examAlarmEntity.getCertificateExamName()))
+                    .build();
         }
 
         throw EntityTypeMismatchException.EXCEPTION;
     }
 
-    public static AlarmEntity from(AlarmEvent alarmEvent) {
-        return new BoardAlarmEntity(
-                UserEntity.from(alarmEvent.recieveUser()),
-                alarmEvent.alarmType(),
-                false,
-                UserEntity.from(alarmEvent.alarmArg().fromUser()),
-                alarmEvent.alarmArg().targetId()
-        );
-    }
 }
 

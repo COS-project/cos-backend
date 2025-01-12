@@ -25,7 +25,7 @@ public class ReadCertificateService {
      */
     public CertificateExam readRecentCertificateExam(TargetCertificate targetCertificate) {
         Certificate certificate = certificateReader.read(targetCertificate);
-        return certificateExamReader.readRecent(certificate);
+        return certificateExamReader.readNext(certificate);
     }
 
     /**

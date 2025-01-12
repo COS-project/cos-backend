@@ -1,6 +1,6 @@
 package com.cos.cercat.cache.user;
 
-import static com.cos.cercat.cache.common.config.UserRedisConfig.BAN_TOKEN_KEY;
+import static com.cos.cercat.cache.user.config.UserRedisConfig.BAN_TOKEN_KEY;
 
 import com.cos.cercat.domain.user.RefreshToken;
 import com.cos.cercat.domain.user.TargetUser;
@@ -8,6 +8,7 @@ import com.cos.cercat.domain.user.TokenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -18,7 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RedisTokenRepository implements TokenRepository {
 
-    private final RedisTemplate<String, String> banTokenRedisTemplate;
+    private final StringRedisTemplate banTokenRedisTemplate;
     private final RedisTemplate<String, RefreshToken> tokenRedisTemplate;
 
     @Override

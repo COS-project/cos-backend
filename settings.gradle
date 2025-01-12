@@ -11,7 +11,11 @@ include('applications')
 include('applications:app-api')
 include('applications:app-batch')
 
-include('supports')
+include(
+        'supports',
+        'supports:alarm',
+        'supports:common',
+)
 
 include('core-domain')
 

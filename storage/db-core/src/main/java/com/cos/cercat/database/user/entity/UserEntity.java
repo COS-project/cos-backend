@@ -9,6 +9,7 @@ import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserProfileImage;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.SQLDelete;
 
 import java.time.LocalDateTime;
@@ -17,8 +18,8 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
-@AllArgsConstructor
 @Table(name = "users")
+@SuperBuilder
 @SQLDelete(sql = "UPDATE users SET removed_at = NOW() WHERE user_id = ?")
 public class UserEntity extends BaseTimeEntity {
 
@@ -44,7 +45,6 @@ public class UserEntity extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Builder
     public UserEntity(Long id,
                       String nickname,
                       String username,

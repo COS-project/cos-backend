@@ -1,3 +1,3 @@
-# Common Module
+# Supports Module
 
 #### 시스템 내의 모든 모듈이 의존할수있는 공통 모듈입니다. 최대한 가볍게 유지합니다.

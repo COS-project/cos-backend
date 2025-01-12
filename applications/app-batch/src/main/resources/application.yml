@@ -1,18 +1,12 @@
 spring:
-  profiles:
-    group:
-      batch: common, domain
-    include:
-      - jpa
-
-  main:
-    web-application-type: none
-
   batch:
     jdbc:
       initialize-schema: always
     job:
-      enabled: true
+      enabled: false
+  config:
+    import:
+      - application-db.yml
 
 server:
   port: 8081

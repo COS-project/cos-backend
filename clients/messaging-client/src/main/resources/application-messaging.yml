@@ -1,8 +1,15 @@
+kafka:
+  topic:
+    alarm-events: like-created-event,comment-created-event
+  consumer-group:
+    alarm: alarm-group
+    debezium: debezium-group
+
+---
 spring:
   config:
     activate:
       on-profile: local
-
   kafka:
     bootstrap-servers: localhost:29092
     topic:

@@ -1,6 +1,6 @@
 package com.cos.cercat.apis.global.oauth2;
 
-import com.cos.cercat.database.user.exception.UserNotFoundException;
+import com.cos.cercat.domain.user.exception.UserNotFoundException;
 import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserAppender;
 import com.cos.cercat.domain.user.UserReader;

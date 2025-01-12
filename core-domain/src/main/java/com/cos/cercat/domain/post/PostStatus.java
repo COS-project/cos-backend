@@ -1,8 +1,10 @@
 package com.cos.cercat.domain.post;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor(force = true)
 public class PostStatus {
     private PostType postType;
     private int likeCount;

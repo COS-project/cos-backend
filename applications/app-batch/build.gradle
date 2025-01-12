@@ -1,5 +1,5 @@
 dependencies {
-    implementation project(':supports')
+    implementation project(':supports:common')
 
     //domain modules
     implementation project(':core-domain')

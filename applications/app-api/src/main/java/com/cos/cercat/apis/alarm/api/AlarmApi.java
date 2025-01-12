@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.alarm.api;
 
-import com.cos.cercat.apis.alarm.response.AlarmResponse;
-import com.cos.cercat.database.alarm.sse.SseEmitterConnector;
+import com.cos.cercat.alarm.sse.SseEmitterConnector;
+import com.cos.cercat.domain.alarm.Alarm;
 import com.cos.cercat.domain.alarm.AlarmService;
 import com.cos.cercat.common.domain.Response;
 import com.cos.cercat.domain.user.TargetUser;
@@ -34,12 +34,8 @@ public class AlarmApi implements AlarmApiDocs {
     }
 
     @GetMapping("/alarms")
-    public Response<List<AlarmResponse>> getAlarmList(@AuthenticationPrincipal User currentUser) {
-        List<AlarmResponse> alarmResponses = alarmService.readAlarms(
-                        TargetUser.from(currentUser.getId())).stream()
-                .map(AlarmResponse::from)
-                .toList();
-        return Response.success(alarmResponses);
+    public Response<List<Alarm>> getAlarmList(@AuthenticationPrincipal User currentUser) {
+        return Response.success(alarmService.readAlarms(TargetUser.from(currentUser.getId())));
     }
 
     @GetMapping("/alarms/unread")

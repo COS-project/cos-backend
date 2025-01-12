@@ -138,7 +138,7 @@ services:
       - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
   kafka-connect:
     build:
-      context: ../docker-compose/connect
+      context: ../docker/connect
       dockerfile: ../docker-compose/connect/Dockerfile
     links:
       - zookeeper
@@ -173,8 +173,8 @@ services:
       CONNECT_REST_PORT: 8083\
   es:
     build:
-      context: ../docker-compose/elastic-search
-      dockerfile: ../docker-compose/elastic-search/Dockerfile
+      context: ../docker/elastic-search
+      dockerfile: ../docker/elastic-search/Dockerfile
     environment:
       - node.name=es-node
       - cluster.name=search-cluster

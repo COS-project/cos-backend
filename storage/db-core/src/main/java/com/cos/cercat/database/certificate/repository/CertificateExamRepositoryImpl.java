@@ -8,6 +8,8 @@ import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.domain.certificate.CertificateExam;
 import com.cos.cercat.domain.certificate.CertificateExamRepository;
 import com.cos.cercat.domain.certificate.NewExamInformation;
+import java.time.LocalDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -48,8 +50,29 @@ public class CertificateExamRepositoryImpl implements CertificateExamRepository 
     }
 
     @Override
-    public CertificateExam findRecentCertificateExam(Certificate certificate) {
+    public List<CertificateExam> findCertificateExamsByApplicationDate(LocalDateTime applicationDate) {
+        List<CertificateExamEntity> certificateExamEntities = certificateExamJpaRepository.findCertificateExamsByApplicationStartDate(applicationDate);
+        return certificateExamEntities.stream()
+                .map(CertificateExamEntity::toDomain)
+                .toList();
+    }
+
+    @Override
+    public List<CertificateExam> findCertificateExamsByDeadlineDate(LocalDateTime deadlineDate) {
+        List<CertificateExamEntity> certificateExamEntities = certificateExamJpaRepository.findCertificateExamsByDeadlineDate(deadlineDate);
+        return certificateExamEntities.stream()
+                .map(CertificateExamEntity::toDomain)
+                .toList();
+    }
+
+    @Override
+    public CertificateExam findPreviousCertificateExam(Certificate certificate) {
         CertificateExamEntity recentCertificateExam = certificateExamJpaRepository.findRecentCertificateExam(certificate.id());
         return recentCertificateExam.toDomain();
+    }
+
+    @Override
+    public CertificateExam findNextCertificateExam(Certificate certificate) {
+        return null;
     }
 }

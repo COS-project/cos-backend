@@ -5,8 +5,10 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class PostContent {
 
     private String title;
