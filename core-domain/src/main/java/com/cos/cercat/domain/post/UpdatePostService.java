@@ -1,8 +1,8 @@
 package com.cos.cercat.domain.post;
 
-import com.cos.cercat.common.domain.File;
-import com.cos.cercat.common.domain.FileUploader;
-import com.cos.cercat.common.domain.Image;
+import com.cos.cercat.domain.common.File;
+import com.cos.cercat.domain.common.FileUploader;
+import com.cos.cercat.domain.common.Image;
 import com.cos.cercat.domain.user.PermissionValidator;
 import com.cos.cercat.domain.user.TargetUser;
 import com.cos.cercat.domain.user.User;

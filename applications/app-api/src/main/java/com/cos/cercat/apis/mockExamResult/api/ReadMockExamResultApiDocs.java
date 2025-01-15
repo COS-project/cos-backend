@@ -1,10 +1,10 @@
 package com.cos.cercat.apis.mockExamResult.api;
 
 import com.cos.cercat.apis.mockExamResult.response.*;
-import com.cos.cercat.common.domain.Cursor;
-import com.cos.cercat.common.domain.PageResult;
-import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.common.domain.SliceResult;
+import com.cos.cercat.domain.common.Cursor;
+import com.cos.cercat.domain.common.PageResult;
+import com.cos.cercat.web.Response;
+import com.cos.cercat.domain.common.SliceResult;
 import com.cos.cercat.domain.mockexamresult.DateCond;
 import com.cos.cercat.domain.mockexamresult.DateType;
 import com.cos.cercat.domain.mockexamresult.ReportType;

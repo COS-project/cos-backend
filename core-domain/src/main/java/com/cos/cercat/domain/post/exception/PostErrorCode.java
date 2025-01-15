@@ -1,7 +1,7 @@
 package com.cos.cercat.domain.post.exception;
 
-import com.cos.cercat.common.exception.BaseErrorCode;
-import com.cos.cercat.common.exception.ErrorReason;
+import com.cos.cercat.exception.BaseErrorCode;
+import com.cos.cercat.exception.ErrorReason;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

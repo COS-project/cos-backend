@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.board.api;
 
 import com.cos.cercat.apis.board.response.BoardResponse;
-import com.cos.cercat.common.domain.Response;
+import com.cos.cercat.web.Response;
 import com.cos.cercat.domain.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

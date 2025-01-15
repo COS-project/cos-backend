@@ -2,7 +2,7 @@ package com.cos.cercat.apis.board.api;
 
 import com.cos.cercat.apis.board.response.BoardResponse;
 import com.cos.cercat.domain.certificate.TargetCertificate;
-import com.cos.cercat.common.domain.Response;
+import com.cos.cercat.web.Response;
 import com.cos.cercat.domain.post.BoardService;
 import com.cos.cercat.domain.user.TargetUser;
 import com.cos.cercat.domain.user.User;

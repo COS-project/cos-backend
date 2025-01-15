@@ -10,6 +10,7 @@ spring:
       - application-cache.yml
       - application-search.yml
       - application-messaging.yml
+      - application-security.yml
 
 springdoc:
   swagger-ui:
@@ -43,33 +44,10 @@ spring:
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
-jwt:
-  secret-key: ${SECRET_KEY}
-  access-token:
-    header: Access-token
-    expiration: 259200 #3일
-  refresh-token:
-    header: Refresh-token
-
-logging:
-  level:
-    tracer: trace
-    org:
-      springframework:
-        data:
-          elasticsearch:
-            client:
-              WIRE: trace
-      hibernate:
-        orm:
-          jdbc:
-            bind: trace
-        SQL: trace
 
 front:
   scheme: http
   host: localhost
-  port: 3000
   home-path: /home
   sign-up-path: /onboarding
 ---
@@ -98,14 +76,6 @@ spring:
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
-
-jwt:
-  secret-key: ${SECRET_KEY}
-  access-token:
-    header: Access-token
-    expiration: 259200 #3일
-  refresh-token:
-    header: Refresh-token
 
 front:
   scheme: http

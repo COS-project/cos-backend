@@ -1,9 +1,9 @@
 package com.cos.cercat.apis.global.resolver;
 
-import com.cos.cercat.common.annotation.CursorDefault;
-import com.cos.cercat.common.domain.Cursor;
-import com.cos.cercat.common.domain.SortDirection;
-import com.cos.cercat.common.domain.SortOrder;
+import com.cos.cercat.apis.global.annotation.CursorDefault;
+import com.cos.cercat.domain.common.Cursor;
+import com.cos.cercat.domain.common.SortDirection;
+import com.cos.cercat.domain.common.SortOrder;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;

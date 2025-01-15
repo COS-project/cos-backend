@@ -1,7 +1,0 @@
-dependencies {
-    implementation project(':supports:common')
-    implementation project(':core-domain')
-
-    //sse emitter
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-}

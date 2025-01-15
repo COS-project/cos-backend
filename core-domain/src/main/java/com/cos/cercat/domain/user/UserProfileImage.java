@@ -1,6 +1,6 @@
 package com.cos.cercat.domain.user;
 
-import com.cos.cercat.common.domain.Image;
+import com.cos.cercat.domain.common.Image;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

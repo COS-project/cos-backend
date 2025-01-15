@@ -6,7 +6,7 @@ import com.cos.cercat.apis.certificate.request.CertificateExamCreateRequest;
 import com.cos.cercat.apis.certificate.request.InterestCertificateCreateRequest;
 import com.cos.cercat.domain.certificate.CreateCertificateService;
 import com.cos.cercat.domain.certificate.TargetCertificate;
-import com.cos.cercat.common.domain.Response;
+import com.cos.cercat.web.Response;
 import com.cos.cercat.domain.user.TargetUser;
 import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;

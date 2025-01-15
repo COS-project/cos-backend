@@ -1,7 +1,6 @@
 dependencies {
-    implementation project(':core-domain')
-    implementation project(':supports:common')
-    implementation project(':supports:alarm')
+    compileOnly project(':core-domain')
+    implementation project(':supports:exception')
 
     //kakfa
     implementation 'org.springframework.kafka:spring-kafka'
@@ -10,7 +9,7 @@ dependencies {
     //guava
     implementation("com.google.guava:guava:33.1.0-jre")
 
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    //json
     implementation 'org.springframework.boot:spring-boot-starter-json'
 }
 

@@ -3,7 +3,7 @@ package com.cos.cercat.apis.learning.api;
 import com.cos.cercat.apis.learning.response.GoalDetailResponse;
 import com.cos.cercat.apis.learning.response.GoalResponse;
 import com.cos.cercat.domain.certificate.TargetCertificate;
-import com.cos.cercat.common.domain.Response;
+import com.cos.cercat.web.Response;
 import com.cos.cercat.domain.learning.Goal;
 import com.cos.cercat.domain.learning.GoalAchievement;
 import com.cos.cercat.domain.learning.ReadLearningService;

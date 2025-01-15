@@ -6,7 +6,7 @@ import com.cos.cercat.apis.mockExam.request.CreateMockExamRequest;
 import com.cos.cercat.apis.mockExam.response.MockExamResponse;
 import com.cos.cercat.apis.mockExam.response.QuestionResponse;
 import com.cos.cercat.domain.certificate.TargetCertificate;
-import com.cos.cercat.common.domain.Response;
+import com.cos.cercat.web.Response;
 import com.cos.cercat.domain.mockexam.MockExamService;
 import com.cos.cercat.domain.mockexam.TargetMockExam;
 import com.cos.cercat.domain.user.User;

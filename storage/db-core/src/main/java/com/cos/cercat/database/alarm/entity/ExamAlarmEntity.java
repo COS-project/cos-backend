@@ -15,7 +15,6 @@ import lombok.experimental.SuperBuilder;
 @DiscriminatorValue("ExamAlarm")
 public class ExamAlarmEntity extends AlarmEntity {
 
-    private Long certificateExamId;
     private Long certificateId;
     private String certificateExamName;
 

@@ -1,6 +1,6 @@
 package com.cos.cercat.domain.mockexam;
 
-import com.cos.cercat.common.domain.File;
+import com.cos.cercat.domain.common.File;
 
 public record UploadingOptionImageFile(
         Integer optionSequence,

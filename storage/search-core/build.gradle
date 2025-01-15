@@ -1,6 +1,6 @@
 dependencies {
 
-    implementation project(':supports:common')
+    implementation project(':supports:exception')
     implementation project(':storage:cache-core')
     implementation project(':storage:db-core')
     compileOnly project(':core-domain')

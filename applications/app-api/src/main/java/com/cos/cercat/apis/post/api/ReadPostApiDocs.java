@@ -2,9 +2,9 @@ package com.cos.cercat.apis.post.api;
 
 import com.cos.cercat.apis.post.response.PostResponse;
 import com.cos.cercat.apis.post.response.PostWithCommentsResponse;
-import com.cos.cercat.common.domain.Cursor;
-import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.common.domain.SliceResult;
+import com.cos.cercat.domain.common.Cursor;
+import com.cos.cercat.web.Response;
+import com.cos.cercat.domain.common.SliceResult;
 import com.cos.cercat.domain.post.CommentaryPostSearchCond;
 import com.cos.cercat.domain.post.PostType;
 import com.cos.cercat.domain.user.User;

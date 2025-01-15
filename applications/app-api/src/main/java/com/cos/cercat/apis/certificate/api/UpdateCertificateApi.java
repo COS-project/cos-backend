@@ -2,7 +2,7 @@ package com.cos.cercat.apis.certificate.api;
 
 import com.cos.cercat.apis.certificate.request.InterestCertificateUpdateRequest;
 import com.cos.cercat.domain.certificate.UpdateCertificateService;
-import com.cos.cercat.common.domain.Response;
+import com.cos.cercat.web.Response;
 import com.cos.cercat.domain.user.TargetUser;
 import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;

@@ -1,8 +1,9 @@
 dependencies {
-
-    implementation project(':supports:common')
-    implementation project(':supports:alarm')
     implementation project(':core-domain')
+
+    implementation project(':supports:exception')
+    implementation project(':supports:security')
+    implementation project(':supports:web')
 
     runtimeOnly project(':storage:cache-core')
     runtimeOnly project(':storage:db-core')
@@ -11,10 +12,6 @@ dependencies {
     runtimeOnly project(':clients:gcs-client')
     runtimeOnly project(':clients:messaging-client')
 
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-
-    //인증 & 인가
-    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
     //API 문서화 Swagger-UI
@@ -23,10 +20,4 @@ dependencies {
     //spring-aop
     implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'org.springframework.boot:spring-boot-configuration-processor'
-
-    //JWT
-    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
-    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
-    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-    implementation 'com.auth0:java-jwt:4.2.1'
 }

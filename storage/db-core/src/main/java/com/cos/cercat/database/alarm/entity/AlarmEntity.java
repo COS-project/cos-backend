@@ -43,12 +43,6 @@ public class AlarmEntity extends BaseTimeEntity {
 
     private Boolean isRead;
 
-    public AlarmEntity(UserEntity receiver, AlarmType alarmType, Boolean isRead) {
-        this.receiver = receiver;
-        this.alarmType = alarmType;
-        this.isRead = isRead;
-    }
-
     public static AlarmEntity from(Alarm domain) {
         if (domain instanceof LikeAlarm likeAlarm) {
             return LikeAlarmEntity.builder()
@@ -70,6 +64,8 @@ public class AlarmEntity extends BaseTimeEntity {
                     .alarmType(examAlarm.getAlarmType())
                     .originId(examAlarm.getOriginId())
                     .isRead(examAlarm.isRead())
+                    .certificateId(examAlarm.getCertificate().id())
+                    .certificateExamName(examAlarm.getCertificate().certificateName())
                     .build();
         }
 
@@ -103,12 +99,17 @@ public class AlarmEntity extends BaseTimeEntity {
                     .alarmType(alarmType)
                     .originId(examAlarmEntity.getOriginId())
                     .alarmTime(getCreatedAt())
-                    .certificateExamId(examAlarmEntity.getCertificateExamId())
                     .certificate(new Certificate(examAlarmEntity.getCertificateId(), examAlarmEntity.getCertificateExamName()))
                     .build();
         }
 
-        throw EntityTypeMismatchException.EXCEPTION;
+        return Alarm.builder()
+                .id(id)
+                .receiver(receiver.toDomain())
+                .alarmType(alarmType)
+                .originId(originId)
+                .alarmTime(getCreatedAt())
+                .build();
     }
 
 }

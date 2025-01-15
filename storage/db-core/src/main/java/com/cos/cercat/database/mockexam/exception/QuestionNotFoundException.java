@@ -1,7 +1,7 @@
 package com.cos.cercat.database.mockexam.exception;
 
-import com.cos.cercat.common.exception.GlobalErrorCode;
-import com.cos.cercat.common.exception.InfraException;
+import com.cos.cercat.exception.GlobalErrorCode;
+import com.cos.cercat.exception.InfraException;
 
 public class QuestionNotFoundException extends InfraException {
 

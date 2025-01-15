@@ -1,8 +1,8 @@
 package com.cos.cercat.domain.mockexam;
 
-import com.cos.cercat.common.domain.File;
-import com.cos.cercat.common.domain.FileUploader;
-import com.cos.cercat.common.domain.Image;
+import com.cos.cercat.domain.common.File;
+import com.cos.cercat.domain.common.FileUploader;
+import com.cos.cercat.domain.common.Image;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

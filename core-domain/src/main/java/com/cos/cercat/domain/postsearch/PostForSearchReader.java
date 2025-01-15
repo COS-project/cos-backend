@@ -1,8 +1,8 @@
 package com.cos.cercat.domain.postsearch;
 
 import com.cos.cercat.domain.certificate.Certificate;
-import com.cos.cercat.common.domain.Cursor;
-import com.cos.cercat.common.domain.SliceResult;
+import com.cos.cercat.domain.common.Cursor;
+import com.cos.cercat.domain.common.SliceResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

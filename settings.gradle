@@ -9,12 +9,13 @@ plugins {
 rootProject.name = 'cercat'
 include('applications')
 include('applications:app-api')
-include('applications:app-batch')
+include('applications:app-alarm')
 
 include(
         'supports',
-        'supports:alarm',
-        'supports:common',
+        'supports:exception',
+        'supports:security',
+        'supports:web',
 )
 
 include('core-domain')

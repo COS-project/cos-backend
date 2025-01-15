@@ -1,6 +1,6 @@
 package com.cos.cercat.database.user.entity;
 
-import com.cos.cercat.common.domain.Image;
+import com.cos.cercat.domain.common.Image;
 import com.cos.cercat.database.common.entity.BaseTimeEntity;
 import com.cos.cercat.database.common.entity.ImageEntity;
 import com.cos.cercat.domain.user.UserInfo;

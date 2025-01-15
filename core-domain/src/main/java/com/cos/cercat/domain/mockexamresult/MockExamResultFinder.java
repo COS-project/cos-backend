@@ -1,8 +1,8 @@
 package com.cos.cercat.domain.mockexamresult;
 
 import com.cos.cercat.domain.certificate.Certificate;
-import com.cos.cercat.common.domain.Cursor;
-import com.cos.cercat.common.domain.PageResult;
+import com.cos.cercat.domain.common.Cursor;
+import com.cos.cercat.domain.common.PageResult;
 import com.cos.cercat.domain.mockexam.MockExam;
 import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;

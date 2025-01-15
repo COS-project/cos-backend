@@ -3,9 +3,9 @@ package com.cos.cercat.apis.examReview.api;
 
 import com.cos.cercat.apis.examReview.request.ExamReviewCreateRequest;
 import com.cos.cercat.apis.examReview.response.ExamReviewResponse;
-import com.cos.cercat.common.domain.Cursor;
-import com.cos.cercat.common.domain.Response;
-import com.cos.cercat.common.domain.SliceResult;
+import com.cos.cercat.domain.common.Cursor;
+import com.cos.cercat.web.Response;
+import com.cos.cercat.domain.common.SliceResult;
 import com.cos.cercat.domain.examreview.ExamReviewSearchCond;
 import com.cos.cercat.domain.user.User;
 import io.swagger.v3.oas.annotations.Operation;

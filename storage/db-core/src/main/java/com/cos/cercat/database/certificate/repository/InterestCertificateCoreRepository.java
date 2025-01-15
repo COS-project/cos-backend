@@ -33,9 +33,16 @@ public class InterestCertificateCoreRepository implements InterestCertificateRep
     }
 
     @Override
-    public List<InterestCertificate> find(User user) {
+    public List<InterestCertificate> findByUser(User user) {
         List<InterestCertificateEntity> interestCertificateEntities = interestCertificateJpaRepository.findInterestCertificatesByUserId(user.getId());
         return interestCertificateEntities.stream()
+                .map(InterestCertificateEntity::toDomain)
+                .toList();
+    }
+
+    @Override
+    public List<InterestCertificate> findByCertificate(Certificate certificate) {
+        return interestCertificateJpaRepository.findInterestCertificatesByCertificateId(certificate.id()).stream()
                 .map(InterestCertificateEntity::toDomain)
                 .toList();
     }

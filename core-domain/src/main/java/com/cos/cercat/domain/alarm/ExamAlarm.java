@@ -11,7 +11,15 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class ExamAlarm extends Alarm {
 
-    private final Long certificateExamId;
     private final Certificate certificate;
+
+    public static ExamAlarm from(CertificateExam certificateExam, User receiver, AlarmType alarmType) {
+        return ExamAlarm.builder()
+                .receiver(receiver)
+                .originId(certificateExam.id())
+                .alarmType(alarmType)
+                .certificate(certificateExam.certificate())
+                .build();
+    }
 
 }

@@ -1,7 +1,7 @@
 package com.cos.cercat.apis.mockExam.response;
 
 import com.cos.cercat.apis.certificate.response.SubjectResponse;
-import com.cos.cercat.common.domain.Image;
+import com.cos.cercat.domain.common.Image;
 import com.cos.cercat.domain.mockexam.Question;
 import com.fasterxml.jackson.annotation.JsonInclude;
 

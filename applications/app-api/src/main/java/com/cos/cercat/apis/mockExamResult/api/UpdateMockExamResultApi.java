@@ -1,6 +1,6 @@
 package com.cos.cercat.apis.mockExamResult.api;
 
-import com.cos.cercat.common.domain.Response;
+import com.cos.cercat.web.Response;
 import com.cos.cercat.domain.mockexamresult.TargetUserAnswer;
 import com.cos.cercat.domain.mockexamresult.UpdateMockExamResultService;
 import com.cos.cercat.domain.user.TargetUser;

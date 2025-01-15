@@ -23,7 +23,11 @@ public class InterestCertificateManager {
     }
 
     public List<InterestCertificate> find(User user) {
-        return interestCertificateRepository.find(user);
+        return interestCertificateRepository.findByUser(user);
+    }
+
+    public List<InterestCertificate> find(Certificate certificate) {
+        return interestCertificateRepository.findByCertificate(certificate);
     }
 
     public List<Certificate> findCertificate(User user) {

@@ -1,6 +1,6 @@
 package com.cos.cercat.domain.post.exception;
 
-import com.cos.cercat.common.exception.DomainException;
+import com.cos.cercat.exception.DomainException;
 
 public class InvalidCommentException extends DomainException {
 

@@ -1,6 +1,7 @@
 package com.cos.cercat.apis.global.util;
 
-import com.cos.cercat.common.domain.File;
+import com.cos.cercat.domain.common.File;
+import java.io.IOException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
@@ -15,12 +16,19 @@ public class FileMapper {
         }
 
         return files.stream()
-                .map(File::from)
+                .map(FileMapper::toFile)
                 .toList();
     }
 
     public static File toFile(MultipartFile file) {
-        return File.from(file);
+        try {
+            return new File(
+                    file.getContentType(),
+                    file.getInputStream()
+            );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

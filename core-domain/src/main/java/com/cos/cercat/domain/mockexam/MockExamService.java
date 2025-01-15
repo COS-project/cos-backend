@@ -1,6 +1,6 @@
 package com.cos.cercat.domain.mockexam;
 
-import com.cos.cercat.common.domain.File;
+import com.cos.cercat.domain.common.File;
 import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.domain.certificate.CertificateReader;
 import com.cos.cercat.domain.certificate.TargetCertificate;

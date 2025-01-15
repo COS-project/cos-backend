@@ -1,9 +1,10 @@
 package com.cos.cercat.apis.user.api;
 
+import com.cos.cercat.apis.global.util.FileMapper;
 import com.cos.cercat.apis.user.request.UserCreateRequest;
 import com.cos.cercat.apis.user.response.UserResponse;
-import com.cos.cercat.common.domain.File;
-import com.cos.cercat.common.domain.Response;
+import com.cos.cercat.domain.common.File;
+import com.cos.cercat.web.Response;
 import com.cos.cercat.domain.user.TargetUser;
 import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserService;
@@ -36,7 +37,7 @@ public class UserApi implements UserApiDocs {
                                          @AuthenticationPrincipal User currentUser) {
         userService.updateUser(
                 TargetUser.from(currentUser.getId()),
-                File.from(file),
+                FileMapper.toFile(file),
                 request.nickname()
         );
         return Response.success("회원 정보 추가 성공");

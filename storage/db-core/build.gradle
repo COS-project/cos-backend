@@ -1,5 +1,5 @@
 dependencies {
-    implementation project(':supports:common')
+    implementation project(':supports:exception')
     compileOnly project(':core-domain')
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 

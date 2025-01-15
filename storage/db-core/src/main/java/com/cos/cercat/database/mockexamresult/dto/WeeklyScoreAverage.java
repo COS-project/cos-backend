@@ -1,6 +1,6 @@
 package com.cos.cercat.database.mockexamresult.dto;
 
-import com.cos.cercat.common.util.ScoreFormatter;
+import com.cos.cercat.database.common.util.ScoreFormatter;
 import com.cos.cercat.domain.mockexamresult.ScoreData;
 import com.cos.cercat.domain.mockexamresult.WeeklyScoreData;
 import com.querydsl.core.annotations.QueryProjection;

@@ -9,7 +9,7 @@ kafka:
 spring:
   config:
     activate:
-      on-profile: local
+      on-profile: local,alarm
   kafka:
     bootstrap-servers: localhost:29092
     topic:

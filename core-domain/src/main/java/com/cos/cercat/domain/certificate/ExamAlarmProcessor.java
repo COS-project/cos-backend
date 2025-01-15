@@ -1,12 +1,18 @@
 package com.cos.cercat.domain.certificate;
 
 import com.cos.cercat.domain.alarm.AlarmNotifier;
+import com.cos.cercat.domain.alarm.AlarmSchedule;
 import com.cos.cercat.domain.alarm.AlarmType;
+import com.cos.cercat.domain.alarm.ExamAlarm;
+import com.cos.cercat.domain.user.User;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ExamAlarmProcessor {
@@ -15,43 +21,36 @@ public class ExamAlarmProcessor {
     private final InterestCertificateManager interestCertificateManager;
     private final AlarmNotifier alarmNotifier;
 
-    public void process(AlarmType alarmType) {
-        switch (alarmType) {
-            case BEFORE_APPLICATION -> processBeforeApplicationAlarm();
-            case START_APPLICATION -> processApplicationStartedAlarm();
-            case DEADLINE -> processBeforeDeadlineAlarm();
-            default -> throw new IllegalArgumentException("Unexpected value: " + alarmType);
+    public void process() {
+        for (AlarmSchedule alarmSchedule : AlarmSchedule.values()) {
+            int count = processExamAlarm(alarmSchedule);
+            log.info("[{} 알림] {} 건 전송 완료", alarmSchedule.name(), count);
         }
     }
 
-    private void processBeforeApplicationAlarm() {
-        List<CertificateExam> certificateExams = certificateExamReader.read(
-                ExamScheduleType.APPLICATION_START, getTomorrowDate());
-
+    private int processExamAlarm(AlarmSchedule alarmSchedule) {
+        List<CertificateExam> certificateExams = certificateExamReader.read(alarmSchedule.getExamScheduleType(), alarmSchedule.getDate());
         int count = 0;
-
         for (CertificateExam certificateExam : certificateExams) {
             Certificate certificate = certificateExam.certificate();
+            List<User> users = getAlarmTargetUsers(certificate);
+            count += notifyToUser(alarmSchedule.getAlarmType(), certificateExam, users);
         }
-
+        return count;
     }
 
-    private void processApplicationStartedAlarm() {
-        List<CertificateExam> certificateExams = certificateExamReader.read(
-                ExamScheduleType.APPLICATION_START, getTodayDate());
+    private int notifyToUser(AlarmType alarmType, CertificateExam certificateExam, List<User> users) {
+        AtomicInteger count = new AtomicInteger(0);
+        for (User user : users) {
+            alarmNotifier.notify(ExamAlarm.from(certificateExam, user, alarmType));
+            count.incrementAndGet();
+        }
+        return count.get();
     }
 
-    private void processBeforeDeadlineAlarm() {
-        List<CertificateExam> certificateExams = certificateExamReader.read(ExamScheduleType.DEADLINE, getTomorrowDate());
+    private List<User> getAlarmTargetUsers(Certificate certificate) {
+        return interestCertificateManager.find(certificate).stream()
+                .map(InterestCertificate::user)
+                .toList();
     }
-
-    private LocalDateTime getTodayDate() {
-        return LocalDateTime.now();
-    }
-
-    private LocalDateTime getTomorrowDate() {
-        return LocalDateTime.now().plusDays(1);
-    }
-
-
 }

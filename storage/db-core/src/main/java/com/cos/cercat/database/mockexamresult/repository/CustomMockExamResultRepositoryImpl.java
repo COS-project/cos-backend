@@ -4,7 +4,7 @@ import static com.cos.cercat.database.certificate.entity.QCertificateEntity.cert
 import static com.cos.cercat.database.mockexamresult.entity.QMockExamResultEntity.mockExamResultEntity;
 import static com.cos.cercat.database.user.entity.QUserEntity.userEntity;
 
-import com.cos.cercat.common.util.DateUtils;
+import com.cos.cercat.database.common.util.DateUtils;
 import com.cos.cercat.database.mockexamresult.dto.QDailyScoreAverage;
 import com.cos.cercat.database.mockexamresult.dto.QMonthlyScoreAverage;
 import com.cos.cercat.database.mockexamresult.dto.QWeeklyScoreAverage;

@@ -1,6 +1,6 @@
 package com.cos.cercat.database.common.entity;
 
-import com.cos.cercat.common.domain.Image;
+import com.cos.cercat.domain.common.Image;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

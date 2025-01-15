@@ -1,0 +1,10 @@
+spring:
+  config:
+    import:
+      - application-db.yml
+      - application-messaging.yml
+      - application-cache.yml
+      - application-security.yml
+
+server:
+  port: 8081

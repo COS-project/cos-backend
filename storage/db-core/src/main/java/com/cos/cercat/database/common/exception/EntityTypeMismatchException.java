@@ -1,6 +1,6 @@
 package com.cos.cercat.database.common.exception;
 
-import com.cos.cercat.common.exception.InfraException;
+import com.cos.cercat.exception.InfraException;
 
 public class EntityTypeMismatchException extends InfraException {
 

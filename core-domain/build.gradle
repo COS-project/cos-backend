@@ -1,5 +1,5 @@
 dependencies {
-    implementation project(':supports:common')
+    implementation project(':supports:exception')
     implementation 'org.springframework:spring-tx'
     implementation 'org.springframework:spring-context'
 }

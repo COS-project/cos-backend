@@ -2,7 +2,7 @@ package com.cos.cercat.apis.mockExam.request;
 
 import static com.cos.cercat.apis.global.util.FileMapper.toFile;
 
-import com.cos.cercat.common.domain.File;
+import com.cos.cercat.domain.common.File;
 import com.cos.cercat.domain.mockexam.UploadingOptionImageFile;
 import java.util.List;
 import lombok.Data;

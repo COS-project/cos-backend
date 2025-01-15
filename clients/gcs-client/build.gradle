@@ -1,6 +1,6 @@
 dependencies {
 
-    implementation project(':supports:common')
+    implementation project(':supports:exception')
     compileOnly project(':core-domain')
 
     //google GCP 버킷

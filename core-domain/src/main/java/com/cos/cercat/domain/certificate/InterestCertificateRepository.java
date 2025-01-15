@@ -9,9 +9,12 @@ public interface InterestCertificateRepository {
 
     void saveAll(User user, List<NewInterestCertificate> newInterestCertificates);
 
-    List<InterestCertificate> find(User user);
+    List<InterestCertificate> findByUser(User user);
+
+    List<InterestCertificate> findByCertificate(Certificate certificate);
 
     void remove(User user, Certificate certificate);
 
     void removeAll(User user);
+
 }

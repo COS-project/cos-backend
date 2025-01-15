@@ -1,7 +1,7 @@
 package com.cos.cercat.domain.certificate.exception;
 
 
-import com.cos.cercat.common.exception.DomainException;
+import com.cos.cercat.exception.DomainException;
 
 public class RecentCertificateNotExistException extends DomainException {
 

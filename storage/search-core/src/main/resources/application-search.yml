@@ -3,18 +3,33 @@ spring:
   config:
     activate:
       on-profile: local
-
+  shedlock:
+    table:
+      name: cercat_test.shedlock
 elasticsearch:
   client:
     host: ${ELASTIC_HOST}
     port: 9200
   host: ${ELASTICSEARCH_HOST_PORT:localhost:9200}
 
+logging:
+  level:
+    tracer: trace
+    org:
+      springframework:
+        data:
+          elasticsearch:
+            client:
+              WIRE: trace
+
 ---
 spring:
   config:
     activate:
       on-profile: prod
+  shedlock:
+    table:
+      name: cercat.shedlock
 
 elasticsearch:
   client:

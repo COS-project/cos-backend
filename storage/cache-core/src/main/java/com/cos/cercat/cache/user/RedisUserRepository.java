@@ -7,7 +7,6 @@ import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserCacheRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +15,6 @@ import java.util.Optional;
 
 @Repository
 @Slf4j
-@Profile("!batch")
 @RequiredArgsConstructor
 public class RedisUserRepository implements UserCacheRepository {
 
