@@ -1,7 +1,6 @@
 package com.cos.cercat.domain.user;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -10,23 +9,23 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TokenManager {
 
-    private final TokenRepository tokenRepository;
+    private final TokenCache tokenCache;
 
     public void saveRefreshToken(RefreshToken refreshToken) {
-        tokenRepository.saveRefreshToken(refreshToken);
+        tokenCache.cacheRefreshToken(refreshToken);
     }
 
     public Optional<String> getRefreshToken(TargetUser targetUser) {
-        return tokenRepository
-                .getRefreshToken(targetUser)
+        return tokenCache
+                .find(targetUser)
                 .map(RefreshToken::refreshToken);
     }
 
-    public void ban(String accessToken) {
-        tokenRepository.ban(accessToken);
+    public void banAccessToken(String accessToken) {
+        tokenCache.cacheAccessToken(accessToken);
     }
 
     public boolean isAlreadyLogin(String accessToken) {
-        return tokenRepository.isAlreadyLogin(accessToken);
+        return tokenCache.exists(accessToken);
     }
 }

@@ -1,4 +1,4 @@
-package com.cos.cercat.cache.common.config;
+package com.cos.cercat.cache.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

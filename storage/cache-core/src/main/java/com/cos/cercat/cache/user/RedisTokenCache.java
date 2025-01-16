@@ -4,7 +4,7 @@ import static com.cos.cercat.cache.user.config.UserRedisConfig.BAN_TOKEN_KEY;
 
 import com.cos.cercat.domain.user.RefreshToken;
 import com.cos.cercat.domain.user.TargetUser;
-import com.cos.cercat.domain.user.TokenRepository;
+import com.cos.cercat.domain.user.TokenCache;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -17,20 +17,20 @@ import java.util.Optional;
 @Repository
 @Slf4j
 @RequiredArgsConstructor
-public class RedisTokenRepository implements TokenRepository {
+public class RedisTokenCache implements TokenCache {
 
     private final StringRedisTemplate banTokenRedisTemplate;
     private final RedisTemplate<String, RefreshToken> tokenRedisTemplate;
 
     @Override
-    public void saveRefreshToken(RefreshToken refreshToken) {
+    public void cacheRefreshToken(RefreshToken refreshToken) {
         String key = getKey(refreshToken.userId());
         log.info("Set Refresh Token from {} : {}", key, refreshToken);
         tokenRedisTemplate.opsForValue().set(key, refreshToken);
     }
 
     @Override
-    public Optional<RefreshToken> getRefreshToken(TargetUser targetUser) {
+    public Optional<RefreshToken> find(TargetUser targetUser) {
         String key = getKey(targetUser.userId());
         RefreshToken token = tokenRedisTemplate.opsForValue().get(key);
         log.info("Get Refresh Token from {} : {}", key, token);
@@ -38,12 +38,12 @@ public class RedisTokenRepository implements TokenRepository {
     }
 
     @Override
-    public void ban(String token) {
-        banTokenRedisTemplate.opsForSet().add(BAN_TOKEN_KEY, token);
+    public void cacheAccessToken(String accessToken) {
+        banTokenRedisTemplate.opsForSet().add(BAN_TOKEN_KEY, accessToken);
     }
 
     @Override
-    public boolean isAlreadyLogin(String token) {
+    public boolean exists(String token) {
         return Boolean.FALSE.equals(
                 banTokenRedisTemplate.opsForSet().isMember(BAN_TOKEN_KEY, token));
     }

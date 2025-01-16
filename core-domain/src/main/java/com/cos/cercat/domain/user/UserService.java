@@ -29,7 +29,7 @@ public class UserService {
   }
 
   public void logout(String accessToken) {
-    tokenManager.ban(accessToken);
+    tokenManager.banAccessToken(accessToken);
   }
 
   public void deleteUser(TargetUser targetUser) {

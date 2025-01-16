@@ -1,8 +1,6 @@
 package com.cos.cercat.domain.user;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -11,18 +9,18 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserCacheManager {
 
-    private final UserCacheRepository userCacheRepository;
+    private final UserCache userCache;
 
     public void cache(User user) {
-        userCacheRepository.setUser(user);
+        userCache.cache(user);
     }
 
     public Optional<User> read(TargetUser targetUser) {
-        return userCacheRepository.getUser(targetUser);
+        return userCache.find(targetUser);
     }
 
     public void remove(User user) {
-        userCacheRepository.deleteUser(user);
+        userCache.delete(user);
     }
 
     public void refresh(User user) {

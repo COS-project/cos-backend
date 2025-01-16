@@ -1,6 +1,5 @@
 package com.cos.cercat.cache.postsearch;
 
-import com.cos.cercat.cache.postsearch.exception.SearchLogNotExistException;
 import com.cos.cercat.domain.postsearch.SearchLog;
 import com.cos.cercat.domain.postsearch.SearchLogCache;
 import com.cos.cercat.domain.user.User;
@@ -10,7 +9,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Objects;
 
 @Repository
 @Slf4j
@@ -25,14 +23,8 @@ public class RedisSearchLogCache implements SearchLogCache {
     public void cache(User user, SearchLog searchLog) {
         String key = getKey(user.getId());
         log.info("Set Search Log from {} : {}", key, searchLog);
-
-        int size = Objects.requireNonNull(redisTemplate.opsForList().size(key)).intValue();
-
-        if (size == LIST_FULL_SIZE) {
-            redisTemplate.opsForList().rightPop(key);
-        }
-
         redisTemplate.opsForList().leftPush(key, searchLog);
+        redisTemplate.opsForList().trim(key, 0, LIST_FULL_SIZE - 1); // 리스트 크기를 10으로 유지
     }
 
     @Override
@@ -46,10 +38,7 @@ public class RedisSearchLogCache implements SearchLogCache {
     @Override
     public void delete(User user, SearchLog searchLog) {
         String key = getKey(user.getId());
-        int count = Objects.requireNonNull(redisTemplate.opsForList().remove(key, 1, searchLog)).intValue();
-        if (count == 0) {
-            throw SearchLogNotExistException.EXCEPTION;
-        }
+        redisTemplate.opsForList().remove(key, 1, searchLog);
     }
 
     @Override
