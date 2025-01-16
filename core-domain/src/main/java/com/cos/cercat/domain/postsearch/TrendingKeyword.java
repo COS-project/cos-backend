@@ -1,14 +1,16 @@
 package com.cos.cercat.domain.postsearch;
 
 public record TrendingKeyword(
+        int rank,
         String keyword,
         KeywordStatus status
 ) {
-    public static TrendingKeyword of(String keyword, KeywordStatus status) {
-        return new TrendingKeyword(keyword, status);
+
+    public static TrendingKeyword newKeyword(int rank, String keyword) {
+        return new TrendingKeyword(rank, keyword, KeywordStatus.NEW);
     }
 
-    public static TrendingKeyword newKeyword(String keyword) {
-        return new TrendingKeyword(keyword, KeywordStatus.NEW);
+    public TrendingKeyword updateStatus(KeywordStatus keywordStatus) {
+        return new TrendingKeyword(rank, keyword, keywordStatus);
     }
 }

@@ -1,18 +1,12 @@
 dependencies {
 
     implementation project(':supports:exception')
-    implementation project(':storage:cache-core')
-    implementation project(':storage:db-core')
     compileOnly project(':core-domain')
 
     //elastic search
     implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
     implementation 'co.elastic.clients:elasticsearch-java:8.9.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-
-    // shedlock - schedule lock
-    implementation 'net.javacrumbs.shedlock:shedlock-spring:5.10.0'
-    implementation 'net.javacrumbs.shedlock:shedlock-provider-jdbc-template:5.10.0'
 }
 
 bootJar {

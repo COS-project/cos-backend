@@ -12,11 +12,10 @@ dependencies {
     runtimeOnly project(':clients:gcs-client')
     runtimeOnly project(':clients:messaging-client')
 
+    //OAuth2
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-
     //API 문서화 Swagger-UI
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
-
     //spring-aop
     implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'org.springframework.boot:spring-boot-configuration-processor'

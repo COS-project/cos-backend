@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class SearchLogAppender {
 
-    private final SearchLogRepository searchLogRepository;
+    private final SearchLogCache searchLogCache;
 
     public void append(User user, String searchKeyword) {
         if (searchKeyword != null && !searchKeyword.isBlank()) {
             SearchLog searchLog = new SearchLog(searchKeyword, LocalDateTime.now().toString());
-            searchLogRepository.setLog(user, searchLog);
+            searchLogCache.cache(user, searchLog);
         }
     }
 

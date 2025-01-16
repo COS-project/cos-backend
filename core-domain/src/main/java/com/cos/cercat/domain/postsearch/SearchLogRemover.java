@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SearchLogRemover {
 
-    private final SearchLogRepository searchLogRepository;
+    private final SearchLogCache searchLogCache;
 
 
     public void deleteSearchLog(User user, SearchLog searchLog) {
-        searchLogRepository.deleteSearchLog(user, searchLog);
+        searchLogCache.delete(user, searchLog);
     }
 
     public void deleteAllSearchLogs(User user) {
-        searchLogRepository.deleteAllSearchLogs(user);
+        searchLogCache.deleteAll(user);
     }
 }

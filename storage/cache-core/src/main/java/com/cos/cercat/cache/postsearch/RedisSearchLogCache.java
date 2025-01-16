@@ -2,7 +2,7 @@ package com.cos.cercat.cache.postsearch;
 
 import com.cos.cercat.cache.postsearch.exception.SearchLogNotExistException;
 import com.cos.cercat.domain.postsearch.SearchLog;
-import com.cos.cercat.domain.postsearch.SearchLogRepository;
+import com.cos.cercat.domain.postsearch.SearchLogCache;
 import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,14 +15,14 @@ import java.util.Objects;
 @Repository
 @Slf4j
 @RequiredArgsConstructor
-public class SearchLogRepositoryImpl implements SearchLogRepository {
+public class RedisSearchLogCache implements SearchLogCache {
 
     private final RedisTemplate<String, SearchLog> redisTemplate;
 
     private final static int LIST_FULL_SIZE = 10;
 
     @Override
-    public void setLog(User user, SearchLog searchLog) {
+    public void cache(User user, SearchLog searchLog) {
         String key = getKey(user.getId());
         log.info("Set Search Log from {} : {}", key, searchLog);
 
@@ -36,7 +36,7 @@ public class SearchLogRepositoryImpl implements SearchLogRepository {
     }
 
     @Override
-    public List<SearchLog> findSearchLogs(User user) {
+    public List<SearchLog> get(User user) {
         String key = getKey(user.getId());
         List<SearchLog> searchLogs = redisTemplate.opsForList().range(key, 0, 10);
         log.info("Get Search Log from {} : {}", key, searchLogs);
@@ -44,7 +44,7 @@ public class SearchLogRepositoryImpl implements SearchLogRepository {
     }
 
     @Override
-    public void deleteSearchLog(User user, SearchLog searchLog) {
+    public void delete(User user, SearchLog searchLog) {
         String key = getKey(user.getId());
         int count = Objects.requireNonNull(redisTemplate.opsForList().remove(key, 1, searchLog)).intValue();
         if (count == 0) {
@@ -53,7 +53,7 @@ public class SearchLogRepositoryImpl implements SearchLogRepository {
     }
 
     @Override
-    public void deleteAllSearchLogs(User user) {
+    public void deleteAll(User user) {
         String key = getKey(user.getId());
         redisTemplate.delete(key);
     }

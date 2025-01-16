@@ -1,8 +1,8 @@
 dependencies {
     implementation project(':core-domain')
-    implementation project(':storage:db-core')
-    implementation project(':storage:cache-core')
-    implementation project(':clients:messaging-client')
+    runtimeOnly project(':storage:db-core')
+    runtimeOnly project(':storage:cache-core')
+    runtimeOnly project(':clients:messaging-client')
 
     implementation project(':supports:exception')
     implementation project(':supports:security')
@@ -13,6 +13,4 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-json'
-
-    implementation 'org.springframework.boot:spring-boot-starter-web'
 }

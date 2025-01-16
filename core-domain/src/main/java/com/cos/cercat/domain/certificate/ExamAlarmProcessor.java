@@ -1,11 +1,10 @@
 package com.cos.cercat.domain.certificate;
 
-import com.cos.cercat.domain.alarm.AlarmNotifier;
+import com.cos.cercat.domain.alarm.AlarmNotificationService;
 import com.cos.cercat.domain.alarm.AlarmSchedule;
 import com.cos.cercat.domain.alarm.AlarmType;
 import com.cos.cercat.domain.alarm.ExamAlarm;
 import com.cos.cercat.domain.user.User;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,7 @@ public class ExamAlarmProcessor {
 
     private final CertificateExamReader certificateExamReader;
     private final InterestCertificateManager interestCertificateManager;
-    private final AlarmNotifier alarmNotifier;
+    private final AlarmNotificationService alarmNotificationService;
 
     public void process() {
         for (AlarmSchedule alarmSchedule : AlarmSchedule.values()) {
@@ -42,7 +41,7 @@ public class ExamAlarmProcessor {
     private int notifyToUser(AlarmType alarmType, CertificateExam certificateExam, List<User> users) {
         AtomicInteger count = new AtomicInteger(0);
         for (User user : users) {
-            alarmNotifier.notify(ExamAlarm.from(certificateExam, user, alarmType));
+            alarmNotificationService.notify(ExamAlarm.from(certificateExam, user, alarmType));
             count.incrementAndGet();
         }
         return count.get();

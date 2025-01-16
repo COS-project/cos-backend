@@ -22,15 +22,15 @@ import java.util.Map;
 @Component
 public class LogAspect {
 
-    @Pointcut("execution(* com.cos.cercat.domain..*(..)) && !execution(* com.cos.cercat.common..*(..))")
-    public void all() {
+    @Pointcut("execution(* com.cos.cercat.domain..*(..))")
+    public void domain() {
     }
 
     @Pointcut("execution(* com.cos.cercat.apis..*Api.*(..)) && !execution(* com.cos.cercat.apis.HealthCheckApi.*(..))")
     public void controller() {
     }
 
-    @Around("all()")
+    @Around("domain()")
     public Object logging(ProceedingJoinPoint joinPoint) throws Throwable {
         long start = System.currentTimeMillis();
         try {

@@ -46,7 +46,7 @@ public class SearchPostService {
 
     public List<TrendingKeyword> getTrendingKeywords(TargetCertificate targetCertificate) {
         Certificate certificate = certificateReader.read(targetCertificate);
-        return postForSearchReader.readTrendingKeywords(certificate);
+        return postForSearchReader.readTrendingKeywordRanking(certificate);
     }
 
     public List<SearchLog> readSearchLogs(TargetUser targetUser) {

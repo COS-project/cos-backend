@@ -7,14 +7,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
 public class PostForSearchReader {
 
     private final PostForSearchRepository postForSearchRepository;
-    private final TrendingKeywordsCacheManager trendingKeywordsCacheManager;
+    private final TrendingKeywordRankingCache trendingKeywordRankingCache;
 
     public SliceResult<PostForSearch> read(SearchCond cond, Certificate certificate, Cursor cursor) {
         return postForSearchRepository.search(cond, certificate, cursor);
@@ -24,17 +23,16 @@ public class PostForSearchReader {
         return postForSearchRepository.findAutoCompletedKeywords(certificate, searchText);
     }
 
-    public List<TrendingKeyword> readTrendingKeywords(Certificate certificate) {
-        return Optional.ofNullable(trendingKeywordsCacheManager.findTrendingKeywords(certificate))
-                .orElseGet(() -> {
-                    List<String> recentTop10Keywords = postForSearchRepository.findRecentTop10Keywords(certificate);
+    public TrendingKeywordsRanking readTrendingKeywordRanking(Certificate certificate) {
+        return trendingKeywordRankingCache.find(certificate).orElseGet(() -> {
+            TrendingKeywordsRanking trendingKeywords = getKeywordsInDB(certificate);
+            trendingKeywordRankingCache.cache(certificate, trendingKeywords);
+            return trendingKeywords;
+        });
+    }
 
-                    List<TrendingKeyword> trendingKeywords = recentTop10Keywords.stream()
-                            .map(TrendingKeyword::newKeyword)
-                            .toList();
-
-                    trendingKeywordsCacheManager.setTrendingKeywords(certificate, trendingKeywords);
-                    return trendingKeywords;
-                });
+    private TrendingKeywordsRanking getKeywordsInDB(Certificate certificate) {
+        List<String> recentTop10Keywords = postForSearchRepository.findRecentTop10Keywords(certificate);
+        return TrendingKeywordsRanking.from(recentTop10Keywords);
     }
 }

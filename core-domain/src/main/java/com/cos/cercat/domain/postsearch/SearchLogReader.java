@@ -10,10 +10,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SearchLogReader {
 
-    private final SearchLogRepository searchLogRepository;
+    private final SearchLogCache searchLogCache;
 
     public List<SearchLog> readSearchLogs(User user) {
-        return searchLogRepository.findSearchLogs(user);
+        return searchLogCache.get(user);
     }
 
 }

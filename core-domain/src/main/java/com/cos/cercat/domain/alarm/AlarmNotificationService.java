@@ -3,11 +3,11 @@ package com.cos.cercat.domain.alarm;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @RequiredArgsConstructor
-public class AlarmNotifier {
+public class AlarmNotificationService {
 
     private final AlarmManager alarmManager;
     private final List<NotificationChannel> notificationChannels;

@@ -1,4 +1,4 @@
-package com.cos.cercat.search.postsearch.scheduler.config;
+package com.cos.cercat.cache.postsearch.scheduler.config;
 
 import net.javacrumbs.shedlock.core.LockProvider;
 import net.javacrumbs.shedlock.provider.jdbctemplate.JdbcTemplateLockProvider;
