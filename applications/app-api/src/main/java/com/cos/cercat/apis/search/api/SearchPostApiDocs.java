@@ -1,7 +1,6 @@
 package com.cos.cercat.apis.search.api;
 
 import com.cos.cercat.apis.post.response.PostResponse;
-import com.cos.cercat.apis.user.request.SearchLogDeleteRequest;
 import com.cos.cercat.domain.common.Cursor;
 import com.cos.cercat.web.Response;
 import com.cos.cercat.domain.common.SliceResult;
@@ -46,8 +45,7 @@ public interface SearchPostApiDocs {
     Response<List<TrendingKeyword>> getTrendingKeywords(Long certificateId);
 
     @Operation(summary = "특정 검색 기록 삭제")
-    Response<Void> deleteSearchLogs(User currentUser,
-                                    SearchLogDeleteRequest request);
+    Response<Void> deleteSearchLogs(User currentUser, String keyword);
 
     @Operation(summary = "모든 검색 기록 삭제")
     Response<Void> deleteAllSearchLogs(User currentUser);

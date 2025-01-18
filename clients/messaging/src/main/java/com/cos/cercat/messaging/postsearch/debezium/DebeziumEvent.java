@@ -1,4 +1,4 @@
-package com.cos.cercat.messaging.debezium;
+package com.cos.cercat.messaging.postsearch.debezium;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;

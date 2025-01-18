@@ -1,9 +1,7 @@
 package com.cos.cercat.cache.postsearch.config;
 
 import com.cos.cercat.domain.postsearch.SearchLog;
-import com.cos.cercat.domain.postsearch.TrendingKeyword;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.cos.cercat.domain.postsearch.TrendingKeywordsRanking;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,8 +10,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-
-import java.util.List;
 
 @EnableRedisRepositories
 @Configuration
@@ -32,12 +28,11 @@ public class SearchRedisConfig {
     }
 
     @Bean
-    public RedisTemplate<String, List<TrendingKeyword>> trendingKeywordRedisTemplate() {
-        RedisTemplate<String, List<TrendingKeyword>> redisTemplate = new RedisTemplate<>();
+    public RedisTemplate<String, TrendingKeywordsRanking> trendingKeywordRedisTemplate() {
+        RedisTemplate<String, TrendingKeywordsRanking> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
-        JavaType type = TypeFactory.defaultInstance().constructCollectionType(List.class, TrendingKeyword.class);
-        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(type));
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(TrendingKeywordsRanking.class));
         return redisTemplate;
     }
 

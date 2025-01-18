@@ -25,8 +25,8 @@ public class TrendingKeywordRankingService {
     }
 
     private void processCertificateTrendingKeywords(Certificate certificate) {
-        TrendingKeywordsRanking currentRanking = postForSearchReader.readTrendingKeywordRanking(certificate);
         Optional<TrendingKeywordsRanking> beforeRanking = trendingKeywordRankingCache.find(certificate);
+        TrendingKeywordsRanking currentRanking = postForSearchReader.readCurrentTrendingKeywordRanking(certificate);
         TrendingKeywordsRanking updatedRanking = getUpdatedRanking(currentRanking, beforeRanking);
         trendingKeywordRankingCache.cache(certificate, updatedRanking);
     }

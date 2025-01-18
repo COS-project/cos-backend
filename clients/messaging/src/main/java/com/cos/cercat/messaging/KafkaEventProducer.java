@@ -1,4 +1,4 @@
-package com.cos.cercat.messaging.alarm.publisher;
+package com.cos.cercat.messaging;
 
 import com.cos.cercat.domain.common.Event;
 import com.cos.cercat.domain.common.EventPublisher;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class KafkaMessageProducer implements EventPublisher {
+public class KafkaEventProducer implements EventPublisher {
 
     private final KafkaTemplate<String, Event> kafkaTemplate;
 

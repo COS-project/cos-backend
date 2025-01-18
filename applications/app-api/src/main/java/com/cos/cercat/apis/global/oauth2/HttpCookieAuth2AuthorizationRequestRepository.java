@@ -1,4 +1,4 @@
-package com.cos.cercat.apis.global.security;
+package com.cos.cercat.apis.global.oauth2;
 
 import com.cos.cercat.apis.global.util.CookieUtils;
 import com.nimbusds.oauth2.sdk.util.StringUtils;

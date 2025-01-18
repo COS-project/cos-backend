@@ -2,7 +2,7 @@ dependencies {
     implementation project(':core-domain')
     runtimeOnly project(':storage:db-core')
     runtimeOnly project(':storage:cache-core')
-    runtimeOnly project(':clients:messaging-client')
+    runtimeOnly project(':clients:messaging')
 
     implementation project(':supports:exception')
     implementation project(':supports:security')
@@ -11,6 +11,14 @@ dependencies {
     //API 문서화 Swagger-UI
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 
+    //JPA
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    //kafka
+    implementation 'org.springframework.kafka:spring-kafka'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
+
+    //redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-json'
 }

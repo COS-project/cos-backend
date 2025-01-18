@@ -29,6 +29,6 @@ include(
 
 include(
         'clients',
-        'clients:gcs-client',
-        'clients:messaging-client',
+        'clients:object-storage',
+        'clients:messaging',
 )

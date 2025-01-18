@@ -32,7 +32,7 @@ public class ExamAlarmProcessor {
         int count = 0;
         for (CertificateExam certificateExam : certificateExams) {
             Certificate certificate = certificateExam.certificate();
-            List<User> users = getAlarmTargetUsers(certificate);
+            List<User> users = getAlarmTargetUsers(certificate);    
             count += notifyToUser(alarmSchedule.getAlarmType(), certificateExam, users);
         }
         return count;

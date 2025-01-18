@@ -12,11 +12,11 @@ public class SearchLogAppender {
 
     private final SearchLogCache searchLogCache;
 
-    public void append(User user, String searchKeyword) {
-        if (searchKeyword != null && !searchKeyword.isBlank()) {
-            SearchLog searchLog = new SearchLog(searchKeyword, LocalDateTime.now().toString());
-            searchLogCache.cache(user, searchLog);
+    public void append(User user, SearchLog searchLog) {
+        if (searchLog.isNotValid()) {
+            return;
         }
+        searchLogCache.cache(user, searchLog);
     }
 
 }

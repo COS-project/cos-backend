@@ -1,6 +1,6 @@
 package com.cos.cercat.messaging.postsearch;
 
-import com.cos.cercat.messaging.debezium.EventHandler;
+import com.cos.cercat.messaging.postsearch.debezium.EventHandler;
 import com.google.common.collect.Maps;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;

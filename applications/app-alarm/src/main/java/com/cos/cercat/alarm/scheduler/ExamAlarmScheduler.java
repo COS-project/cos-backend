@@ -15,11 +15,7 @@ public class ExamAlarmScheduler {
 
     @Scheduled(cron = "0 0 9 * * ?")
     public void runSendExamAlarmJob() {
-        long startTime = System.currentTimeMillis();
-        log.info("Starting exam alarm processing at {}", startTime);
         examAlarmProcessor.process();
-        long endTime = System.currentTimeMillis();
-        log.info("Finished exam alarm processing at {}. Total time: {} ms", endTime, (endTime - startTime));
     }
 
 }

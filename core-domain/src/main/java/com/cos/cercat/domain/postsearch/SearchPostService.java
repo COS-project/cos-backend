@@ -34,7 +34,7 @@ public class SearchPostService {
                                     Cursor cursor) {
         User user = userReader.read(targetUser);
         Certificate certificate = certificateReader.read(targetCertificate);
-        searchLogAppender.append(user, cond.keyword());
+        searchLogAppender.append(user, cond.toSearchLog());
         return postForSearchReader.read(cond, certificate, cursor)
                 .map(post -> postReader.read(TargetPost.from(post.getId())));
     }
@@ -44,7 +44,7 @@ public class SearchPostService {
         return postForSearchReader.readAutoCompletedKeywords(certificate, searchText);
     }
 
-    public List<TrendingKeyword> getTrendingKeywords(TargetCertificate targetCertificate) {
+    public TrendingKeywordsRanking getTrendingKeywords(TargetCertificate targetCertificate) {
         Certificate certificate = certificateReader.read(targetCertificate);
         return postForSearchReader.readTrendingKeywordRanking(certificate);
     }

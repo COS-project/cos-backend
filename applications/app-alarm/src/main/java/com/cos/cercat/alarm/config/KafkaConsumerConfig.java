@@ -1,6 +1,6 @@
-package com.cos.cercat.messaging.config;
+package com.cos.cercat.alarm.config;
 
-import com.google.common.collect.ImmutableMap;
+import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -36,16 +36,16 @@ public class KafkaConsumerConfig<V> {
 
     @Bean
     public Map<String, Object> consumerConfigs() {
-        return ImmutableMap.<String, Object>builder()
-                .put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers)
-                .put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class)
-                .put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class)
-                .put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest")
-                .put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false")
-                .put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "10")
-                .put(JsonDeserializer.TRUSTED_PACKAGES, "*")
-                .put(JsonDeserializer.USE_TYPE_INFO_HEADERS, true)
-                .build();
+        return new HashMap<>() {{
+            put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+            put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+            put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+            put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+            put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
+            put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "10");
+            put(JsonDeserializer.TRUSTED_PACKAGES, "*");
+            put(JsonDeserializer.USE_TYPE_INFO_HEADERS, true);
+        }};
     }
 
 }

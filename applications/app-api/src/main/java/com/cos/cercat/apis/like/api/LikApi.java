@@ -24,8 +24,7 @@ public class LikApi implements LikeApiDocs {
     }
 
     @GetMapping("likes/status")
-    public Response<Boolean> isLiked(LikeRequest request,
-                                     @AuthenticationPrincipal User currentUser) {
+    public Response<Boolean> isLiked(LikeRequest request, @AuthenticationPrincipal User currentUser) {
         return Response.success(likeService.isLiked(TargetUser.from(currentUser.getId()), request.toLike()));
     }
 

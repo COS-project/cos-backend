@@ -1,6 +1,6 @@
 package com.cos.cercat.messaging.postsearch.listener;
 
-import com.cos.cercat.messaging.debezium.DebeziumEvent;
+import com.cos.cercat.messaging.postsearch.debezium.DebeziumEvent;
 import com.cos.cercat.messaging.postsearch.EventHandlerFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

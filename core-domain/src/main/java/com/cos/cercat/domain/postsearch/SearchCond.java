@@ -7,4 +7,7 @@ public record SearchCond(
         PostType postType,
         String keyword
 ) {
+    public SearchLog toSearchLog() {
+        return new SearchLog(keyword);
+    }
 }

@@ -9,8 +9,8 @@ dependencies {
     runtimeOnly project(':storage:db-core')
     runtimeOnly project(':storage:search-core')
 
-    runtimeOnly project(':clients:gcs-client')
-    runtimeOnly project(':clients:messaging-client')
+    runtimeOnly project(':clients:object-storage')
+    runtimeOnly project(':clients:messaging')
 
     //OAuth2
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'

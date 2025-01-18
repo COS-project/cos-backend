@@ -57,7 +57,7 @@ public class PostForForSearchRepositoryImpl implements PostForSearchRepository {
     }
 
     @Override
-    public List<String> findRecentTop10Keywords(Certificate certificate) {
+    public List<String> findRecentTrendingKeywords(Certificate certificate) {
         return postSearchElasticRepository.getRecentTop10Keywords(certificate.id());
     }
 

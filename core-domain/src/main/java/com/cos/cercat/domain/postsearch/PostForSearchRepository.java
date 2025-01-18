@@ -19,5 +19,5 @@ public interface PostForSearchRepository {
 
     List<String> findAutoCompletedKeywords(Certificate certificate, String searchText);
 
-    List<String> findRecentTop10Keywords(Certificate certificate);
+    List<String> findRecentTrendingKeywords(Certificate certificate);
 }

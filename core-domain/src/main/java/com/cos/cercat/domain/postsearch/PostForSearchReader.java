@@ -25,14 +25,14 @@ public class PostForSearchReader {
 
     public TrendingKeywordsRanking readTrendingKeywordRanking(Certificate certificate) {
         return trendingKeywordRankingCache.find(certificate).orElseGet(() -> {
-            TrendingKeywordsRanking trendingKeywords = getKeywordsInDB(certificate);
+            TrendingKeywordsRanking trendingKeywords = readCurrentTrendingKeywordRanking(certificate);
             trendingKeywordRankingCache.cache(certificate, trendingKeywords);
             return trendingKeywords;
         });
     }
 
-    private TrendingKeywordsRanking getKeywordsInDB(Certificate certificate) {
-        List<String> recentTop10Keywords = postForSearchRepository.findRecentTop10Keywords(certificate);
+    public TrendingKeywordsRanking readCurrentTrendingKeywordRanking(Certificate certificate) {
+        List<String> recentTop10Keywords = postForSearchRepository.findRecentTrendingKeywords(certificate);
         return TrendingKeywordsRanking.from(recentTop10Keywords);
     }
 }

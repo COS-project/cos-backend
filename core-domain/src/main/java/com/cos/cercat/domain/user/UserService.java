@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 @Service
+@Profile("api")
 @RequiredArgsConstructor
-@Profile("!alarm")
 public class UserService {
 
   private final UserReader userReader;

@@ -2,13 +2,12 @@ package com.cos.cercat.messaging.postsearch;
 
 import com.cos.cercat.domain.postsearch.PostForSearchAppender;
 import com.cos.cercat.domain.postsearch.PostForSearchRemover;
-import com.cos.cercat.messaging.debezium.AbstractSimpleEventHandler;
-import com.cos.cercat.messaging.debezium.EventHandler;
+import com.cos.cercat.messaging.postsearch.debezium.AbstractSimpleEventHandler;
+import com.cos.cercat.messaging.postsearch.debezium.DebeziumEvent.DebeziumEventPayloadOperation;
+import com.cos.cercat.messaging.postsearch.debezium.EventHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
-
-import static com.cos.cercat.messaging.debezium.DebeziumEvent.*;
 
 @Component
 public class PostCommentEventHandler extends

@@ -1,7 +1,6 @@
 package com.cos.cercat.apis.search.api;
 
 import com.cos.cercat.apis.post.response.PostResponse;
-import com.cos.cercat.apis.user.request.SearchLogDeleteRequest;
 import com.cos.cercat.domain.certificate.TargetCertificate;
 import com.cos.cercat.apis.global.annotation.CursorDefault;
 import com.cos.cercat.domain.common.Cursor;
@@ -50,14 +49,13 @@ public class SearchPostApi implements SearchPostApiDocs {
 
     @GetMapping("/certificates/{certificateId}/trending-keywords")
     public Response<List<TrendingKeyword>> getTrendingKeywords(@PathVariable Long certificateId) {
-        return Response.success(searchPostService.getTrendingKeywords(TargetCertificate.from(certificateId)));
+        return Response.success(searchPostService.getTrendingKeywords(TargetCertificate.from(certificateId)).getKeywordList());
     }
 
 
     @DeleteMapping("/search-logs")
-    public Response<Void> deleteSearchLogs(@AuthenticationPrincipal User currentUser,
-                                           SearchLogDeleteRequest request) {
-        searchPostService.deleteSearchLog(TargetUser.from(currentUser.getId()), request.toSearchLog());
+    public Response<Void> deleteSearchLogs(@AuthenticationPrincipal User currentUser, String keyword) {
+        searchPostService.deleteSearchLog(TargetUser.from(currentUser.getId()), SearchLog.from(keyword));
         return Response.success("검색 기록 삭제 성공");
     }
 

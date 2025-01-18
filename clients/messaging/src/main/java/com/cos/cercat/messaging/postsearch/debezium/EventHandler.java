@@ -1,4 +1,4 @@
-package com.cos.cercat.messaging.debezium;
+package com.cos.cercat.messaging.postsearch.debezium;
 
 public interface EventHandler {
 
