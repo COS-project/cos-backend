@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication(scanBasePackages = {
+		"com.cos.cercat.domain.common",
 		"com.cos.cercat.alarm",
 		"com.cos.cercat.domain.certificate",
 		"com.cos.cercat.domain.user",
@@ -14,8 +15,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 		"com.cos.cercat.database.alarm",
 		"com.cos.cercat.database.common",
 		"com.cos.cercat.cache.user",
-		"com.cos.cercat.messaging.alarm",
-		"com.cos.cercat.messaging.config",
 		"com.cos.cercat.security",
 		"com.cos.cercat.web",
 		"com.cos.cercat.exception",

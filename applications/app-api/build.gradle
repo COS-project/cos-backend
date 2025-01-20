@@ -12,6 +12,8 @@ dependencies {
     runtimeOnly project(':clients:object-storage')
     runtimeOnly project(':clients:messaging')
 
+    runtimeOnly project(':infrastructure:scheduler')
+
     //OAuth2
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     //API 문서화 Swagger-UI

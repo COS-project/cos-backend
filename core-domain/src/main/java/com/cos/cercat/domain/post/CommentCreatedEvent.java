@@ -21,6 +21,6 @@ public record CommentCreatedEvent(
 
     @Override
     public String getType() {
-        return "comment-created-event";
+        return "comment-created";
     }
 }

@@ -86,6 +86,16 @@ project(':clients') {
     }
 }
 
+project(':infrastructure') {
+    bootJar {
+        enabled = false
+    }
+
+    jar {
+        enabled = false
+    }
+}
+
 project(':supports') {
     bootJar {
         enabled = false

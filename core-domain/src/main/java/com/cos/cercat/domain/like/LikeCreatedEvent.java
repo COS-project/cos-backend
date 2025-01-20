@@ -28,6 +28,6 @@ public record LikeCreatedEvent(
 
     @Override
     public String getType() {
-        return "like-created-event";
+        return "like-created";
     }
 }

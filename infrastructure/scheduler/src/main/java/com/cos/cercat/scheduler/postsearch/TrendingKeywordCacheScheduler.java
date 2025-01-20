@@ -1,4 +1,4 @@
-package com.cos.cercat.cache.postsearch.scheduler;
+package com.cos.cercat.scheduler.postsearch;
 
 import com.cos.cercat.domain.postsearch.TrendingKeywordRankingService;
 import lombok.RequiredArgsConstructor;

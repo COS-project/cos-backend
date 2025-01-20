@@ -2,7 +2,6 @@ dependencies {
     implementation project(':core-domain')
     runtimeOnly project(':storage:db-core')
     runtimeOnly project(':storage:cache-core')
-    runtimeOnly project(':clients:messaging')
 
     implementation project(':supports:exception')
     implementation project(':supports:security')

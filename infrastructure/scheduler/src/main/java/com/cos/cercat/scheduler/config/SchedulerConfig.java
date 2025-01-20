@@ -1,5 +1,6 @@
-package com.cos.cercat.cache.postsearch.scheduler.config;
+package com.cos.cercat.scheduler.config;
 
+import lombok.extern.slf4j.Slf4j;
 import net.javacrumbs.shedlock.core.LockProvider;
 import net.javacrumbs.shedlock.provider.jdbctemplate.JdbcTemplateLockProvider;
 import net.javacrumbs.shedlock.spring.annotation.EnableSchedulerLock;
@@ -16,8 +17,9 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableScheduling
+@Slf4j
 @EnableSchedulerLock(defaultLockAtMostFor = "PT30M")
-public class TrendingCacheScheduleConfig implements SchedulingConfigurer {
+public class SchedulerConfig implements SchedulingConfigurer {
 
     @Value("${spring.shedlock.table.name}")
     private String shedlockTableName;

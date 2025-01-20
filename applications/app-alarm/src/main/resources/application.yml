@@ -2,9 +2,27 @@ spring:
   config:
     import:
       - application-db.yml
-      - application-messaging.yml
       - application-cache.yml
       - application-security.yml
-
 server:
   port: 8081
+kafka:
+  topic:
+    alarm-events: like-created,comment-created,interest-certificate-exam-schedule
+  consumer-group:
+    alarm: alarm-group
+---
+spring:
+  config:
+    activate:
+      on-profile: local,alarm
+  kafka:
+    bootstrap-servers: localhost:29092
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  kafka:
+    bootstrap-servers: kafka:9092

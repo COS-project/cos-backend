@@ -11,6 +11,7 @@ spring:
       - application-search.yml
       - application-messaging.yml
       - application-security.yml
+      - application-scheduler.yml
 
 springdoc:
   swagger-ui:

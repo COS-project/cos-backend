@@ -28,6 +28,11 @@ include(
 )
 
 include(
+        'infrastructure',
+        'infrastructure:scheduler',
+)
+
+include(
         'clients',
         'clients:object-storage',
         'clients:messaging',
