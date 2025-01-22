@@ -1,8 +1,10 @@
 package com.cos.cercat.domain.post;
 
 import com.cos.cercat.domain.certificate.Certificate;
+import com.cos.cercat.domain.common.Image;
 import com.cos.cercat.domain.mockexam.Question;
 import com.cos.cercat.domain.user.User;
+import java.util.List;
 import lombok.Getter;
 
 @Getter
@@ -21,8 +23,8 @@ public class CommentaryPost extends Post {
         this.question = question;
     }
 
-    public void update(PostContent postContent, Question question) {
-        super.update(postContent);
+    public void update(PostContent postContent, Question question, List<Image> images) {
+        super.update(postContent, images);
         this.question = question;
     }
 

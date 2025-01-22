@@ -4,28 +4,28 @@ import com.cos.cercat.domain.user.TargetUser;
 import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserReader;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class LikeService {
 
-    private final LikeReader postLikeReader;
+    private final LikeReader likeReader;
     private final LikeManager likeManager;
     private final UserReader userReader;
 
-    public void flipLike(TargetUser targetUser, Like like) {
+    public void like(TargetUser targetUser, LikeTarget likeTarget) {
         User user = userReader.read(targetUser);
-        if (postLikeReader.isLiked(user, like)) {
-            likeManager.unLike(user, like);
-            return;
-        }
-        likeManager.like(user, like);
+        likeManager.like(user, likeTarget);
     }
 
-    public boolean isLiked(TargetUser targetUser, Like like) {
+    public void unLike(TargetUser targetUser, LikeTarget likeTarget) {
         User user = userReader.read(targetUser);
-        return postLikeReader.isLiked(user, like);
+        likeManager.unLike(user, likeTarget);
+    }
+
+    public LikeStatus getLikeStatus(TargetUser targetUser, LikeTarget likeTarget) {
+        User user = userReader.read(targetUser);
+        return likeReader.read(user, likeTarget);
     }
 }

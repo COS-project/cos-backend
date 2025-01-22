@@ -2,6 +2,9 @@ package com.cos.cercat.messaging.postsearch;
 
 import com.cos.cercat.domain.postsearch.PostCommentForSearch;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -37,6 +40,13 @@ public class PostCommentDebeziumDTO implements Serializable {
                 likeCount,
                 createdAt
         );
+    }
+
+    public void setCreatedAt(Long timestamp) {
+        Instant instant = Instant.ofEpochMilli(timestamp / 1000);
+        ZoneId seoulZoneId = ZoneId.of("Asia/Seoul");
+        ZonedDateTime seoulZonedDateTime = instant.atZone(seoulZoneId);
+        this.createdAt = seoulZonedDateTime.toLocalDateTime();
     }
 
 }

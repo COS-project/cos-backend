@@ -20,20 +20,21 @@ public class KafkaCDCEventConsumer {
     private final EventHandlerFactory eventHandlerFactory;
 
     @KafkaListener(topics = {"${spring.kafka.topic.debezium_post}", "${spring.kafka.topic.debezium_comment}"}, groupId = "${kafka.consumer-group.debezium}")
-    public void handleEvents(List<ConsumerRecord<String, DebeziumEvent>> records,
+    public void handleEvents(ConsumerRecord<String, DebeziumEvent> record,
                              Acknowledgment acknowledgment) {
-        log.info("{}개의 레코드 처리 요청", records.size());
 
-        List<ConsumerRecord<String, DebeziumEvent>> sortedRecords = records.stream()
-                .filter(record -> record.value().getPayload().getOperation() != DebeziumEvent.DebeziumEventPayloadOperation.READ)
-                .sorted(Comparator.comparing(r -> r.value().getPayload().getDate()))
-                .toList();
-
-        sortedRecords.forEach(record -> {
-            log.info("{} 이벤트를 {} 토픽에 처리 요청", record.value().getPayload().getOperation(), record.topic());
-            eventHandlerFactory.getHandler(record.topic()).process(record.value());
-        });
+        if (isReadOperation(record)) {
+            acknowledgment.acknowledge();
+            return;
+        }
+        eventHandlerFactory.getHandler(record.topic()).process(record.value());
+        log.info("{} 이벤트를 {} 토픽에 처리 요청", record.value().getPayload().getOperation(), record.topic());
         acknowledgment.acknowledge();
+    }
+
+    private static boolean isReadOperation(ConsumerRecord<String, DebeziumEvent> record) {
+        return record.value().getPayload().getOperation()
+                == DebeziumEvent.DebeziumEventPayloadOperation.READ;
     }
 
 }

@@ -15,10 +15,6 @@ public class PostReader {
 
     private final ReadPostRepository postRepository;
 
-    public Post readToLike(TargetPost targetPost) {
-        return postRepository.findWithLock(targetPost);
-    }
-
     public Post read(TargetPost targetPost) {
         return postRepository.find(targetPost);
     }

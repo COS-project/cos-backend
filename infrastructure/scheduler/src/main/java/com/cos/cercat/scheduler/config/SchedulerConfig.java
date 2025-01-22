@@ -1,5 +1,6 @@
 package com.cos.cercat.scheduler.config;
 
+import java.util.TimeZone;
 import lombok.extern.slf4j.Slf4j;
 import net.javacrumbs.shedlock.core.LockProvider;
 import net.javacrumbs.shedlock.provider.jdbctemplate.JdbcTemplateLockProvider;
@@ -39,7 +40,7 @@ public class SchedulerConfig implements SchedulingConfigurer {
                 JdbcTemplateLockProvider.Configuration.builder()
                         .withTableName(shedlockTableName)
                         .withJdbcTemplate(new JdbcTemplate(dataSource))
-                        .usingDbTime()
+                        .withTimeZone(TimeZone.getDefault())
                         .build()
         );
     }

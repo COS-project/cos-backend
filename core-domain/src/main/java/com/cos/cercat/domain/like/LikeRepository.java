@@ -4,9 +4,14 @@ import com.cos.cercat.domain.user.User;
 
 public interface LikeRepository {
 
-    boolean isLiked(User user, Like like);
+    boolean isLiked(User user, LikeTarget likeTarget);
 
-    void save(User user, Like like);
+    void save(User user, LikeTarget likeTarget);
 
-    void remove(User user, Like like);
+    void remove(User user, LikeTarget likeTarget);
+
+    void initLikeCount(LikeTarget likeTarget);
+
+    Long getCount(LikeTarget likeTarget);
+
 }

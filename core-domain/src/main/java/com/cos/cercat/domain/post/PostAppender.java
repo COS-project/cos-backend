@@ -17,8 +17,7 @@ public class PostAppender {
   private final QuestionReader questionReader;
 
   public TargetPost append(User user, Certificate certificate, NewPost newPost,
-      List<Image> images) {
-      newPost.content().addImages(images);
+          List<Image> images) {
       return switch (newPost.postType()) {
           case COMMENTARY -> appendCommentaryPost(user, certificate, newPost);
           case NORMAL -> appendNormalPost(user, certificate, newPost);
@@ -29,7 +28,6 @@ public class PostAppender {
   private TargetPost appendCommentaryPost(User user,
       Certificate certificate,
       NewPost newPost) {
-
       Question question = questionReader.read(certificate, newPost.mockExamSession(),
           newPost.questionSequence());
     return postRepository.saveCommentaryPost(user, certificate, newPost.content(), question);

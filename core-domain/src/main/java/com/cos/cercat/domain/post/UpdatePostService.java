@@ -18,7 +18,7 @@ public class UpdatePostService {
 
   private final UserReader userReader;
   private final PostReader postReader;
-  private final PostUpdator postUpdator;
+  private final PostUpdater postUpdater;
   private final PermissionValidator permissionValidator;
   private final FileUploader fileUploader;
 
@@ -30,8 +30,7 @@ public class UpdatePostService {
     User user = userReader.read(targetUser);
     permissionValidator.validate(post, user);
     List<Image> images = fileUploader.upload(uploadImages);
-    updatedPost.content().addImages(images);
-    postUpdator.update(post, updatedPost);
+    postUpdater.update(post, updatedPost, images);
     return targetPost;
   }
 

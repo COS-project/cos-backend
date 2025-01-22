@@ -21,10 +21,10 @@ import java.util.Set;
 import static org.hibernate.annotations.OnDeleteAction.CASCADE;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@DiscriminatorColumn
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "dtype", discriminatorType = DiscriminatorType.STRING)
 @Table(name = "post")
 public class PostEntity extends BaseTimeEntity {
 

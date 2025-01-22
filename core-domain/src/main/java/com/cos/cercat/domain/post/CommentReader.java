@@ -21,8 +21,4 @@ public class CommentReader {
         return postRepository.findComment(user, cursor);
     }
 
-    public PostComment readToLike(TargetComment targetComment) {
-        return postRepository.findCommentWithLock(targetComment);
-    }
-
 }

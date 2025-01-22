@@ -1,8 +1,10 @@
 package com.cos.cercat.domain.post;
 
 import com.cos.cercat.domain.certificate.Certificate;
+import com.cos.cercat.domain.common.Image;
 import com.cos.cercat.domain.user.Ownable;
 import com.cos.cercat.domain.user.User;
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,12 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(force = true)
 public class Post implements Ownable {
 
-    private final Long id;
-    private final User user;
-    private final Certificate certificate;
-    private final PostContent postContent;
-    private final PostStatus postStatus;
-    private final DateTime dateTime;
+    private Long id;
+    private User user;
+    private Certificate certificate;
+    private PostContent postContent;
+    private PostStatus postStatus;
+    private List<Image> postImages;
+    private DateTime dateTime;
 
     public Post(Long id, User user, Certificate certificate, PostContent postContent, PostStatus postStatus, DateTime dateTime) {
         this.id = id;
@@ -26,19 +29,8 @@ public class Post implements Ownable {
         this.dateTime = dateTime;
     }
 
-    public void like() {
-        postStatus.likeCountUp();
-    }
-
-    public void unLike() {
-        postStatus.likeCountDown();
-    }
-
-    public boolean isOwner(User user) {
-        return this.user.getId().equals(user.getId());
-    }
-
-    public void update(PostContent postContent) {
-        this.postContent.update(postContent);
+    public void update(PostContent postContent, List<Image> postImages) {
+        this.postContent = postContent;
+        this.postImages = postImages;
     }
 }
