@@ -19,5 +19,6 @@ public class TrendingKeywordCacheScheduler {
     @SchedulerLock(name = "trending_cache", lockAtMostFor = "PT2S", lockAtLeastFor = "PT2S")
     public void trendingCache() {
         trendingKeywordRankingService.refreshRanking();
+        log.info("TrendingKeywordCacheScheduler.trendingCache() executed");
     }
 }

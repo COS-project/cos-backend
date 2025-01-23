@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class QuestionReader {
 
     private final MockExamRepository mockExamRepository;
-    private final MockExamCacheRepository mockExamCacheRepository;
+    private final MockExamCache mockExamCache;
 
     public Question read(Certificate certificate,
             MockExamSession mockExamSession,
@@ -20,10 +20,10 @@ public class QuestionReader {
     }
 
     public List<Question> read(MockExam mockExam) {
-        return mockExamCacheRepository.getQuestions(mockExam)
+        return mockExamCache.find(mockExam)
                 .orElseGet(() -> {
                     List<Question> questions = mockExamRepository.findQuestions(mockExam);
-                    mockExamCacheRepository.setQuestions(questions);
+                    mockExamCache.cache(questions);
                     return questions;
                 });
     }

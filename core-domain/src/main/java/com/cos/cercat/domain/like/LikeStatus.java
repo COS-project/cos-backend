@@ -1,11 +1,11 @@
 package com.cos.cercat.domain.like;
 
 public record LikeStatus(
-        Long likeCount,
-        Boolean isLiked
+        LikeCount count,
+        boolean isLiked
 ) {
 
-    public static LikeStatus of(Long likeCount, boolean isLiked) {
-        return new LikeStatus(likeCount, isLiked);
+    public static LikeStatus of(LikeCount count, boolean isLiked) {
+        return new LikeStatus(count, isLiked);
     }
 }

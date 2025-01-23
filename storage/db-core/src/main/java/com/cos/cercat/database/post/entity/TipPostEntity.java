@@ -33,21 +33,19 @@ public class TipPostEntity extends PostEntity {
                          UserEntity userEntity,
                          CertificateEntity certificateEntity,
                          PostType postType,
-                         Integer likeCount,
                          LocalDateTime createdAt) {
-        super(id, title, content, userEntity, certificateEntity, postType, likeCount,createdAt);
+        super(id, title, content, userEntity, certificateEntity, postType, createdAt);
     }
 
     public static TipPostEntity from(TipPost tipPost) {
 
         return new TipPostEntity(
                 tipPost.getId(),
-                tipPost.getPostContent().getTitle(),
-                tipPost.getPostContent().getContent(),
+                tipPost.getPostContent().title(),
+                tipPost.getPostContent().content(),
                 UserEntity.from(tipPost.getUser()),
                 CertificateEntity.from(tipPost.getCertificate()),
                 tipPost.getPostStatus().getPostType(),
-                tipPost.getPostStatus().getLikeCount(),
                 tipPost.getDateTime().createdAt());
     }
 }

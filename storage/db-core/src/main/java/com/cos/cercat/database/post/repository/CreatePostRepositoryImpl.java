@@ -44,8 +44,8 @@ public class CreatePostRepositoryImpl implements CreatePostRepository {
                                          PostContent postContent,
                                          Question question) {
         CommentaryPostEntity commentaryPostEntity = new CommentaryPostEntity(
-                postContent.getTitle(),
-                postContent.getContent(),
+                postContent.title(),
+                postContent.content(),
                 UserEntity.from(user),
                 CertificateEntity.from(certificate),
                 PostType.COMMENTARY,
@@ -62,8 +62,8 @@ public class CreatePostRepositoryImpl implements CreatePostRepository {
     public TargetPost saveNormalPost(User user, Certificate certificate, PostContent postContent) {
 
         NormalPostEntity normalPostEntity = new NormalPostEntity(
-                postContent.getTitle(),
-                postContent.getContent(),
+                postContent.title(),
+                postContent.content(),
                 UserEntity.from(user),
                 CertificateEntity.from(certificate),
                 PostType.NORMAL
@@ -80,8 +80,8 @@ public class CreatePostRepositoryImpl implements CreatePostRepository {
                                   PostContent postContent,
                                   Set<RecommendTag> recommendTags) {
         TipPostEntity tipPostEntity = new TipPostEntity(
-                postContent.getTitle(),
-                postContent.getContent(),
+                postContent.title(),
+                postContent.content(),
                 UserEntity.from(user),
                 CertificateEntity.from(certificate),
                 PostType.TIP

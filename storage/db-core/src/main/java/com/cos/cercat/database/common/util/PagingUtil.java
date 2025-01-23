@@ -20,7 +20,7 @@ public class PagingUtil {
                     case "createdAt" -> {
                         return new OrderSpecifier<>(direction, createdAt);
                     }
-                    case "likeCount" -> {
+                    case "count" -> {
                         return new OrderSpecifier<>(direction, likeCount);
                     }
                 }

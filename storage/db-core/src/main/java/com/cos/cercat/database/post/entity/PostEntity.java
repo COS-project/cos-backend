@@ -48,16 +48,12 @@ public class PostEntity extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     protected PostType postType;
 
-    @ColumnDefault("0")
-    protected Integer likeCount = 0;
-
     public PostEntity(Long id,
                       String title,
                       String content,
                       UserEntity userEntity,
                       CertificateEntity certificateEntity,
                       PostType postType,
-                      Integer likeCount,
                       LocalDateTime createdAt) {
         this.id = id;
         this.title = title;
@@ -65,7 +61,6 @@ public class PostEntity extends BaseTimeEntity {
         this.userEntity = userEntity;
         this.certificateEntity = certificateEntity;
         this.postType = postType;
-        this.likeCount = likeCount;
         this.createdAt = createdAt;
     }
 
@@ -84,17 +79,19 @@ public class PostEntity extends BaseTimeEntity {
                     id,
                     userEntity.toDomain(),
                     certificateEntity.toDomain(),
-                    new PostContent(title, content, images),
-                    new PostStatus(commentCount, likeCount, postType),
+                    new PostContent(title, content),
+                    new PostStatus(commentCount, postType),
                     ((CommentaryPostEntity) this).getQuestionEntity().toDomain(),
+                    images,
                     new DateTime(createdAt, modifiedAt)
                 );
             case TIP -> new TipPost(
                     id,
                     userEntity.toDomain(),
                     certificateEntity.toDomain(),
-                    new PostContent(title, content, images),
-                    new PostStatus(commentCount, likeCount, postType),
+                    new PostContent(title, content),
+                    new PostStatus(commentCount, postType),
+                    images,
                     new DateTime(createdAt, modifiedAt),
                     recommendTags
             );
@@ -102,8 +99,9 @@ public class PostEntity extends BaseTimeEntity {
                     id,
                     userEntity.toDomain(),
                     certificateEntity.toDomain(),
-                    new PostContent(title, content, images),
-                    new PostStatus(commentCount, likeCount, postType),
+                    new PostContent(title, content),
+                    new PostStatus(commentCount, postType),
+                    images,
                     new DateTime(createdAt, modifiedAt)
             );
         };
@@ -113,33 +111,30 @@ public class PostEntity extends BaseTimeEntity {
         return switch (post.getPostStatus().getPostType()) {
             case COMMENTARY -> new CommentaryPostEntity(
                     post.getId(),
-                    post.getPostContent().getTitle(),
-                    post.getPostContent().getContent(),
+                    post.getPostContent().title(),
+                    post.getPostContent().content(),
                     UserEntity.from(post.getUser()),
                     CertificateEntity.from(post.getCertificate()),
                     post.getPostStatus().getPostType(),
-                    post.getPostStatus().getLikeCount(),
                     QuestionEntity.from(((CommentaryPost) post).getQuestion()),
                     post.getDateTime().createdAt()
             );
             case TIP -> new TipPostEntity(
                     post.getId(),
-                    post.getPostContent().getTitle(),
-                    post.getPostContent().getContent(),
+                    post.getPostContent().title(),
+                    post.getPostContent().content(),
                     UserEntity.from(post.getUser()),
                     CertificateEntity.from(post.getCertificate()),
                     post.getPostStatus().getPostType(),
-                    post.getPostStatus().getLikeCount(),
                     post.getDateTime().createdAt()
             );
             case NORMAL -> new NormalPostEntity(
                     post.getId(),
-                    post.getPostContent().getTitle(),
-                    post.getPostContent().getContent(),
+                    post.getPostContent().title(),
+                    post.getPostContent().content(),
                     UserEntity.from(post.getUser()),
                     CertificateEntity.from(post.getCertificate()),
                     post.getPostStatus().getPostType(),
-                    post.getPostStatus().getLikeCount(),
                     post.getDateTime().createdAt()
             );
         };

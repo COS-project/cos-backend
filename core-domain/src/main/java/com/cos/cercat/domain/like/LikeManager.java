@@ -18,32 +18,28 @@ public class LikeManager {
     private final LikeRepository likeRepository;
     private final PostReader postReader;
     private final CommentReader commentReader;
+    private final LikeCounter likeCounter;
     private final EventPublisher eventPublisher;
 
-    public void like(User user, LikeTarget likeTarget) {
+    public void like(User liker, LikeTarget likeTarget) {
         switch (likeTarget.targetType()) {
             case POST -> {
                 Post post = postReader.read(TargetPost.from(likeTarget.targetId()));
-                likeRepository.save(user, likeTarget);
-                eventPublisher.publish(LikeCreatedEvent.postLike(post, user));
+                likeRepository.save(Like.from(liker, likeTarget));
+                eventPublisher.publish(LikeCreatedEvent.postLike(post, liker));
             }
             case COMMENT -> {
                 PostComment comment = commentReader.read(TargetComment.from(likeTarget.targetId()));
-                likeRepository.save(user, likeTarget);
-                eventPublisher.publish(LikeCreatedEvent.commentLike(comment, user));
+                likeRepository.save(Like.from(liker, likeTarget));
+                eventPublisher.publish(LikeCreatedEvent.commentLike(comment, liker));
             }
         }
+        likeCounter.countUp(likeTarget);
     }
 
-    public void unLike(User user, LikeTarget likeTarget) {
-        // likeCounter.decrease(likeTarget.targetId());
-        likeRepository.remove(user, likeTarget);
+    public void unLike(User liker, LikeTarget likeTarget) {
+        likeRepository.remove(Like.from(liker, likeTarget));
+        likeCounter.countDown(likeTarget);
     }
-
-    public void initCount(LikeTarget likeTarget) {
-        likeRepository.initLikeCount(likeTarget);
-
-    }
-
 
 }

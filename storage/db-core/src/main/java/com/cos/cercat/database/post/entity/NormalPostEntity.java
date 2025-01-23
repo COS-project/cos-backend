@@ -36,9 +36,8 @@ public class NormalPostEntity extends PostEntity {
                             UserEntity userEntity,
                             CertificateEntity certificateEntity,
                             PostType postType,
-                            Integer likeCount,
                             LocalDateTime createdAt) {
-        super(id, title, content, userEntity, certificateEntity, postType, likeCount,createdAt);
+        super(id, title, content, userEntity, certificateEntity, postType,createdAt);
     }
 
 }

@@ -1,11 +1,9 @@
 package com.cos.cercat.database.like.entity;
 
+import com.cos.cercat.domain.like.LikeCount;
 import com.cos.cercat.domain.like.LikeTarget;
-import com.cos.cercat.domain.like.LikeTargetType;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,15 +15,21 @@ import lombok.NoArgsConstructor;
 @Getter
 public class LikeCountEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private Long targetId;
-    private LikeTargetType likeTargetType;
+    @EmbeddedId
+    private LikeCountId id;
     private Long count;
 
-    public static LikeCountEntity from(LikeTarget likeTarget) {
-        return new LikeCountEntity(null, likeTarget.targetId(), likeTarget.targetType(), 0L);
+    public LikeCountEntity(LikeCount likeCount) {
+        this.id = LikeCountId.from(likeCount.likeTarget());
+        this.count = likeCount.count();
     }
 
+    public static LikeCountEntity from(LikeCount likeCount) {
+        return new LikeCountEntity(likeCount);
+    }
+
+    public LikeCount toDomain() {
+        return new LikeCount(new LikeTarget(id.targetId(), id.targetType()), count);
+    }
 }
+

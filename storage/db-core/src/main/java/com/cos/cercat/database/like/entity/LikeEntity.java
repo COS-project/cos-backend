@@ -1,8 +1,7 @@
 package com.cos.cercat.database.like.entity;
 
-import com.cos.cercat.domain.like.LikeTarget;
+import com.cos.cercat.domain.like.Like;
 import com.cos.cercat.domain.like.LikeTargetType;
-import com.cos.cercat.domain.user.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -33,7 +32,7 @@ public class LikeEntity {
     @Enumerated(EnumType.STRING)
     private LikeTargetType likeTargetType;
 
-    public static LikeEntity of(User user, LikeTarget likeTarget) {
-        return new LikeEntity(null, user.getId(), likeTarget.targetId(), likeTarget.targetType());
+    public static LikeEntity from(Like like) {
+        return new LikeEntity(null, like.likerId(), like.likeTarget().targetId(), like.likeTarget().targetType());
     }
 }

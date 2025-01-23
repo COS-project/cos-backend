@@ -20,12 +20,13 @@ public class Post implements Ownable {
     private List<Image> postImages;
     private DateTime dateTime;
 
-    public Post(Long id, User user, Certificate certificate, PostContent postContent, PostStatus postStatus, DateTime dateTime) {
+    public Post(Long id, User user, Certificate certificate, PostContent postContent, PostStatus postStatus, List<Image> images, DateTime dateTime) {
         this.id = id;
         this.user = user;
         this.certificate = certificate;
         this.postContent = postContent;
         this.postStatus = postStatus;
+        this.postImages = images;
         this.dateTime = dateTime;
     }
 

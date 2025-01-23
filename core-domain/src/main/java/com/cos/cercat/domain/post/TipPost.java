@@ -18,9 +18,10 @@ public class TipPost extends Post {
                    Certificate certificate,
                    PostContent postContent,
                    PostStatus postStatus,
+                   List<Image> images,
                    DateTime dateTime,
                    Set<RecommendTag> recommendTags) {
-        super(id, user, certificate, postContent, postStatus, dateTime);
+        super(id, user, certificate, postContent, postStatus, images, dateTime);
         this.recommendTags = recommendTags;
     }
 

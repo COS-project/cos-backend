@@ -13,7 +13,7 @@ public class QuestionUpdater {
 
     private final FileUploader fileUploader;
     private final MockExamRepository mockExamRepository;
-    private final MockExamCacheRepository mockExamCacheRepository;
+    private final MockExamCache mockExamCache;
 
     public void updateImage(Question question, File questionImageFile,
             List<UploadingOptionImageFile> optionImageFiles) {
@@ -25,6 +25,6 @@ public class QuestionUpdater {
             question.addOptionImageUrl(optionImageFile.optionSequence(), optionImage.getImageUrl());
         }
         mockExamRepository.updateQuestion(question);
-        mockExamCacheRepository.deleteQuestions(TargetMockExam.from(question.getMockExam().id()));
+        mockExamCache.delete(TargetMockExam.from(question.getMockExam().id()));
     }
 }

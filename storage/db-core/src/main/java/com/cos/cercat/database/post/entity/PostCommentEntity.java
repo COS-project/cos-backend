@@ -35,9 +35,6 @@ public class PostCommentEntity extends BaseTimeEntity {
 
     private Long parentCommentId;
 
-    @ColumnDefault("0")
-    private Integer likeCount = 0;
-
     @Column(length = 500)
     private String content;
 
@@ -45,14 +42,12 @@ public class PostCommentEntity extends BaseTimeEntity {
                              UserEntity userEntity,
                              PostEntity postEntity,
                              Long parentCommentId,
-                             Integer likeCount,
                              String content,
                              LocalDateTime createdAt) {
         this.id = id;
         this.userEntity = userEntity;
         this.postEntity = postEntity;
         this.parentCommentId = parentCommentId;
-        this.likeCount = likeCount;
         this.content = content;
         this.createdAt = createdAt;
     }
@@ -80,7 +75,6 @@ public class PostCommentEntity extends BaseTimeEntity {
                 userEntity.toDomain(),
                 new CommentContent(parentCommentId, content),
                 postEntity.getId(),
-                likeCount,
                 new DateTime(createdAt, modifiedAt)
         );
     }
@@ -91,7 +85,6 @@ public class PostCommentEntity extends BaseTimeEntity {
                 UserEntity.from(postComment.getUser()),
                 postEntity,
                 postComment.getContent().parentId(),
-                postComment.getLikeCount(),
                 postComment.getContent().content(),
                 postComment.getDateTime().createdAt()
         );

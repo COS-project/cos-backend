@@ -18,8 +18,9 @@ public class CommentaryPost extends Post {
                           PostContent postContent,
                           PostStatus postStatus,
                           Question question,
+                          List<Image> images,
                           DateTime dateTime) {
-        super(id, user, certificate, postContent, postStatus, dateTime);
+        super(id, user, certificate, postContent, postStatus, images, dateTime);
         this.question = question;
     }
 

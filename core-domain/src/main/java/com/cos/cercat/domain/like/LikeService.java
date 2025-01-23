@@ -13,19 +13,22 @@ public class LikeService {
     private final LikeReader likeReader;
     private final LikeManager likeManager;
     private final UserReader userReader;
+    private final LikeCounter likeCounter;
 
     public void like(TargetUser targetUser, LikeTarget likeTarget) {
-        User user = userReader.read(targetUser);
-        likeManager.like(user, likeTarget);
+        User liker = userReader.read(targetUser);
+        likeManager.like(liker, likeTarget);
     }
 
     public void unLike(TargetUser targetUser, LikeTarget likeTarget) {
-        User user = userReader.read(targetUser);
-        likeManager.unLike(user, likeTarget);
+        User liker = userReader.read(targetUser);
+        likeManager.unLike(liker, likeTarget);
     }
 
     public LikeStatus getLikeStatus(TargetUser targetUser, LikeTarget likeTarget) {
-        User user = userReader.read(targetUser);
-        return likeReader.read(user, likeTarget);
+        User liker = userReader.read(targetUser);
+        LikeCount likeCount = likeCounter.get(likeTarget);
+        boolean isLiked = likeReader.isLiked(liker, likeTarget);
+        return LikeStatus.of(likeCount, isLiked);
     }
 }

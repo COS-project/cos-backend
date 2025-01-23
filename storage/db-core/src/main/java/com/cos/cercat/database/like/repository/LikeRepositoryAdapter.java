@@ -1,46 +1,53 @@
 package com.cos.cercat.database.like.repository;
 
 import com.cos.cercat.database.like.entity.LikeCountEntity;
+import com.cos.cercat.database.like.entity.LikeCountId;
 import com.cos.cercat.database.like.entity.LikeEntity;
+import com.cos.cercat.domain.like.Like;
+import com.cos.cercat.domain.like.LikeCount;
+import com.cos.cercat.domain.like.LikeCountRepository;
 import com.cos.cercat.domain.like.LikeTarget;
 import com.cos.cercat.domain.like.LikeRepository;
-import com.cos.cercat.domain.user.User;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
-public class LikeRepositoryAdapter implements LikeRepository {
+public class LikeRepositoryAdapter implements LikeRepository, LikeCountRepository {
 
     private final LikeJpaRepository likeJpaRepository;
     private final LikeCountJpaRepository likeCountJpaRepository;
 
     @Override
-    public boolean isLiked(User user, LikeTarget likeTarget) {
-        return likeJpaRepository.exists(user.getId(), likeTarget.targetId(), likeTarget.targetType());
+    public void save(Like like) {
+        likeJpaRepository.save(LikeEntity.from(like));
     }
 
     @Override
-    @Transactional
-    public void save(User user, LikeTarget likeTarget) {
-        likeJpaRepository.save(LikeEntity.of(user, likeTarget));
+    public boolean exists(Like like) {
+        return likeJpaRepository.exists(like.likerId(), like.likeTarget().targetId(), like.likeTarget().targetType());
     }
 
     @Override
-    @Transactional
-    public void remove(User user, LikeTarget likeTarget) {
-        likeJpaRepository.delete(user.getId(), likeTarget.targetId(), likeTarget.targetType());
+    public void remove(Like like) {
+        likeJpaRepository.delete(like.likerId(), like.likeTarget().targetId(), like.likeTarget().targetType());
     }
 
     @Override
-    public void initLikeCount(LikeTarget likeTarget) {
-        likeCountJpaRepository.save(LikeCountEntity.from(likeTarget));
+    public void save(LikeCount likeCount) {
+        likeCountJpaRepository.save(LikeCountEntity.from(likeCount));
     }
 
     @Override
-    public Long getCount(LikeTarget likeTarget) {
-        return 0L;
+    public Optional<LikeCount> findByTarget(LikeTarget likeTarget) {
+        return likeCountJpaRepository.findById(LikeCountId.from(likeTarget)).map(LikeCountEntity::toDomain);
+    }
+
+    @Override
+    public void saveAll(List<LikeCount> bufferedCounts) {
+        likeCountJpaRepository.saveAll(bufferedCounts.stream().map(LikeCountEntity::from).toList());
     }
 }
 
