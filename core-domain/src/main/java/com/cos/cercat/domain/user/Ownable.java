@@ -2,9 +2,9 @@ package com.cos.cercat.domain.user;
 
 public interface Ownable {
 
-    User getUser();
+    User getOwner();
 
     default boolean isOwner(User user) {
-        return getUser().getId().equals(user.getId());
+        return getOwner().getId().equals(user.getId());
     }
 }

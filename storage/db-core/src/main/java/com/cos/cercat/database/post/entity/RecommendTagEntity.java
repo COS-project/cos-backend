@@ -4,9 +4,6 @@ import com.cos.cercat.domain.post.RecommendTag;
 import com.cos.cercat.domain.post.TagType;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-
-import static org.hibernate.annotations.OnDeleteAction.*;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -19,30 +16,17 @@ public class RecommendTagEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tip_post_id")
-    @OnDelete(action = CASCADE)
-    private TipPostEntity tipPost;
+    private Long tipPostId;
 
     @Enumerated(EnumType.STRING)
     private TagType tagType;
 
     private String tagName;
 
-    public RecommendTagEntity(TagType tagType, String tagName) {
-        this.tagType = tagType;
-        this.tagName = tagName;
-    }
-
-    public RecommendTagEntity(TipPostEntity tipPost, TagType tagType, String tagName) {
-        this.tagType = tagType;
-        this.tagName = tagName;
-        this.tipPost = tipPost;
-    }
-
-    public static RecommendTagEntity of(TipPostEntity tipPost, RecommendTag recommendTag) {
+    public static RecommendTagEntity of(Long postId, RecommendTag recommendTag) {
         return new RecommendTagEntity(
-                tipPost,
+                null,
+                postId,
                 recommendTag.tagType(),
                 recommendTag.tagName()
         );

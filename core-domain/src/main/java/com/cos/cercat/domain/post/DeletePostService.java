@@ -13,7 +13,7 @@ public class DeletePostService {
 
     private final UserReader userReader;
     private final PostReader postReader;
-    private final CommentReader commentReader;
+    private final PostCommentReader postCommentReader;
     private final PostRemover postRemover;
     private final PermissionValidator permissionValidator;
 
@@ -26,7 +26,7 @@ public class DeletePostService {
 
     public void deletePostComment(TargetUser targetUser, TargetComment targetComment) {
         User user = userReader.read(targetUser);
-        PostComment postComment = commentReader.read(targetComment);
+        PostComment postComment = postCommentReader.read(targetComment);
         permissionValidator.validate(postComment, user);
         postRemover.remove(postComment);
     }

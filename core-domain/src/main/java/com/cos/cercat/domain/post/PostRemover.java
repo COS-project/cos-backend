@@ -10,12 +10,13 @@ import java.util.List;
 public class PostRemover {
 
     private final DeletePostRepository postRepository;
+    private final PostCommentRepository postCommentRepository;
 
     public void deleteRecommendTags(Post post) {
         postRepository.deleteRecommendTags(post);
     }
 
-    public void deleteImages(List<Long> removeImageIds) {
+    public void removeImages(List<Long> removeImageIds) {
         postRepository.deleteImages(removeImageIds);
     }
 
@@ -24,6 +25,6 @@ public class PostRemover {
     }
 
     public void remove(PostComment postComment) {
-        postRepository.deleteComment(postComment);
+        postCommentRepository.deleteComment(postComment);
     }
 }

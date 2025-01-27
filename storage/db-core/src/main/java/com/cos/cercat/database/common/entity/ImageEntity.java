@@ -27,9 +27,7 @@ public class ImageEntity {
         }
 
         return new ImageEntity(
-                image.getId() != null ?
-                        image.getId()
-                        : null,
+                image.getId(),
                 image.getImageUrl()
         );
     }

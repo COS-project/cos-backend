@@ -23,7 +23,7 @@ public record PostCommentResponse(
     public static PostCommentResponse from(PostComment postComment) {
         return new PostCommentResponse(
                 postComment.getId(),
-                UserResponse.from(postComment.getUser()),
+                UserResponse.from(postComment.getOwner()),
                 postComment.getContent().parentId(),
                 postComment.getLikeCount(),
                 postComment.getContent().content(),

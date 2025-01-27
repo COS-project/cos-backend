@@ -135,7 +135,7 @@ public class GoalEntity {
         return new GoalEntity(
                 goal.getId(),
                 CertificateEntity.from(goal.getCertificate()),
-                UserEntity.from(goal.getUser()),
+                UserEntity.from(goal.getOwner()),
                 goalContent.goalScore(),
                 goalPeriod.startDateTime(),
                 goalPeriod.endDateTime(),

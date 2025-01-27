@@ -16,32 +16,47 @@ public class PostAppender {
   private final CreatePostRepository postRepository;
   private final QuestionReader questionReader;
 
-  public TargetPost append(User user, Certificate certificate, NewPost newPost,
-          List<Image> images) {
-      return switch (newPost.postType()) {
-          case COMMENTARY -> appendCommentaryPost(user, certificate, newPost);
-          case NORMAL -> appendNormalPost(user, certificate, newPost);
-          case TIP -> appendTipPost(user, certificate, newPost);
-    };
-  }
+    public TargetPost append(
+            User user,
+            Certificate certificate,
+            NewPost newPost,
+            List<Image> images
+    ) {
+        Post post = switch (newPost.postType()) {
+            case COMMENTARY -> createCommentaryPost(user, certificate, newPost, images);
+            case NORMAL -> createNormalPost(user, certificate, newPost, images);
+            case TIP -> createTipPost(user, certificate, newPost, images);
+        };
+        return postRepository.save(post);
+    }
 
-  private TargetPost appendCommentaryPost(User user,
-      Certificate certificate,
-      NewPost newPost) {
+  private Post createCommentaryPost(
+          User user,
+          Certificate certificate,
+          NewPost newPost,
+          List<Image> images
+  ) {
       Question question = questionReader.read(certificate, newPost.mockExamSession(),
           newPost.questionSequence());
-    return postRepository.saveCommentaryPost(user, certificate, newPost.content(), question);
+
+      return CommentaryPost.create(user, certificate, newPost, images, question);
   }
 
-  private TargetPost appendNormalPost(User user,
-      Certificate certificate,
-      NewPost newPost) {
-    return postRepository.saveNormalPost(user, certificate, newPost.content());
+  private Post createNormalPost(
+          User user,
+          Certificate certificate,
+          NewPost newPost,
+          List<Image> images
+  ) {
+      return Post.create(user, certificate, newPost, images);
   }
 
-  private TargetPost appendTipPost(User user,
-      Certificate certificate,
-      NewPost newPost) {
-    return postRepository.saveTipPost(user, certificate, newPost.content(), newPost.tags());
+  private Post createTipPost(
+          User user,
+          Certificate certificate,
+          NewPost newPost,
+          List<Image> images
+  ) {
+      return TipPost.create(user, certificate, newPost, images);
   }
 }

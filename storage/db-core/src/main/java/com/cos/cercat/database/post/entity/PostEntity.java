@@ -3,18 +3,17 @@ package com.cos.cercat.database.post.entity;
 import com.cos.cercat.domain.common.Image;
 import com.cos.cercat.database.certificate.entity.CertificateEntity;
 import com.cos.cercat.database.common.entity.BaseTimeEntity;
-import com.cos.cercat.database.mockexam.entity.QuestionEntity;
 import com.cos.cercat.database.user.entity.UserEntity;
 import com.cos.cercat.domain.post.*;
 
 import jakarta.persistence.*;
+import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.OnDelete;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -22,6 +21,7 @@ import static org.hibernate.annotations.OnDeleteAction.CASCADE;
 
 @Entity
 @Getter
+@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "dtype", discriminatorType = DiscriminatorType.STRING)
@@ -48,95 +48,50 @@ public class PostEntity extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     protected PostType postType;
 
-    public PostEntity(Long id,
-                      String title,
-                      String content,
-                      UserEntity userEntity,
-                      CertificateEntity certificateEntity,
-                      PostType postType,
-                      LocalDateTime createdAt) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.userEntity = userEntity;
-        this.certificateEntity = certificateEntity;
-        this.postType = postType;
-        this.createdAt = createdAt;
-    }
+    protected int commentCount;
 
-    public PostEntity(String title, String content, UserEntity userEntity, CertificateEntity certificateEntity, PostType postType) {
-        this.title = title;
-        this.content = content;
-        this.userEntity = userEntity;
-        this.certificateEntity = certificateEntity;
-        this.postType = postType;
-    }
-
-    public Post toDomain(List<Image> images, int commentCount, Set<RecommendTag> recommendTags) {
+    public Post toDomain(List<Image> images) {
         return switch (postType) {
-            case COMMENTARY ->
-                new CommentaryPost(
-                    id,
-                    userEntity.toDomain(),
-                    certificateEntity.toDomain(),
-                    new PostContent(title, content),
-                    new PostStatus(commentCount, postType),
-                    ((CommentaryPostEntity) this).getQuestionEntity().toDomain(),
-                    images,
-                    new DateTime(createdAt, modifiedAt)
-                );
-            case TIP -> new TipPost(
-                    id,
-                    userEntity.toDomain(),
-                    certificateEntity.toDomain(),
-                    new PostContent(title, content),
-                    new PostStatus(commentCount, postType),
-                    images,
-                    new DateTime(createdAt, modifiedAt),
-                    recommendTags
-            );
-            default -> new Post(
-                    id,
-                    userEntity.toDomain(),
-                    certificateEntity.toDomain(),
-                    new PostContent(title, content),
-                    new PostStatus(commentCount, postType),
-                    images,
-                    new DateTime(createdAt, modifiedAt)
-            );
+            case COMMENTARY -> ((CommentaryPostEntity) this).toDomain(images);
+            case NORMAL, TIP -> Post.builder()
+                    .id(id)
+                    .writer(userEntity.toDomain())
+                    .certificate(certificateEntity.toDomain())
+                    .postContent(new PostContent(title, content))
+                    .postImages(images)
+                    .dateTime(new DateTime(createdAt, modifiedAt))
+                    .build();
         };
     }
 
+    public Post toDomain(List<Image> images, Set<RecommendTagEntity> recommendTagEntities) {
+        return TipPost.builder()
+                .id(id)
+                .writer(userEntity.toDomain())
+                .certificate(certificateEntity.toDomain())
+                .postContent(new PostContent(title, content))
+                .postImages(images)
+                .dateTime(new DateTime(createdAt, modifiedAt))
+                .recommendTags(recommendTagEntities.stream().map(RecommendTagEntity::toDomain).collect(
+                                Collectors.toSet()))
+                .build();
+    }
+
+
+
     public static PostEntity from(Post post) {
-        return switch (post.getPostStatus().getPostType()) {
-            case COMMENTARY -> new CommentaryPostEntity(
-                    post.getId(),
-                    post.getPostContent().title(),
-                    post.getPostContent().content(),
-                    UserEntity.from(post.getUser()),
-                    CertificateEntity.from(post.getCertificate()),
-                    post.getPostStatus().getPostType(),
-                    QuestionEntity.from(((CommentaryPost) post).getQuestion()),
-                    post.getDateTime().createdAt()
-            );
-            case TIP -> new TipPostEntity(
-                    post.getId(),
-                    post.getPostContent().title(),
-                    post.getPostContent().content(),
-                    UserEntity.from(post.getUser()),
-                    CertificateEntity.from(post.getCertificate()),
-                    post.getPostStatus().getPostType(),
-                    post.getDateTime().createdAt()
-            );
-            case NORMAL -> new NormalPostEntity(
-                    post.getId(),
-                    post.getPostContent().title(),
-                    post.getPostContent().content(),
-                    UserEntity.from(post.getUser()),
-                    CertificateEntity.from(post.getCertificate()),
-                    post.getPostStatus().getPostType(),
-                    post.getDateTime().createdAt()
-            );
+        return switch (post.getType()) {
+            case COMMENTARY -> CommentaryPostEntity.from((CommentaryPost) post);
+            case NORMAL, TIP -> PostEntity.builder()
+                    .id(post.getId())
+                    .postType(post.getType())
+                    .title(post.getPostContent().title())
+                    .content(post.getPostContent().content())
+                    .userEntity(UserEntity.from(post.getWriter()))
+                    .certificateEntity(CertificateEntity.from(post.getCertificate()))
+                    .createdAt(post.getDateTime().createdAt())
+                    .modifiedAt(post.getDateTime().modifiedAt())
+                    .build();
         };
     }
 }

@@ -11,7 +11,7 @@ public record CommentCreatedEvent(
 ) implements Event {
 
     public static Event from(Post post, CommentContent commentContent) {
-        return new CommentCreatedEvent(post.getUser(), post.getId(), post.getPostContent().title(), commentContent);
+        return new CommentCreatedEvent(post.getWriter(), post.getId(), post.getPostContent().title(), commentContent);
     }
 
     @Override

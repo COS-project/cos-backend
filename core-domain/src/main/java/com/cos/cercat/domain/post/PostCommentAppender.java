@@ -7,13 +7,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CommentAppender {
+public class PostCommentAppender {
 
-    private final CreatePostRepository createPostRepository;
+    private final PostCommentRepository postCommentRepository;
     private final EventPublisher eventPublisher;
 
     public void append(User commenter, Post post, CommentContent commentContent) {
-        createPostRepository.saveComment(commenter, post, commentContent);
+        PostComment postComment = PostComment.create(commenter, post, commentContent);
+        postCommentRepository.save(postComment);
         eventPublisher.publish(CommentCreatedEvent.from(post, commentContent));
     }
 }

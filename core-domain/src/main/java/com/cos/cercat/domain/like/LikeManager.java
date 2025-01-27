@@ -1,7 +1,7 @@
 package com.cos.cercat.domain.like;
 
 import com.cos.cercat.domain.common.EventPublisher;
-import com.cos.cercat.domain.post.CommentReader;
+import com.cos.cercat.domain.post.PostCommentReader;
 import com.cos.cercat.domain.post.Post;
 import com.cos.cercat.domain.post.PostComment;
 import com.cos.cercat.domain.post.PostReader;
@@ -17,7 +17,7 @@ public class LikeManager {
 
     private final LikeRepository likeRepository;
     private final PostReader postReader;
-    private final CommentReader commentReader;
+    private final PostCommentReader postCommentReader;
     private final LikeCounter likeCounter;
     private final EventPublisher eventPublisher;
 
@@ -29,7 +29,7 @@ public class LikeManager {
                 eventPublisher.publish(LikeCreatedEvent.postLike(post, liker));
             }
             case COMMENT -> {
-                PostComment comment = commentReader.read(TargetComment.from(likeTarget.targetId()));
+                PostComment comment = postCommentReader.read(TargetComment.from(likeTarget.targetId()));
                 likeRepository.save(Like.from(liker, likeTarget));
                 eventPublisher.publish(LikeCreatedEvent.commentLike(comment, liker));
             }

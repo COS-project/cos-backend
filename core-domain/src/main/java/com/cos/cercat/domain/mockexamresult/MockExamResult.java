@@ -31,6 +31,11 @@ public class MockExamResult implements Ownable {
     }
 
     @Override
+    public User getOwner() {
+        return this.user;
+    }
+
+    @Override
     public boolean isOwner(User user) {
         return this.user.getId().equals(user.getId());
     }

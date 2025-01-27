@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class PostUpdater {
 
-    private final UpdatePostRepository postRepository;
+    private final CreatePostRepository postRepository;
     private final PostRemover postRemover;
     private final QuestionReader questionReader;
     private final CertificateReader certificateReader;
@@ -24,25 +24,25 @@ public class PostUpdater {
     public void update(Post post,
                        UpdatedPost updatedPost,
                        List<Image> images) {
-        switch (updatedPost.postType()) {
+        Post updated = updateBasedOnType(post, updatedPost, images);
+        postRepository.save(updated);
+        postRemover.removeImages(updatedPost.removeImageIds());
+    }
+
+    private Post updateBasedOnType(Post post, UpdatedPost updatedPost, List<Image> images) {
+        return switch (updatedPost.postType()) {
             case COMMENTARY -> {
                 CommentaryPost commentaryPost = (CommentaryPost) post;
                 Certificate certificate = certificateReader.read(TargetCertificate.from(post.getCertificate().id()));
                 Question question = questionReader.read(certificate, updatedPost.mockExamSession(), updatedPost.questionSequence());
-                commentaryPost.update(updatedPost.content(), question, images);
-                postRepository.update(commentaryPost);
+                yield commentaryPost.update(updatedPost.content(), question, images);
             }
             case TIP -> {
                 TipPost tipPost = (TipPost) post;
-                tipPost.update(updatedPost.content(), updatedPost.tags(), images);
                 postRemover.deleteRecommendTags(tipPost);
-                postRepository.updateTipPost(tipPost);
+                yield tipPost.update(updatedPost.content(), images, updatedPost.tags());
             }
-            case NORMAL -> {
-                post.update(updatedPost.content(), images);
-                postRepository.update(post);
-            }
-        }
-        postRemover.deleteImages(updatedPost.removeImageIds());
+            case NORMAL -> post.update(updatedPost.content(), images);
+        };
     }
 }

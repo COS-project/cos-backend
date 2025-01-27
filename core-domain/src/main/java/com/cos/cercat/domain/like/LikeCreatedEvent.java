@@ -14,11 +14,11 @@ public record LikeCreatedEvent(
 ) implements Event {
 
     public static Event postLike(Post post, User liker) {
-        return new LikeCreatedEvent(post.getId(), post.getUser(), liker.getId(), liker.getNickname(), LikeTargetType.POST);
+        return new LikeCreatedEvent(post.getId(), post.getWriter(), liker.getId(), liker.getNickname(), LikeTargetType.POST);
     }
 
     public static Event commentLike(PostComment comment, User liker) {
-        return new LikeCreatedEvent(comment.getId(), comment.getUser(), liker.getId(), liker.getNickname(), LikeTargetType.COMMENT);
+        return new LikeCreatedEvent(comment.getId(), comment.getOwner(), liker.getId(), liker.getNickname(), LikeTargetType.COMMENT);
     }
 
     @Override

@@ -1,10 +1,8 @@
 package com.cos.cercat.database.post.repository;
 
-import com.cos.cercat.database.post.entity.PostCommentEntity;
 import com.cos.cercat.database.post.entity.PostEntity;
 import com.cos.cercat.domain.post.DeletePostRepository;
 import com.cos.cercat.domain.post.Post;
-import com.cos.cercat.domain.post.PostComment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +14,6 @@ public class DeletePostRepositoryImpl implements DeletePostRepository {
 
     private final RecommendTagJpaRepository recommendTagJpaRepository;
     private final PostImageJpaRepository postImageJpaRepository;
-    private final PostCommentJpaRepository postCommentJpaRepository;
     private final PostJpaRepository postJpaRepository;
 
     @Override
@@ -35,9 +32,4 @@ public class DeletePostRepositoryImpl implements DeletePostRepository {
         postJpaRepository.delete(postEntity);
     }
 
-    @Override
-    public void deleteComment(PostComment postComment) {
-        PostCommentEntity commentEntity = postCommentJpaRepository.getReferenceById(postComment.getId());
-        postCommentJpaRepository.delete(commentEntity);
-    }
 }

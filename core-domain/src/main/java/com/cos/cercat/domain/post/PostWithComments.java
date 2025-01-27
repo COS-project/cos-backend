@@ -11,7 +11,7 @@ public record PostWithComments(
         List<PostComment> postComments
 ) {
     public static PostWithComments of(Post post, List<PostComment> postComments) {
-        return new PostWithComments(post, postComments);
+        return new PostWithComments(post, postComments).organizeChildComments();
     }
 
     public PostWithComments organizeChildComments() {

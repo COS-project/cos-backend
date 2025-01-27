@@ -3,20 +3,20 @@ package com.cos.cercat.database.post.entity;
 import com.cos.cercat.database.certificate.entity.CertificateEntity;
 import com.cos.cercat.database.mockexam.entity.QuestionEntity;
 import com.cos.cercat.database.user.entity.UserEntity;
-import com.cos.cercat.domain.post.PostType;
+import com.cos.cercat.domain.common.Image;
+import com.cos.cercat.domain.post.CommentaryPost;
+import com.cos.cercat.domain.post.DateTime;
+import com.cos.cercat.domain.post.PostContent;
 import jakarta.persistence.*;
+import java.util.List;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.time.LocalDateTime;
-
-import static org.hibernate.annotations.OnDeleteAction.CASCADE;
-
-
 @Entity
+@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Getter
 @OnDelete(action = OnDeleteAction.CASCADE)
 @Table(name = "commentary_post")
@@ -25,28 +25,35 @@ public class CommentaryPostEntity extends PostEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
-    @OnDelete(action =  CASCADE)
+    @OnDelete(action =  OnDeleteAction.CASCADE)
     private QuestionEntity questionEntity;
 
-    public CommentaryPostEntity(String title,
-                                String content,
-                                UserEntity userEntity,
-                                CertificateEntity certificateEntity,
-                                PostType postType,
-                                QuestionEntity questionEntity) {
-        super(title, content, userEntity, certificateEntity, postType);
-        this.questionEntity = questionEntity;
+    public static CommentaryPostEntity from(CommentaryPost commentaryPost) {
+        return CommentaryPostEntity.builder()
+                .id(commentaryPost.getId())
+                .postType(commentaryPost.getType())
+                .title(commentaryPost.getPostContent().title())
+                .content(commentaryPost.getPostContent().content())
+                .userEntity(UserEntity.from(commentaryPost.getWriter()))
+                .certificateEntity(CertificateEntity.from(commentaryPost.getCertificate()))
+                .questionEntity(QuestionEntity.from(commentaryPost.getQuestion()))
+                .createdAt(commentaryPost.getDateTime().createdAt())
+                .modifiedAt(commentaryPost.getDateTime().modifiedAt())
+                .build();
     }
 
-    public CommentaryPostEntity(Long id,
-                                String title,
-                                String content,
-                                UserEntity userEntity,
-                                CertificateEntity certificateEntity,
-                                PostType postType,
-                                QuestionEntity questionEntity,
-                                LocalDateTime createdAt) {
-        super(id, title, content, userEntity, certificateEntity, postType, createdAt);
-        this.questionEntity = questionEntity;
+    public CommentaryPost toDomain(List<Image> images) {
+        return CommentaryPost.builder()
+                .id(id)
+                .type(postType)
+                .postContent(new PostContent(title, content))
+                .writer(userEntity.toDomain())
+                .certificate(certificateEntity.toDomain())
+                .question(questionEntity.toDomain())
+                .dateTime(new DateTime(createdAt, modifiedAt))
+                .commentCount(commentCount)
+                .postImages(images)
+                .build();
     }
+
 }

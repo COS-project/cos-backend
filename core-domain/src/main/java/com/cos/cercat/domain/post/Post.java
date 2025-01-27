@@ -7,31 +7,43 @@ import com.cos.cercat.domain.user.User;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Getter
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
+@SuperBuilder
 public class Post implements Ownable {
 
     private Long id;
-    private User user;
+    private User writer;
+    private PostType type;
     private Certificate certificate;
     private PostContent postContent;
-    private PostStatus postStatus;
     private List<Image> postImages;
     private DateTime dateTime;
+    private int commentCount;
 
-    public Post(Long id, User user, Certificate certificate, PostContent postContent, PostStatus postStatus, List<Image> images, DateTime dateTime) {
-        this.id = id;
-        this.user = user;
-        this.certificate = certificate;
-        this.postContent = postContent;
-        this.postStatus = postStatus;
-        this.postImages = images;
-        this.dateTime = dateTime;
+    public static Post create(User user, Certificate certificate, NewPost newPost, List<Image> images) {
+        return Post.builder()
+                .writer(user)
+                .type(newPost.postType())
+                .certificate(certificate)
+                .postContent(new PostContent(newPost.content().title(), newPost.content().content()))
+                .postImages(images)
+                .dateTime(DateTime.init())
+                .commentCount(0)
+                .build();
+
     }
 
-    public void update(PostContent postContent, List<Image> postImages) {
+    public Post update(PostContent postContent, List<Image> postImages) {
         this.postContent = postContent;
         this.postImages = postImages;
+        return this;
+    }
+
+    @Override
+    public User getOwner() {
+        return writer;
     }
 }

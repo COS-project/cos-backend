@@ -8,6 +8,4 @@ public interface DeletePostRepository {
     void deleteImages(List<Long> removeImageIds);
 
     void delete(Post post);
-
-    void deleteComment(PostComment postComment);
 }

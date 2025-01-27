@@ -6,6 +6,7 @@ import com.cos.cercat.domain.common.SliceResult;
 import com.cos.cercat.domain.user.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ReadPostRepository {
 
@@ -13,23 +14,10 @@ public interface ReadPostRepository {
                              CommentaryPostSearchCond commentaryPostSearchCond,
                              Cursor cursor);
 
-    PostWithComments findDetail(TargetPost targetPost);
-
-    Post findWithLock(TargetPost targetPost);
-
-    PostComment findCommentWithLock(TargetComment targetComment);
-
-    PostComment find(TargetComment targetComment);
-
-    SliceResult<PostComment> findComment(User user, Cursor cursor);
+    Optional<Post> find(TargetPost targetPost);
 
     List<Post> findTop3TipPosts(Certificate certificate);
 
-    SliceResult<Post> findMyCommentaryPosts(User user, Cursor cursor);
+    SliceResult<Post> findMyPosts(User user, Cursor cursor, PostType postType);
 
-    SliceResult<Post> findMyNormalPosts(User user, Cursor cursor);
-
-    SliceResult<Post> findMyTipPosts(User user, Cursor cursor);
-
-    Post find(TargetPost targetPost);
 }

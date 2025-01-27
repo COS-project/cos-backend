@@ -68,7 +68,7 @@ public class UserAnswerEntity {
     public static UserAnswerEntity from(UserAnswer userAnswer) {
         return UserAnswerEntity.builder()
                 .id(userAnswer.getId())
-                .userEntity(UserEntity.from(userAnswer.getUser()))
+                .userEntity(UserEntity.from(userAnswer.getOwner()))
                 .questionEntity(QuestionEntity.from(userAnswer.getQuestion()))
                 .subjectResultEntity(SubjectResultEntity.from(userAnswer.getSubjectResultId()))
                 .selectOptionSeq(userAnswer.getSelectOptionSeq())

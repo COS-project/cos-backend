@@ -2,12 +2,10 @@ package com.cos.cercat.database.post.entity;
 
 import com.cos.cercat.database.common.entity.ImageEntity;
 import com.cos.cercat.database.post.entity.embeddedId.PostImageId;
+import com.cos.cercat.domain.common.Image;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
 import org.springframework.data.domain.Persistable;
-
-import static org.hibernate.annotations.OnDeleteAction.CASCADE;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -19,26 +17,18 @@ public class PostImageEntity implements Persistable<PostImageId> {
     @EmbeddedId
     private PostImageId postImageId = new PostImageId();
 
-    @MapsId("postId")
-    @ManyToOne
-    @JoinColumn(name = "post_id")
-    @Setter
-    @OnDelete(action =  CASCADE)
-    private PostEntity postEntity;
-
     @MapsId("imageId")
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id")
-    private ImageEntity imageEntity;
+    private ImageEntity image;
 
-    public static PostImageEntity of(PostEntity postEntity, ImageEntity imageEntity) {
-        return new PostImageEntity(
-                new PostImageId(postEntity.getId(), imageEntity.getId()),
-                postEntity,
-                imageEntity
-        );
+    public static PostImageEntity of(Long postId, Image image) {
+        return new PostImageEntity(new PostImageId(postId, image.getId()), ImageEntity.from(image));
     }
 
+    public Image toDomain() {
+        return new Image(image.getId(), image.getImageUrl());
+    }
 
     @Override
     public PostImageId getId() {

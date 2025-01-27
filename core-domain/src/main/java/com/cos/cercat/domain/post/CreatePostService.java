@@ -24,23 +24,27 @@ public class CreatePostService {
   private final UserReader userReader;
   private final PostReader postReader;
   private final CertificateReader certificateReader;
-  private final CommentAppender commentAppender;
+  private final PostCommentAppender postCommentAppender;
 
-  public TargetPost createPost(TargetUser targetUser,
-      TargetCertificate targetCertificate,
-      NewPost newPost,
-      List<File> uploadFiles) {
+  public TargetPost createPost(
+          TargetUser targetUser,
+          TargetCertificate targetCertificate,
+          NewPost newPost,
+          List<File> uploadFiles
+  ) {
     User user = userReader.read(targetUser);
     Certificate certificate = certificateReader.read(targetCertificate);
     List<Image> images = fileUploader.upload(uploadFiles);
     return postAppender.append(user, certificate, newPost, images);
   }
 
-  public void createPostComment(TargetUser targetUser,
-      TargetPost targetPost,
-      CommentContent commentContent) {
+  public void createPostComment(
+          TargetUser targetUser,
+          TargetPost targetPost,
+          CommentContent commentContent
+  ) {
     User user = userReader.read(targetUser);
     Post post = postReader.read(targetPost);
-    commentAppender.append(user, post, commentContent);
+    postCommentAppender.append(user, post, commentContent);
   }
 }

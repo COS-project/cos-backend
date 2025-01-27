@@ -21,7 +21,7 @@ public class ReadPostService {
     private final CertificateReader certificateReader;
     private final UserReader userReader;
     private final PostReader postReader;
-    private final CommentReader commentReader;
+    private final PostCommentReader postCommentReader;
     private final PostSearcher postSearcher;
 
     @Transactional(readOnly = true)
@@ -51,7 +51,7 @@ public class ReadPostService {
     public SliceResult<Post> readCommentingPosts(TargetUser targetUser,
                                                 Cursor cursor) {
         User user = userReader.read(targetUser);
-        SliceResult<PostComment> postComments = commentReader.read(user, cursor);
+        SliceResult<PostComment> postComments = postCommentReader.read(user, cursor);
         return postComments.map(postComment ->
                 postReader.read(TargetPost.from(postComment.getPostId()))
         );
