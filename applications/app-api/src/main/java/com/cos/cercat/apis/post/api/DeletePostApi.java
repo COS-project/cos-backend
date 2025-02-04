@@ -1,7 +1,8 @@
 package com.cos.cercat.apis.post.api;
 
+import com.cos.cercat.domain.post.PostCommentService;
+import com.cos.cercat.domain.post.PostService;
 import com.cos.cercat.web.Response;
-import com.cos.cercat.domain.post.DeletePostService;
 import com.cos.cercat.domain.post.TargetComment;
 import com.cos.cercat.domain.post.TargetPost;
 import com.cos.cercat.domain.user.TargetUser;
@@ -18,19 +19,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v2")
 public class DeletePostApi implements DeletePostApiDocs {
 
-    private final DeletePostService deletePostService;
+    private final PostService postService;
+    private final PostCommentService postCommentService;
 
     @DeleteMapping("/posts/{postId}")
     public Response<Void> deletePost(@PathVariable Long postId,
                                      @AuthenticationPrincipal User currentUser) {
-        deletePostService.deletePost(TargetUser.from(currentUser.getId()), TargetPost.from(postId));
+        postService.deletePost(TargetUser.from(currentUser.getId()), TargetPost.from(postId));
         return Response.success("게시글 삭제 성공");
     }
 
     @DeleteMapping("/post-comments/{commentId}")
     public Response<Void> deletePostComment(@PathVariable Long commentId,
                                             @AuthenticationPrincipal User currentUser) {
-        deletePostService.deletePostComment(TargetUser.from(currentUser.getId()), TargetComment.from(commentId));
+        postCommentService.deletePostComment(TargetUser.from(currentUser.getId()), TargetComment.from(commentId));
         return Response.success("댓글 삭제 성공");
     }
 

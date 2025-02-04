@@ -9,13 +9,13 @@ import java.util.Set;
 
 public interface RecommendTagJpaRepository extends JpaRepository<RecommendTagEntity, Long> {
 
-    @Query("select rt from RecommendTagEntity rt where rt.tipPostId = :postId")
+    @Query("select rt from RecommendTagEntity rt where rt.postId = :postId")
     Set<RecommendTagEntity> findByPostId(Long postId);
 
     @Modifying
     @Query("""
             delete from RecommendTagEntity rt
-            where rt.tipPostId = :postId
+            where rt.postId = :postId
             """)
     void deleteByPostId(Long postId);
 }

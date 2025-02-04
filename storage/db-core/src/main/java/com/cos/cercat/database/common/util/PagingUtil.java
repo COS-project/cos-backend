@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 public class PagingUtil {
 
-    public static OrderSpecifier<?> getOrderSpecifier(Pageable pageable, DateTimePath<LocalDateTime> createdAt, NumberPath<Integer> likeCount) {
+    public static OrderSpecifier<?> getOrderSpecifier(Pageable pageable, DateTimePath<LocalDateTime> createdAt, NumberPath<Long> likeCount) {
         if (!pageable.getSort().isEmpty()) {
             for (Sort.Order order : pageable.getSort()) {
                 Order direction = order.getDirection().isAscending() ? Order.ASC : Order.DESC;

@@ -3,8 +3,9 @@ package com.cos.cercat.apis.post.api;
 import com.cos.cercat.apis.post.request.PostCommentCreateRequest;
 import com.cos.cercat.apis.post.request.PostCreateRequest;
 import com.cos.cercat.domain.certificate.TargetCertificate;
+import com.cos.cercat.domain.post.PostCommentService;
 import com.cos.cercat.web.Response;
-import com.cos.cercat.domain.post.CreatePostService;
+import com.cos.cercat.domain.post.PostService;
 import com.cos.cercat.domain.post.PostType;
 import com.cos.cercat.domain.post.TargetPost;
 import com.cos.cercat.domain.user.TargetUser;
@@ -24,7 +25,8 @@ import static com.cos.cercat.apis.global.util.FileMapper.toFiles;
 @RequestMapping("/api/v2")
 public class CreatePostApi implements CreatePostApiDocs {
 
-    private final CreatePostService createPostService;
+    private final PostService postService;
+    private final PostCommentService postCommentService;
 
     @PostMapping(path = "/certificates/{certificateId}/{postType}/posts", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Response<TargetPost> createPost(@PathVariable Long certificateId,
@@ -32,7 +34,7 @@ public class CreatePostApi implements CreatePostApiDocs {
                                            @RequestPart PostCreateRequest request,
                                            @RequestPart(required = false) List<MultipartFile> files,
                                            @AuthenticationPrincipal User currentUser) {
-        TargetPost targetPost = createPostService.createPost(
+        TargetPost targetPost = postService.createPost(
                 TargetUser.from(currentUser.getId()),
                 TargetCertificate.from(certificateId),
                 request.toNewPost(postType),
@@ -45,7 +47,7 @@ public class CreatePostApi implements CreatePostApiDocs {
     public Response<Void> createPostComment(@PathVariable Long postId,
                                             @RequestBody PostCommentCreateRequest request,
                                             @AuthenticationPrincipal User currentUser) {
-        createPostService.createPostComment(
+        postCommentService.createPostComment(
                 TargetUser.from(currentUser.getId()),
                 TargetPost.from(postId),
                 request.toCommentContent()

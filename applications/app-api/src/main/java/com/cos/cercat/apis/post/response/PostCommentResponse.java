@@ -14,7 +14,6 @@ public record PostCommentResponse(
         Long postCommentId,
         UserResponse user,
         Long parentCommentId,
-        Integer likeCount,
         String content,
         DateTime dateTime,
         @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -25,7 +24,6 @@ public record PostCommentResponse(
                 postComment.getId(),
                 UserResponse.from(postComment.getOwner()),
                 postComment.getContent().parentId(),
-                postComment.getLikeCount(),
                 postComment.getContent().content(),
                 postComment.getDateTime(),
                 postComment.getChildComments().stream()

@@ -4,6 +4,7 @@ package com.cos.cercat.domain.learning;
 import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.domain.user.Ownable;
 import com.cos.cercat.domain.user.User;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -15,6 +16,7 @@ import java.util.List;
 
 @Getter
 @Builder
+@AllArgsConstructor
 public class Goal implements Ownable {
 
     private final Long id;

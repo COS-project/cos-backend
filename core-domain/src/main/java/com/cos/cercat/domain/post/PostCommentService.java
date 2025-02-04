@@ -9,25 +9,29 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class DeletePostService {
+public class PostCommentService {
 
-    private final UserReader userReader;
     private final PostReader postReader;
+    private final PostCommentAppender postCommentAppender;
+    private final UserReader userReader;
     private final PostCommentReader postCommentReader;
     private final PostRemover postRemover;
     private final PermissionValidator permissionValidator;
-
-    public void deletePost(TargetUser targetUser, TargetPost targetPost) {
-        User user = userReader.read(targetUser);
-        Post post = postReader.read(targetPost);
-        permissionValidator.validate(post, user);
-        postRemover.remove(post);
-    }
 
     public void deletePostComment(TargetUser targetUser, TargetComment targetComment) {
         User user = userReader.read(targetUser);
         PostComment postComment = postCommentReader.read(targetComment);
         permissionValidator.validate(postComment, user);
         postRemover.remove(postComment);
+    }
+
+    public void createPostComment(
+            TargetUser targetUser,
+            TargetPost targetPost,
+            CommentContent commentContent
+    ) {
+        User user = userReader.read(targetUser);
+        Post post = postReader.read(targetPost);
+        postCommentAppender.append(user, post, commentContent);
     }
 }

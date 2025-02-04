@@ -3,11 +3,13 @@ package com.cos.cercat.database.post.repository;
 import com.cos.cercat.database.certificate.entity.CertificateEntity;
 import com.cos.cercat.database.certificate.entity.QCertificateEntity;
 import com.cos.cercat.database.common.util.PagingUtil;
+import com.cos.cercat.database.like.entity.QLikeCountEntity;
 import com.cos.cercat.database.mockexam.entity.QMockExamEntity;
 import com.cos.cercat.database.mockexam.entity.QQuestionEntity;
 import com.cos.cercat.database.post.entity.CommentaryPostEntity;
 import com.cos.cercat.database.post.entity.QCommentaryPostEntity;
 import com.cos.cercat.database.user.entity.QUserEntity;
+import com.cos.cercat.domain.like.LikeTargetType;
 import com.cos.cercat.domain.post.CommentaryPostSearchCond;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -46,6 +48,10 @@ public class CommentaryPostJpaRepositoryImpl implements
                 .leftJoin(QCommentaryPostEntity.commentaryPostEntity.certificateEntity,
                         QCertificateEntity.certificateEntity)
                 .fetchJoin()
+                .leftJoin(QLikeCountEntity.likeCountEntity)
+                .on(
+                        QLikeCountEntity.likeCountEntity.id.targetId.eq(QCommentaryPostEntity.commentaryPostEntity.id)
+                        .and(QLikeCountEntity.likeCountEntity.id.targetType.eq(LikeTargetType.POST)))
                 .where(
                         eqExamYear(cond.examYear()),
                         eqRound(cond.round()),
@@ -98,6 +104,6 @@ public class CommentaryPostJpaRepositoryImpl implements
     public static OrderSpecifier<?> postSort(Pageable pageable) {
         return PagingUtil.getOrderSpecifier(pageable,
                 QCommentaryPostEntity.commentaryPostEntity.createdAt,
-                QCommentaryPostEntity.commentaryPostEntity.likeCount);
+                QLikeCountEntity.likeCountEntity.count);
     }
 }

@@ -16,7 +16,7 @@ public class RecommendTagEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long tipPostId;
+    private Long postId;
 
     @Enumerated(EnumType.STRING)
     private TagType tagType;

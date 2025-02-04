@@ -28,6 +28,7 @@ public class CommentaryPost extends Post {
                 .postContent(newPost.content())
                 .question(question)
                 .postImages(images)
+                .dateTime(DateTime.init())
                 .build();
     }
 

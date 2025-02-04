@@ -1,6 +1,7 @@
 package com.cos.cercat.database.post.repository;
 
 
+import com.cos.cercat.domain.common.Image;
 import com.cos.cercat.domain.post.*;
 
 import com.cos.cercat.database.post.entity.PostEntity;
@@ -27,26 +28,26 @@ public class CreatePostRepositoryAdapter implements CreatePostRepository {
     @Override
     public TargetPost save(Post post) {
         PostEntity postEntity = postJpaRepository.save(PostEntity.from(post));
-        savePostImages(post);
+        savePostImages(postEntity.getId(), post.getPostImages());
 
         if (post.getType().equals(PostType.TIP)) {
-            saveRecommendTags((TipPost) post);
+            saveRecommendTags(postEntity.getId(), (TipPost) post);
         }
 
         return TargetPost.from(postEntity.getId());
     }
 
-    private void savePostImages(Post post) {
-        List<PostImageEntity> imageEntities = post.getPostImages().stream()
-                .map(image -> PostImageEntity.of(post.getId(), image))
+    private void savePostImages(Long postId, List<Image> postImages) {
+        List<PostImageEntity> imageEntities = postImages.stream()
+                .map(image -> PostImageEntity.of(postId, image))
                 .toList();
         postImageJpaRepository.saveAll(imageEntities);
     }
 
-    private void saveRecommendTags(TipPost tipPost) {
+    private void saveRecommendTags(Long postId, TipPost tipPost) {
         Set<RecommendTag> recommendTags = tipPost.getRecommendTags();
         recommendTagJpaRepository.saveAll(recommendTags.stream()
-                .map(recommendTag -> RecommendTagEntity.of(tipPost.getId(), recommendTag))
+                .map(recommendTag -> RecommendTagEntity.of(postId, recommendTag))
                 .toList());
     }
 }

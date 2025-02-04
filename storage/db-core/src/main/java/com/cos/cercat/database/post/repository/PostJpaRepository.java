@@ -19,7 +19,7 @@ public interface PostJpaRepository extends JpaRepository<PostEntity, Long> {
     @Query("""
             SELECT p
             FROM PostEntity p
-            JOIN LikeCountEntity lc ON p.id = lc.id.targetId AND lc.id.targetType = 'POST'
+            LEFT JOIN LikeCountEntity lc ON p.id = lc.id.targetId AND lc.id.targetType = 'POST'
             WHERE p.postType = 'TIP'
             AND p.certificateEntity.id = :certificateId
             ORDER BY lc.count DESC
