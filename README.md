@@ -75,10 +75,10 @@
 Cercat 프로젝트는 단일 모듈 구조에서 시작하여, 코드 간의 의존도와 결합도를 줄여보고자 멀티모듈 구조의 프로젝트로 리팩토링을 진행했습니다.
 
 ```
-📁 cercat-application # Runnable
+📁 applications # Runnable
 📁 supports # 공통
-📁 cercat-domain # Business-Layer, Implementation-Layer
-📁 cercat-infra # Data-Access-Layer, GCS, Kafka, Redis
+📁 core-domain # Business-Layer, Implementation-Layer
+📁 infrastructure # Data-Access-Layer, GCS, Kafka, Redis
 ```
 
 - [applications](https://github.com/COS-project/cos-backend/blob/main/applications/README.md)
