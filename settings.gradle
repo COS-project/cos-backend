@@ -7,33 +7,27 @@ plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
 }
 rootProject.name = 'cercat'
-include('applications')
-include('applications:app-api')
-include('applications:app-alarm')
+include(
+        'applications',
+        'applications:app-api',
+        'applications:app-alarm'
+)
+
+include('core-domain')
+
+include(
+        'infrastructure',
+        'infrastructure:client-kafka',
+        'infrastructure:client-gcs',
+        'infrastructure:db-mysql',
+        'infrastructure:cache-redis',
+        'infrastructure:search-es',
+)
 
 include(
         'supports',
         'supports:exception',
         'supports:security',
         'supports:web',
-)
-
-include('core-domain')
-
-include(
-        'storage',
-        'storage:db-core',
-        'storage:cache-core',
-        'storage:search-core',
-)
-
-include(
-        'infrastructure',
-        'infrastructure:scheduler',
-)
-
-include(
-        'clients',
-        'clients:object-storage',
-        'clients:messaging',
+        'supports:scheduler-shedlock'
 )

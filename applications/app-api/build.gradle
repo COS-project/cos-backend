@@ -5,14 +5,14 @@ dependencies {
     implementation project(':supports:security')
     implementation project(':supports:web')
 
-    runtimeOnly project(':storage:cache-core')
-    runtimeOnly project(':storage:db-core')
-    runtimeOnly project(':storage:search-core')
+    runtimeOnly project(':infrastructure:cache-redis')
+    runtimeOnly project(':infrastructure:db-mysql')
+    runtimeOnly project(':infrastructure:search-es')
 
-    runtimeOnly project(':clients:object-storage')
-    runtimeOnly project(':clients:messaging')
+    runtimeOnly project(':infrastructure:client-gcs')
+    runtimeOnly project(':infrastructure:client-kafka')
 
-    runtimeOnly project(':infrastructure:scheduler')
+    runtimeOnly project(':supports:scheduler-shedlock')
 
     //OAuth2
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'

@@ -21,28 +21,34 @@ public class PostUpdater {
     private final CertificateReader certificateReader;
 
     @Transactional
-    public void update(Post post,
-                       UpdatedPost updatedPost,
-                       List<Image> images) {
-        Post updated = updateBasedOnType(post, updatedPost, images);
+    public void update(Post post, UpdatedPost updatedPost, List<Image> images) {
+        Post updated = updatePost(post, updatedPost, images);
         postRepository.save(updated);
         postRemover.removeImages(updatedPost.removeImageIds());
     }
 
-    private Post updateBasedOnType(Post post, UpdatedPost updatedPost, List<Image> images) {
-        return switch (updatedPost.postType()) {
-            case COMMENTARY -> {
-                CommentaryPost commentaryPost = (CommentaryPost) post;
-                Certificate certificate = certificateReader.read(TargetCertificate.from(post.getCertificate().id()));
-                Question question = questionReader.read(certificate, updatedPost.mockExamSession(), updatedPost.questionSequence());
-                yield commentaryPost.update(updatedPost.content(), question, images);
-            }
-            case TIP -> {
-                TipPost tipPost = (TipPost) post;
-                postRemover.deleteRecommendTags(tipPost);
-                yield tipPost.update(updatedPost.content(), images, updatedPost.tags());
-            }
-            case NORMAL -> post.update(updatedPost.content(), images);
-        };
+    private Post updatePost(Post post, UpdatedPost updatedPost, List<Image> images) {
+        if (post instanceof CommentaryPost commentaryPost) {
+            return updateCommentaryPost(commentaryPost, updatedPost, images);
+        }
+        if (post instanceof TipPost tipPost) {
+            return updateTipPost(tipPost, updatedPost, images);
+        }
+        return updateNormalPost(post, updatedPost, images);
+    }
+
+    private Post updateCommentaryPost(CommentaryPost post, UpdatedPost updatedPost, List<Image> images) {
+        Certificate certificate = certificateReader.read(TargetCertificate.from(post.getCertificate().id()));
+        Question question = questionReader.read(certificate, updatedPost.mockExamSession(), updatedPost.questionSequence());
+        return post.update(updatedPost.content(), question, images);
+    }
+
+    private Post updateTipPost(TipPost post, UpdatedPost updatedPost, List<Image> images) {
+        postRemover.deleteRecommendTags(post);
+        return post.update(updatedPost.content(), images, updatedPost.tags());
+    }
+
+    private Post updateNormalPost(Post post, UpdatedPost updatedPost, List<Image> images) {
+        return post.update(updatedPost.content(), images);
     }
 }

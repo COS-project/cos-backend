@@ -66,17 +66,7 @@ project(':applications') {
     }
 }
 
-project(':storage') {
-    bootJar {
-        enabled = false
-    }
-
-    jar {
-        enabled = false
-    }
-}
-
-project(':clients') {
+project(':infrastructure') {
     bootJar {
         enabled = false
     }

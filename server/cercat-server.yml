@@ -138,7 +138,7 @@ services:
       - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
   kafka-connect:
     build:
-      context: ../infrastructure/docker/connect
+      context: ../docker/connect
       dockerfile: ../docker-compose/connect/Dockerfile
     links:
       - zookeeper

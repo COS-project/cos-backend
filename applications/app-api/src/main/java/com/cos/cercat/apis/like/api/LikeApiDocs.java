@@ -16,6 +16,6 @@ public interface LikeApiDocs {
     @Operation(summary = "좋아요 취소")
     Response<Void> unLike(LikeRequest request, User currentUser);
 
-    @Operation(summary = "좋아요의 여부 확인")
+    @Operation(summary = "좋아요 여부 및 갯수 확인")
     Response<LikeStatus> likeStatus(LikeRequest request, User currentUser);
 }

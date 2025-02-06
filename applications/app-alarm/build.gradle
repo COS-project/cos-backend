@@ -1,7 +1,7 @@
 dependencies {
     implementation project(':core-domain')
-    runtimeOnly project(':storage:db-core')
-    runtimeOnly project(':storage:cache-core')
+    runtimeOnly project(':infrastructure:db-mysql')
+    runtimeOnly project(':infrastructure:cache-redis')
 
     implementation project(':supports:exception')
     implementation project(':supports:security')

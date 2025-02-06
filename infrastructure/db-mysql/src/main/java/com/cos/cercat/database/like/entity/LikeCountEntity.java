@@ -4,6 +4,7 @@ import com.cos.cercat.domain.like.LikeCount;
 import com.cos.cercat.domain.like.LikeTarget;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
+@Table(name = "like_count")
 public class LikeCountEntity {
 
     @EmbeddedId
