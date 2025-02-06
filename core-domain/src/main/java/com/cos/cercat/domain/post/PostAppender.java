@@ -12,8 +12,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class PostAppender {
 
-  private final Set<PostAppendStrategy> postCreationStrategies;
-
+    private final Set<PostAppendStrategy> postCreationStrategies;
 
     public TargetPost append(
             User user,

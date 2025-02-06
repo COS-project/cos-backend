@@ -14,7 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 		"com.cos.cercat.database.user",
 		"com.cos.cercat.database.alarm",
 		"com.cos.cercat.database.common",
-		"com.cos.cercat.cache.user",
+		"com.cos.cercat.redis.user",
 		"com.cos.cercat.security",
 		"com.cos.cercat.web",
 		"com.cos.cercat.exception",
