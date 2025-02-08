@@ -1,7 +1,7 @@
 spring:
   config:
     activate:
-      on-profile: local,test,alarm
+      on-profile: local,test
 
 redis:
   host: localhost
