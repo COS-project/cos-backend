@@ -1,5 +1,7 @@
 package com.cos.cercat.apis.global.web;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -11,6 +13,11 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
+@OpenAPIDefinition(
+        servers = {
+                @Server(url = "https://cercat.o-r.kr", description = "배포 서버"),
+                @Server(url = "http://localhost:8080", description = "로컬 서버")
+        })
 public class SwaggerConfig {
 
     @Bean
