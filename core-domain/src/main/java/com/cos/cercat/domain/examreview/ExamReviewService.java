@@ -18,34 +18,29 @@ import java.util.List;
 public class ExamReviewService {
 
     private final UserReader userReader;
-    private final GoalReader goalReader;
     private final CertificateReader certificateReader;
     private final ExamReviewAppender examReviewAppender;
     private final CertificateExamReader certificateExamReader;
-    private final ExamReviewFinder examReviewFinder;
     private final InterestCertificateManager interestCertificateManager;
     private final ExamReviewReader examReviewReader;
 
 
     public void createExamReview(TargetUser targetUser,
                                  TargetCertificate targetCertificate,
-                                 ExamReviewContent content) {
-
+                                 ExamReviewContent review) {
         User user = userReader.read(targetUser);
         Certificate certificate = certificateReader.read(targetCertificate);
-        CertificateExam recentExam = certificateExamReader.readPrevious(certificate);
-        Goal goal = goalReader.readRecentGoal(user, certificate);
-        examReviewAppender.append(user, recentExam, content, goal.getPrepareMonths());
-
+        examReviewAppender.append(user, certificate, review);
     }
 
-    public SliceResult<ExamReview> getExamReviews(TargetCertificate targetCertificate,
-                                      ExamReviewSearchCond cond,
-                                      Cursor cursor) {
+    public SliceResult<ExamReview> getExamReviews(
+            TargetCertificate targetCertificate,
+            ExamReviewSearchCond cond,
+            Cursor cursor
+    ) {
         Certificate certificate = certificateReader.read(targetCertificate);
-        CertificateExam certificateExam = certificateExamReader.readPrevious(certificate);
-        return examReviewFinder.find(certificateExam, cond, cursor);
-
+        CertificateExam certificateExam = certificateExamReader.readPreviousExam(certificate);
+        return examReviewReader.read(certificateExam, cond, cursor);
     }
 
     public boolean isReviewTarget(TargetUser targetUser,
@@ -54,9 +49,11 @@ public class ExamReviewService {
         Certificate certificate = certificateReader.read(targetCertificate);
         List<Certificate> interesting = interestCertificateManager.findCertificate(user);
         boolean isInterest = interesting.contains(certificate);
-        CertificateExam certificateExam = certificateExamReader.readPrevious(certificate);
-        boolean existReview = examReviewReader.existReview(user, certificateExam);
-        return isInterest && !existReview;
+
+        CertificateExam certificateExam = certificateExamReader.readPreviousExam(certificate);
+        boolean notReviewed = !examReviewReader.existReview(user, certificateExam);
+
+        return isInterest && notReviewed;
     }
 
 }

@@ -11,11 +11,11 @@ public class CertificateExamReader {
 
     private final CertificateExamRepository certificateExamRepository;
 
-    public CertificateExam readPrevious(Certificate certificate) {
+    public CertificateExam readPreviousExam(Certificate certificate) {
         return certificateExamRepository.findPreviousCertificateExam(certificate);
     }
 
-    public CertificateExam readNext(Certificate certificate) {
+    public CertificateExam readNextExam(Certificate certificate) {
         return certificateExamRepository.findNextCertificateExam(certificate);
     }
 

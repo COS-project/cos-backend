@@ -36,8 +36,8 @@ public class ReadCertificateApi implements ReadCertificateApiDocs{
 
     @GetMapping("/certificates/{certificateId}/certificate-exams")
     public Response<CertificateExamResponse> getCertificateExamDetail(@PathVariable Long certificateId) {
-        CertificateExam recentCertificateExam = readCertificateService.readRecentCertificateExam(TargetCertificate.from(certificateId));
-        return Response.success(CertificateExamResponse.from(recentCertificateExam));
+        CertificateExam nextCertificateExam = readCertificateService.readNextCertificateExam(TargetCertificate.from(certificateId));
+        return Response.success(CertificateExamResponse.from(nextCertificateExam));
     }
 
     @GetMapping("/interest-certificates")

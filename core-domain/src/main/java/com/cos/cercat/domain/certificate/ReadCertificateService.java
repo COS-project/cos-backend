@@ -23,9 +23,9 @@ public class ReadCertificateService {
      * @param targetCertificate 자격증 ID
      * @return 자격증 상세 정보
      */
-    public CertificateExam readRecentCertificateExam(TargetCertificate targetCertificate) {
+    public CertificateExam readNextCertificateExam(TargetCertificate targetCertificate) {
         Certificate certificate = certificateReader.read(targetCertificate);
-        return certificateExamReader.readNext(certificate);
+        return certificateExamReader.readNextExam(certificate);
     }
 
     /**

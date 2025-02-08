@@ -1,4 +1,4 @@
-package com.cos.cercat.security.exception;
+package com.cos.cercat.es.exception;
 
 import com.cos.cercat.exception.BaseErrorCode;
 import com.cos.cercat.exception.ErrorReason;
@@ -7,13 +7,14 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum SecurityErrorCode implements BaseErrorCode {
+public enum ESErrorCode implements BaseErrorCode {
 
-    UNAUTHORIZED_USER(401, "인증되지 않은 사용자입니다."),
-    INVALID_TOKEN(404, "유효하지 않은 토큰입니다.");
+    ES_SEARCH_ERROR(500, "엘라스틱 서치 서버에러입니다. 강지원에게 문의해주세요");
+    ;
 
     private final Integer status;
     private final String message;
+
 
     @Override
     public ErrorReason getErrorReason() {

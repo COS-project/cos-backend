@@ -1,4 +1,4 @@
-package com.cos.cercat.security.exception;
+package com.cos.cercat.domain.mockexam.exception;
 
 import com.cos.cercat.exception.BaseErrorCode;
 import com.cos.cercat.exception.ErrorReason;
@@ -7,10 +7,12 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum SecurityErrorCode implements BaseErrorCode {
+public enum MockExamErrorCode implements BaseErrorCode {
 
-    UNAUTHORIZED_USER(401, "인증되지 않은 사용자입니다."),
-    INVALID_TOKEN(404, "유효하지 않은 토큰입니다.");
+    MOCK_EXAM_NOT_FOUND(404, "mock exam not founded"),
+    QUESTION_NOT_FOUND(404, "question not founded"),
+
+    ;
 
     private final Integer status;
     private final String message;

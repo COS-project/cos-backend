@@ -14,7 +14,7 @@ import co.elastic.clients.util.NamedValue;
 import co.elastic.clients.util.ObjectBuilder;
 import com.cos.cercat.domain.postsearch.SearchCond;
 import com.cos.cercat.es.postsearch.entity.PostDocument;
-import com.cos.cercat.es.postsearch.exception.ElasticSearchException;
+import com.cos.cercat.es.exception.ElasticSearchException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;

@@ -7,7 +7,7 @@ import com.cos.cercat.domain.postsearch.PostForSearch;
 import com.cos.cercat.domain.postsearch.PostForSearchRepository;
 import com.cos.cercat.domain.postsearch.SearchCond;
 import com.cos.cercat.es.postsearch.entity.PostDocument;
-import com.cos.cercat.es.postsearch.exception.SearchPostNotFoundException;
+import com.cos.cercat.domain.postsearch.exception.SearchPostNotFoundException;
 import com.cos.cercat.domain.post.TargetPost;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;

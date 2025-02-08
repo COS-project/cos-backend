@@ -4,9 +4,9 @@ import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.database.mockexam.entity.MockExamEntity;
 import com.cos.cercat.database.mockexam.entity.QuestionEntity;
 import com.cos.cercat.domain.mockexam.*;
-import com.cos.cercat.database.mockexam.exception.MockExamNotFoundException;
+import com.cos.cercat.domain.mockexam.exception.MockExamNotFoundException;
 
-import com.cos.cercat.database.mockexam.exception.QuestionNotFoundException;
+import com.cos.cercat.domain.mockexam.exception.QuestionNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

@@ -4,7 +4,7 @@ package com.cos.cercat.database.certificate.repository;
 import com.cos.cercat.database.certificate.entity.CertificateEntity;
 import com.cos.cercat.database.certificate.entity.SubjectEntity;
 import com.cos.cercat.domain.certificate.*;
-import com.cos.cercat.database.certificate.exception.CertificateNotFoundException;
+import com.cos.cercat.domain.certificate.exception.CertificateNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

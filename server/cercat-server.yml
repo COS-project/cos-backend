@@ -24,6 +24,7 @@ services:
       - KAKAO_REDIRECT_URI=${KAKAO_REDIRECT_URI}
       - CLIENT_SECRET=${CLIENT_SECRET}
       - SECRET_KEY=${SECRET_KEY}
+      - FRONT_HOST=${FRONT_HOST}
     restart: always
     healthcheck:
       test: "curl -f http://localhost:8080/health || exit 1"
@@ -53,6 +54,7 @@ services:
       - KAKAO_REDIRECT_URI=${KAKAO_REDIRECT_URI}
       - CLIENT_SECRET=${CLIENT_SECRET}
       - SECRET_KEY=${SECRET_KEY}
+      - FRONT_HOST=${FRONT_HOST}
     restart: always
     healthcheck:
       test: "curl -f http://localhost:8080/health || exit 1"
@@ -60,23 +62,17 @@ services:
       timeout: 10s
       retries: 3
       start_period: 30s
-  cercat-batch:
-    container_name: cercat-batch
+  cercat-alarm:
+    container_name: cercat-alarm
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    image: ghcr.io/jiwonkkang/cercat-batch:latest
+    image: ghcr.io/jiwonkkang/cercat-alarm:latest
     environment:
-      - BUCKET_NAME=${BUCKET_NAME}
-      - GCP_PROJECT_ID=${GCP_PROJECT_ID}
       - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
       - SPRING_DATABASE_HOST=${SPRING_DATABASE_HOST}
       - SPRING_DATABASE_PORT=${SPRING_DATABASE_PORT}
       - SPRING_DATABASE_USERNAME=${SPRING_DATABASE_USERNAME}
       - SPRING_DATABASE_PASSWORD=${SPRING_DATABASE_PASSWORD}
-      - GCS_KEY=${GCS_KEY}
-      - KAKAO_API_KEY=${KAKAO_API_KEY}
-      - KAKAO_REDIRECT_URI=${KAKAO_REDIRECT_URI}
-      - CLIENT_SECRET=${CLIENT_SECRET}
       - SECRET_KEY=${SECRET_KEY}
     networks:
       - app-tier

@@ -7,7 +7,7 @@ import com.cos.cercat.database.user.repository.UserJpaRepository;
 import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.database.learning.entity.GoalEntity;
 import com.cos.cercat.database.learning.entity.StudyTimeLogEntity;
-import com.cos.cercat.database.learning.exception.GoalNotFoundException;
+import com.cos.cercat.domain.learning.exception.GoalNotFoundException;
 import com.cos.cercat.domain.learning.Goal;
 import com.cos.cercat.domain.learning.LearningRepository;
 import com.cos.cercat.domain.learning.NewGoal;

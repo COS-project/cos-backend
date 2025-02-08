@@ -7,7 +7,7 @@ public record SearchLog(
         return new SearchLog(keyword);
     }
 
-    public boolean isNotValid() {
+    public boolean notValid() {
         return keyword == null || keyword.isBlank();
     }
 }

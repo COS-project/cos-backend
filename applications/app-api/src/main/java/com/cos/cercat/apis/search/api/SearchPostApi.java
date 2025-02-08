@@ -32,7 +32,12 @@ public class SearchPostApi implements SearchPostApiDocs {
                                                       @AuthenticationPrincipal User user,
                                                       @PathVariable Long certificateId,
                                                       @CursorDefault Cursor cursor) {
-        SliceResult<Post> posts = searchPostService.search(TargetUser.from(user.getId()), TargetCertificate.from(certificateId), cond, cursor);
+        SliceResult<Post> posts = searchPostService.search(
+                TargetUser.from(user.getId()),
+                TargetCertificate.from(certificateId),
+                cond,
+                cursor
+        );
         return Response.success(posts.map(PostResponse::from));
     }
 

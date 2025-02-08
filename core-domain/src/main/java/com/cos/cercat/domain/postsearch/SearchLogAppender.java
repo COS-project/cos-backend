@@ -4,19 +4,22 @@ import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-
 @Component
 @RequiredArgsConstructor
 public class SearchLogAppender {
 
-    private final SearchLogCache searchLogCache;
+    private final SearchLogQueue searchLogQueue;
 
     public void append(User user, SearchLog searchLog) {
-        if (searchLog.isNotValid()) {
+        if (searchLog.notValid()) {
             return;
         }
-        searchLogCache.cache(user, searchLog);
+
+        if (searchLogQueue.exists(user, searchLog)) {
+            searchLogQueue.pop(user, searchLog);
+        }
+
+        searchLogQueue.push(user, searchLog);
     }
 
 }

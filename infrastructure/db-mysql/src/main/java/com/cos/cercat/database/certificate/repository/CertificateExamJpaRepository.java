@@ -18,7 +18,17 @@ public interface CertificateExamJpaRepository extends JpaRepository<CertificateE
             ORDER BY ei.examDateTime DESC
             LIMIT 1
             """)
-    CertificateExamEntity findRecentCertificateExam(@Param("certificateId") Long certificateId);
+    CertificateExamEntity findPreviousCertificateExam(@Param("certificateId") Long certificateId);
+
+    @Query("""
+            SELECT ce FROM CertificateExamEntity ce
+            JOIN FETCH ce.examInfoEntity ei
+            WHERE ce.certificateEntity.id = :certificateId
+            AND ei.examDateTime > CURRENT_TIMESTAMP
+            ORDER BY ei.examDateTime ASC
+            LIMIT 1
+            """)
+    CertificateExamEntity findNextCertificateExam(Long certificateId);
 
     @Query("""
             SELECT ce from CertificateExamEntity ce
@@ -35,4 +45,6 @@ public interface CertificateExamJpaRepository extends JpaRepository<CertificateE
             = FUNCTION('DATE_FORMAT', :deadlineDate, '%Y-%m-%d')
             """)
     List<CertificateExamEntity> findCertificateExamsByDeadlineDate(LocalDateTime deadlineDate);
+
+
 }

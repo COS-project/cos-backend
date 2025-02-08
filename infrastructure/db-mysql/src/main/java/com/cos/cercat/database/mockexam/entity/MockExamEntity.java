@@ -82,6 +82,4 @@ public class MockExamEntity extends BaseTimeEntity {
                 certificateEntity.toDomain()
         );
     }
-
-
 }

@@ -1,4 +1,4 @@
-package com.cos.cercat.security.exception;
+package com.cos.cercat.domain.postsearch.exception;
 
 import com.cos.cercat.exception.BaseErrorCode;
 import com.cos.cercat.exception.ErrorReason;
@@ -7,13 +7,14 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum SecurityErrorCode implements BaseErrorCode {
+public enum PostSearchErrorCode implements BaseErrorCode {
 
-    UNAUTHORIZED_USER(401, "인증되지 않은 사용자입니다."),
-    INVALID_TOKEN(404, "유효하지 않은 토큰입니다.");
+    POST_SEARCH_ERROR_CODE(404, "search post not founded"),
+    ;
 
     private final Integer status;
     private final String message;
+
 
     @Override
     public ErrorReason getErrorReason() {

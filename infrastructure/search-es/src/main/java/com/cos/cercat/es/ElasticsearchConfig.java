@@ -11,14 +11,17 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 @EnableElasticsearchRepositories(basePackages = "com.cos.cercat")
 public class ElasticsearchConfig extends ElasticsearchConfiguration {
 
-    @Value("${elasticsearch.host}")
+    @Value("${elasticsearch.client.host}")
     private String host;
+
+    @Value("${elasticsearch.client.port}")
+    private Integer port;
 
     @NotNull
     @Override
     public ClientConfiguration clientConfiguration() {
         return ClientConfiguration.builder()
-                .connectedTo(host)
+                .connectedTo(host + ":" + port)
                 .build();
     }
 }

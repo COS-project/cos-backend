@@ -1,7 +1,7 @@
 package com.cos.cercat.redis.postsearch;
 
 import com.cos.cercat.domain.postsearch.SearchLog;
-import com.cos.cercat.domain.postsearch.SearchLogCache;
+import com.cos.cercat.domain.postsearch.SearchLogQueue;
 import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,14 +13,14 @@ import java.util.List;
 @Repository
 @Slf4j
 @RequiredArgsConstructor
-public class RedisSearchLogCache implements SearchLogCache {
+public class RedisSearchLogQueue implements SearchLogQueue {
 
     private final RedisTemplate<String, SearchLog> redisTemplate;
 
     private final static int LIST_FULL_SIZE = 10;
 
     @Override
-    public void cache(User user, SearchLog searchLog) {
+    public void push(User user, SearchLog searchLog) {
         String key = getKey(user.getId());
         log.info("Set Search Log from {} : {}", key, searchLog);
         redisTemplate.opsForList().leftPush(key, searchLog);
@@ -28,7 +28,7 @@ public class RedisSearchLogCache implements SearchLogCache {
     }
 
     @Override
-    public List<SearchLog> get(User user) {
+    public List<SearchLog> getAll(User user) {
         String key = getKey(user.getId());
         List<SearchLog> searchLogs = redisTemplate.opsForList().range(key, 0, 10);
         log.info("Get Search Log from {} : {}", key, searchLogs);
@@ -36,15 +36,27 @@ public class RedisSearchLogCache implements SearchLogCache {
     }
 
     @Override
-    public void delete(User user, SearchLog searchLog) {
+    public void pop(User user, SearchLog searchLog) {
         String key = getKey(user.getId());
         redisTemplate.opsForList().remove(key, 1, searchLog);
     }
 
     @Override
-    public void deleteAll(User user) {
+    public void popAll(User user) {
         String key = getKey(user.getId());
         redisTemplate.delete(key);
+    }
+
+    @Override
+    public boolean exists(User user, SearchLog searchLog) {
+        String key = getKey(user.getId());
+        List<SearchLog> searchLogs = redisTemplate.opsForList().range(key, 0, 10);
+
+        if (searchLogs == null) {
+            return false;
+        }
+
+        return searchLogs.contains(searchLog);
     }
 
     public String getKey(Long userId) {

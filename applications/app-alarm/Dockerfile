@@ -1,23 +1,21 @@
 FROM eclipse-temurin:17-jdk-alpine as build
 WORKDIR /workspace/app
 
-# 환경변수 추가
-ARG MODULE_PATH=cercat-application/app-batch
-ARG MODULE_NAME=app-batch
-ARG VERSION=0.0.2
+ARG MODULE_PATH=applications/app-alarm
+ARG MODULE_NAME=app-alarm
+ARG VERSION=0.0.1
 
 COPY ../.. .
 
-RUN ./gradlew :cercat-application:${MODULE_NAME}:build -x test --parallel
+RUN ./gradlew :applications:${MODULE_NAME}:build -x test --parallel
 RUN mkdir -p ${MODULE_PATH}/build/extracted && (java -Djarmode=layertools -jar ${MODULE_PATH}/build/libs/${MODULE_NAME}-${VERSION}.jar extract --destination ${MODULE_PATH}/build/extracted)
 
 FROM eclipse-temurin:17-jdk-alpine
 VOLUME /tmp
 
-# 환경변수를 이용해 경로 설정
-ARG MODULE_PATH=cercat-application/app-batch
-ARG MODULE_NAME=app-batch
-ARG VERSION=0.0.2
+ARG MODULE_PATH=applications/app-alarm
+ARG MODULE_NAME=app-alarm
+ARG VERSION=0.0.1
 ARG EXTRACTED=/workspace/app/${MODULE_PATH}/build/extracted
 
 COPY --from=build ${EXTRACTED}/dependencies/ ./

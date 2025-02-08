@@ -16,8 +16,8 @@ import com.cos.cercat.database.mockexamresult.dto.DailyScoreAverage;
 import com.cos.cercat.database.mockexamresult.dto.MonthlyScoreAverage;
 import com.cos.cercat.database.mockexamresult.dto.SubjectResultsAVG;
 import com.cos.cercat.database.mockexamresult.dto.WeeklyScoreAverage;
-import com.cos.cercat.database.mockexamresult.exception.MockExamResultNotFoundException;
-import com.cos.cercat.database.mockexamresult.exception.UserAnswerNotFoundException;
+import com.cos.cercat.domain.mockexamresult.exception.MockExamResultNotFoundException;
+import com.cos.cercat.domain.mockexamresult.exception.UserAnswerNotFoundException;
 import com.cos.cercat.domain.learning.GoalPeriod;
 import com.cos.cercat.domain.mockexam.MockExam;
 
