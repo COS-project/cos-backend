@@ -16,7 +16,6 @@ public enum SSEErrorCode implements BaseErrorCode {
     private final int status;
     private final String message;
 
-
     @Override
     public ErrorReason getErrorReason() {
         return ErrorReason.from(status, message);

@@ -1,10 +1,9 @@
  name: Cercat-Alarm Build and Deploy
 
-
  on:
    push:
      paths:
-       - '../../applications/app-alarm/**'
+       - 'applications/app-alarm/**'
        - 'supports/**'
      branches: [ main ]
 
