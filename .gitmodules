@@ -1,0 +1,3 @@
+[submodule "cercat-secrets"]
+	path = cercat-secrets
+	url = https://github.com/COS-project/cercat-secrets.git

@@ -1,9 +1,9 @@
 package com.cos.cercat.security;
 
+import com.cos.cercat.domain.user.UserReader;
 import com.cos.cercat.security.exception.InvalidTokenException;
 import com.cos.cercat.domain.user.*;
 
-import com.cos.cercat.security.exception.UnAuthorizedUserException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,11 +41,13 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 log.info("userEntity - {} 리프레시 토큰 재발급", targetUser.userId());
                 return;
             }
+
             JwtTokenizer.extractAccessToken(request)
                     .filter(tokenManager::isAlreadyLogin)
                     .map(JwtTokenizer::extractTargetUser)
                     .map(userReader::read)
                     .ifPresentOrElse(this::saveAuthentication, () -> { throw InvalidTokenException.EXCEPTION; });
+
         } catch (Exception e) {
             log.error("JwtTokenFilter error", e);
             request.setAttribute("exception", e);

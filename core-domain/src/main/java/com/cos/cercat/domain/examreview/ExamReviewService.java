@@ -3,8 +3,6 @@ package com.cos.cercat.domain.examreview;
 import com.cos.cercat.domain.common.Cursor;
 import com.cos.cercat.domain.common.SliceResult;
 import com.cos.cercat.domain.certificate.*;
-import com.cos.cercat.domain.learning.Goal;
-import com.cos.cercat.domain.learning.GoalReader;
 import com.cos.cercat.domain.user.TargetUser;
 import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserReader;

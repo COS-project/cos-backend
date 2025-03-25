@@ -54,6 +54,12 @@ subprojects {
         jvmArgs '-Xshare:off'
     }
 
+    tasks.register('copySecret', Copy) {
+        from("${rootProject.projectDir}/secret")
+        include('secrets.yml')
+        into('src/main/resources')
+        onlyIf { file("${rootProject.projectDir}/secret/secrets.yml").exists() }
+    }
 }
 
 project(':applications') {
@@ -99,3 +105,29 @@ project(':supports') {
 bootJar {
     enabled = false
 }
+
+processResources.dependsOn 'initSetting'
+
+tasks.register("initSetting") {
+    group = "custom tasks"
+    description = "Execute both copyHooks and copySecret tasks."
+
+    dependsOn("copyHooks")
+}
+
+tasks.register("copyHooks") {
+    group = "git hooks"
+    description = "Copy pre-commit and pre-push git hooks from .githooks to .git/hooks folder."
+
+    doLast {
+        // pre-push hook 복사
+        copy {
+            from("$rootDir/.githooks/pre-push")
+            into("$rootDir/.git/hooks")
+        }
+        // pre-push hook에 실행 권한 부여
+        file("$rootDir/.git/hooks/pre-push").setExecutable(true)
+        println("Git pre-push hook이 성공적으로 등록되었습니다.")
+    }
+}
+

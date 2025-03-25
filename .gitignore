@@ -40,3 +40,7 @@ module-application/src/main/generated
 .vscode/
 
 .idea/
+.DS_Store
+
+### Secret ###
+secrets.yml
