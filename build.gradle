@@ -102,9 +102,6 @@ tasks.register("copyHooks") {
     }
 }
 
-subprojects { subproject ->
-    if (!wrappingModules.contains(subproject.path)) {
-        subproject.processResources.dependsOn subproject.tasks.named('copySecret')
-    }
+project(':applications').subprojects { appSubproject ->
+    appSubproject.processResources.dependsOn appSubproject.tasks.named('copySecret')
 }
-

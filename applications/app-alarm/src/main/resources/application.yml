@@ -1,6 +1,7 @@
 spring:
   config:
     import:
+      - secret-env.yml
       - application-db.yml
       - application-cache.yml
       - application-security.yml

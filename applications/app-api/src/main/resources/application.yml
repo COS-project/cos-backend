@@ -1,8 +1,4 @@
 spring:
-  servlet:
-    multipart:
-      max-file-size: 50MB
-      max-request-size: 50MB
   config:
     import:
       - secret-env.yml
@@ -13,7 +9,10 @@ spring:
       - application-messaging.yml
       - application-security.yml
       - application-scheduler.yml
-
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
 springdoc:
   swagger-ui:
     persist-authorization: true
