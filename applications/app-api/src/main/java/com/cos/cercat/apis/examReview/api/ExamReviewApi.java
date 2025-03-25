@@ -54,7 +54,7 @@ public class ExamReviewApi implements ExamReviewApiDocs {
                 TargetUser.from(currentUser.getId()),
                 TargetCertificate.from(certificateId)
         );
-        
+
         return Response.success(isTarget);
     }
 }

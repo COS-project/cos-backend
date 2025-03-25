@@ -23,7 +23,12 @@
          uses: actions/checkout@v4 # git 레파지토리를 클론하는것과 같음
          with:
            submodules: true
-           token: ${{ secrets.SUBMODULE_TOKEN }}
+           token: ${{ secrets.GHCR_TOKEN }}
+
+       - name: Debug - List submodule folder contents
+         run: |
+           echo "=== Submodule Contents ==="
+           ls -Rla ./cercat-secrets
 
        - name: Setup docker buildx
          id: buildx
@@ -48,6 +53,7 @@
          id: docker_build
          uses: docker/build-push-action@v6
          with:
+           context: .
            file: ./applications/app-api/Dockerfile
            builder: ${{ steps.buildx.outputs.name }}
            push: true
