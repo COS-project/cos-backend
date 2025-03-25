@@ -55,58 +55,29 @@ subprojects {
     }
 
     tasks.register('copySecret', Copy) {
-        from("${rootProject.projectDir}/secret")
-        include('secrets.yml')
+        from("${rootProject.projectDir}/cercat-secrets")
+        include('secret-env.yml')
         into('src/main/resources')
-        onlyIf { file("${rootProject.projectDir}/secret/secrets.yml").exists() }
     }
 }
 
-project(':applications') {
-    bootJar {
-        enabled = false
-    }
+def wrappingModules = [':infrastructure', ':applications', ':supports']
 
-    jar {
-        enabled = false
-    }
-}
+wrappingModules.each { moduleName ->
+    project(moduleName) {
+        bootJar {
+            enabled = false
+        }
 
-project(':infrastructure') {
-    bootJar {
-        enabled = false
-    }
-
-    jar {
-        enabled = false
-    }
-}
-
-project(':infrastructure') {
-    bootJar {
-        enabled = false
-    }
-
-    jar {
-        enabled = false
-    }
-}
-
-project(':supports') {
-    bootJar {
-        enabled = false
-    }
-
-    jar {
-        enabled = false
+        jar {
+            enabled = false
+        }
     }
 }
 
 bootJar {
     enabled = false
 }
-
-processResources.dependsOn 'initSetting'
 
 tasks.register("initSetting") {
     group = "custom tasks"
@@ -128,6 +99,12 @@ tasks.register("copyHooks") {
         // pre-push hook에 실행 권한 부여
         file("$rootDir/.git/hooks/pre-push").setExecutable(true)
         println("Git pre-push hook이 성공적으로 등록되었습니다.")
+    }
+}
+
+subprojects { subproject ->
+    if (!wrappingModules.contains(subproject.path)) {
+        subproject.processResources.dependsOn subproject.tasks.named('copySecret')
     }
 }
 

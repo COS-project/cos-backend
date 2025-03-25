@@ -4,7 +4,7 @@ spring:
       on-profile: local,alarm
 
 jwt:
-  secret-key: ${SECRET_KEY}
+  secret-key: ${local.SECRET_KEY}
   access-token:
     header: Access-token
     expiration: 259200 #3일
@@ -19,7 +19,7 @@ spring:
       on-profile: prod
 
 jwt:
-  secret-key: ${SECRET_KEY}
+  secret-key: ${prod.SECRET_KEY}
   access-token:
     header: Access-token
     expiration: 259200 #3일

@@ -20,7 +20,10 @@
      runs-on: ubuntu-latest
      steps:
        - name: Checkout
-         uses: actions/checkout@v2 # git 레파지토리를 클론하는것과 같음
+         uses: actions/checkout@v4 # git 레파지토리를 클론하는것과 같음
+         with:
+           submodules: true
+           token: ${{ secrets.SUBMODULE_TOKEN }}
 
        - name: Setup docker buildx
          id: buildx
@@ -35,7 +38,7 @@
              ${{ runner.os }}-buildx-
 
        - name: Login to ghcr
-         uses: docker/login-action@v1
+         uses: docker/login-action@v3
          with:
            registry: ghcr.io
            username: ${{ github.actor }}
@@ -43,7 +46,7 @@
 
        - name: Build and push
          id: docker_build
-         uses: docker/build-push-action@v2
+         uses: docker/build-push-action@v6
          with:
            file: ./applications/app-api/Dockerfile
            builder: ${{ steps.buildx.outputs.name }}

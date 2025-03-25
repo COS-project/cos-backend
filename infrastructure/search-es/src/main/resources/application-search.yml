@@ -5,7 +5,7 @@ spring:
       on-profile: local
 elasticsearch:
   client:
-    host: ${ELASTIC_HOST}
+    host: ${local.ELASTIC_HOST}
     port: 9200
 
 logging:

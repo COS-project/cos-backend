@@ -44,3 +44,5 @@ module-application/src/main/generated
 
 ### Secret ###
 secrets.yml
+secret-env.yml
+

@@ -37,9 +37,9 @@ spring:
       on-profile: prod
 
   datasource:
-    url: jdbc:mysql://${SPRING_DATABASE_HOST}:${SPRING_DATABASE_PORT}/cercat
-    username: ${SPRING_DATABASE_USERNAME}
-    password: ${SPRING_DATABASE_PASSWORD}
+    url: jdbc:mysql://${prod.SPRING_DATABASE_HOST}:${prod.SPRING_DATABASE_PORT}/cercat
+    username: ${prod.SPRING_DATABASE_USERNAME}
+    password: ${prod.SPRING_DATABASE_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
