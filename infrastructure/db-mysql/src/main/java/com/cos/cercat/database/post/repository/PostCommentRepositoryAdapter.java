@@ -7,8 +7,8 @@ import com.cos.cercat.domain.common.Cursor;
 import com.cos.cercat.domain.common.SliceResult;
 import com.cos.cercat.domain.post.PostComment;
 import com.cos.cercat.domain.post.PostCommentRepository;
-import com.cos.cercat.domain.post.TargetComment;
-import com.cos.cercat.domain.post.TargetPost;
+import com.cos.cercat.domain.post.CommentId;
+import com.cos.cercat.domain.post.PostId;
 import com.cos.cercat.domain.user.User;
 import java.util.List;
 import java.util.Optional;
@@ -30,8 +30,8 @@ public class PostCommentRepositoryAdapter implements PostCommentRepository {
     }
 
     @Override
-    public Optional<PostComment> find(TargetComment targetComment) {
-        return postCommentJpaRepository.findById(targetComment.commentId()).map(PostCommentEntity::toDomain);
+    public Optional<PostComment> find(CommentId commentId) {
+        return postCommentJpaRepository.findById(commentId.commentId()).map(PostCommentEntity::toDomain);
     }
 
     @Override
@@ -43,8 +43,8 @@ public class PostCommentRepositoryAdapter implements PostCommentRepository {
     }
 
     @Override
-    public List<PostComment> findCommentsByPost(TargetPost targetPost) {
-        return postCommentJpaRepository.findByPostId(targetPost.postId()).stream()
+    public List<PostComment> findCommentsByPost(PostId postId) {
+        return postCommentJpaRepository.findByPostId(postId.postId()).stream()
                 .map(PostCommentEntity::toDomain)
                 .toList();
     }

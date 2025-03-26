@@ -2,7 +2,7 @@ package com.cos.cercat.domain.post;
 
 import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.domain.certificate.CertificateReader;
-import com.cos.cercat.domain.certificate.TargetCertificate;
+import com.cos.cercat.domain.certificate.CertificateId;
 import com.cos.cercat.domain.common.Image;
 import com.cos.cercat.domain.mockexam.Question;
 import com.cos.cercat.domain.mockexam.QuestionReader;
@@ -38,7 +38,7 @@ public class PostUpdater {
     }
 
     private Post updateCommentaryPost(CommentaryPost post, UpdatedPost updatedPost, List<Image> images) {
-        Certificate certificate = certificateReader.read(TargetCertificate.from(post.getCertificate().id()));
+        Certificate certificate = certificateReader.read(post.getCertificate().id());
         Question question = questionReader.read(certificate, updatedPost.mockExamSession(), updatedPost.questionSequence());
         return post.update(updatedPost.content(), question, images);
     }

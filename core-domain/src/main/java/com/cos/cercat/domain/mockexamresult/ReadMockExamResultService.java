@@ -2,7 +2,7 @@ package com.cos.cercat.domain.mockexamresult;
 
 import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.domain.certificate.CertificateReader;
-import com.cos.cercat.domain.certificate.TargetCertificate;
+import com.cos.cercat.domain.certificate.CertificateId;
 import com.cos.cercat.domain.common.Cursor;
 import com.cos.cercat.domain.common.PageResult;
 import com.cos.cercat.domain.common.SliceResult;
@@ -10,9 +10,9 @@ import com.cos.cercat.domain.learning.Goal;
 import com.cos.cercat.domain.learning.GoalReader;
 import com.cos.cercat.domain.mockexam.MockExam;
 import com.cos.cercat.domain.mockexam.MockExamReader;
-import com.cos.cercat.domain.mockexam.TargetMockExam;
+import com.cos.cercat.domain.mockexam.MockExamId;
 import com.cos.cercat.domain.user.PermissionValidator;
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserReader;
 import lombok.RequiredArgsConstructor;
@@ -34,18 +34,18 @@ public class ReadMockExamResultService {
     private final GoalReader goalReader;
     private final MockExamReader mockExamReader;
 
-    public List<MockExamResultDetail> getMockExamResultDetail(TargetMockExam targetMockExam,
-                                                              TargetUser targetUser) {
-        User user = userReader.read(targetUser);
-        MockExam mockExam = mockExamReader.read(targetMockExam);
+    public List<MockExamResultDetail> getMockExamResultDetail(MockExamId mockExamId,
+                                                              UserId userId) {
+        User user = userReader.read(userId);
+        MockExam mockExam = mockExamReader.read(mockExamId);
         return mockExamResultFinder.findDetails(user, mockExam);
     }
 
-    public SliceResult<UserAnswer> getAllWrongUserAnswers(TargetCertificate targetCertificate,
-                                                          TargetUser targetUser,
+    public SliceResult<UserAnswer> getAllWrongUserAnswers(CertificateId certificateId,
+                                                          UserId userId,
                                                           Cursor cursor) {
-        User user = userReader.read(targetUser);
-        Certificate certificate = certificateReader.read(targetCertificate);
+        User user = userReader.read(userId);
+        Certificate certificate = certificateReader.read(certificateId);
         return userAnswerManager.findAllWrongUserAnswers(
                 user,
                 certificate,
@@ -54,22 +54,22 @@ public class ReadMockExamResultService {
 
     }
 
-    public SliceResult<UserAnswer> getWrongUserAnswers(TargetMockExamResult targetMockExamResult,
-                                                       TargetUser targetUser,
+    public SliceResult<UserAnswer> getWrongUserAnswers(MockExamResultId mockExamResultId,
+                                                       UserId userId,
                                                        Cursor cursor) {
-        User user = userReader.read(targetUser);
-        MockExamResult mockExamResult = mockExamResultReader.read(targetMockExamResult);
+        User user = userReader.read(userId);
+        MockExamResult mockExamResult = mockExamResultReader.read(mockExamResultId);
         permissionValidator.validate(mockExamResult, user);
         return userAnswerManager.findWrongUserAnswers(mockExamResult, cursor);
     }
 
-    public PageResult<MockExamResult> findMockExamResults(TargetUser targetUser,
-                                                          TargetCertificate targetCertificate,
+    public PageResult<MockExamResult> findMockExamResults(UserId userId,
+                                                          CertificateId certificateId,
                                                           DateType dateType,
                                                           DateCond dateCond,
                                                           Cursor cursor) {
-        User user = userReader.read(targetUser);
-        Certificate certificate = certificateReader.read(targetCertificate);
+        User user = userReader.read(userId);
+        Certificate certificate = certificateReader.read(certificateId);
         return mockExamResultFinder.findMockExamResults(
                 user,
                 certificate,
@@ -79,11 +79,11 @@ public class ReadMockExamResultService {
         );
     }
 
-    public List<SubjectResultStatistics> getSubjectResultsStatistics(TargetUser targetUser,
-                                                                     TargetCertificate targetCertificate) {
+    public List<SubjectResultStatistics> getSubjectResultsStatistics(UserId userId,
+                                                                     CertificateId certificateId) {
 
-        User user = userReader.read(targetUser);
-        Certificate certificate = certificateReader.read(targetCertificate);
+        User user = userReader.read(userId);
+        Certificate certificate = certificateReader.read(certificateId);
         Goal goal = goalReader.readRecentGoal(user, certificate);
         return subjectResultReader.readStatistics(
                 user,
@@ -92,12 +92,12 @@ public class ReadMockExamResultService {
         );
     }
 
-    public List<ScoreData> findReportData(TargetUser targetUser,
-                                             TargetCertificate targetCertificate,
+    public List<ScoreData> findReportData(UserId userId,
+                                             CertificateId certificateId,
                                              ReportType reportType,
                                              DateCond dateCond) {
-        User user = userReader.read(targetUser);
-        Certificate certificate = certificateReader.read(targetCertificate);
+        User user = userReader.read(userId);
+        Certificate certificate = certificateReader.read(certificateId);
         return mockExamResultFinder.findReportData(
                 user,
                 certificate,
@@ -106,9 +106,9 @@ public class ReadMockExamResultService {
         );
     }
 
-    public MockExamResult getRecentMockExamResult(TargetMockExam targetMockExam, TargetUser targetUser) {
-        User user = userReader.read(targetUser);
-        MockExam mockExam = mockExamReader.read(targetMockExam);
+    public MockExamResult getRecentMockExamResult(MockExamId mockExamId, UserId userId) {
+        User user = userReader.read(userId);
+        MockExam mockExam = mockExamReader.read(mockExamId);
         return mockExamResultReader.readRecent(mockExam, user);
     }
 }

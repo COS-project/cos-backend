@@ -11,8 +11,8 @@ public class CertificateFinder {
 
     private final CertificateRepository certificateRepository;
 
-    public List<Certificate> find(List<TargetCertificate> targetCertificates) {
-        return certificateRepository.find(targetCertificates);
+    public List<Certificate> find(List<CertificateId> certificateIds) {
+        return certificateRepository.find(certificateIds);
     }
 
 }

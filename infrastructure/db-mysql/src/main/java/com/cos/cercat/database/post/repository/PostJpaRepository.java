@@ -1,13 +1,14 @@
 package com.cos.cercat.database.post.repository;
 
 import com.cos.cercat.database.post.entity.PostEntity;
+import com.cos.cercat.domain.post.PostType;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-public interface PostJpaRepository extends JpaRepository<PostEntity, Long> {
+public interface PostJpaRepository extends JpaRepository<PostEntity, Long>, PostRepositoryCustom {
 
     @Query("""
             SELECT p

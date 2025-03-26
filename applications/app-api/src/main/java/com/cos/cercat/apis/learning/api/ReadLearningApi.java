@@ -2,13 +2,13 @@ package com.cos.cercat.apis.learning.api;
 
 import com.cos.cercat.apis.learning.response.GoalDetailResponse;
 import com.cos.cercat.apis.learning.response.GoalResponse;
-import com.cos.cercat.domain.certificate.TargetCertificate;
+import com.cos.cercat.domain.certificate.CertificateId;
 import com.cos.cercat.web.Response;
 import com.cos.cercat.domain.learning.Goal;
 import com.cos.cercat.domain.learning.GoalAchievement;
 import com.cos.cercat.domain.learning.ReadLearningService;
-import com.cos.cercat.domain.learning.TargetGoal;
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.learning.GoalId;
+import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class ReadLearningApi implements ReadLearningApiDocs {
     @GetMapping("/certificates/{certificateId}/goals")
     public Response<List<GoalResponse>> getAllGoal(@PathVariable Long certificateId,
                                                    @AuthenticationPrincipal User currentUser) {
-        List<GoalResponse> responses = readLearningService.getAllGoals(TargetUser.from(currentUser.getId()), TargetCertificate.from(certificateId)).stream()
+        List<GoalResponse> responses = readLearningService.getAllGoals(UserId.from(currentUser.getId()), CertificateId.from(certificateId)).stream()
                 .map(GoalResponse::from)
                 .toList();
         return Response.success(responses);
@@ -41,7 +41,7 @@ public class ReadLearningApi implements ReadLearningApiDocs {
     @Operation(summary = "목표 상세 조회")
     @GetMapping("/goals/{goalId}")
     public Response<GoalDetailResponse> getGoalDetail(@PathVariable  Long goalId) {
-        Goal goal = readLearningService.getGoal(TargetGoal.from(goalId));
+        Goal goal = readLearningService.getGoal(GoalId.from(goalId));
         return Response.success(GoalDetailResponse.from(goal));
     }
 
@@ -49,7 +49,7 @@ public class ReadLearningApi implements ReadLearningApiDocs {
     @GetMapping("/certificates/{certificateId}/goals/achievement")
     public Response<GoalAchievement> getGoalAchievement(@PathVariable Long certificateId,
                                                         @AuthenticationPrincipal User currentUser) {
-        GoalAchievement goalAchievement = readLearningService.getGoalAchievement(TargetUser.from(currentUser.getId()), TargetCertificate.from(certificateId));
+        GoalAchievement goalAchievement = readLearningService.getGoalAchievement(UserId.from(currentUser.getId()), CertificateId.from(certificateId));
         return Response.success(goalAchievement);
     }
 
@@ -57,7 +57,7 @@ public class ReadLearningApi implements ReadLearningApiDocs {
     @GetMapping("/certificates/{certificateId}/goal-status")
     public Response<Boolean> existsGoal(@PathVariable Long certificateId,
                                         @AuthenticationPrincipal User currentUser) {
-        boolean existsGoal = readLearningService.existsGoal(TargetUser.from(currentUser.getId()), TargetCertificate.from(certificateId));
+        boolean existsGoal = readLearningService.existsGoal(UserId.from(currentUser.getId()), CertificateId.from(certificateId));
         return Response.success(existsGoal);
     }
 }

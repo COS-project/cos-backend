@@ -1,11 +1,11 @@
 package com.cos.cercat.apis.learning.api;
 
 import com.cos.cercat.apis.learning.request.GoalRequest;
-import com.cos.cercat.domain.certificate.TargetCertificate;
+import com.cos.cercat.domain.certificate.CertificateId;
 import com.cos.cercat.web.Response;
 import com.cos.cercat.domain.learning.CreateLearningService;
-import com.cos.cercat.domain.learning.TargetGoal;
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.learning.GoalId;
+import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,8 +23,8 @@ public class CreateLearningApi implements CreateLearningApiDocs {
                                      @RequestBody GoalRequest request,
                                      @AuthenticationPrincipal User currentUser) {
         createLearningService.createGoal(
-                TargetUser.from(currentUser.getId()),
-                TargetCertificate.from(certificateId),
+                UserId.from(currentUser.getId()),
+                CertificateId.from(certificateId),
                 request.toNewGoal()
         );
 
@@ -34,7 +34,7 @@ public class CreateLearningApi implements CreateLearningApiDocs {
     @PostMapping("/goals/{goalId}/study-times")
     public Response<Void> createStudyTimeLog(@PathVariable Long goalId,
                                              Long studyTime) {
-        createLearningService.createStudyTimeLog(TargetGoal.from(goalId), studyTime);
+        createLearningService.createStudyTimeLog(GoalId.from(goalId), studyTime);
         return Response.success("공부 시간 생성(누적) 성공");
     }
 

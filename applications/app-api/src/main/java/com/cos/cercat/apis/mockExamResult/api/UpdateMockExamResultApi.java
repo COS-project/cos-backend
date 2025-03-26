@@ -1,9 +1,9 @@
 package com.cos.cercat.apis.mockExamResult.api;
 
 import com.cos.cercat.web.Response;
-import com.cos.cercat.domain.mockexamresult.TargetUserAnswer;
+import com.cos.cercat.domain.mockexamresult.UserAnswerId;
 import com.cos.cercat.domain.mockexamresult.UpdateMockExamResultService;
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,7 +22,7 @@ public class UpdateMockExamResultApi implements UpdateMockExamResultApiDocs{
     @PatchMapping("/user-answers/{userAnswerId}/review")
     public Response<Void> reviewUserAnswers(@PathVariable Long userAnswerId,
                                             @AuthenticationPrincipal User currentUser) {
-        updateMockExamResultService.reviewUserAnswer(TargetUser.from(currentUser.getId()), TargetUserAnswer.from(userAnswerId));
+        updateMockExamResultService.reviewUserAnswer(UserId.from(currentUser.getId()), UserAnswerId.from(userAnswerId));
         return Response.success("틀린 문제 리뷰 성공");
     }
 }

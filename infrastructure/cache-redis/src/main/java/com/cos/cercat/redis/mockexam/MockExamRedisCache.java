@@ -3,7 +3,7 @@ package com.cos.cercat.redis.mockexam;
 import com.cos.cercat.domain.mockexam.MockExam;
 import com.cos.cercat.domain.mockexam.MockExamCache;
 import com.cos.cercat.domain.mockexam.Question;
-import com.cos.cercat.domain.mockexam.TargetMockExam;
+import com.cos.cercat.domain.mockexam.MockExamId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -37,8 +37,8 @@ public class MockExamRedisCache implements MockExamCache {
     }
 
     @Override
-    public void delete(TargetMockExam targetMockExam) {
-        String key = getKey(targetMockExam.mockExamId());
+    public void delete(MockExamId mockExamId) {
+        String key = getKey(mockExamId.mockExamId());
         redisTemplate.delete(key);
         log.info("모의고사 문제 캐싱 폐기 완료 - {}", key);
     }

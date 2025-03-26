@@ -1,7 +1,6 @@
 package com.cos.cercat.redis.postsearch.config;
 
-import com.cos.cercat.domain.postsearch.SearchLog;
-import com.cos.cercat.domain.postsearch.TrendingKeywordsRanking;
+import com.cos.cercat.domain.searchlog.TrendingKeywordsRanking;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,15 +16,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class SearchRedisConfig {
 
     private final RedisConnectionFactory redisConnectionFactory;
-
-    @Bean
-    public RedisTemplate<String, SearchLog> searchLogRedisTemplate() {
-        RedisTemplate<String, SearchLog> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(redisConnectionFactory);
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(SearchLog.class));
-        return redisTemplate;
-    }
 
     @Bean
     public RedisTemplate<String, TrendingKeywordsRanking> trendingKeywordRedisTemplate() {

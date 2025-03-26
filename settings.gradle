@@ -20,8 +20,7 @@ include(
         'infrastructure:client-kafka',
         'infrastructure:client-gcs',
         'infrastructure:db-mysql',
-        'infrastructure:cache-redis',
-        'infrastructure:search-es',
+        'infrastructure:cache-redis'
 )
 
 include(

@@ -9,7 +9,7 @@ public record CertificateResponse(
 ) {
     public static CertificateResponse from(Certificate certificate) {
         return new CertificateResponse(
-                certificate.id(),
+                certificate.id().value(),
                 certificate.certificateName()
         );
     }

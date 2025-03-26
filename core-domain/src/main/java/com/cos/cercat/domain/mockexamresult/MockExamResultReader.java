@@ -14,8 +14,8 @@ public class MockExamResultReader implements MockExamResultProvider {
 
     private final MockExamResultRepository mockExamResultRepository;
 
-    public MockExamResult read(TargetMockExamResult targetMockExamResult) {
-        return mockExamResultRepository.find(targetMockExamResult);
+    public MockExamResult read(MockExamResultId mockExamResultId) {
+        return mockExamResultRepository.find(mockExamResultId);
     }
 
     public int count(User user, MockExam mockExam) {

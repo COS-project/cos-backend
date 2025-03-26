@@ -9,9 +9,9 @@ public class StudyTimeLogAppender {
 
     private final LearningRepository learningRepository;
 
-    public void append(TargetGoal targetGoal,
+    public void append(GoalId goalId,
                        Long studyTime) {
-        learningRepository.saveStudyTimeLog(targetGoal, studyTime);
+        learningRepository.saveStudyTimeLog(goalId, studyTime);
     }
 
 }

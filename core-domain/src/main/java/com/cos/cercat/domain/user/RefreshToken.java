@@ -4,7 +4,7 @@ public record RefreshToken(
         Long userId,
         String refreshToken
 ) {
-    public static RefreshToken of(TargetUser targetUser, String refreshToken) {
-        return new RefreshToken(targetUser.userId(), refreshToken);
+    public static RefreshToken of(UserId userId, String refreshToken) {
+        return new RefreshToken(userId.userId(), refreshToken);
     }
 }

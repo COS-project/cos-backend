@@ -9,6 +9,6 @@ public interface MockExamCache {
 
     Optional<List<Question>> find(MockExam mockExam);
 
-    void delete(TargetMockExam targetMockExam);
+    void delete(MockExamId mockExamId);
 
 }

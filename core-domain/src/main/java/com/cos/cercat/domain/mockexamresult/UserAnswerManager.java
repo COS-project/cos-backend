@@ -13,8 +13,8 @@ public class UserAnswerManager {
 
     private final MockExamResultRepository mockExamResultRepository;
 
-    public UserAnswer read(TargetUserAnswer targetUserAnswer) {
-        return mockExamResultRepository.findUserAnswer(targetUserAnswer);
+    public UserAnswer read(UserAnswerId userAnswerId) {
+        return mockExamResultRepository.findUserAnswer(userAnswerId);
     }
 
     public SliceResult<UserAnswer> findAllWrongUserAnswers(User user, Certificate certificate, Cursor cursor) {

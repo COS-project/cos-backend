@@ -1,6 +1,6 @@
 package com.cos.cercat.domain.certificate;
 
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserReader;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +20,11 @@ public class ReadCertificateService {
     /**
      * 자격증 ID를 통해 자격증 상세정보를 조회한다
      *
-     * @param targetCertificate 자격증 ID
+     * @param certificateId 자격증 ID
      * @return 자격증 상세 정보
      */
-    public CertificateExam readNextCertificateExam(TargetCertificate targetCertificate) {
-        Certificate certificate = certificateReader.read(targetCertificate);
+    public CertificateExam readNextCertificateExam(CertificateId certificateId) {
+        Certificate certificate = certificateReader.read(certificateId);
         return certificateExamReader.readNextExam(certificate);
     }
 
@@ -36,8 +36,8 @@ public class ReadCertificateService {
         return certificateReader.readAll();
     }
 
-    public List<InterestCertificate> readInterestCertificates(TargetUser targetUser) {
-        User user = userReader.read(targetUser);
+    public List<InterestCertificate> readInterestCertificates(UserId userId) {
+        User user = userReader.read(userId);
         return interestCertificateManager.find(user);
     }
 }

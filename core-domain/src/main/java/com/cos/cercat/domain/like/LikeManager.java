@@ -5,8 +5,8 @@ import com.cos.cercat.domain.post.PostCommentReader;
 import com.cos.cercat.domain.post.Post;
 import com.cos.cercat.domain.post.PostComment;
 import com.cos.cercat.domain.post.PostReader;
-import com.cos.cercat.domain.post.TargetComment;
-import com.cos.cercat.domain.post.TargetPost;
+import com.cos.cercat.domain.post.CommentId;
+import com.cos.cercat.domain.post.PostId;
 import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -24,12 +24,12 @@ public class LikeManager {
     public void like(User liker, LikeTarget likeTarget) {
         switch (likeTarget.targetType()) {
             case POST -> {
-                Post post = postReader.read(TargetPost.from(likeTarget.targetId()));
+                Post post = postReader.read(PostId.from(likeTarget.targetId()));
                 likeRepository.save(Like.from(liker, likeTarget));
                 eventPublisher.publish(LikeCreatedEvent.postLike(post, liker));
             }
             case COMMENT -> {
-                PostComment comment = postCommentReader.read(TargetComment.from(likeTarget.targetId()));
+                PostComment comment = postCommentReader.read(CommentId.from(likeTarget.targetId()));
                 likeRepository.save(Like.from(liker, likeTarget));
                 eventPublisher.publish(LikeCreatedEvent.commentLike(comment, liker));
             }

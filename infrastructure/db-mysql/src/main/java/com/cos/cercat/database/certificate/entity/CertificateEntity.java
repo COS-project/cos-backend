@@ -1,6 +1,7 @@
 package com.cos.cercat.database.certificate.entity;
 
 import com.cos.cercat.domain.certificate.Certificate;
+import com.cos.cercat.domain.certificate.CertificateId;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,10 +33,10 @@ public class CertificateEntity {
     }
 
     public static CertificateEntity from(Certificate certificate) {
-        return new CertificateEntity(certificate.id(), certificate.certificateName());
+        return new CertificateEntity(certificate.id().value(), certificate.certificateName());
     }
 
     public Certificate toDomain() {
-        return new Certificate(id, certificateName);
+        return new Certificate(CertificateId.from(id), certificateName);
     }
 }

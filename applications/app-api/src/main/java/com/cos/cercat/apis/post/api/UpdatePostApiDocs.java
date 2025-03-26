@@ -4,7 +4,7 @@ package com.cos.cercat.apis.post.api;
 import com.cos.cercat.apis.post.request.PostUpdateRequest;
 import com.cos.cercat.web.Response;
 import com.cos.cercat.domain.post.PostType;
-import com.cos.cercat.domain.post.TargetPost;
+import com.cos.cercat.domain.post.PostId;
 import com.cos.cercat.domain.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,7 +17,7 @@ public interface UpdatePostApiDocs {
 
 
     @Operation(summary = "게시글 수정")
-    Response<TargetPost> updatePost(Long certificateId,
+    Response<PostId> updatePost(Long certificateId,
                                     PostType postType,
                                     PostUpdateRequest request,
                                     List<MultipartFile> files,

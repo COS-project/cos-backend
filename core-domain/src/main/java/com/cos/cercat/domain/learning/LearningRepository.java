@@ -12,10 +12,10 @@ public interface LearningRepository {
               Certificate certificate,
               NewGoal newGoal);
 
-    void saveStudyTimeLog(TargetGoal targetGoal,
+    void saveStudyTimeLog(GoalId goalId,
                           Long studyTime);
 
-    Goal getGoal(TargetGoal targetGoal);
+    Goal getGoal(GoalId goalId);
 
     boolean existsGoal(User user, Certificate certificate);
 

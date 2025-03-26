@@ -19,7 +19,7 @@ public class NormalPostAppendStrategy implements PostAppendStrategy {
     }
 
     @Override
-    public TargetPost append(User user, Certificate certificate, NewPost newPost, List<Image> images) {
+    public PostId append(User user, Certificate certificate, NewPost newPost, List<Image> images) {
         Post post = Post.create(user, certificate, newPost, images);
         return postRepository.save(post);
     }

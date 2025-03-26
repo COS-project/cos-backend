@@ -14,7 +14,7 @@ public class PostAppender {
 
     private final Set<PostAppendStrategy> postCreationStrategies;
 
-    public TargetPost append(
+    public PostId append(
             User user,
             Certificate certificate,
             NewPost newPost,

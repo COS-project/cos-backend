@@ -1,17 +1,17 @@
 package com.cos.cercat.apis.search.api;
 
 import com.cos.cercat.apis.post.response.PostResponse;
-import com.cos.cercat.domain.certificate.TargetCertificate;
+import com.cos.cercat.domain.certificate.CertificateId;
 import com.cos.cercat.apis.global.annotation.CursorDefault;
 import com.cos.cercat.domain.common.Cursor;
 import com.cos.cercat.web.Response;
 import com.cos.cercat.domain.common.SliceResult;
 import com.cos.cercat.domain.post.Post;
-import com.cos.cercat.domain.postsearch.SearchCond;
-import com.cos.cercat.domain.postsearch.SearchLog;
-import com.cos.cercat.domain.postsearch.SearchPostService;
-import com.cos.cercat.domain.postsearch.TrendingKeyword;
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.searchlog.SearchCond;
+import com.cos.cercat.domain.searchlog.SearchLog;
+import com.cos.cercat.domain.searchlog.SearchLogService;
+import com.cos.cercat.domain.searchlog.TrendingKeyword;
+import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,48 +25,56 @@ import java.util.List;
 @RequestMapping("/api/v2")
 public class SearchPostApi implements SearchPostApiDocs {
 
-    private final SearchPostService searchPostService;
+    private final SearchLogService searchLogService;
 
-    @GetMapping("/certificates/{certificateId}/search")
-    public Response<SliceResult<PostResponse>> search(SearchCond cond,
-                                                      @AuthenticationPrincipal User user,
-                                                      @PathVariable Long certificateId,
-                                                      @CursorDefault Cursor cursor) {
-        SliceResult<Post> posts = searchPostService.search(
-                TargetUser.from(user.getId()),
-                TargetCertificate.from(certificateId),
-                cond,
-                cursor
+    @GetMapping("/certificates/{certificateId}/search-logs")
+    public Response<List<String>> getSearchLogs(
+            @AuthenticationPrincipal User user,
+            @PathVariable Long certificateId
+    ) {
+        List<String> searchLogs = searchLogService.readUserSearchHistories(
+                UserId.from(user.getId()),
+                CertificateId.from(certificateId)
         );
-        return Response.success(posts.map(PostResponse::from));
-    }
-
-    @GetMapping("/users/search-logs")
-    public Response<List<SearchLog>> getSearchLogs(@AuthenticationPrincipal User user) {
-        return Response.success(searchPostService.readSearchLogs(TargetUser.from(user.getId())));
+        return Response.success(searchLogs);
     }
 
     @GetMapping("/certificates/{certificateId}/auto-complete-keywords")
-    public Response<List<String>> getAutoCompleteKeywords(@RequestParam String searchText,
+    public Response<List<String>> getAutoCompleteKeywords(@RequestParam String query,
                                                           @PathVariable Long certificateId) {
-        return Response.success(searchPostService.readAutoCompleteKeyword(TargetCertificate.from(certificateId), searchText));
+        return Response.success(searchLogService.readAutoCompleteKeyword(CertificateId.from(certificateId),
+                query));
     }
 
     @GetMapping("/certificates/{certificateId}/trending-keywords")
     public Response<List<TrendingKeyword>> getTrendingKeywords(@PathVariable Long certificateId) {
-        return Response.success(searchPostService.getTrendingKeywords(TargetCertificate.from(certificateId)).getKeywordList());
+        return Response.success(
+                searchLogService.getTrendingKeywords(CertificateId.from(certificateId)).getKeywordList());
     }
 
 
-    @DeleteMapping("/search-logs")
-    public Response<Void> deleteSearchLogs(@AuthenticationPrincipal User currentUser, String keyword) {
-        searchPostService.deleteSearchLog(TargetUser.from(currentUser.getId()), SearchLog.from(keyword));
+    @DeleteMapping("/certificates/{certificateId}/search-logs")
+    public Response<Void> deleteSearchLogs(
+            @AuthenticationPrincipal User currentUser,
+            @PathVariable Long certificateId,
+            String keyword
+    ) {
+        searchLogService.deleteUserSearchHistory(
+                UserId.from(currentUser.getId()),
+                SearchLog.of(certificateId, keyword)
+        );
         return Response.success("검색 기록 삭제 성공");
     }
 
-    @DeleteMapping("/search-logs/all")
-    public Response<Void> deleteAllSearchLogs(@AuthenticationPrincipal User currentUser) {
-        searchPostService.deleteAllSearchLogs(TargetUser.from(currentUser.getId()));
+    @DeleteMapping("/certificates/{certificateId}/search-logs/all")
+    public Response<Void> deleteAllSearchLogs(
+            @AuthenticationPrincipal User currentUser,
+            @PathVariable Long certificateId
+    ) {
+        searchLogService.deleteAllUserSearchHistories(
+                UserId.from(currentUser.getId()),
+                CertificateId.from(certificateId)
+        );
         return Response.success("모든 검색 기록 삭제 성공");
     }
 }

@@ -1,6 +1,6 @@
 package com.cos.cercat.domain.certificate;
 
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserReader;
 import com.cos.cercat.domain.user.UserUpdater;
@@ -23,13 +23,13 @@ public class CreateCertificateService {
         certificateAppender.append(certificateName, subjectsInfo);
     }
 
-    public void createCertificateExam(TargetCertificate targetCertificate, NewExamInformation newExamInformation) {
-        Certificate certificate = certificateReader.read(targetCertificate);
+    public void createCertificateExam(CertificateId certificateId, NewExamInformation newExamInformation) {
+        Certificate certificate = certificateReader.read(certificateId);
         certificateExamAppender.append(certificate, newExamInformation);
     }
 
-    public void addInterestCertificates(TargetUser targetUser, InterestTargets interestTargets) {
-        User user = userReader.read(targetUser);
+    public void addInterestCertificates(UserId userId, InterestTargets interestTargets) {
+        User user = userReader.read(userId);
         interestCertificateManager.append(user, interestTargets);
         user.updateRole();
         userUpdater.update(user);

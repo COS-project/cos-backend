@@ -11,7 +11,7 @@ import com.cos.cercat.domain.learning.exception.GoalNotFoundException;
 import com.cos.cercat.domain.learning.Goal;
 import com.cos.cercat.domain.learning.LearningRepository;
 import com.cos.cercat.domain.learning.NewGoal;
-import com.cos.cercat.domain.learning.TargetGoal;
+import com.cos.cercat.domain.learning.GoalId;
 import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -35,39 +35,39 @@ public class LearningRepositoryImpl implements LearningRepository {
                      Certificate certificate,
                      NewGoal newGoal) {
         UserEntity userEntity = userJpaRepository.getReferenceById(user.getId());
-        CertificateEntity certificateEntity = certificateJpaRepository.getReferenceById(certificate.id());
+        CertificateEntity certificateEntity = certificateJpaRepository.getReferenceById(certificate.id().value());
         goalJpaRepository.save(GoalEntity.of(certificateEntity, userEntity, newGoal));
     }
 
     @Override
-    public void saveStudyTimeLog(TargetGoal targetGoal,
+    public void saveStudyTimeLog(GoalId goalId,
                                  Long studyTime) {
-        GoalEntity goalEntity = goalJpaRepository.getReferenceById(targetGoal.goalId());
+        GoalEntity goalEntity = goalJpaRepository.getReferenceById(goalId.goalId());
 
         studyTimeJpaRepository.save(StudyTimeLogEntity.of(goalEntity, studyTime));
     }
 
     @Override
-    public Goal getGoal(TargetGoal targetGoal) {
-        return goalJpaRepository.findById(targetGoal.goalId()).orElseThrow(
+    public Goal getGoal(GoalId goalId) {
+        return goalJpaRepository.findById(goalId.goalId()).orElseThrow(
                 () -> GoalNotFoundException.EXCEPTION).toDomain();
     }
 
     @Override
     public boolean existsGoal(User user, Certificate certificate) {
-        return goalJpaRepository.existsGoalByUserIdAndCertificateId(user.getId(), certificate.id());
+        return goalJpaRepository.existsGoalByUserIdAndCertificateId(user.getId(), certificate.id().value());
     }
 
     @Override
     public List<Goal> findAllGoals(User user, Certificate certificate) {
-        return goalJpaRepository.findGoalsByUserIdAndCertificateId(user.getId(), certificate.id()).stream()
+        return goalJpaRepository.findGoalsByUserIdAndCertificateId(user.getId(), certificate.id().value()).stream()
                 .map(GoalEntity::toDomain)
                 .toList();
     }
 
     @Override
     public Goal getRecentGoal(User user, Certificate certificate) {
-        return goalJpaRepository.findRecentGoalByUserIdAndCertificateId(user.getId(), certificate.id())
+        return goalJpaRepository.findRecentGoalByUserIdAndCertificateId(user.getId(), certificate.id().value())
                 .orElseThrow(() -> GoalNotFoundException.EXCEPTION)
                 .toDomain();
     }

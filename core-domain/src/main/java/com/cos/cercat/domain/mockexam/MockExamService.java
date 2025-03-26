@@ -3,7 +3,7 @@ package com.cos.cercat.domain.mockexam;
 import com.cos.cercat.domain.common.File;
 import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.domain.certificate.CertificateReader;
-import com.cos.cercat.domain.certificate.TargetCertificate;
+import com.cos.cercat.domain.certificate.CertificateId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,27 +20,27 @@ public class MockExamService {
     private final MockExamReader mockExamReader;
     private final QuestionUpdater questionUpdater;
 
-    public List<MockExam> find(TargetCertificate targetCertificate,
+    public List<MockExam> find(CertificateId certificateId,
             Integer examYear) {
-        Certificate certificate = certificateReader.read(targetCertificate);
+        Certificate certificate = certificateReader.read(certificateId);
         return mockExamFinder.find(certificate, examYear);
     }
 
-    public List<Integer> findExamYears(TargetCertificate targetCertificate) {
-        Certificate certificate = certificateReader.read(targetCertificate);
+    public List<Integer> findExamYears(CertificateId certificateId) {
+        Certificate certificate = certificateReader.read(certificateId);
         return mockExamFinder.findExamYears(certificate);
     }
 
-    public List<Question> findQuestions(TargetMockExam targetMockExam) {
-        MockExam mockExam = mockExamReader.read(targetMockExam);
+    public List<Question> findQuestions(MockExamId mockExamId) {
+        MockExam mockExam = mockExamReader.read(mockExamId);
         return questionReader.read(mockExam);
     }
 
-    public void createMockExam(TargetCertificate targetCertificate,
+    public void createMockExam(CertificateId certificateId,
             MockExamSession session,
             Long timeLimit,
             List<QuestionWithSubjectSeq> contents) {
-        Certificate certificate = certificateReader.read(targetCertificate);
+        Certificate certificate = certificateReader.read(certificateId);
         mockExamAppender.append(certificate, session, timeLimit, contents);
     }
 

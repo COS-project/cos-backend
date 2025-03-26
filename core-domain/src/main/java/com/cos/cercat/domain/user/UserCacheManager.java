@@ -15,8 +15,8 @@ public class UserCacheManager {
         userCache.cache(user);
     }
 
-    public Optional<User> read(TargetUser targetUser) {
-        return userCache.find(targetUser);
+    public Optional<User> read(UserId userId) {
+        return userCache.find(userId);
     }
 
     public void remove(User user) {

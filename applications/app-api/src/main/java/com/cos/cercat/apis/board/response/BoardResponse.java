@@ -11,7 +11,7 @@ public record BoardResponse(
 
     public static BoardResponse of(Board board, boolean isFavorite) {
         return new BoardResponse(
-                board.certificateId(),
+                board.certificateId().value(),
                 board.boardName(),
                 isFavorite
         );

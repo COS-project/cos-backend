@@ -67,13 +67,13 @@ public class CertificateExamRepositoryImpl implements CertificateExamRepository 
 
     @Override
     public CertificateExam findPreviousCertificateExam(Certificate certificate) {
-        CertificateExamEntity recentCertificateExam = certificateExamJpaRepository.findPreviousCertificateExam(certificate.id());
+        CertificateExamEntity recentCertificateExam = certificateExamJpaRepository.findPreviousCertificateExam(certificate.id().value());
         return recentCertificateExam.toDomain();
     }
 
     @Override
     public CertificateExam findNextCertificateExam(Certificate certificate) {
-        CertificateExamEntity nextCertificateExam = certificateExamJpaRepository.findNextCertificateExam(certificate.id());
+        CertificateExamEntity nextCertificateExam = certificateExamJpaRepository.findNextCertificateExam(certificate.id().value());
         return nextCertificateExam.toDomain();
     }
 }

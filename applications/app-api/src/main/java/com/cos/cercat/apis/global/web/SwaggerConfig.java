@@ -39,7 +39,7 @@ public class SwaggerConfig {
     @Bean
     public GroupedOpenApi search() {
         return GroupedOpenApi.builder()
-                .group("통합 검색")
+                .group("검색어")
                 .packagesToScan("com.cos.cercat.apis.search.api")
                 .build();
     }

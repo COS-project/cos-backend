@@ -22,16 +22,16 @@ public class MockExamRepositoryImpl implements MockExamRepository {
     private final MockExamJpaRepository mockExamJpaRepository;
 
     @Override
-    public TargetMockExam save(NewMockExam newMockExam) {
+    public MockExamId save(NewMockExam newMockExam) {
         MockExamEntity entity = mockExamJpaRepository.save(MockExamEntity.from(newMockExam));
-        return TargetMockExam.from(entity.getId());
+        return MockExamId.from(entity.getId());
     }
 
     @Override
-    public void saveQuestions(TargetMockExam targetMockExam, List<NewQuestion> newQuestions) {
+    public void saveQuestions(MockExamId mockExamId, List<NewQuestion> newQuestions) {
 
         List<QuestionEntity> questionEntities = newQuestions.stream()
-                .map(newQuestion -> QuestionEntity.from(targetMockExam, newQuestion))
+                .map(newQuestion -> QuestionEntity.from(mockExamId, newQuestion))
                 .toList();
 
         questionJpaRepository.saveAll(questionEntities);
@@ -44,7 +44,7 @@ public class MockExamRepositoryImpl implements MockExamRepository {
             int questionSequence) {
 
         MockExamEntity mockExamEntity = mockExamJpaRepository.findMockExamByCertificateIdAndExamYearAndRound(
-                certificate.id(),
+                certificate.id().value(),
                 mockExamSession.examYear(),
                 mockExamSession.round()
         ).orElseThrow(() -> MockExamNotFoundException.EXCEPTION);
@@ -56,7 +56,7 @@ public class MockExamRepositoryImpl implements MockExamRepository {
     @Override
     @Transactional(readOnly = true)
     public List<MockExam> find(Certificate certificate, Integer examYear) {
-        return mockExamJpaRepository.findMockExamByCertificateIdAndExamYear(certificate.id(),
+        return mockExamJpaRepository.findMockExamByCertificateIdAndExamYear(certificate.id().value(),
                         examYear)
                 .stream()
                 .map(MockExamEntity::toDomain)
@@ -73,12 +73,12 @@ public class MockExamRepositoryImpl implements MockExamRepository {
 
     @Override
     public List<Integer> findExamYears(Certificate certificate) {
-        return mockExamJpaRepository.findExamYearsByCertificateId(certificate.id());
+        return mockExamJpaRepository.findExamYearsByCertificateId(certificate.id().value());
     }
 
     @Override
-    public MockExam find(TargetMockExam targetMockExam) {
-        return mockExamJpaRepository.findById(targetMockExam.mockExamId())
+    public MockExam find(MockExamId mockExamId) {
+        return mockExamJpaRepository.findById(mockExamId.mockExamId())
                 .orElseThrow(() -> MockExamNotFoundException.EXCEPTION)
                 .toDomain();
     }

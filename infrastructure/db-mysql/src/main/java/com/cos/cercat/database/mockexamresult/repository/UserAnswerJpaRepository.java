@@ -30,7 +30,7 @@ public interface UserAnswerJpaRepository extends JpaRepository<UserAnswerEntity,
                 AND ua.userEntity.id = :userId
               """)
     Slice<UserAnswerEntity> findWrongUserAnswersByUserIdAndCertificateId(@Param("userId") Long userId,
-                                                                         @Param("certificateId") Long certificateId,
+                                                                         Long certificateId,
                                                                          Pageable pageable);
 
     @Query("""

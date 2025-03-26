@@ -7,7 +7,6 @@ dependencies {
 
     runtimeOnly project(':infrastructure:cache-redis')
     runtimeOnly project(':infrastructure:db-mysql')
-    runtimeOnly project(':infrastructure:search-es')
 
     runtimeOnly project(':infrastructure:client-gcs')
     runtimeOnly project(':infrastructure:client-kafka')

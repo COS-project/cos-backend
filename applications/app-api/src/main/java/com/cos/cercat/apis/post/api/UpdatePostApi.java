@@ -4,8 +4,8 @@ import com.cos.cercat.apis.post.request.PostUpdateRequest;
 import com.cos.cercat.domain.post.PostService;
 import com.cos.cercat.web.Response;
 import com.cos.cercat.domain.post.PostType;
-import com.cos.cercat.domain.post.TargetPost;
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.post.PostId;
+import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -25,18 +25,18 @@ public class UpdatePostApi implements UpdatePostApiDocs {
     private final PostService postService;
 
     @PutMapping(value = "/certificates/{certificateId}/{postType}/posts", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Response<TargetPost> updatePost(@PathVariable Long certificateId,
+    public Response<PostId> updatePost(@PathVariable Long certificateId,
                                            @PathVariable PostType postType,
                                            @RequestPart PostUpdateRequest request,
                                            @RequestPart(required = false) List<MultipartFile> files,
                                            @AuthenticationPrincipal User currentUser) {
-        TargetPost targetPost = postService.updatePost(
-                TargetUser.from(currentUser.getId()),
-                TargetPost.from(request.postId()),
+        PostId postId = postService.updatePost(
+                UserId.from(currentUser.getId()),
+                PostId.from(request.postId()),
                 request.toUpdatedPost(postType),
                 toFiles(files)
         );
-        return Response.success(targetPost);
+        return Response.success(postId);
     }
 
 }

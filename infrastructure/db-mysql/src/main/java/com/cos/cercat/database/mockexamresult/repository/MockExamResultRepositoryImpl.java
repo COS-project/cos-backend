@@ -49,7 +49,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
     private final SubjectJpaRepository subjectJpaRepository;
 
     @Override
-    public TargetMockExamResult save(User user, MockExam mockExam,
+    public MockExamResultId save(User user, MockExam mockExam,
             NewMockExamResult newMockExamResult) {
         UserEntity userEntity = UserEntity.from(user);
         MockExamEntity mockExamEntity = MockExamEntity.from(mockExam);
@@ -71,7 +71,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
                             userEntity));
         });
 
-        return TargetMockExamResult.from(savedResult.getId());
+        return MockExamResultId.from(savedResult.getId());
     }
 
     @Override
@@ -81,9 +81,9 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
 
     @Override
     @Transactional(readOnly = true)
-    public UserAnswer findUserAnswer(TargetUserAnswer targetUserAnswer) {
+    public UserAnswer findUserAnswer(UserAnswerId userAnswerId) {
         UserAnswerEntity userAnswerEntity = userAnswerJpaRepository.findById(
-                targetUserAnswer.userAnswerId()).orElseThrow(
+                userAnswerId.userAnswerId()).orElseThrow(
                 () -> UserAnswerNotFoundException.EXCEPTION);
         return userAnswerEntity.toDomain();
     }
@@ -115,7 +115,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
             Cursor cursor) {
         Slice<UserAnswerEntity> userAnswerEntities = userAnswerJpaRepository.findWrongUserAnswersByUserIdAndCertificateId(
                 user.getId(),
-                certificate.id(),
+                certificate.id().value(),
                 toPageRequest(cursor));
 
         return SliceResult.of(userAnswerEntities.stream().map(UserAnswerEntity::toDomain).toList(),
@@ -136,8 +136,8 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
     }
 
     @Override
-    public MockExamResult find(TargetMockExamResult targetMockExamResult) {
-        return mockExamResultJpaRepository.findById(targetMockExamResult.mockExamResultId())
+    public MockExamResult find(MockExamResultId mockExamResultId) {
+        return mockExamResultJpaRepository.findById(mockExamResultId.mockExamResultId())
                 .orElseThrow(() -> MockExamResultNotFoundException.EXCEPTION)
                 .toDomain();
     }
@@ -149,7 +149,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
             Cursor cursor) {
         Page<MockExamResultEntity> mockExamResults = mockExamResultJpaRepository.findMockExamResultsByDate(
                 user.getId(),
-                certificate.id(),
+                certificate.id().value(),
                 dateCond.date(),
                 toPageRequest(cursor)
         );
@@ -170,7 +170,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
             Cursor cursor) {
         Page<MockExamResultEntity> mockExamResults = mockExamResultJpaRepository.findMockExamResultsByWeekOfMonth(
                 user.getId(),
-                certificate.id(),
+                certificate.id().value(),
                 DateUtils.getFirstDayOfMonth(LocalDate.of(dateCond.year(), dateCond.month(), 1)),
                 dateCond.month(),
                 dateCond.weekOfMonth(),
@@ -192,7 +192,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
             Cursor cursor) {
         Page<MockExamResultEntity> mockExamResults = mockExamResultJpaRepository.findMockExamResultsByMonth(
                 user.getId(),
-                certificate.id(),
+                certificate.id().value(),
                 dateCond.month(),
                 toPageRequest(cursor)
         );
@@ -211,7 +211,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
             DateCond dateCond) {
         return mockExamResultJpaRepository.getDailyScoreDataList(
                         user.getId(),
-                        certificate.id(),
+                        certificate.id().value(),
                         dateCond
                 ).stream()
                 .map(DailyScoreAverage::toScoreData)
@@ -224,7 +224,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
             DateCond dateCond) {
         return mockExamResultJpaRepository.getWeeklyScoreDataList(
                         user.getId(),
-                        certificate.id(),
+                        certificate.id().value(),
                         dateCond
                 ).stream()
                 .map(WeeklyScoreAverage::toScoreData)
@@ -237,7 +237,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
             DateCond dateCond) {
         return mockExamResultJpaRepository.getMonthlyScoreDataList(
                         user.getId(),
-                        certificate.id(),
+                        certificate.id().value(),
                         dateCond
                 ).stream()
                 .map(MonthlyScoreAverage::toScoreData)
@@ -250,7 +250,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
             GoalPeriod goalPeriod) {
         return subjectResultJpaRepository.getSubjectResultsAVG(
                         user.getId(),
-                        certificate.id(),
+                        certificate.id().value(),
                         goalPeriod.startDateTime(),
                         goalPeriod.endDateTime()
                 ).stream()
@@ -264,7 +264,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
             GoalPeriod goalPeriod) {
         return mockExamResultJpaRepository.getMockExamResultMaxScore(
                 user.getId(),
-                certificate.id(),
+                certificate.id().value(),
                 goalPeriod.startDateTime(),
                 goalPeriod.endDateTime()
         );
@@ -275,7 +275,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
             Certificate certificate) {
         return mockExamResultJpaRepository.countTodayMockExamResults(
                 user.getId(),
-                certificate.id()
+                certificate.id().value()
         );
     }
 
@@ -285,7 +285,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
             GoalPeriod goalPeriod) {
         return mockExamResultJpaRepository.countTotalMockExamResults(
                 user.getId(),
-                certificate.id(),
+                certificate.id().value(),
                 goalPeriod.startDateTime(),
                 goalPeriod.endDateTime()
         );

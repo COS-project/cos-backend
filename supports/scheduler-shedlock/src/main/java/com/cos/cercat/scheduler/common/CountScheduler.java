@@ -25,7 +25,7 @@ public class CountScheduler {
     @Scheduled(fixedRate = SCHEDULED_FIXED_RATE)
     public void synchronize() {
         synchronizers.forEach(CountSynchronizer::synchronize);
-        log.info("CountScheduler.synchronize() executed");
+        log.debug("CountScheduler.synchronize() executed");
     }
 
 }

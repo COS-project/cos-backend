@@ -36,6 +36,6 @@ public class FavoriteBoardRepositoryImpl implements FavoriteBoardRepository {
     @Override
     @Transactional
     public void remove(User user, Certificate interested) {
-        favoriteBoardJpaRepository.deleteById(user.getId(), interested.id());
+        favoriteBoardJpaRepository.deleteById(user.getId(), interested.id().value());
     }
 }

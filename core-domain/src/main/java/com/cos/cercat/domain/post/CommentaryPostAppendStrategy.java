@@ -22,7 +22,7 @@ public class CommentaryPostAppendStrategy implements PostAppendStrategy {
     }
 
     @Override
-    public TargetPost append(User user, Certificate certificate, NewPost newPost, List<Image> images) {
+    public PostId append(User user, Certificate certificate, NewPost newPost, List<Image> images) {
         Question question = questionReader.read(certificate, newPost.mockExamSession(),
                 newPost.questionSequence());
         CommentaryPost.create(user, certificate, newPost, images, question);

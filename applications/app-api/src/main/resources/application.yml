@@ -5,7 +5,6 @@ spring:
       - application-db.yml
       - application-gcs.yml
       - application-cache.yml
-      - application-search.yml
       - application-messaging.yml
       - application-security.yml
       - application-scheduler.yml
@@ -45,6 +44,10 @@ spring:
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
+logging:
+  level:
+    root: INFO
+    com.cos.cercat: DEBUG
 
 front:
   scheme: http
@@ -77,6 +80,11 @@ spring:
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
+
+logging:
+  level:
+    root: INFO
+    com.cos.cercat: INFO
 
 front:
   scheme: http

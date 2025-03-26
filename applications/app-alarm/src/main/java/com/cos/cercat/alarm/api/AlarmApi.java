@@ -4,7 +4,7 @@ import com.cos.cercat.alarm.sse.SseEmitterConnector;
 import com.cos.cercat.domain.alarm.Alarm;
 import com.cos.cercat.domain.alarm.AlarmService;
 import com.cos.cercat.web.Response;
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -35,13 +35,13 @@ public class AlarmApi implements AlarmApiDocs {
 
     @GetMapping("/alarms")
     public Response<List<Alarm>> getAlarmList(@AuthenticationPrincipal User currentUser) {
-        return Response.success(alarmService.readAlarms(TargetUser.from(currentUser.getId())));
+        return Response.success(alarmService.readAlarms(UserId.from(currentUser.getId())));
     }
 
     @GetMapping("/alarms/unread")
     public Response<Integer> countUnreadAlarm(@AuthenticationPrincipal User currentUser) {
         return Response.success(
-                alarmService.countUnreadAlarms(TargetUser.from(currentUser.getId())));
+                alarmService.countUnreadAlarms(UserId.from(currentUser.getId())));
     }
 
     @PostMapping("/alarms/read")

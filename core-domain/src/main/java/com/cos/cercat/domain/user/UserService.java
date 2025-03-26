@@ -19,11 +19,11 @@ public class UserService {
   private final TokenManager tokenManager;
 
 
-  public void updateUser(TargetUser targetUser,
+  public void updateUser(UserId userId,
       File file,
       String nickname) {
     Image image = fileUploader.upload(file);
-    User user = userReader.read(targetUser);
+    User user = userReader.read(userId);
     user.update(nickname, image);
     userUpdater.update(user);
   }
@@ -32,8 +32,8 @@ public class UserService {
     tokenManager.banAccessToken(accessToken);
   }
 
-  public void deleteUser(TargetUser targetUser) {
-    User user = userReader.read(targetUser);
+  public void deleteUser(UserId userId) {
+    User user = userReader.read(userId);
     userRemover.remove(user);
   }
 }

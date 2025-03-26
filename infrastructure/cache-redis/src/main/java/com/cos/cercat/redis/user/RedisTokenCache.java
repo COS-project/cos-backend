@@ -3,7 +3,7 @@ package com.cos.cercat.redis.user;
 import static com.cos.cercat.redis.user.config.UserRedisConfig.BAN_TOKEN_KEY;
 
 import com.cos.cercat.domain.user.RefreshToken;
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.TokenCache;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,8 +30,8 @@ public class RedisTokenCache implements TokenCache {
     }
 
     @Override
-    public Optional<RefreshToken> find(TargetUser targetUser) {
-        String key = getKey(targetUser.userId());
+    public Optional<RefreshToken> find(UserId userId) {
+        String key = getKey(userId.userId());
         RefreshToken token = tokenRedisTemplate.opsForValue().get(key);
         log.info("Get Refresh Token from {} : {}", key, token);
         return Optional.ofNullable(token);

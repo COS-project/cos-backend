@@ -25,6 +25,6 @@ public class QuestionUpdater {
             question.addOptionImageUrl(optionImageFile.optionSequence(), optionImage.getImageUrl());
         }
         mockExamRepository.updateQuestion(question);
-        mockExamCache.delete(TargetMockExam.from(question.getMockExam().id()));
+        mockExamCache.delete(MockExamId.from(question.getMockExam().id()));
     }
 }

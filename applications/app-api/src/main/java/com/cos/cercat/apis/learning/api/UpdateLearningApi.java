@@ -2,9 +2,9 @@ package com.cos.cercat.apis.learning.api;
 
 import com.cos.cercat.apis.learning.request.GoalRequest;
 import com.cos.cercat.web.Response;
-import com.cos.cercat.domain.learning.TargetGoal;
+import com.cos.cercat.domain.learning.GoalId;
 import com.cos.cercat.domain.learning.UpdateLearningService;
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,8 +23,8 @@ public class UpdateLearningApi implements UpdateLearningApiDocs {
                                      @AuthenticationPrincipal User currentUser) {
 
         updateLearningService.updateGoal(
-                TargetUser.from(currentUser.getId()),
-                TargetGoal.from(goalId),
+                UserId.from(currentUser.getId()),
+                GoalId.from(goalId),
                 request.toNewGoal()
                 );
         return Response.success("목표 수정 성공");

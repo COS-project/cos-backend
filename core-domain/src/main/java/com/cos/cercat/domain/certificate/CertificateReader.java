@@ -15,7 +15,7 @@ public class CertificateReader {
         return certificateRepository.findAll();
     }
 
-    public Certificate read(TargetCertificate targetCertificate) {
-        return certificateRepository.findById(targetCertificate);
+    public Certificate read(CertificateId certificateId) {
+        return certificateRepository.findById(certificateId);
     }
 }

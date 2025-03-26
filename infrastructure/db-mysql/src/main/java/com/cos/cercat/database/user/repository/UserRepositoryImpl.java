@@ -3,7 +3,7 @@ package com.cos.cercat.database.user.repository;
 import com.cos.cercat.database.user.entity.UserEntity;
 import com.cos.cercat.domain.user.exception.UserNotFoundException;
 import com.cos.cercat.domain.user.UserInfo;
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +19,8 @@ public class UserRepositoryImpl implements UserRepository {
   private final UserJpaRepository userJpaRepository;
 
   @Override
-  public User find(TargetUser targetUser) {
-    return userJpaRepository.findById(targetUser.userId())
+  public User find(UserId userId) {
+    return userJpaRepository.findById(userId.userId())
         .orElseThrow(() -> UserNotFoundException.EXCEPTION)
         .toDomain();
   }

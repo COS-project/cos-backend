@@ -4,7 +4,7 @@ import com.cos.cercat.apis.post.request.PostCommentCreateRequest;
 import com.cos.cercat.apis.post.request.PostCreateRequest;
 import com.cos.cercat.web.Response;
 import com.cos.cercat.domain.post.PostType;
-import com.cos.cercat.domain.post.TargetPost;
+import com.cos.cercat.domain.post.PostId;
 import com.cos.cercat.domain.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,7 +16,7 @@ import java.util.List;
 public interface CreatePostApiDocs {
 
     @Operation(summary = "게시글 생성")
-    Response<TargetPost> createPost(Long certificateId, PostType postType,
+    Response<PostId> createPost(Long certificateId, PostType postType,
                                     PostCreateRequest request,
                                     List<MultipartFile> files,
                                     User currentUser);

@@ -1,7 +1,7 @@
 package com.cos.cercat.domain.certificate;
 
 public record Certificate(
-        Long id,
+        CertificateId id,
         String certificateName
 ) {
 }

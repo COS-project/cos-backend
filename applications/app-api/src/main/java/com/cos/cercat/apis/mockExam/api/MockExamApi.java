@@ -5,10 +5,10 @@ import com.cos.cercat.apis.mockExam.request.QuestionImageRequest;
 import com.cos.cercat.apis.mockExam.request.CreateMockExamRequest;
 import com.cos.cercat.apis.mockExam.response.MockExamResponse;
 import com.cos.cercat.apis.mockExam.response.QuestionResponse;
-import com.cos.cercat.domain.certificate.TargetCertificate;
+import com.cos.cercat.domain.certificate.CertificateId;
 import com.cos.cercat.web.Response;
 import com.cos.cercat.domain.mockexam.MockExamService;
-import com.cos.cercat.domain.mockexam.TargetMockExam;
+import com.cos.cercat.domain.mockexam.MockExamId;
 import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,7 +28,7 @@ public class MockExamApi implements MockExamApiDocs {
             Integer examYear,
             @AuthenticationPrincipal User currentUser) {
         List<MockExamResponse> mockExamResponses = mockExamService.find(
-                        TargetCertificate.from(certificateId), examYear).stream()
+                        CertificateId.from(certificateId), examYear).stream()
                 .map(MockExamResponse::from)
                 .toList();
 
@@ -39,14 +39,14 @@ public class MockExamApi implements MockExamApiDocs {
     @GetMapping("/certificates/{certificateId}/exam-years")
     public Response<List<Integer>> findExamYears(@PathVariable Long certificateId) {
         return Response.success(
-                mockExamService.findExamYears(TargetCertificate.from(certificateId)));
+                mockExamService.findExamYears(CertificateId.from(certificateId)));
     }
 
     @Override
     @GetMapping("/mock-exams/{mockExamId}/questions")
     public Response<List<QuestionResponse>> findQuestions(@PathVariable Long mockExamId) {
         List<QuestionResponse> questionResponses = mockExamService.findQuestions(
-                        TargetMockExam.from(mockExamId)).stream()
+                        MockExamId.from(mockExamId)).stream()
                 .map(QuestionResponse::from)
                 .toList();
 
@@ -58,7 +58,7 @@ public class MockExamApi implements MockExamApiDocs {
     public Response<Void> createMockExam(@PathVariable Long certificateId,
             @RequestBody CreateMockExamRequest request) {
         mockExamService.createMockExam(
-                TargetCertificate.from(certificateId),
+                CertificateId.from(certificateId),
                 request.toExamSession(),
                 request.timeLimit(),
                 request.toContent()

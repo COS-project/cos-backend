@@ -4,23 +4,19 @@ import static com.cos.cercat.database.common.util.PagingUtil.toPageRequest;
 
 import com.cos.cercat.database.certificate.entity.CertificateEntity;
 import com.cos.cercat.database.post.entity.PostImageEntity;
-import com.cos.cercat.domain.post.exception.CommentNotFoundException;
-import com.cos.cercat.domain.post.exception.PostNotFoundException;
 import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.domain.common.Cursor;
 import com.cos.cercat.domain.common.Image;
 import com.cos.cercat.domain.common.SliceResult;
 import com.cos.cercat.domain.post.*;
 import com.cos.cercat.database.post.entity.CommentaryPostEntity;
-import com.cos.cercat.database.post.entity.PostCommentEntity;
 import com.cos.cercat.database.post.entity.PostEntity;
 
+import com.cos.cercat.domain.searchlog.SearchCond;
 import com.cos.cercat.domain.user.User;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,19 +33,39 @@ public class ReadPostRepositoryImpl implements ReadPostRepository {
     private final RecommendTagJpaRepository recommendTagJpaRepository;
 
     @Override
-    public Optional<Post> find(TargetPost targetPost) {
-        return postJpaRepository.findById(targetPost.postId()).map(this::toDomain);
+    public Optional<Post> find(PostId postId) {
+        return postJpaRepository.findById(postId.postId()).map(this::toDomain);
     }
 
     @Override
-    public SliceResult<Post> search(Certificate certificate,
-                                    CommentaryPostSearchCond commentaryPostSearchCond,
-                                    Cursor cursor) {
+    public SliceResult<Post> findPosts(
+            Certificate certificate,
+            SearchCond cond,
+            Cursor cursor
+    ) {
+        Slice<PostEntity> postEntities = postJpaRepository.findPosts(
+                cond,
+                certificate,
+                toPageRequest(cursor));
+
+        List<Post> posts = postEntities.stream()
+                .map(this::toDomain)
+                .toList();
+
+        return SliceResult.of(posts, postEntities.hasNext());
+    }
+
+    @Override
+    public SliceResult<Post> findCommentaries(
+            Certificate certificate,
+            CommentarySearchCond commentarySearchCond,
+            Cursor cursor
+    ) {
 
         Slice<CommentaryPostEntity> commentaryPostEntities = commentaryPostJpaRepository.searchPosts(
                 toPageRequest(cursor),
                 CertificateEntity.from(certificate),
-                commentaryPostSearchCond
+                commentarySearchCond
         );
 
         List<Post> commentaryPosts = commentaryPostEntities.stream()
@@ -61,7 +77,7 @@ public class ReadPostRepositoryImpl implements ReadPostRepository {
 
     @Override
     public List<Post> findTop3TipPosts(Certificate certificate) {
-        return postJpaRepository.findTop3Tips(certificate.id()).stream()
+        return postJpaRepository.findTop3Tips(certificate.id().value()).stream()
                 .map(this::toDomain)
                 .toList();
     }

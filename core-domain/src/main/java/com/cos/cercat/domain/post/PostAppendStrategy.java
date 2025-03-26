@@ -9,6 +9,6 @@ public interface PostAppendStrategy {
 
     Boolean supports(PostType postType);
 
-    TargetPost append(User user, Certificate certificate, NewPost newPost, List<Image> images);
+    PostId append(User user, Certificate certificate, NewPost newPost, List<Image> images);
 
 }

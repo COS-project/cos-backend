@@ -10,7 +10,7 @@ import com.cos.cercat.database.post.entity.CommentaryPostEntity;
 import com.cos.cercat.database.post.entity.QCommentaryPostEntity;
 import com.cos.cercat.database.user.entity.QUserEntity;
 import com.cos.cercat.domain.like.LikeTargetType;
-import com.cos.cercat.domain.post.CommentaryPostSearchCond;
+import com.cos.cercat.domain.post.CommentarySearchCond;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -32,7 +32,7 @@ public class CommentaryPostJpaRepositoryImpl implements
 
     @Override
     public Slice<CommentaryPostEntity> searchPosts(Pageable pageable,
-            CertificateEntity certificateEntity, CommentaryPostSearchCond cond) {
+            CertificateEntity certificateEntity, CommentarySearchCond cond) {
 
         List<CommentaryPostEntity> contents = queryFactory
                 .selectFrom(QCommentaryPostEntity.commentaryPostEntity)

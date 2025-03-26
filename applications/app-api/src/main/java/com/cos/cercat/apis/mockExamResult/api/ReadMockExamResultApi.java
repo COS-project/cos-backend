@@ -1,16 +1,16 @@
 package com.cos.cercat.apis.mockExamResult.api;
 
 import com.cos.cercat.apis.mockExamResult.response.*;
-import com.cos.cercat.domain.certificate.TargetCertificate;
+import com.cos.cercat.domain.certificate.CertificateId;
 import com.cos.cercat.apis.global.annotation.CursorDefault;
 import com.cos.cercat.domain.common.Cursor;
 import com.cos.cercat.domain.common.PageResult;
 import com.cos.cercat.web.Response;
 import com.cos.cercat.domain.common.SliceResult;
-import com.cos.cercat.domain.mockexam.TargetMockExam;
+import com.cos.cercat.domain.mockexam.MockExamId;
 import com.cos.cercat.domain.mockexamresult.*;
 
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,7 +30,7 @@ public class ReadMockExamResultApi implements ReadMockExamResultApiDocs {
       @PathVariable Long mockExamId,
       @AuthenticationPrincipal User user) {
     List<MockExamResultDetail> mockExamResultDetails = readMockExamResultService.getMockExamResultDetail(
-        TargetMockExam.from(mockExamId), TargetUser.from(user.getId()));
+        MockExamId.from(mockExamId), UserId.from(user.getId()));
     List<MockExamResultWithSubjectsResponse> responses = mockExamResultDetails.stream()
         .map(MockExamResultWithSubjectsResponse::from)
         .toList();
@@ -41,8 +41,8 @@ public class ReadMockExamResultApi implements ReadMockExamResultApiDocs {
   public Response<MockExamResultResponse> recentMockExamResult(@PathVariable Long mockExamId,
       @AuthenticationPrincipal User currentUser) {
     MockExamResult recentMockExamResult = readMockExamResultService.getRecentMockExamResult(
-        TargetMockExam.from(mockExamId),
-        TargetUser.from(currentUser.getId())
+        MockExamId.from(mockExamId),
+        UserId.from(currentUser.getId())
     );
 
     return Response.success(MockExamResultResponse.from(recentMockExamResult));
@@ -55,8 +55,8 @@ public class ReadMockExamResultApi implements ReadMockExamResultApiDocs {
       @AuthenticationPrincipal User currentUser) {
 
     SliceResult<UserAnswer> allWrongUserAnswers = readMockExamResultService.getAllWrongUserAnswers(
-        TargetCertificate.from(certificateId),
-        TargetUser.from(currentUser.getId()),
+        CertificateId.from(certificateId),
+        UserId.from(currentUser.getId()),
         cursor);
 
     return Response.success(allWrongUserAnswers.map(UserAnswerResponse::from));
@@ -67,8 +67,8 @@ public class ReadMockExamResultApi implements ReadMockExamResultApiDocs {
       @PathVariable Long mockExamResultId,
       @AuthenticationPrincipal User currentUser) {
     SliceResult<UserAnswerResponse> responses = readMockExamResultService.getWrongUserAnswers(
-        TargetMockExamResult.from(mockExamResultId),
-        TargetUser.from(currentUser.getId()),
+        MockExamResultId.from(mockExamResultId),
+        UserId.from(currentUser.getId()),
         cursor
     ).map(UserAnswerResponse::from);
 
@@ -80,8 +80,8 @@ public class ReadMockExamResultApi implements ReadMockExamResultApiDocs {
       @PathVariable Long certificateId,
       @AuthenticationPrincipal User currentUser) {
     List<SubjectResultStatistics> subjectResultsStatistics = readMockExamResultService.getSubjectResultsStatistics(
-        TargetUser.from(currentUser.getId()),
-        TargetCertificate.from(certificateId)
+        UserId.from(currentUser.getId()),
+        CertificateId.from(certificateId)
     );
 
     List<SubjectResultsAVGResponse> responses = subjectResultsStatistics.stream()
@@ -97,8 +97,8 @@ public class ReadMockExamResultApi implements ReadMockExamResultApiDocs {
       DateCond dateCond,
       @AuthenticationPrincipal User currentUser) {
     List<ScoreData> reportData = readMockExamResultService.findReportData(
-        TargetUser.from(currentUser.getId()),
-        TargetCertificate.from(certificateId),
+        UserId.from(currentUser.getId()),
+        CertificateId.from(certificateId),
         reportType,
         dateCond
     );
@@ -114,8 +114,8 @@ public class ReadMockExamResultApi implements ReadMockExamResultApiDocs {
       @AuthenticationPrincipal User currentUser,
       @CursorDefault Cursor cursor) {
     PageResult<MockExamResultResponse> responses = readMockExamResultService.findMockExamResults(
-            TargetUser.from(currentUser.getId()),
-            TargetCertificate.from(certificateId),
+            UserId.from(currentUser.getId()),
+            CertificateId.from(certificateId),
             dateType,
             dateCond,
             cursor)

@@ -15,12 +15,12 @@ public class MockExamAppender {
     private final MockExamRepository mockExamRepository;
     private final SubjectReader subjectReader;
 
-    public TargetMockExam append(Certificate certificate,
+    public MockExamId append(Certificate certificate,
             MockExamSession session,
             Long timeLimit,
             List<QuestionWithSubjectSeq> contents) {
         NewMockExam newMockExam = NewMockExam.of(session, timeLimit, certificate);
-        TargetMockExam targetMockExam = mockExamRepository.save(newMockExam);
+        MockExamId mockExamId = mockExamRepository.save(newMockExam);
 
         List<Subject> subjects = subjectReader.read(certificate);
 
@@ -28,8 +28,8 @@ public class MockExamAppender {
                 .map(content -> content.toNewQuestion(subjects))
                 .toList();
 
-        mockExamRepository.saveQuestions(targetMockExam, newQuestions);
-        return targetMockExam;
+        mockExamRepository.saveQuestions(mockExamId, newQuestions);
+        return mockExamId;
     }
 
 }

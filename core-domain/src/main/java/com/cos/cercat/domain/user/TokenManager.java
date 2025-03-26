@@ -15,9 +15,9 @@ public class TokenManager {
         tokenCache.cacheRefreshToken(refreshToken);
     }
 
-    public Optional<String> getRefreshToken(TargetUser targetUser) {
+    public Optional<String> getRefreshToken(UserId userId) {
         return tokenCache
-                .find(targetUser)
+                .find(userId)
                 .map(RefreshToken::refreshToken);
     }
 

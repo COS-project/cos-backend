@@ -27,8 +27,8 @@ public class CertificateRepositoryImpl implements CertificateRepository {
     }
 
     @Override
-    public Certificate findById(TargetCertificate targetCertificate) {
-        CertificateEntity certificateEntity = certificateJpaRepository.findById(targetCertificate.certificateId())
+    public Certificate findById(CertificateId certificateId) {
+        CertificateEntity certificateEntity = certificateJpaRepository.findById(certificateId.value())
                 .orElseThrow(() -> CertificateNotFoundException.EXCEPTION);
 
         return certificateEntity.toDomain();
@@ -48,9 +48,9 @@ public class CertificateRepositoryImpl implements CertificateRepository {
     }
 
     @Override
-    public List<Certificate> find(List<TargetCertificate> targetCertificates) {
-        return certificateJpaRepository.findAllById(targetCertificates.stream()
-                .map(TargetCertificate::certificateId)
+    public List<Certificate> find(List<CertificateId> certificateIds) {
+        return certificateJpaRepository.findAllById(certificateIds.stream()
+                .map(CertificateId::value)
                 .toList())
                 .stream()
                 .map(CertificateEntity::toDomain)
@@ -59,7 +59,7 @@ public class CertificateRepositoryImpl implements CertificateRepository {
 
     @Override
     public List<Subject> findSubject(Certificate certificate) {
-        return subjectJpaRepository.findSubjectsByCertificateId(certificate.id())
+        return subjectJpaRepository.findSubjectsByCertificateId(certificate.id().value())
                 .stream()
                 .map(SubjectEntity::toDomain)
                 .toList();

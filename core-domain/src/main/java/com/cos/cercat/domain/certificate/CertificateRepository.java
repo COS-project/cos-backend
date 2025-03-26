@@ -8,9 +8,9 @@ public interface CertificateRepository {
 
     void save(String certificateName, List<SubjectInfo> subjectsInfo);
 
-    Certificate findById(TargetCertificate targetCertificate);
+    Certificate findById(CertificateId certificateId);
 
-    List<Certificate> find(List<TargetCertificate> targetCertificates);
+    List<Certificate> find(List<CertificateId> certificateIds);
 
     List<Subject> findSubject(Certificate certificate);
 }

@@ -6,7 +6,7 @@ import com.cos.cercat.domain.mockexam.NewQuestion;
 import com.cos.cercat.domain.mockexam.Question;
 import com.cos.cercat.domain.mockexam.QuestionContent;
 import com.cos.cercat.domain.mockexam.QuestionOption;
-import com.cos.cercat.domain.mockexam.TargetMockExam;
+import com.cos.cercat.domain.mockexam.MockExamId;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -92,9 +92,9 @@ public class QuestionEntity {
         );
     }
 
-    public static QuestionEntity from(TargetMockExam targetMockExam, NewQuestion newQuestion) {
+    public static QuestionEntity from(MockExamId mockExamId, NewQuestion newQuestion) {
         QuestionEntity questionEntity = QuestionEntity.builder()
-                .mockExamEntity(MockExamEntity.from(targetMockExam))
+                .mockExamEntity(MockExamEntity.from(mockExamId))
                 .subjectEntity(SubjectEntity.from(newQuestion.subject()))
                 .questionSeq(newQuestion.questionContent().questionSequence())
                 .questionText(newQuestion.questionContent().questionText())

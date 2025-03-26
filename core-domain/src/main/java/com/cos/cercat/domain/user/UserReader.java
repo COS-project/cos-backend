@@ -10,9 +10,9 @@ public class UserReader {
   private final UserRepository userRepository;
   private final UserCacheManager userCacheManager;
 
-  public User read(TargetUser targetUser) {
-    return userCacheManager.read(targetUser).orElseGet(() ->
-        userRepository.find(targetUser)
+  public User read(UserId userId) {
+    return userCacheManager.read(userId).orElseGet(() ->
+        userRepository.find(userId)
     );
   }
 

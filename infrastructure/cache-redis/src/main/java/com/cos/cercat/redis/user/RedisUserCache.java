@@ -2,7 +2,7 @@ package com.cos.cercat.redis.user;
 
 import static com.cos.cercat.redis.user.config.UserRedisConfig.USER_CACHE_TTL;
 
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserCache;
 import lombok.RequiredArgsConstructor;
@@ -22,16 +22,16 @@ public class RedisUserCache implements UserCache {
 
     public void cache(User user) {
         String key = getKey(user.getId());
-        log.info("Set UserEntity from {} : {}", key, user.getUsername());
+        log.debug("Set UserEntity from {} : {}", key, user.getUsername());
         redisTemplate.opsForValue().setIfAbsent(key, user, USER_CACHE_TTL);
     }
 
-    public Optional<User> find(TargetUser targetUser) {
-        String key = getKey(targetUser.userId());
+    public Optional<User> find(UserId userId) {
+        String key = getKey(userId.userId());
         Optional<User> user = Optional.ofNullable(redisTemplate.opsForValue().get(key));
         user.ifPresentOrElse(
-                u -> log.info("Get User from Cache - {} : {}", key, u.getUsername()),
-                () -> log.info("No User Cache - {}", key)
+                u -> log.debug("Get User from Cache - {} : {}", key, u.getUsername()),
+                () -> log.debug("No User Cache - {}", key)
         );
         return user;
     }
@@ -39,7 +39,7 @@ public class RedisUserCache implements UserCache {
     public void delete(User user) {
         String key = getKey(user.getId());
         redisTemplate.delete(key);
-        log.info("유저 캐싱 폐기 완료 - {}", key);
+        log.debug("유저 캐싱 폐기 완료 - {}", key);
     }
 
     public String getKey(Long userId) {

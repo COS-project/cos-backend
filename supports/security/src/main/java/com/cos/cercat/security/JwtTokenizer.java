@@ -2,7 +2,7 @@ package com.cos.cercat.security;
 
 import static com.cos.cercat.security.JwtTokenProperties.*;
 import com.cos.cercat.security.exception.InvalidTokenException;
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.UserId;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -22,24 +22,24 @@ import java.util.Optional;
 @Component
 public class JwtTokenizer {
 
-    public static String generateAccessToken(TargetUser targetUser) {
+    public static String generateAccessToken(UserId userId) {
 
         Key key = getKeyFromSecretKey(SECRET_KEY);
 
         return Jwts.builder()
-                .setSubject(targetUser.userId().toString())
+                .setSubject(userId.userId().toString())
                 .setIssuedAt(Calendar.getInstance().getTime())
                 .setExpiration(getTokenExpiration())
                 .signWith(key)
                 .compact();
     }
 
-    public static String generateRefreshToken(TargetUser targetUser) {
+    public static String generateRefreshToken(UserId userId) {
 
         Key key = getKeyFromSecretKey(SECRET_KEY);
 
         return Jwts.builder()
-                .setSubject(targetUser.userId().toString())
+                .setSubject(userId.userId().toString())
                 .setIssuedAt(Calendar.getInstance().getTime())
                 .signWith(key)
                 .compact();
@@ -73,7 +73,7 @@ public class JwtTokenizer {
                 .map(refreshToken -> refreshToken.replace(BEARER, ""));
     }
 
-    public static TargetUser extractTargetUser(String token) {
+    public static UserId extractTargetUser(String token) {
         try {
             Key key = getKeyFromSecretKey(SECRET_KEY);
 
@@ -83,7 +83,7 @@ public class JwtTokenizer {
                     .parseClaimsJws(token)
                     .getBody()
                     .getSubject();
-            return TargetUser.from(Long.valueOf(subject));
+            return UserId.from(Long.valueOf(subject));
         } catch (ExpiredJwtException e) {
             throw InvalidTokenException.EXCEPTION;
         }

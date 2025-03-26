@@ -10,10 +10,10 @@ public record InterestTargets(
         return new InterestTargets(interestTargets);
     }
 
-    public List<TargetCertificate> certificates() {
+    public List<CertificateId> certificates() {
         return interestTargetList.stream()
                 .map(InterestTarget::certificateId)
-                .map(TargetCertificate::from)
+                .map(CertificateId::from)
                 .toList();
     }
 
@@ -21,7 +21,7 @@ public record InterestTargets(
         return interestTargetList.stream()
                 .map(interestTarget -> {
                     Certificate certificate = certificates.stream()
-                            .filter(c -> c.id() == interestTarget.certificateId())
+                            .filter(c -> c.id().value() == interestTarget.certificateId())
                             .findFirst()
                             .get();
                     return new NewInterestCertificate(

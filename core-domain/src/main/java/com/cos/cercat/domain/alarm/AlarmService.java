@@ -1,6 +1,6 @@
 package com.cos.cercat.domain.alarm;
 
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserReader;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +15,8 @@ public class AlarmService {
     private final AlarmManager alarmManager;
     private final UserReader userReader;
 
-    public List<Alarm> readAlarms(TargetUser targetUser) {
-        User user = userReader.read(targetUser);
+    public List<Alarm> readAlarms(UserId userId) {
+        User user = userReader.read(userId);
         return alarmManager.read(user);
     }
 
@@ -24,8 +24,8 @@ public class AlarmService {
         alarmManager.markAsRead(alarmIds);
     }
 
-    public int countUnreadAlarms(TargetUser targetUser) {
-        User user = userReader.read(targetUser);
+    public int countUnreadAlarms(UserId userId) {
+        User user = userReader.read(userId);
         return alarmManager.countUnread(user);
     }
 }

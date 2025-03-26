@@ -8,7 +8,7 @@ public interface TokenCache {
 
     void cacheAccessToken(String accessToken);
 
-    Optional<RefreshToken> find(TargetUser targetUser);
+    Optional<RefreshToken> find(UserId userId);
 
     boolean exists(String token);
 }

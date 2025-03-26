@@ -36,7 +36,7 @@ public interface MockExamResultJpaRepository extends JpaRepository<MockExamResul
       AND mer.createdAt BETWEEN :goalStartDateTime AND :goalEndDateTime
       """)
   Integer countTotalMockExamResults(@Param("userId") Long userId,
-      @Param("certificateId") Long certificateId,
+      Long certificateId,
       @Param("goalStartDateTime") LocalDateTime goalStartDateTime,
       @Param("goalEndDateTime") LocalDateTime goalEndDateTime);
 
@@ -48,7 +48,7 @@ public interface MockExamResultJpaRepository extends JpaRepository<MockExamResul
       AND mer.createdAt BETWEEN :goalStartDateTime AND :goalEndDateTime
       """)
   Integer getMockExamResultMaxScore(@Param("userId") Long userId,
-      @Param("certificateId") Long certificateId,
+      Long certificateId,
       @Param("goalStartDateTime") LocalDateTime goalStartDateTime,
       @Param("goalEndDateTime") LocalDateTime goalEndDateTime);
 
@@ -59,8 +59,7 @@ public interface MockExamResultJpaRepository extends JpaRepository<MockExamResul
       AND mr.userEntity.id = :userId
       AND c.id = :certificateId
       """)
-  Integer countTodayMockExamResults(@Param("userId") Long userId,
-      @Param("certificateId") Long certificateId);
+  Integer countTodayMockExamResults(@Param("userId") Long userId, Long certificateId);
 
 
   @Query("""
@@ -71,10 +70,12 @@ public interface MockExamResultJpaRepository extends JpaRepository<MockExamResul
       AND mr.userEntity.id = :userId
       AND c.id = :certificateId
       """)
-  Page<MockExamResultEntity> findMockExamResultsByDate(@Param("userId") Long userId,
-      @Param("certificateId") Long certificateId,
-      @Param("date") Date date,
-      Pageable pageable);
+  Page<MockExamResultEntity> findMockExamResultsByDate(
+          Long userId,
+          Long certificateId,
+          Date date,
+          Pageable pageable
+  );
 
   @Query("""
       SELECT mr from MockExamResultEntity mr
@@ -86,7 +87,7 @@ public interface MockExamResultJpaRepository extends JpaRepository<MockExamResul
       AND c.id = :certificateId
       """)
   Page<MockExamResultEntity> findMockExamResultsByWeekOfMonth(@Param("userId") Long userId,
-      @Param("certificateId") Long certificateId,
+      Long certificateId,
       @Param("firstDayOfMonth") LocalDateTime firstDayOfMonth,
       @Param("month") int month,
       @Param("weekOfMonth") int weekOfMonth,
@@ -101,7 +102,7 @@ public interface MockExamResultJpaRepository extends JpaRepository<MockExamResul
       AND c.id = :certificateId
       """)
   Page<MockExamResultEntity> findMockExamResultsByMonth(@Param("userId") Long userId,
-      @Param("certificateId") Long certificateId,
+      Long certificateId,
       @Param("month") int month,
       Pageable pageable);
 

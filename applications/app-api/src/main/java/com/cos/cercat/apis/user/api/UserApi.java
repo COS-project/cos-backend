@@ -3,9 +3,8 @@ package com.cos.cercat.apis.user.api;
 import com.cos.cercat.apis.global.util.FileMapper;
 import com.cos.cercat.apis.user.request.UserCreateRequest;
 import com.cos.cercat.apis.user.response.UserResponse;
-import com.cos.cercat.domain.common.File;
 import com.cos.cercat.web.Response;
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,7 +35,7 @@ public class UserApi implements UserApiDocs {
                                          @RequestPart(required = false) MultipartFile file,
                                          @AuthenticationPrincipal User currentUser) {
         userService.updateUser(
-                TargetUser.from(currentUser.getId()),
+                UserId.from(currentUser.getId()),
                 FileMapper.toFile(file),
                 request.nickname()
         );
@@ -52,7 +51,7 @@ public class UserApi implements UserApiDocs {
     @DeleteMapping("/users/me")
     @Operation(summary = "회원 탈퇴")
     public Response<Void> deleteUser(@AuthenticationPrincipal User currentUser) {
-        userService.deleteUser(TargetUser.from(currentUser.getId()));
+        userService.deleteUser(UserId.from(currentUser.getId()));
         return Response.success("회원탈퇴 성공");
     }
 

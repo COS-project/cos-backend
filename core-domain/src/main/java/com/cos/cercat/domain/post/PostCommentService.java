@@ -1,7 +1,7 @@
 package com.cos.cercat.domain.post;
 
 import com.cos.cercat.domain.user.PermissionValidator;
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserReader;
 import lombok.RequiredArgsConstructor;
@@ -18,20 +18,20 @@ public class PostCommentService {
     private final PostRemover postRemover;
     private final PermissionValidator permissionValidator;
 
-    public void deletePostComment(TargetUser targetUser, TargetComment targetComment) {
-        User user = userReader.read(targetUser);
-        PostComment postComment = postCommentReader.read(targetComment);
+    public void deletePostComment(UserId userId, CommentId commentId) {
+        User user = userReader.read(userId);
+        PostComment postComment = postCommentReader.read(commentId);
         permissionValidator.validate(postComment, user);
         postRemover.remove(postComment);
     }
 
     public void createPostComment(
-            TargetUser targetUser,
-            TargetPost targetPost,
+            UserId userId,
+            PostId postId,
             CommentContent commentContent
     ) {
-        User user = userReader.read(targetUser);
-        Post post = postReader.read(targetPost);
+        User user = userReader.read(userId);
+        Post post = postReader.read(postId);
         postCommentAppender.append(user, post, commentContent);
     }
 }

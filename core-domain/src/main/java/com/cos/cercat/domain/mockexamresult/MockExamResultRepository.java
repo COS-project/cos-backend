@@ -12,14 +12,14 @@ import java.util.List;
 
 public interface MockExamResultRepository {
 
-    TargetMockExamResult save(User user,
+    MockExamResultId save(User user,
                               MockExam mockExam,
                               NewMockExamResult newMockExamResult);
 
     int countMockExamResult(User user,
                             MockExam mockExam);
 
-    UserAnswer findUserAnswer(TargetUserAnswer targetUserAnswer);
+    UserAnswer findUserAnswer(UserAnswerId userAnswerId);
 
     void update(UserAnswer userAnswer);
 
@@ -33,7 +33,7 @@ public interface MockExamResultRepository {
     SliceResult<UserAnswer> findWrongUserAnswers(MockExamResult mockExamResult,
                                                  Cursor cursor);
 
-    MockExamResult find(TargetMockExamResult targetMockExamResult);
+    MockExamResult find(MockExamResultId mockExamResultId);
 
     PageResult<MockExamResult> findMockExamResultsByDate(User user,
                                                          Certificate certificate,

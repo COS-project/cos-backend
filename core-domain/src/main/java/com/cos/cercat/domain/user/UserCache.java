@@ -5,7 +5,7 @@ import java.util.Optional;
 public interface UserCache {
     void cache(User user);
 
-    Optional<User> find(TargetUser targetUser);
+    Optional<User> find(UserId userId);
 
     void delete(User user);
 }

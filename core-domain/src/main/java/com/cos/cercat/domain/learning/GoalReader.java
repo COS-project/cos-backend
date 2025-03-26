@@ -11,8 +11,8 @@ public class GoalReader {
 
     private final LearningRepository learningRepository;
 
-    public Goal read(TargetGoal targetGoal) {
-        return learningRepository.getGoal(targetGoal);
+    public Goal read(GoalId goalId) {
+        return learningRepository.getGoal(goalId);
     }
 
     public boolean exists(User user, Certificate certificate) {

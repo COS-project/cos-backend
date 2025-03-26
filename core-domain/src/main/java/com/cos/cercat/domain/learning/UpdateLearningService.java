@@ -1,7 +1,7 @@
 package com.cos.cercat.domain.learning;
 
 import com.cos.cercat.domain.user.PermissionValidator;
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserReader;
 import lombok.RequiredArgsConstructor;
@@ -16,11 +16,11 @@ public class UpdateLearningService {
     private final GoalUpdater goalUpdater;
     private final PermissionValidator permissionValidator;
 
-    public void updateGoal(TargetUser targetUser,
-                           TargetGoal targetGoal,
+    public void updateGoal(UserId userId,
+                           GoalId goalId,
                            NewGoal newGoal) {
-        User user = userReader.read(targetUser);
-        Goal goal = goalReader.read(targetGoal);
+        User user = userReader.read(userId);
+        Goal goal = goalReader.read(goalId);
         permissionValidator.validate(goal, user);
         goal.updateGoal(newGoal);
         goalUpdater.update(goal);

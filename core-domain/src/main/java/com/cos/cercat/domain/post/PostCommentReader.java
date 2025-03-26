@@ -14,12 +14,12 @@ public class PostCommentReader {
 
     private final PostCommentRepository postCommentRepository;
 
-    public PostComment read(TargetComment targetComment) {
-        return postCommentRepository.find(targetComment).orElseThrow(() -> CommentNotFoundException.EXCEPTION);
+    public PostComment read(CommentId commentId) {
+        return postCommentRepository.find(commentId).orElseThrow(() -> CommentNotFoundException.EXCEPTION);
     }
 
-    public List<PostComment> readByPost(TargetPost targetPost) {
-        return postCommentRepository.findCommentsByPost(targetPost);
+    public List<PostComment> readByPost(PostId postId) {
+        return postCommentRepository.findCommentsByPost(postId);
     }
 
     public SliceResult<PostComment> read(User user, Cursor cursor) {

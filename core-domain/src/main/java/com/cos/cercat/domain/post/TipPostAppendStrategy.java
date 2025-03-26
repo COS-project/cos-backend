@@ -19,7 +19,7 @@ public class TipPostAppendStrategy implements PostAppendStrategy {
     }
 
     @Override
-    public TargetPost append(User user, Certificate certificate, NewPost newPost, List<Image> images) {
+    public PostId append(User user, Certificate certificate, NewPost newPost, List<Image> images) {
         TipPost tipPost = TipPost.create(user, certificate, newPost, images);
         return postRepository.save(tipPost);
     }

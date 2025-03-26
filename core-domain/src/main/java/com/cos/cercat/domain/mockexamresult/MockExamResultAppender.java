@@ -14,7 +14,7 @@ public class MockExamResultAppender {
     private final MockExamResultRepository mockExamResultRepository;
     private final MockExamResultReader mockExamResultReader;
 
-    public TargetMockExamResult append(User user,
+    public MockExamResultId append(User user,
                                        MockExam mockExam,
                                        List<NewSubjectResult> newSubjectResults) {
 

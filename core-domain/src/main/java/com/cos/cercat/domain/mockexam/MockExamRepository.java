@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MockExamRepository {
 
-    TargetMockExam save(NewMockExam newMockExam);
+    MockExamId save(NewMockExam newMockExam);
 
     Question readQuestion(Certificate certificate,
             MockExamSession mockExamSession,
@@ -19,9 +19,9 @@ public interface MockExamRepository {
 
     List<Integer> findExamYears(Certificate certificate);
 
-    MockExam find(TargetMockExam targetMockExam);
+    MockExam find(MockExamId mockExamId);
 
-    void saveQuestions(TargetMockExam targetMockExam, List<NewQuestion> newQuestions);
+    void saveQuestions(MockExamId mockExamId, List<NewQuestion> newQuestions);
 
     Question findById(Long questionId);
 

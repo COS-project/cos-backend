@@ -18,7 +18,7 @@ public interface CertificateExamJpaRepository extends JpaRepository<CertificateE
             ORDER BY ei.examDateTime DESC
             LIMIT 1
             """)
-    CertificateExamEntity findPreviousCertificateExam(@Param("certificateId") Long certificateId);
+    CertificateExamEntity findPreviousCertificateExam(Long certificateId);
 
     @Query("""
             SELECT ce FROM CertificateExamEntity ce

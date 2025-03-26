@@ -2,13 +2,13 @@ package com.cos.cercat.apis.post.api;
 
 import com.cos.cercat.apis.post.request.PostCommentCreateRequest;
 import com.cos.cercat.apis.post.request.PostCreateRequest;
-import com.cos.cercat.domain.certificate.TargetCertificate;
+import com.cos.cercat.domain.certificate.CertificateId;
 import com.cos.cercat.domain.post.PostCommentService;
 import com.cos.cercat.web.Response;
 import com.cos.cercat.domain.post.PostService;
 import com.cos.cercat.domain.post.PostType;
-import com.cos.cercat.domain.post.TargetPost;
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.post.PostId;
+import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -29,18 +29,18 @@ public class CreatePostApi implements CreatePostApiDocs {
     private final PostCommentService postCommentService;
 
     @PostMapping(path = "/certificates/{certificateId}/{postType}/posts", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Response<TargetPost> createPost(@PathVariable Long certificateId,
+    public Response<PostId> createPost(@PathVariable Long certificateId,
                                            @PathVariable PostType postType,
                                            @RequestPart PostCreateRequest request,
                                            @RequestPart(required = false) List<MultipartFile> files,
                                            @AuthenticationPrincipal User currentUser) {
-        TargetPost targetPost = postService.createPost(
-                TargetUser.from(currentUser.getId()),
-                TargetCertificate.from(certificateId),
+        PostId postId = postService.createPost(
+                UserId.from(currentUser.getId()),
+                CertificateId.from(certificateId),
                 request.toNewPost(postType),
                 toFiles(files)
         );
-        return Response.success(targetPost);
+        return Response.success(postId);
     }
 
     @PostMapping("/posts/{postId}/post-comments")
@@ -48,8 +48,8 @@ public class CreatePostApi implements CreatePostApiDocs {
                                             @RequestBody PostCommentCreateRequest request,
                                             @AuthenticationPrincipal User currentUser) {
         postCommentService.createPostComment(
-                TargetUser.from(currentUser.getId()),
-                TargetPost.from(postId),
+                UserId.from(currentUser.getId()),
+                PostId.from(postId),
                 request.toCommentContent()
         );
         return Response.success("댓글 생성 성공");

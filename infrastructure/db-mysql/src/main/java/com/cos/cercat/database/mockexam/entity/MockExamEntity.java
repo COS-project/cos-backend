@@ -5,7 +5,7 @@ import com.cos.cercat.database.common.entity.BaseTimeEntity;
 import com.cos.cercat.domain.mockexam.MockExam;
 import com.cos.cercat.domain.mockexam.MockExamSession;
 import com.cos.cercat.domain.mockexam.NewMockExam;
-import com.cos.cercat.domain.mockexam.TargetMockExam;
+import com.cos.cercat.domain.mockexam.MockExamId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -53,9 +53,9 @@ public class MockExamEntity extends BaseTimeEntity {
                 .build();
     }
 
-    public static MockExamEntity from(TargetMockExam targetMockExam) {
+    public static MockExamEntity from(MockExamId mockExamId) {
         return MockExamEntity.builder()
-                .id(targetMockExam.mockExamId())
+                .id(mockExamId.mockExamId())
                 .build();
     }
 

@@ -6,9 +6,9 @@ import com.cos.cercat.apis.certificate.response.InterestCertificateResponse;
 import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.domain.certificate.CertificateExam;
 import com.cos.cercat.domain.certificate.ReadCertificateService;
-import com.cos.cercat.domain.certificate.TargetCertificate;
+import com.cos.cercat.domain.certificate.CertificateId;
 import com.cos.cercat.web.Response;
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -36,13 +36,14 @@ public class ReadCertificateApi implements ReadCertificateApiDocs{
 
     @GetMapping("/certificates/{certificateId}/certificate-exams")
     public Response<CertificateExamResponse> getCertificateExamDetail(@PathVariable Long certificateId) {
-        CertificateExam nextCertificateExam = readCertificateService.readNextCertificateExam(TargetCertificate.from(certificateId));
+        CertificateExam nextCertificateExam = readCertificateService.readNextCertificateExam(
+                CertificateId.from(certificateId));
         return Response.success(CertificateExamResponse.from(nextCertificateExam));
     }
 
     @GetMapping("/interest-certificates")
     public Response<List<InterestCertificateResponse>> getInterestCertificates(@AuthenticationPrincipal User currentUser) {
-        return Response.success(readCertificateService.readInterestCertificates(TargetUser.from(currentUser.getId())).stream()
+        return Response.success(readCertificateService.readInterestCertificates(UserId.from(currentUser.getId())).stream()
                 .map(InterestCertificateResponse::from)
                 .toList());
     }

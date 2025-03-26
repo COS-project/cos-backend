@@ -2,7 +2,7 @@ package com.cos.cercat.domain.user;
 
 public interface UserRepository {
 
-  User find(TargetUser targetUser);
+  User find(UserId userId);
 
   User update(User user);
 

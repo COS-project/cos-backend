@@ -9,6 +9,7 @@ import com.cos.cercat.domain.alarm.AlarmType;
 import com.cos.cercat.domain.alarm.LikeAlarm;
 import com.cos.cercat.domain.alarm.ExamAlarm;
 import com.cos.cercat.domain.certificate.Certificate;
+import com.cos.cercat.domain.certificate.CertificateId;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -64,7 +65,7 @@ public class AlarmEntity extends BaseTimeEntity {
                     .alarmType(examAlarm.getAlarmType())
                     .originId(examAlarm.getOriginId())
                     .isRead(examAlarm.isRead())
-                    .certificateId(examAlarm.getCertificate().id())
+                    .certificateId(examAlarm.getCertificate().id().value())
                     .certificateExamName(examAlarm.getCertificate().certificateName())
                     .build();
         }
@@ -99,7 +100,12 @@ public class AlarmEntity extends BaseTimeEntity {
                     .alarmType(alarmType)
                     .originId(examAlarmEntity.getOriginId())
                     .alarmTime(getCreatedAt())
-                    .certificate(new Certificate(examAlarmEntity.getCertificateId(), examAlarmEntity.getCertificateExamName()))
+                    .certificate(
+                            new Certificate(
+                                    CertificateId.from(examAlarmEntity.getCertificateId()),
+                                    examAlarmEntity.getCertificateExamName()
+                            )
+                    )
                     .build();
         }
 

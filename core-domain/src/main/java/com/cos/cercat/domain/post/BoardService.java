@@ -1,7 +1,7 @@
 package com.cos.cercat.domain.post;
 
 import com.cos.cercat.domain.certificate.*;
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserReader;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +19,9 @@ public class BoardService {
     private final BoardReader boardReader;
     private final BoardManager boardManager;
 
-    public void flipFavorite(TargetUser targetUser, TargetCertificate targetCertificate) {
-        User user = userReader.read(targetUser);
-        Certificate certificate = certificateReader.read(targetCertificate);
+    public void flipFavorite(UserId userId, CertificateId certificateId) {
+        User user = userReader.read(userId);
+        Certificate certificate = certificateReader.read(certificateId);
 
 
         if (boardReader.isFavorite(user, certificate)) {
@@ -36,9 +36,9 @@ public class BoardService {
 
     }
 
-    public boolean isFavorite(TargetUser targetUser, TargetCertificate targetCertificate) {
-        User user = userReader.read(targetUser);
-        Certificate certificate = certificateReader.read(targetCertificate);
+    public boolean isFavorite(UserId userId, CertificateId certificateId) {
+        User user = userReader.read(userId);
+        Certificate certificate = certificateReader.read(certificateId);
         return boardReader.isFavorite(user, certificate);
     }
 

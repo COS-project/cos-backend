@@ -10,9 +10,9 @@ public interface PostCommentRepository {
 
     Long save(PostComment postComment);
 
-    List<PostComment> findCommentsByPost(TargetPost targetPost);
+    List<PostComment> findCommentsByPost(PostId postId);
 
-    Optional<PostComment> find(TargetComment targetComment);
+    Optional<PostComment> find(CommentId commentId);
 
     SliceResult<PostComment> findCommentsByUser(User user, Cursor cursor);
 

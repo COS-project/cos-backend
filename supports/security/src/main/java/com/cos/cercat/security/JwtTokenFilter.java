@@ -35,10 +35,10 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             Optional<String> refreshToken = JwtTokenizer.extractRefreshToken(request);
 
             if (refreshToken.isPresent()) {
-                TargetUser targetUser = JwtTokenizer.extractTargetUser(refreshToken.get());
-                validateRefreshToken(targetUser, refreshToken.get());
-                reIssueToken(targetUser, response);
-                log.info("userEntity - {} 리프레시 토큰 재발급", targetUser.userId());
+                UserId userId = JwtTokenizer.extractTargetUser(refreshToken.get());
+                validateRefreshToken(userId, refreshToken.get());
+                reIssueToken(userId, response);
+                log.info("userEntity - {} 리프레시 토큰 재발급", userId.userId());
                 return;
             }
 
@@ -49,7 +49,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                     .ifPresentOrElse(this::saveAuthentication, () -> { throw InvalidTokenException.EXCEPTION; });
 
         } catch (Exception e) {
-            log.error("JwtTokenFilter error", e);
             request.setAttribute("exception", e);
         }
 
@@ -57,16 +56,16 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private void validateRefreshToken(TargetUser targetUser, String givenRefreshToken) {
-        tokenManager.getRefreshToken(targetUser)
+    private void validateRefreshToken(UserId userId, String givenRefreshToken) {
+        tokenManager.getRefreshToken(userId)
                 .filter(existRefreshToken -> existRefreshToken.equals(givenRefreshToken))
                 .orElseThrow(() -> InvalidTokenException.EXCEPTION);
     }
 
-    private void reIssueToken(TargetUser targetUser, HttpServletResponse response) {
-        String reIssuedAccessToken = JwtTokenizer.generateAccessToken(targetUser);
-        String reIssuedRefreshToken = JwtTokenizer.generateRefreshToken(targetUser);
-        tokenManager.saveRefreshToken(RefreshToken.of(targetUser, reIssuedRefreshToken));
+    private void reIssueToken(UserId userId, HttpServletResponse response) {
+        String reIssuedAccessToken = JwtTokenizer.generateAccessToken(userId);
+        String reIssuedRefreshToken = JwtTokenizer.generateRefreshToken(userId);
+        tokenManager.saveRefreshToken(RefreshToken.of(userId, reIssuedRefreshToken));
         JwtTokenizer.setInHeader(response, reIssuedAccessToken, reIssuedRefreshToken);
         response.setStatus(HttpServletResponse.SC_CREATED);
     }

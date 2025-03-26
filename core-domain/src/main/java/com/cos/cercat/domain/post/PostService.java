@@ -3,11 +3,11 @@ package com.cos.cercat.domain.post;
 import com.cos.cercat.domain.common.FileUploader;
 import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.domain.certificate.CertificateReader;
-import com.cos.cercat.domain.certificate.TargetCertificate;
+import com.cos.cercat.domain.certificate.CertificateId;
 import com.cos.cercat.domain.common.File;
 import com.cos.cercat.domain.common.Image;
 import com.cos.cercat.domain.user.PermissionValidator;
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserReader;
 import lombok.RequiredArgsConstructor;
@@ -29,33 +29,33 @@ public class PostService {
     private final PostReader postReader;
     private final CertificateReader certificateReader;
 
-    public TargetPost createPost(
-            TargetUser targetUser,
-            TargetCertificate targetCertificate,
+    public PostId createPost(
+            UserId userId,
+            CertificateId certificateId,
             NewPost newPost,
             List<File> uploadFiles
     ) {
-      User user = userReader.read(targetUser);
-      Certificate certificate = certificateReader.read(targetCertificate);
+      User user = userReader.read(userId);
+      Certificate certificate = certificateReader.read(certificateId);
       List<Image> images = fileUploader.upload(uploadFiles);
       return postAppender.append(user, certificate, newPost, images);
     }
 
-    public TargetPost updatePost(TargetUser targetUser,
-            TargetPost targetPost,
+    public PostId updatePost(UserId userId,
+            PostId postId,
             UpdatedPost updatedPost,
             List<File> uploadImages) {
-      Post post = postReader.read(targetPost);
-      User user = userReader.read(targetUser);
+      Post post = postReader.read(postId);
+      User user = userReader.read(userId);
       permissionValidator.validate(post, user);
       List<Image> images = fileUploader.upload(uploadImages);
       postUpdater.update(post, updatedPost, images);
-      return targetPost;
+      return postId;
     }
 
-  public void deletePost(TargetUser targetUser, TargetPost targetPost) {
-    User user = userReader.read(targetUser);
-    Post post = postReader.read(targetPost);
+  public void deletePost(UserId userId, PostId postId) {
+    User user = userReader.read(userId);
+    Post post = postReader.read(postId);
     permissionValidator.validate(post, user);
     postRemover.remove(post);
   }

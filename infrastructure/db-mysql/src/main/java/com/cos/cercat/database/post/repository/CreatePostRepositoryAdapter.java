@@ -26,7 +26,7 @@ public class CreatePostRepositoryAdapter implements CreatePostRepository {
 
 
     @Override
-    public TargetPost save(Post post) {
+    public PostId save(Post post) {
         PostEntity postEntity = postJpaRepository.save(PostEntity.from(post));
         savePostImages(postEntity.getId(), post.getPostImages());
 
@@ -34,7 +34,7 @@ public class CreatePostRepositoryAdapter implements CreatePostRepository {
             saveRecommendTags(postEntity.getId(), (TipPost) post);
         }
 
-        return TargetPost.from(postEntity.getId());
+        return PostId.from(postEntity.getId());
     }
 
     private void savePostImages(Long postId, List<Image> postImages) {

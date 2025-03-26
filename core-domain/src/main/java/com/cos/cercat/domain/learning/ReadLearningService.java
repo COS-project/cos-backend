@@ -2,8 +2,8 @@ package com.cos.cercat.domain.learning;
 
 import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.domain.certificate.CertificateReader;
-import com.cos.cercat.domain.certificate.TargetCertificate;
-import com.cos.cercat.domain.user.TargetUser;
+import com.cos.cercat.domain.certificate.CertificateId;
+import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserReader;
 import lombok.RequiredArgsConstructor;
@@ -22,25 +22,25 @@ public class ReadLearningService {
     private final MockExamResultProvider mockExamResultReader;
     private final StudyTimeLogReader studyTimeLogReader;
 
-    public Goal getGoal(TargetGoal targetGoal) {
-        return goalReader.read(targetGoal);
+    public Goal getGoal(GoalId goalId) {
+        return goalReader.read(goalId);
     }
 
-    public boolean existsGoal(TargetUser targetUser, TargetCertificate targetCertificate) {
-        User user = userReader.read(targetUser);
-        Certificate certificate = certificateReader.read(targetCertificate);
+    public boolean existsGoal(UserId userId, CertificateId certificateId) {
+        User user = userReader.read(userId);
+        Certificate certificate = certificateReader.read(certificateId);
         return goalReader.exists(user, certificate);
     }
 
-    public List<Goal> getAllGoals(TargetUser targetUser, TargetCertificate targetCertificate) {
-        User user = userReader.read(targetUser);
-        Certificate certificate = certificateReader.read(targetCertificate);
+    public List<Goal> getAllGoals(UserId userId, CertificateId certificateId) {
+        User user = userReader.read(userId);
+        Certificate certificate = certificateReader.read(certificateId);
         return goalFinder.findAll(user, certificate);
     }
 
-    public GoalAchievement getGoalAchievement(TargetUser targetUser, TargetCertificate targetCertificate) {
-        User user = userReader.read(targetUser);
-        Certificate certificate = certificateReader.read(targetCertificate);
+    public GoalAchievement getGoalAchievement(UserId userId, CertificateId certificateId) {
+        User user = userReader.read(userId);
+        Certificate certificate = certificateReader.read(certificateId);
         Goal goal = goalReader.readRecentGoal(user, certificate);
         int currentMaxScore = mockExamResultReader.readCurrentMaxScore(user, certificate, goal.getGoalPeriod());
         int countTodayMockExamResult = mockExamResultReader.countTodayMockExamResults(user, certificate);

@@ -46,12 +46,12 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
         OAuth2CustomUser oAuth2User = (OAuth2CustomUser) authentication.getPrincipal();
-        TargetUser targetUser = TargetUser.from(oAuth2User.getUserId());
-        User user = userReader.read(targetUser);
+        UserId userId = UserId.from(oAuth2User.getUserId());
+        User user = userReader.read(userId);
         userCacheManager.cache(user); // 유저 캐싱
-        String accessToken = generateAccessToken(targetUser);
-        String refreshToken = generateRefreshToken(targetUser);
-        tokenManager.saveRefreshToken(RefreshToken.of(targetUser, refreshToken));
+        String accessToken = generateAccessToken(userId);
+        String refreshToken = generateRefreshToken(userId);
+        tokenManager.saveRefreshToken(RefreshToken.of(userId, refreshToken));
         redirect(response, accessToken, refreshToken, user);
     }
 

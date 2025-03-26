@@ -44,7 +44,6 @@ public class KafkaConsumerConfig<V> {
             put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
             put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
             put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "10");
-            put(JsonDeserializer.TYPE_MAPPINGS, "DebeziumEvent:com.cos.cercat.kafka.postsearch.debezium.DebeziumEvent");
             put(JsonDeserializer.TRUSTED_PACKAGES, "*");
             put(JsonDeserializer.USE_TYPE_INFO_HEADERS, true);
         }};
