@@ -54,6 +54,23 @@ front:
   host: localhost
   home-path: /home
   sign-up-path: /onboarding
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus, health
+      base-path: ${prod.MANAGEMENT_BASE_PATH}
+    jmx:
+      exposure:
+        exclude: "*"
+    access:
+      default: none
+  endpoint:
+    prometheus:
+      enabled: true
+    health:
+      enabled: true
+      show-components: never
 ---
 spring:
   config:
@@ -94,9 +111,6 @@ front:
 
 
 management:
-  server:
-    port: ${prod.MANAGEMENT_PORT}
-
   endpoints:
     web:
       exposure:
