@@ -1,0 +1,13 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'spring-app'
+    metrics_path: '/act-cercat/prometheus'  # 수정된 기본 경로 반영
+    static_configs:
+      - targets: ['cercat.o-r.kr']    # 수정된 관리 포트 반영
+  
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['34.64.140.236:9100']    # 노드 익스포터 포트 

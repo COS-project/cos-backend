@@ -1,0 +1,49 @@
+networks:
+  loki:
+    driver: bridge
+
+services:
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./data/loki/config/loki-config.yaml:/etc/loki/local-config.yaml
+      - ./data/loki:/data/loki
+    networks:
+      - loki
+    restart: unless-stopped
+    user: "1000:1000"
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./data/grafana:/var/lib/grafana
+    networks:
+      - loki
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=cercat # 원하는 비밀번호로 변경하세요
+      - GF_USERS_ALLOW_SIGN_UP=false
+    depends_on:
+      - loki
+    user: "1000:1000"
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./data/prometheus/config:/etc/prometheus
+      - ./data/prometheus/data:/prometheus
+    ports:
+      - "9090:9090"
+    command:
+      - '--storage.tsdb.path=/prometheus'
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    restart: always
+    networks:
+      - loki
+    user: "1000:1000"

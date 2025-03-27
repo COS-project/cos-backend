@@ -1,0 +1,141 @@
+networks:
+  app-tier:
+    driver: bridge
+services:
+  cercat-blue:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - app-tier
+    image: ghcr.io/jiwonkkang/cercat:latest
+    depends_on:
+      - redis
+      - kafka
+    restart: always
+    healthcheck:
+      test: "curl -f http://localhost:8080/health || exit 1"
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod,api
+  cercat-green:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - app-tier
+    image: ghcr.io/jiwonkkang/cercat:latest
+    depends_on:
+      - redis
+      - kafka
+    restart: always
+    healthcheck:
+      test: "curl -f http://localhost:8080/health || exit 1"
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod,api
+  cercat-alarm:
+    container_name: cercat-alarm
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    image: ghcr.io/jiwonkkang/cercat-alarm:latest
+    networks:
+      - app-tier
+    ports:
+      - "8082:8081"
+  redis:
+    container_name: cercat-redis
+    networks:
+      - app-tier
+    image: redis:latest
+    ports:
+      - "6379:6379"
+  zookeeper:
+    container_name: cercat-zookeeper
+    image: confluentinc/cp-zookeeper:latest
+    networks:
+      - app-tier
+    environment:
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_INIT_LIMIT: 5
+      ZOOKEEPER_SYNC_LIMIT: 2
+    ports:
+      - "22181:2181"
+  kafka:
+    container_name: cercat-kafka
+    image: confluentinc/cp-kafka:latest
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - app-tier
+    depends_on:
+      - zookeeper
+    ports:
+      - "29092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+  kafka-ui:
+    image: provectuslabs/kafka-ui
+    container_name: kafka-ui
+    ports:
+      - "8989:8080"
+    networks:
+      - app-tier
+    restart: always
+    depends_on:
+      - kafka
+      - zookeeper
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
+  nginx:
+    image: nginx:1.15-alpine
+    container_name: nginx
+    networks:
+      - app-tier
+    restart: unless-stopped
+    volumes:
+      - ./data/nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
+      - ./nginx/log:/var/log/nginx
+      - /etc/localtime:/etc/localtime
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    ports:
+      - "80:80"
+      - "443:443"
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+  certbot:
+    image: certbot/certbot
+    networks:
+      - app-tier
+    restart: unless-stopped
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+  promtail:
+    container_name: promtail
+    image: grafana/promtail:latest
+    volumes:
+      - ./data/promtail/config/promtail-config.yaml:/etc/promtail/config.yaml
+      - ./data/promtail/positions:/data/promtail/positions
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - ./nginx/log:/var/log/nginx:ro
+    networks:
+      - app-tier
+    command: -config.file=/etc/promtail/config.yaml
+    restart: unless-stopped
