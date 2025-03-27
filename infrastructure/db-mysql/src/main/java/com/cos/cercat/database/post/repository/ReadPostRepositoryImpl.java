@@ -43,16 +43,12 @@ public class ReadPostRepositoryImpl implements ReadPostRepository {
             SearchCond cond,
             Cursor cursor
     ) {
-        Slice<PostEntity> postEntities = postJpaRepository.findPosts(
+        Slice<Post> posts = postJpaRepository.findPosts(
                 cond,
                 certificate,
                 toPageRequest(cursor));
 
-        List<Post> posts = postEntities.stream()
-                .map(this::toDomain)
-                .toList();
-
-        return SliceResult.of(posts, postEntities.hasNext());
+        return SliceResult.of(posts.getContent(), posts.hasNext());
     }
 
     @Override

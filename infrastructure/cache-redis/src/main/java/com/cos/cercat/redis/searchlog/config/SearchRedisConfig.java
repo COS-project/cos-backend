@@ -1,4 +1,4 @@
-package com.cos.cercat.redis.postsearch.config;
+package com.cos.cercat.redis.searchlog.config;
 
 import com.cos.cercat.domain.searchlog.TrendingKeywordsRanking;
 import lombok.RequiredArgsConstructor;

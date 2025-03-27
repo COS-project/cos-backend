@@ -57,7 +57,7 @@ public class QuestionEntity {
     private String questionText;
 
     @Builder.Default
-    @OneToMany(mappedBy = "questionEntity", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "questionEntity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<QuestionOptionEntity> questionOptions = new ArrayList<>();
 
     private int correctOption;

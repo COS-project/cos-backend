@@ -25,7 +25,13 @@ import static org.hibernate.annotations.OnDeleteAction.CASCADE;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "dtype", discriminatorType = DiscriminatorType.STRING)
-@Table(name = "post")
+@Table(
+        name = "post",
+        indexes = {
+                @Index(name = "idx_post_cert_created", columnList = "certificate_id, created_at"),
+                @Index(name = "idx_post_type_created", columnList = "post_type, created_at")
+        }
+)
 public class PostEntity extends BaseTimeEntity {
 
     @Id
@@ -72,8 +78,8 @@ public class PostEntity extends BaseTimeEntity {
                 .postContent(new PostContent(title, content))
                 .postImages(images)
                 .dateTime(new DateTime(createdAt, modifiedAt))
-                .recommendTags(recommendTagEntities.stream().map(RecommendTagEntity::toDomain).collect(
-                                Collectors.toSet()))
+                .recommendTags(recommendTagEntities.stream().map(RecommendTagEntity::toDomain)
+                        .collect(Collectors.toSet()))
                 .build();
     }
 

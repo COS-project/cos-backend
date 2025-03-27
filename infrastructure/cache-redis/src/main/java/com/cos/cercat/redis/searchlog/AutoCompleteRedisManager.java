@@ -1,4 +1,4 @@
-package com.cos.cercat.redis.postsearch;
+package com.cos.cercat.redis.searchlog;
 
 import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.domain.certificate.CertificateId;

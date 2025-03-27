@@ -17,7 +17,10 @@ import static org.hibernate.annotations.OnDeleteAction.CASCADE;
 @NoArgsConstructor
 @Table(
         name = "mock_exam_result",
-        indexes = @Index(name = "idx_mock_exam_result_user_id", columnList = "created_at, round")
+        indexes = {
+                @Index(name = "idx_mock_exam_result_user_id", columnList = "created_at, round"),
+                @Index(name = "idx_mock_exam_stats", columnList = "user_id, mock_exam_id, created_at, total_score")
+        }
 )
 public class MockExamResultEntity extends BaseTimeEntity {
 
