@@ -54,6 +54,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                     );
 
         } catch (Exception e) {
+            log.error(e.getMessage());
             request.setAttribute("exception", e);
         }
 
