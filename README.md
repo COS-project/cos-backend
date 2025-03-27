@@ -43,22 +43,21 @@
 
 # 인프라 구성
 
-![infra](https://github.com/COS-project/cos-backend/assets/128073698/f8d681e1-8dd3-4773-82c4-e7eba3b1976e)
+<img width="1061" alt="image" src="https://github.com/user-attachments/assets/9794c868-98a3-4cfb-905b-fb537b59b7f3" />
+
+
 
 - Nginx로 리버스 프록시
 - Docker compose로 서버 scale-out
-- ~~Kafka를 통해 비동기 알림 pub/sub~~ -> Redis Pub/Sub으로 SSE 구독 및 비동기 알림 구현
-- Debezium 커넥터를 통해 MySQL의 데이터변경을 캡쳐하여 Kafka로 발행 -> Elastic Search 동기화
-- Elastic Search의 ngram, nori 분석기등을 통해 검색 최적화
-- Redis를 통해 최근 검색기록 및 모의고사 문제 데이터 캐싱
-- Git Actions의 Cron job을 통해 Batch 서버 실행
+- Kafka를 통해 비동기 알림
+- Redis를 통해 검색어 시스템 및 모의고사 문제 데이터 캐싱
+- Grafana,Loki,Prometheus를 통해 모니터링 시스템 구축
 
 # CI/CD
 
-![ci:cd](https://github.com/COS-project/cos-backend/assets/128073698/b9550baa-80b7-4376-b0a2-ffdf68b024d9)
+![image](https://github.com/user-attachments/assets/6fa98738-f167-4f18-b64c-b9e3115bd9e9)
 
 - 블루-그린 배포방식으로 무중단 배포 구현
-- cron-job을 통해 매일 알람 batch 작업
 
 # ERD
 
