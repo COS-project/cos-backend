@@ -95,13 +95,13 @@ front:
 
 management:
   server:
-    port: ${secret.prod.MANAGEMENT_PORT}
+    port: ${prod.MANAGEMENT_PORT}
 
   endpoints:
     web:
       exposure:
         include: prometheus, health
-      base-path: ${secret.prod.MANAGEMENT_BASE_PATH}
+      base-path: ${prod.MANAGEMENT_BASE_PATH}
     jmx:
       exposure:
         exclude: "*"
