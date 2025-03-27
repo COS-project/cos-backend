@@ -1,13 +1,7 @@
 package com.cos.cercat.apis.search.api;
 
-import com.cos.cercat.apis.post.response.PostResponse;
 import com.cos.cercat.domain.certificate.CertificateId;
-import com.cos.cercat.apis.global.annotation.CursorDefault;
-import com.cos.cercat.domain.common.Cursor;
 import com.cos.cercat.web.Response;
-import com.cos.cercat.domain.common.SliceResult;
-import com.cos.cercat.domain.post.Post;
-import com.cos.cercat.domain.searchlog.SearchCond;
 import com.cos.cercat.domain.searchlog.SearchLog;
 import com.cos.cercat.domain.searchlog.SearchLogService;
 import com.cos.cercat.domain.searchlog.TrendingKeyword;
@@ -23,7 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v2")
-public class SearchPostApi implements SearchPostApiDocs {
+public class SearchLogApi implements SearchLogApiDocs {
 
     private final SearchLogService searchLogService;
 

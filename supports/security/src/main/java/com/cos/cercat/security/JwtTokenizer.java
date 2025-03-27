@@ -1,7 +1,7 @@
 package com.cos.cercat.security;
 
 import static com.cos.cercat.security.JwtTokenProperties.*;
-import com.cos.cercat.security.exception.InvalidTokenException;
+import com.cos.cercat.security.exception.TokenParseFailedException;
 import com.cos.cercat.domain.user.UserId;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -85,7 +85,7 @@ public class JwtTokenizer {
                     .getSubject();
             return UserId.from(Long.valueOf(subject));
         } catch (ExpiredJwtException e) {
-            throw InvalidTokenException.EXCEPTION;
+            throw TokenParseFailedException.EXCEPTION;
         }
     }
 }

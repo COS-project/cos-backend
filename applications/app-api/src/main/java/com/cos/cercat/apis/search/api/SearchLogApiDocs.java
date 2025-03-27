@@ -1,21 +1,15 @@
 package com.cos.cercat.apis.search.api;
 
-import com.cos.cercat.apis.post.response.PostResponse;
-import com.cos.cercat.domain.common.Cursor;
 import com.cos.cercat.web.Response;
-import com.cos.cercat.domain.common.SliceResult;
-import com.cos.cercat.domain.searchlog.SearchCond;
 import com.cos.cercat.domain.searchlog.TrendingKeyword;
 import com.cos.cercat.domain.user.User;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
 
 @Tag(name = "통합검색 API")
-public interface SearchPostApiDocs {
+public interface SearchLogApiDocs {
 
     @Operation(summary = "최근 검색 기록 조회")
     Response<List<String>> getSearchLogs(User user, Long certificateId);

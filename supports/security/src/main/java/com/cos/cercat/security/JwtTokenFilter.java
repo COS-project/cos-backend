@@ -1,7 +1,7 @@
 package com.cos.cercat.security;
 
 import com.cos.cercat.domain.user.UserReader;
-import com.cos.cercat.security.exception.InvalidTokenException;
+import com.cos.cercat.security.exception.TokenParseFailedException;
 import com.cos.cercat.domain.user.*;
 
 import jakarta.servlet.FilterChain;
@@ -28,9 +28,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     private final UserReader userReader;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain
+    ) throws ServletException, IOException {
         try {
             Optional<String> refreshToken = JwtTokenizer.extractRefreshToken(request);
 
@@ -46,12 +48,14 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                     .filter(tokenManager::isAlreadyLogin)
                     .map(JwtTokenizer::extractTargetUser)
                     .map(userReader::read)
-                    .ifPresentOrElse(this::saveAuthentication, () -> { throw InvalidTokenException.EXCEPTION; });
+                    .ifPresentOrElse(
+                            this::saveAuthentication,
+                            () -> {throw TokenParseFailedException.EXCEPTION;}
+                    );
 
         } catch (Exception e) {
             request.setAttribute("exception", e);
         }
-
 
         filterChain.doFilter(request, response);
     }
@@ -59,7 +63,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     private void validateRefreshToken(UserId userId, String givenRefreshToken) {
         tokenManager.getRefreshToken(userId)
                 .filter(existRefreshToken -> existRefreshToken.equals(givenRefreshToken))
-                .orElseThrow(() -> InvalidTokenException.EXCEPTION);
+                .orElseThrow(() -> TokenParseFailedException.EXCEPTION);
     }
 
     private void reIssueToken(UserId userId, HttpServletResponse response) {

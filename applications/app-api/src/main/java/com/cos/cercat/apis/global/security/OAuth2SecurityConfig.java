@@ -15,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class ApiSecurityConfig {
+public class OAuth2SecurityConfig {
 
     private final OAuth2MemberSuccessHandler oAuth2MemberSuccessHandler;
     private final OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
@@ -23,8 +23,9 @@ public class ApiSecurityConfig {
     private final HttpCookieAuth2AuthorizationRequestRepository cookieOAuth2AuthorizationRequestRepository;
 
     @Bean
-    public SecurityFilterChain apiSecurityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain oAuth2SecurityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
+                .securityMatcher("/oauth2/**", "/login/**")
                 .oauth2Login(
                         oauth2 -> oauth2
                                 .loginPage("/oauth2/authorization/kakao")
