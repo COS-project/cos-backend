@@ -18,7 +18,7 @@ public class CustomException extends RuntimeException {
         if (message == null) {
             return errorCode.getErrorReason().message();
         } else {
-            return String.format("%s. %s", errorCode.getErrorReason().message(), message);
+            return message;
         }
     }
 

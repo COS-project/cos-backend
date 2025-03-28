@@ -20,7 +20,7 @@ public class CustomControllerAdvice {
 
     @ExceptionHandler(value = RuntimeException.class)
     public ResponseEntity<?> unknownErrorHandler(Exception e) {
-        log.error("CustomControllerAdvice", e);
+        log.error(e.getMessage(), e);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(Response.error(GlobalErrorCode.INTERNAL_SERVER_ERROR, e.getMessage()));
     }
