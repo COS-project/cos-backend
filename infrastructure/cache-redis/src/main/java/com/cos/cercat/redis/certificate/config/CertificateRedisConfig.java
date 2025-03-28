@@ -12,7 +12,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class CertificateRedisConfig {
 
      @Bean
-     public RedisTemplate<String, Certificate> redisTemplate(
+     public RedisTemplate<String, Certificate> certificateRedisTemplate(
              RedisConnectionFactory redisConnectionFactory) {
          RedisTemplate<String, Certificate> template = new RedisTemplate<>();
          template.setConnectionFactory(redisConnectionFactory);

@@ -36,7 +36,7 @@ public class AlarmRedisConfig {
     }
 
     @Bean
-    public RedisTemplate<String, Alarm> redisTemplate() {
+    public RedisTemplate<String, Alarm> alarmRedisTemplate() {
         RedisTemplate<String, Alarm> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());

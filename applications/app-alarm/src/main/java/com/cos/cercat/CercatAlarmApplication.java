@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 		"com.cos.cercat.database.alarm",
 		"com.cos.cercat.domain.certificate",
 		"com.cos.cercat.database.certificate",
+		"com.cos.cercat.redis.certificate",
 		"com.cos.cercat.domain.user",
 		"com.cos.cercat.database.user",
 		"com.cos.cercat.redis.user",
