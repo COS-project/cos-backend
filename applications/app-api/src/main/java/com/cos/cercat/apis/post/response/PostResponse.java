@@ -2,11 +2,13 @@ package com.cos.cercat.apis.post.response;
 
 import com.cos.cercat.apis.mockExam.response.QuestionResponse;
 import com.cos.cercat.apis.user.response.UserResponse;
+import com.cos.cercat.domain.common.Image;
 import com.cos.cercat.domain.post.*;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 
+import java.util.List;
 import java.util.Set;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.*;
@@ -18,6 +20,7 @@ public record PostResponse(
         UserResponse user,
         QuestionResponse question,
         Set<RecommendTag> recommendTags,
+        List<String> postImages,
         DateTime dateTime,
         int commentCount
 ) {
@@ -33,6 +36,7 @@ public record PostResponse(
                 post instanceof TipPost tipPost?
                         tipPost.getRecommendTags()
                         : null,
+                post.getPostImages().stream().map(Image::getImageUrl).toList(),
                 post.getDateTime(),
                 post.getCommentCount()
         );
