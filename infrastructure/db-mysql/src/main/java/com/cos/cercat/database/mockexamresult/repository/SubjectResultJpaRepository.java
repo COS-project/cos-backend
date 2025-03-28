@@ -20,10 +20,11 @@ public interface SubjectResultJpaRepository extends JpaRepository<SubjectResultE
             AND sr.mockExamResultEntity.createdAt BETWEEN :goalStartDateTime AND :goalEndDateTime
             GROUP BY sr.subjectEntity
             """)
-    List<SubjectResultsAVG> getSubjectResultsAVG(Long certificateId,
-            @Param("userId") Long userId,
-            @Param("goalStartDateTime") LocalDateTime goalStartDateTime,
-            @Param("goalEndDateTime") LocalDateTime goalEndDateTime);
+    List<SubjectResultsAVG> getSubjectResultsAVG(
+            Long certificateId,
+            Long userId,
+            LocalDateTime goalStartDateTime,
+            LocalDateTime goalEndDateTime);
 
     @Query("""
              SELECT sr FROM SubjectResultEntity sr

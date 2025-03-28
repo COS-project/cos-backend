@@ -249,8 +249,8 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
             Certificate certificate,
             GoalPeriod goalPeriod) {
         return subjectResultJpaRepository.getSubjectResultsAVG(
-                        user.getId(),
                         certificate.id().value(),
+                        user.getId(),
                         goalPeriod.startDateTime(),
                         goalPeriod.endDateTime()
                 ).stream()
