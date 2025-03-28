@@ -52,6 +52,7 @@ public class CommentaryPostEntity extends PostEntity {
                 .question(questionEntity.toDomain())
                 .dateTime(new DateTime(createdAt, modifiedAt))
                 .commentCount(commentCount)
+                .likeCount(likeCount)
                 .postImages(images)
                 .build();
     }

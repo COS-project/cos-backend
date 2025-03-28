@@ -1,6 +1,7 @@
 package com.cos.cercat.domain.learning;
 
 import com.cos.cercat.domain.certificate.Certificate;
+import com.cos.cercat.domain.learning.exception.GoalNotFoundException;
 import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,7 @@ public class GoalReader {
     }
 
     public Goal readRecentGoal(User user, Certificate certificate) {
-        return learningRepository.getRecentGoal(user, certificate);
+        return learningRepository.getRecentGoal(user, certificate)
+                .orElseThrow(() -> GoalNotFoundException.EXCEPTION);
     }
 }

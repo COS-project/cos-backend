@@ -56,6 +56,8 @@ public class PostEntity extends BaseTimeEntity {
 
     protected int commentCount;
 
+    protected int likeCount;
+
     public Post toDomain(List<Image> images) {
         return switch (postType) {
             case COMMENTARY -> ((CommentaryPostEntity) this).toDomain(images);
@@ -66,6 +68,8 @@ public class PostEntity extends BaseTimeEntity {
                     .postContent(new PostContent(title, content))
                     .postImages(images)
                     .dateTime(new DateTime(createdAt, modifiedAt))
+                    .commentCount(commentCount)
+                    .likeCount(likeCount)
                     .build();
         };
     }
@@ -80,6 +84,8 @@ public class PostEntity extends BaseTimeEntity {
                 .dateTime(new DateTime(createdAt, modifiedAt))
                 .recommendTags(recommendTagEntities.stream().map(RecommendTagEntity::toDomain)
                         .collect(Collectors.toSet()))
+                .commentCount(commentCount)
+                .likeCount(likeCount)
                 .build();
     }
 

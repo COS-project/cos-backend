@@ -13,6 +13,7 @@ import com.cos.cercat.domain.learning.LearningRepository;
 import com.cos.cercat.domain.learning.NewGoal;
 import com.cos.cercat.domain.learning.GoalId;
 import com.cos.cercat.domain.user.User;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,10 +67,9 @@ public class LearningRepositoryImpl implements LearningRepository {
     }
 
     @Override
-    public Goal getRecentGoal(User user, Certificate certificate) {
+    public Optional<Goal> getRecentGoal(User user, Certificate certificate) {
         return goalJpaRepository.findRecentGoalByUserIdAndCertificateId(user.getId(), certificate.id().value())
-                .orElseThrow(() -> GoalNotFoundException.EXCEPTION)
-                .toDomain();
+                .map(GoalEntity::toDomain);
     }
 
     @Override

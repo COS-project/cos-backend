@@ -23,6 +23,7 @@ public class Post implements Ownable {
     private List<Image> postImages;
     private DateTime dateTime;
     private int commentCount;
+    private int likeCount;
 
     public static Post create(User user, Certificate certificate, NewPost newPost, List<Image> images) {
         return Post.builder()

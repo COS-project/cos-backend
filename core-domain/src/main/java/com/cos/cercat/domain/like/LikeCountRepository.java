@@ -1,6 +1,7 @@
 package com.cos.cercat.domain.like;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface LikeCountRepository {
@@ -11,4 +12,5 @@ public interface LikeCountRepository {
 
     void saveAll(List<LikeCount> bufferedCounts);
 
+    Map<Long, LikeCount> findByTargets(List<LikeTarget> likeTargets);
 }

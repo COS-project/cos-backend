@@ -2,7 +2,7 @@ package com.cos.cercat.domain.like;
 
 public record LikeCount(
         LikeTarget likeTarget,
-        Long count
+        Long value
 ) {
 
     public static LikeCount init(LikeTarget likeTarget) {

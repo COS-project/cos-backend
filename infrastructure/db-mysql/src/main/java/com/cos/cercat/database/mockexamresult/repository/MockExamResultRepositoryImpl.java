@@ -262,12 +262,13 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
     public int getCurrentMaxScore(User user,
             Certificate certificate,
             GoalPeriod goalPeriod) {
-        return mockExamResultJpaRepository.getMockExamResultMaxScore(
+        Integer currentMax = mockExamResultJpaRepository.getMockExamResultMaxScore(
                 user.getId(),
                 certificate.id().value(),
                 goalPeriod.startDateTime(),
                 goalPeriod.endDateTime()
         );
+        return currentMax == null ? 0 : currentMax;
     }
 
     @Override

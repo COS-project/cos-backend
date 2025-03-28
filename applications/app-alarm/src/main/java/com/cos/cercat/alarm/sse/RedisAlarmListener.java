@@ -1,7 +1,8 @@
 package com.cos.cercat.alarm.sse;
 
 import com.cos.cercat.domain.alarm.Alarm;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.
+        ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.Message;

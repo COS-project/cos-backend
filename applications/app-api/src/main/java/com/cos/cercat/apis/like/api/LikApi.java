@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v2")
-public class LikApi implements LikeApiDocs { //API 변경 예정
+public class LikApi implements LikeApiDocs {
 
     private final LikeService likeService;
 

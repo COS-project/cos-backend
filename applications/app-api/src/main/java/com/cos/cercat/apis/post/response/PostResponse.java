@@ -3,6 +3,7 @@ package com.cos.cercat.apis.post.response;
 import com.cos.cercat.apis.mockExam.response.QuestionResponse;
 import com.cos.cercat.apis.user.response.UserResponse;
 import com.cos.cercat.domain.common.Image;
+import com.cos.cercat.domain.like.LikeStatus;
 import com.cos.cercat.domain.post.*;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -17,28 +18,34 @@ import static com.fasterxml.jackson.annotation.JsonInclude.*;
 public record PostResponse(
         Long postId,
         PostContent postContent,
+        PostType postType,
         UserResponse user,
         QuestionResponse question,
         Set<RecommendTag> recommendTags,
         List<String> postImages,
         DateTime dateTime,
-        int commentCount
+        int commentCount,
+        long likeCount,
+        boolean likeStatus
 ) {
 
-    public static PostResponse from(Post post) {
+    public static PostResponse from(Post post, LikeStatus likeStatus) {
         return new PostResponse(
                 post.getId(),
                 post.getPostContent(),
+                post.getType(),
                 UserResponse.from(post.getWriter()),
                 post instanceof CommentaryPost commentaryPost?
-                        QuestionResponse.from(commentaryPost.getQuestion())
+                        com.cos.cercat.apis.mockExam.response.QuestionResponse.from(commentaryPost.getQuestion())
                         : null,
                 post instanceof TipPost tipPost?
                         tipPost.getRecommendTags()
                         : null,
                 post.getPostImages().stream().map(Image::getImageUrl).toList(),
                 post.getDateTime(),
-                post.getCommentCount()
+                post.getCommentCount(),
+                likeStatus.count().value(),
+                likeStatus.isLiked()
         );
     }
 

@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 @Tag(name = "게시글 조회 API")
 public interface ReadPostApiDocs {
@@ -38,25 +39,35 @@ public interface ReadPostApiDocs {
     );
 
     @Operation(summary = "해설 게시글 검색")
-    Response<SliceResult<PostResponse>> searchCommentaryPosts(Long certificateId,
-                                                              CommentarySearchCond cond,
-                                                              @Parameter(examples = {
-                                                                      @ExampleObject(name = "cursor", value = """ 
-                                                                    {
-                                                                        "page" : 0,
-                                                                        "size" : 10,
-                                                                        "sortFields" : "createdAt, id",
-                                                                        "sortDirections" : "DESC, ASC"
-                                                                    }
-                                                                """)
-                                                              })
-                                                              Cursor cursor);
+    Response<SliceResult<PostResponse>> searchCommentaryPosts(
+            Long certificateId,
+            User currentUser,
+            CommentarySearchCond cond,
+            @Parameter(examples = {
+                      @ExampleObject(name = "cursor", value = """ 
+                    {
+                        "page" : 0,
+                        "size" : 10,
+                        "sortFields" : "createdAt, id",
+                        "sortDirections" : "DESC, ASC"
+                    }
+                    """
+                      )
+            }
+            )
+            Cursor cursor);
 
     @Operation(summary = "게시글 상세 조회")
-    Response<PostWithCommentsResponse> readPostDetail(Long postId);
+    Response<PostWithCommentsResponse> readPostDetail(
+            Long postId,
+            User currentUser
+    );
 
     @Operation(summary = "베스트 꿀팁 TOP3 조회")
-    Response<List<PostResponse>> readTop3TipPosts(Long certificateId);
+    Response<List<PostResponse>> readTop3TipPosts(
+            Long certificateId,
+            User currentUser
+    );
 
     @Operation(summary = "내가 쓴 글 조회")
     Response<SliceResult<PostResponse>> readMyPosts(PostType postType,

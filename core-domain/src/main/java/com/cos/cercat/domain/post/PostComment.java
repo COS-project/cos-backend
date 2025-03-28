@@ -2,6 +2,7 @@ package com.cos.cercat.domain.post;
 
 import com.cos.cercat.domain.user.Ownable;
 import com.cos.cercat.domain.user.User;
+import java.util.ArrayList;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +21,9 @@ public class PostComment implements Ownable {
     private Long postId;
     private CommentContent content;
     private DateTime dateTime;
-    private List<PostComment> childComments;
+
+    @Builder.Default
+    private List<PostComment> childComments = new ArrayList<>();
 
     public static PostComment create(User commenter, Post post, CommentContent commentContent) {
         return PostComment.builder()

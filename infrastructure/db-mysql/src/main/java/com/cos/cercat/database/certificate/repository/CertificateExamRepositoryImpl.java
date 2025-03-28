@@ -10,6 +10,7 @@ import com.cos.cercat.domain.certificate.CertificateExamRepository;
 import com.cos.cercat.domain.certificate.NewExamInformation;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -66,14 +67,14 @@ public class CertificateExamRepositoryImpl implements CertificateExamRepository 
     }
 
     @Override
-    public CertificateExam findPreviousCertificateExam(Certificate certificate) {
-        CertificateExamEntity recentCertificateExam = certificateExamJpaRepository.findPreviousCertificateExam(certificate.id().value());
-        return recentCertificateExam.toDomain();
+    public Optional<CertificateExam> findPreviousCertificateExam(Certificate certificate) {
+        return certificateExamJpaRepository.findPreviousCertificateExam(
+                certificate.id().value()).map(CertificateExamEntity::toDomain);
     }
 
     @Override
-    public CertificateExam findNextCertificateExam(Certificate certificate) {
-        CertificateExamEntity nextCertificateExam = certificateExamJpaRepository.findNextCertificateExam(certificate.id().value());
-        return nextCertificateExam.toDomain();
+    public Optional<CertificateExam> findNextCertificateExam(Certificate certificate) {
+        return certificateExamJpaRepository.findNextCertificateExam(
+                certificate.id().value()).map(CertificateExamEntity::toDomain);
     }
 }

@@ -9,7 +9,9 @@ import com.cos.cercat.domain.like.LikeCountRepository;
 import com.cos.cercat.domain.like.LikeTarget;
 import com.cos.cercat.domain.like.LikeRepository;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -43,6 +45,17 @@ public class LikeRepositoryAdapter implements LikeRepository, LikeCountRepositor
     @Override
     public Optional<LikeCount> findByTarget(LikeTarget likeTarget) {
         return likeCountJpaRepository.findById(LikeCountId.from(likeTarget)).map(LikeCountEntity::toDomain);
+    }
+
+    @Override
+    public Map<Long, LikeCount> findByTargets(List<LikeTarget> likeTargets) {
+        List<LikeCountEntity> likeCounts = likeCountJpaRepository.findByIds(
+                likeTargets.stream().map(LikeCountId::from).toList());
+        return likeCounts.stream()
+                .collect(Collectors.toMap(
+                        likeCountEntity -> likeCountEntity.getId().targetId(),
+                        LikeCountEntity::toDomain
+                ));
     }
 
     @Override

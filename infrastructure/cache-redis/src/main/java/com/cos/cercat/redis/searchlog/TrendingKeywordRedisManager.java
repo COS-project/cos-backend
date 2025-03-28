@@ -30,7 +30,7 @@ public class TrendingKeywordRedisManager implements TrendingKeywordManager {
     private static final double MIN_SCORE = 0.1;
     private static final int RECENT_WINDOW_SECONDS = 1800; // 30분
     private static final String REALTIME_KEY_PREFIX = "trending:realtime:";
-    private static final String COUNT_KEY_PREFIX = "trending:count:";
+    private static final String COUNT_KEY_PREFIX = "trending:value:";
     private static final String PREVIOUS_KEY_PREFIX = "trending:previous:";
     private static final String CERTIFICATE_IDS_KEY = "certificate:ids";
     private static final double SURGE_FACTOR_INCREASE = 0.2;

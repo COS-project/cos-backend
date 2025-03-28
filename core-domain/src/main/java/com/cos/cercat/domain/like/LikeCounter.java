@@ -1,6 +1,7 @@
 package com.cos.cercat.domain.like;
 
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +27,10 @@ public class LikeCounter {
     public LikeCount get(LikeTarget likeTarget) {
         return likeCountRepository.findByTarget(likeTarget)
                 .orElseGet(() -> LikeCount.init(likeTarget));
+    }
+
+    public Map<Long, LikeCount> getConutMap(List<LikeTarget> likeTargets) {
+        return likeCountRepository.findByTargets(likeTargets);
     }
 
 }

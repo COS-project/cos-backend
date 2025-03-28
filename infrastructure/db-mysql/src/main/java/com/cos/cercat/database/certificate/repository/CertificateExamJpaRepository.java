@@ -1,6 +1,7 @@
 package com.cos.cercat.database.certificate.repository;
 
 import com.cos.cercat.database.certificate.entity.CertificateExamEntity;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,7 +19,7 @@ public interface CertificateExamJpaRepository extends JpaRepository<CertificateE
             ORDER BY ei.examDateTime DESC
             LIMIT 1
             """)
-    CertificateExamEntity findPreviousCertificateExam(Long certificateId);
+    Optional<CertificateExamEntity> findPreviousCertificateExam(Long certificateId);
 
     @Query("""
             SELECT ce FROM CertificateExamEntity ce
@@ -28,7 +29,7 @@ public interface CertificateExamJpaRepository extends JpaRepository<CertificateE
             ORDER BY ei.examDateTime ASC
             LIMIT 1
             """)
-    CertificateExamEntity findNextCertificateExam(Long certificateId);
+    Optional<CertificateExamEntity> findNextCertificateExam(Long certificateId);
 
     @Query("""
             SELECT ce from CertificateExamEntity ce

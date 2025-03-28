@@ -18,10 +18,10 @@ public class ReadCertificateService {
     private final UserReader userReader;
 
     /**
-     * 자격증 ID를 통해 자격증 상세정보를 조회한다
+     * 자격증 ID를 통해 자격증 시험정보를 조회한다
      *
      * @param certificateId 자격증 ID
-     * @return 자격증 상세 정보
+     * @return 자격증 시험 정보
      */
     public CertificateExam readNextCertificateExam(CertificateId certificateId) {
         Certificate certificate = certificateReader.read(certificateId);

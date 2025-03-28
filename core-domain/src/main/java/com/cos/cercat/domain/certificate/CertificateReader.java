@@ -10,12 +10,18 @@ import java.util.List;
 public class CertificateReader {
 
     private final CertificateRepository certificateRepository;
+    private final CertificateCache certificateCache;
 
     public List<Certificate> readAll() {
         return certificateRepository.findAll();
     }
 
     public Certificate read(CertificateId certificateId) {
-        return certificateRepository.findById(certificateId);
+        return certificateCache.get(certificateId)
+                .orElseGet(() -> {
+                    Certificate certificate = certificateRepository.findById(certificateId);
+                    certificateCache.cache(certificate);
+                    return certificate;
+                });
     }
 }

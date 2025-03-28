@@ -17,6 +17,7 @@ public class PostReader {
 
     private final ReadPostRepository postRepository;
     private final PostCommentReader postCommentReader;
+    private final PostCache postCache;
 
     public SliceResult<Post> read(
             Certificate certificate,
@@ -43,7 +44,12 @@ public class PostReader {
     }
 
     public List<Post> readTop3TipPosts(Certificate certificate) {
-        return postRepository.findTop3TipPosts(certificate);
+        return postCache.getTipPosts(certificate)
+                .orElseGet(() -> {
+                    List<Post> posts = postRepository.findTop3TipPosts(certificate);
+                    postCache.cacheTipPosts(certificate, posts);
+                    return posts;
+                });
     }
 
     public SliceResult<Post> readMyPosts(User user, PostType postType, Cursor cursor) {

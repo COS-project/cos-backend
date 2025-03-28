@@ -17,8 +17,6 @@ import static org.hibernate.annotations.OnDeleteAction.CASCADE;
 @Table(name = "repeat_day")
 public class StudyScheduleEntity {
 
-    public static final Integer SUNDAY_VALUE = 7;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "repeat_day_id")
