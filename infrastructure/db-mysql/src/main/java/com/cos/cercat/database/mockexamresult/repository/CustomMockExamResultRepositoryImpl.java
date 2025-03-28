@@ -39,8 +39,8 @@ public class CustomMockExamResultRepositoryImpl implements CustomMockExamResultR
         LocalDate sundayOfGivenWeek = DateUtils.getThisSunday(firstDayOfMonth)
                 .plusWeeks(dateCond.weekOfMonth() - 1).toLocalDate();
 
-        LocalDateTime thisSunday = DateUtils.getThisSunday(sundayOfGivenWeek);
-        LocalDateTime thisSaturday = DateUtils.getThisSaturday(sundayOfGivenWeek);
+        LocalDateTime weekStart = DateUtils.getThisSunday(sundayOfGivenWeek);
+        LocalDateTime weekEnd = DateUtils.getThisSaturday(sundayOfGivenWeek);
 
         DateTemplate<Date> date = Expressions.dateTemplate(Date.class, "DATE({0})",
                 mockExamResultEntity.createdAt);
@@ -49,15 +49,16 @@ public class CustomMockExamResultRepositoryImpl implements CustomMockExamResultR
                         new QDailyScoreAverage(
                                 mockExamResultEntity.totalScore.avg(),
                                 mockExamResultEntity.createdAt.dayOfWeek(),
-                                date)
+                                date
+                        )
                 )
                 .from(mockExamResultEntity)
-                .leftJoin(mockExamResultEntity.mockExamEntity.certificateEntity, certificateEntity)
-                .leftJoin(mockExamResultEntity.userEntity, userEntity)
+                .join(mockExamResultEntity.mockExamEntity.certificateEntity, certificateEntity)
+                .join(mockExamResultEntity.userEntity, userEntity)
                 .where(
                         certificateEntity.id.eq(certificateId),
                         userEntity.id.eq(userId),
-                        betweenStartDateAndEndDate(thisSunday, thisSaturday)
+                        betweenStartDateAndEndDate(weekStart, weekEnd)
                 )
                 .groupBy(date, mockExamResultEntity.createdAt.dayOfWeek())
                 .fetch();

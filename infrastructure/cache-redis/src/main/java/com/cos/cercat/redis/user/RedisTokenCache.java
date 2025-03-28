@@ -25,7 +25,7 @@ public class RedisTokenCache implements TokenCache {
     @Override
     public void cacheRefreshToken(RefreshToken refreshToken) {
         String key = getKey(refreshToken.userId());
-        log.info("Set Refresh Token from {} : {}", key, refreshToken);
+        log.debug("Set Refresh Token from {} : {}", key, refreshToken);
         tokenRedisTemplate.opsForValue().set(key, refreshToken);
     }
 
@@ -33,7 +33,7 @@ public class RedisTokenCache implements TokenCache {
     public Optional<RefreshToken> find(UserId userId) {
         String key = getKey(userId.userId());
         RefreshToken token = tokenRedisTemplate.opsForValue().get(key);
-        log.info("Get Refresh Token from {} : {}", key, token);
+        log.debug("Get Refresh Token from {} : {}", key, token);
         return Optional.ofNullable(token);
     }
 

@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
 public interface CertificateExamJpaRepository extends JpaRepository<CertificateExamEntity, Long> {
 

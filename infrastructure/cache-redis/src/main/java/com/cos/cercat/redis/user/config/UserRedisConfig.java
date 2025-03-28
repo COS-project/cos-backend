@@ -17,7 +17,6 @@ import java.time.Duration;
 
 @Configuration
 @RequiredArgsConstructor
-@EnableRedisRepositories
 public class UserRedisConfig {
 
   public final static String BAN_TOKEN_KEY = "BAN_TOKEN_KEY";

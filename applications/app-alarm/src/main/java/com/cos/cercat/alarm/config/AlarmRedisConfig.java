@@ -17,7 +17,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
 @RequiredArgsConstructor
-@EnableRedisRepositories
 public class AlarmRedisConfig {
 
     private final RedisConnectionFactory redisConnectionFactory;

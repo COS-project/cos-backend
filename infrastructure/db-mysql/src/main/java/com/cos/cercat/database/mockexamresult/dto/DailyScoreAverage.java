@@ -21,9 +21,7 @@ public class DailyScoreAverage {
                              Date date) {
         this.scoreAverage = ScoreFormatter.formatScore(scoreAverage);
         this.dayOfWeek = DayOfWeek.of(
-                (dayOfWeek > 1) ?
-                        dayOfWeek - 1
-                        : 7);
+                (dayOfWeek > 1) ? dayOfWeek - 1 : 7);
         this.date = date;
     }
 

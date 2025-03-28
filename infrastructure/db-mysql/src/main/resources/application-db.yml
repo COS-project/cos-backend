@@ -1,6 +1,8 @@
 spring:
   jpa:
     open-in-view: false
+    properties:
+      hibernate.discriminator.ignore_explicit_for_joined: true
 ---
 spring:
   config:

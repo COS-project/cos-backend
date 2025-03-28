@@ -2,6 +2,10 @@ spring:
   config:
     activate:
       on-profile: local,test
+  data:
+    redis:
+      repositories:
+        enabled: false
 
 redis:
   host: localhost

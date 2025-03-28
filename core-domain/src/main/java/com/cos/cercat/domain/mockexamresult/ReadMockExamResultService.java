@@ -79,9 +79,9 @@ public class ReadMockExamResultService {
         );
     }
 
-    public List<SubjectResultStatistics> getSubjectResultsStatistics(UserId userId,
-                                                                     CertificateId certificateId) {
-
+    public List<SubjectResultStatistics> getSubjectResultsStatistics(
+            UserId userId,
+            CertificateId certificateId) {
         User user = userReader.read(userId);
         Certificate certificate = certificateReader.read(certificateId);
         Goal goal = goalReader.readRecentGoal(user, certificate);
@@ -92,10 +92,11 @@ public class ReadMockExamResultService {
         );
     }
 
-    public List<ScoreData> findReportData(UserId userId,
-                                             CertificateId certificateId,
-                                             ReportType reportType,
-                                             DateCond dateCond) {
+    public List<ScoreData> findReportData(
+            UserId userId,
+            CertificateId certificateId,
+            ReportType reportType,
+            DateCond dateCond) {
         User user = userReader.read(userId);
         Certificate certificate = certificateReader.read(certificateId);
         return mockExamResultFinder.findReportData(

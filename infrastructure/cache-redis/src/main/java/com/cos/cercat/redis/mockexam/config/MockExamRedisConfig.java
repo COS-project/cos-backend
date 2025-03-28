@@ -17,7 +17,6 @@ import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
-@EnableRedisRepositories
 public class MockExamRedisConfig {
 
     private final RedisConnectionFactory redisConnectionFactory;

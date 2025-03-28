@@ -11,8 +11,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
 @EnableJpaAuditing
-@EntityScan(basePackages = "com.cos.cercat")
-@EnableJpaRepositories(basePackages = "com.cos.cercat")
+@EntityScan(basePackages = "com.cos.cercat.database")
+@EnableJpaRepositories(basePackages = "com.cos.cercat.database")
 public class JpaConfig {
 
     @PersistenceContext
