@@ -50,17 +50,12 @@ public interface MockExamResultRepository {
                                                           DateCond dateCond,
                                                           Cursor cursor);
 
-    List<ScoreData> getDailyScoreData(User user,
-                                      Certificate certificate,
-                                      DateCond dateCond);
-
-    List<ScoreData> getWeeklyScoreData(User user,
-                                       Certificate certificate,
-                                       DateCond dateCond);
-
-    List<ScoreData> getYearlyScoreData(User user,
-                                       Certificate certificate,
-                                       DateCond dateCond);
+    ScoreDataList getScoreData(
+            ReportType reportType,
+            User user,
+            Certificate certificate,
+            DateCond dateCond
+    );
 
     List<SubjectResultStatistics> getSubjectResultStatistics(User user,
                                                              Certificate certificate,

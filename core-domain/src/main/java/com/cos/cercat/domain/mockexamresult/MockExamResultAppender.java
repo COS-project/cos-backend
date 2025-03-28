@@ -13,12 +13,15 @@ public class MockExamResultAppender {
 
     private final MockExamResultRepository mockExamResultRepository;
     private final MockExamResultReader mockExamResultReader;
+    private final ScoreDataCache scoreDataCache;
 
-    public MockExamResultId append(User user,
-                                       MockExam mockExam,
-                                       List<NewSubjectResult> newSubjectResults) {
-
-        int round = mockExamResultReader.count(user, mockExam); // 응시 횟수
+    public MockExamResultId append(
+            User user,
+            MockExam mockExam,
+            List<NewSubjectResult> newSubjectResults
+    ) {
+        int round = mockExamResultReader.count(user, mockExam);
+        scoreDataCache.delete(user, mockExam.certificate());
         return mockExamResultRepository.save(
                 user,
                 mockExam,

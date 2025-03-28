@@ -3,10 +3,12 @@ package com.cos.cercat.domain.mockexamresult;
 import lombok.Getter;
 
 import java.time.Month;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class MonthlyScoreData extends ScoreData {
-    private final Month month;
+    private Month month;
 
     public MonthlyScoreData(double scoreAverage, Month month) {
         super(scoreAverage);

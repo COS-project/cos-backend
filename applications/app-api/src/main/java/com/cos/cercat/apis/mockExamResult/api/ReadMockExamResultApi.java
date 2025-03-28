@@ -96,14 +96,14 @@ public class ReadMockExamResultApi implements ReadMockExamResultApiDocs {
       @PathVariable ReportType reportType,
       DateCond dateCond,
       @AuthenticationPrincipal User currentUser) {
-    List<ScoreData> reportData = readMockExamResultService.findReportData(
-        UserId.from(currentUser.getId()),
-        CertificateId.from(certificateId),
-        reportType,
-        dateCond
+    ScoreDataList scoreDataList = readMockExamResultService.findReportData(
+            UserId.from(currentUser.getId()),
+            CertificateId.from(certificateId),
+            reportType,
+            dateCond
     );
 
-    return Response.success(ReportResponse.from(reportData));
+    return Response.success(ReportResponse.from(scoreDataList.dataList()));
   }
 
   @GetMapping("/certificates/{certificateId}/mock-exam-results/{dateType}")

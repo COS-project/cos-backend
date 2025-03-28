@@ -24,7 +24,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReadMockExamResultService {
 
-    private final MockExamResultFinder mockExamResultFinder;
     private final MockExamResultReader mockExamResultReader;
     private final UserAnswerManager userAnswerManager;
     private final UserReader userReader;
@@ -33,12 +32,13 @@ public class ReadMockExamResultService {
     private final SubjectResultReader subjectResultReader;
     private final GoalReader goalReader;
     private final MockExamReader mockExamReader;
+    private final ReportStrategyFactory reportStrategyFactory;
 
     public List<MockExamResultDetail> getMockExamResultDetail(MockExamId mockExamId,
                                                               UserId userId) {
         User user = userReader.read(userId);
         MockExam mockExam = mockExamReader.read(mockExamId);
-        return mockExamResultFinder.findDetails(user, mockExam);
+        return mockExamResultReader.readDetails(user, mockExam);
     }
 
     public SliceResult<UserAnswer> getAllWrongUserAnswers(CertificateId certificateId,
@@ -70,7 +70,7 @@ public class ReadMockExamResultService {
                                                           Cursor cursor) {
         User user = userReader.read(userId);
         Certificate certificate = certificateReader.read(certificateId);
-        return mockExamResultFinder.findMockExamResults(
+        return mockExamResultReader.read(
                 user,
                 certificate,
                 dateType,
@@ -92,19 +92,17 @@ public class ReadMockExamResultService {
         );
     }
 
-    public List<ScoreData> findReportData(
+    public ScoreDataList findReportData(
             UserId userId,
             CertificateId certificateId,
             ReportType reportType,
-            DateCond dateCond) {
+            DateCond dateCond
+    ) {
         User user = userReader.read(userId);
         Certificate certificate = certificateReader.read(certificateId);
-        return mockExamResultFinder.findReportData(
-                user,
-                certificate,
-                reportType,
-                dateCond
-        );
+        return reportStrategyFactory
+                .getStrategy(reportType)
+                .getScoreData(user, certificate, dateCond);
     }
 
     public MockExamResult getRecentMockExamResult(MockExamId mockExamId, UserId userId) {

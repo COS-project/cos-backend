@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @AllArgsConstructor
 public abstract class ScoreData {
-    private final double scoreAverage;
+    private double scoreAverage;
 
     public double getScoreAverage() {
         DecimalFormat df = new DecimalFormat("#.##");

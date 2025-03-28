@@ -206,42 +206,14 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
     }
 
     @Override
-    public List<ScoreData> getDailyScoreData(User user,
-            Certificate certificate,
+    public ScoreDataList getScoreData(ReportType reportType, User user, Certificate certificate,
             DateCond dateCond) {
-        return mockExamResultJpaRepository.getDailyScoreDataList(
-                        user.getId(),
-                        certificate.id().value(),
-                        dateCond
-                ).stream()
-                .map(DailyScoreAverage::toScoreData)
-                .toList();
-    }
-
-    @Override
-    public List<ScoreData> getWeeklyScoreData(User user,
-            Certificate certificate,
-            DateCond dateCond) {
-        return mockExamResultJpaRepository.getWeeklyScoreDataList(
-                        user.getId(),
-                        certificate.id().value(),
-                        dateCond
-                ).stream()
-                .map(WeeklyScoreAverage::toScoreData)
-                .toList();
-    }
-
-    @Override
-    public List<ScoreData> getYearlyScoreData(User user,
-            Certificate certificate,
-            DateCond dateCond) {
-        return mockExamResultJpaRepository.getMonthlyScoreDataList(
-                        user.getId(),
-                        certificate.id().value(),
-                        dateCond
-                ).stream()
-                .map(MonthlyScoreAverage::toScoreData)
-                .toList();
+        List<ScoreData> scoreData = switch (reportType) {
+            case WEEKLY -> getDailyScoreData(user, certificate, dateCond);
+            case MONTHLY -> getWeeklyScoreData(user, certificate, dateCond);
+            case YEARLY -> getMonthlyScoreData(user, certificate, dateCond);
+        };
+        return ScoreDataList.from(scoreData);
     }
 
     @Override
@@ -298,6 +270,44 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
                         user.getId())
                 .orElseThrow(() -> MockExamResultNotFoundException.EXCEPTION)
                 .toDomain();
+    }
+
+    private List<ScoreData> getDailyScoreData(
+            User user,
+            Certificate certificate,
+            DateCond dateCond
+    ) {
+        return mockExamResultJpaRepository.getDailyScoreDataList(
+                        user.getId(),
+                        certificate.id().value(),
+                        dateCond
+                ).stream()
+                .map(DailyScoreAverage::toScoreData)
+                .toList();
+    }
+
+    private List<ScoreData> getWeeklyScoreData(User user,
+            Certificate certificate,
+            DateCond dateCond) {
+        return mockExamResultJpaRepository.getWeeklyScoreDataList(
+                        user.getId(),
+                        certificate.id().value(),
+                        dateCond
+                ).stream()
+                .map(WeeklyScoreAverage::toScoreData)
+                .toList();
+    }
+
+    private List<ScoreData> getMonthlyScoreData(User user,
+            Certificate certificate,
+            DateCond dateCond) {
+        return mockExamResultJpaRepository.getMonthlyScoreDataList(
+                        user.getId(),
+                        certificate.id().value(),
+                        dateCond
+                ).stream()
+                .map(MonthlyScoreAverage::toScoreData)
+                .toList();
     }
 
     private SubjectResultEntity saveSubjectResult(NewSubjectResult newSubjectResult,
