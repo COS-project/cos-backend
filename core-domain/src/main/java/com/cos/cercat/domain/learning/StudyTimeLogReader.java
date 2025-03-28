@@ -11,7 +11,6 @@ public class StudyTimeLogReader {
 
 
     public long readTodayStudyTime(Goal goal) {
-
         return learningRepository.getTodayStudyTime(goal.getId());
     }
 

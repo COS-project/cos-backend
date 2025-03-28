@@ -74,12 +74,14 @@ public class LearningRepositoryImpl implements LearningRepository {
 
     @Override
     public long getTodayStudyTime(Long goalId) {
-        return studyTimeJpaRepository.getTodayStudyTime(goalId);
+        Long todayStudyTime = studyTimeJpaRepository.getTodayStudyTime(goalId);
+        return todayStudyTime == null ? 0 : todayStudyTime;
     }
 
     @Override
     public long getTotalStudyTime(Long goalId) {
-        return studyTimeJpaRepository.getTotalStudyTime(goalId);
+        Long totalStudyTime = studyTimeJpaRepository.getTotalStudyTime(goalId);
+        return totalStudyTime == null ? 0 : totalStudyTime;
     }
 
     @Override
