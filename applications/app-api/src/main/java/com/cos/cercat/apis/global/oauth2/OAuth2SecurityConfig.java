@@ -1,9 +1,5 @@
-package com.cos.cercat.apis.global.security;
+package com.cos.cercat.apis.global.oauth2;
 
-import com.cos.cercat.apis.global.oauth2.CustomOAuth2UserService;
-import com.cos.cercat.apis.global.oauth2.HttpCookieAuth2AuthorizationRequestRepository;
-import com.cos.cercat.apis.global.oauth2.OAuth2LoginFailureHandler;
-import com.cos.cercat.apis.global.oauth2.OAuth2MemberSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
