@@ -30,10 +30,4 @@ public class LikApi implements LikeApiDocs {
         likeService.unLike(UserId.from(currentUser.getId()), request.toLike());
         return Response.success("게시글 좋아요/취소 성공");
     }
-
-    @GetMapping("likes/status")
-    public Response<LikeStatus> likeStatus(LikeRequest request, @AuthenticationPrincipal User currentUser) {
-        return Response.success(likeService.getLikeStatus(UserId.from(currentUser.getId()), request.toLike()));
-    }
-
 }
