@@ -4,7 +4,6 @@ import com.cos.cercat.domain.mockexamresult.ScoreData;
 import com.cos.cercat.domain.mockexamresult.ScoreDataList;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;

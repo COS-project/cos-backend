@@ -15,6 +15,10 @@ public class MonthlyScoreData extends ScoreData {
         this.month = month;
     }
 
+    public void setMonth(int month) {
+        this.month = Month.of(month);
+    }
+
     public int getMonth() {
         return month.getValue();
     }
