@@ -107,13 +107,13 @@ public class ReadMockExamResultApi implements ReadMockExamResultApiDocs {
   }
 
   @GetMapping("/certificates/{certificateId}/mock-exam-results/{dateType}")
-  public Response<PageResult<MockExamResultResponse>> mockExamResults(
+  public Response<SliceResult<MockExamResultResponse>> mockExamResults(
       @PathVariable Long certificateId,
       @PathVariable DateType dateType,
       DateCond dateCond,
       @AuthenticationPrincipal User currentUser,
       @CursorDefault Cursor cursor) {
-    PageResult<MockExamResultResponse> responses = readMockExamResultService.findMockExamResults(
+    SliceResult<MockExamResultResponse> responses = readMockExamResultService.findMockExamResults(
             UserId.from(currentUser.getId()),
             CertificateId.from(certificateId),
             dateType,

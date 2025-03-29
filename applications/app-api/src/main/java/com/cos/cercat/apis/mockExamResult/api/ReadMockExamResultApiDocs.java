@@ -72,7 +72,7 @@ public interface ReadMockExamResultApiDocs {
                                          User currentUser);
 
     @Operation(summary = "날짜/주차/월 로 성적 리포트 조회")
-    Response<PageResult<MockExamResultResponse>> mockExamResults(Long certificateId,
+    Response<SliceResult<MockExamResultResponse>> mockExamResults(Long certificateId,
                                                                  DateType dateType,
                                                                  DateCond dateCond,
                                                                  User currentUser,

@@ -143,32 +143,31 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
     }
 
     @Override
-    public PageResult<MockExamResult> findMockExamResultsByDate(User user,
+    public SliceResult<MockExamResult> findMockExamResultsByDate(User user,
             Certificate certificate,
             DateCond dateCond,
             Cursor cursor) {
-        Page<MockExamResultEntity> mockExamResults = mockExamResultJpaRepository.findMockExamResultsByDate(
+        Slice<MockExamResultEntity> mockExamResults = mockExamResultJpaRepository.findMockExamResultsByDate(
                 user.getId(),
                 certificate.id().value(),
                 dateCond.date(),
                 toPageRequest(cursor)
         );
 
-        return PageResult.of(
+        return SliceResult.of(
                 mockExamResults.stream()
                         .map(MockExamResultEntity::toDomain)
                         .toList(),
-                mockExamResults.getNumber(),
-                mockExamResults.getSize()
+                mockExamResults.hasNext()
         );
     }
 
     @Override
-    public PageResult<MockExamResult> findMockExamResultsByWeekOfMonth(User user,
+    public SliceResult<MockExamResult> findMockExamResultsByWeekOfMonth(User user,
             Certificate certificate,
             DateCond dateCond,
             Cursor cursor) {
-        Page<MockExamResultEntity> mockExamResults = mockExamResultJpaRepository.findMockExamResultsByWeekOfMonth(
+        Slice<MockExamResultEntity> mockExamResults = mockExamResultJpaRepository.findMockExamResultsByWeekOfMonth(
                 user.getId(),
                 certificate.id().value(),
                 DateUtils.getFirstDayOfMonth(LocalDate.of(dateCond.year(), dateCond.month(), 1)),
@@ -176,32 +175,30 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
                 dateCond.weekOfMonth(),
                 toPageRequest(cursor)
         );
-        return PageResult.of(
+        return SliceResult.of(
                 mockExamResults.stream()
                         .map(MockExamResultEntity::toDomain)
                         .toList(),
-                mockExamResults.getNumber(),
-                mockExamResults.getSize()
+                mockExamResults.hasNext()
         );
     }
 
     @Override
-    public PageResult<MockExamResult> findMockExamResultsByMonth(User user,
+    public SliceResult<MockExamResult> findMockExamResultsByMonth(User user,
             Certificate certificate,
             DateCond dateCond,
             Cursor cursor) {
-        Page<MockExamResultEntity> mockExamResults = mockExamResultJpaRepository.findMockExamResultsByMonth(
+        Slice<MockExamResultEntity> mockExamResults = mockExamResultJpaRepository.findMockExamResultsByMonth(
                 user.getId(),
                 certificate.id().value(),
                 dateCond.month(),
                 toPageRequest(cursor)
         );
-        return PageResult.of(
+        return SliceResult.of(
                 mockExamResults.stream()
                         .map(MockExamResultEntity::toDomain)
                         .toList(),
-                mockExamResults.getNumber(),
-                mockExamResults.getSize()
+                mockExamResults.hasNext()
         );
     }
 

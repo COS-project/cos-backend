@@ -3,6 +3,7 @@ package com.cos.cercat.database.mockexamresult.repository;
 import com.cos.cercat.database.mockexamresult.entity.MockExamResultEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -70,7 +71,7 @@ public interface MockExamResultJpaRepository extends JpaRepository<MockExamResul
       AND mr.userEntity.id = :userId
       AND c.id = :certificateId
       """)
-  Page<MockExamResultEntity> findMockExamResultsByDate(
+  Slice<MockExamResultEntity> findMockExamResultsByDate(
           Long userId,
           Long certificateId,
           Date date,
@@ -86,7 +87,7 @@ public interface MockExamResultJpaRepository extends JpaRepository<MockExamResul
       AND mr.userEntity.id = :userId
       AND c.id = :certificateId
       """)
-  Page<MockExamResultEntity> findMockExamResultsByWeekOfMonth(@Param("userId") Long userId,
+  Slice<MockExamResultEntity> findMockExamResultsByWeekOfMonth(@Param("userId") Long userId,
       Long certificateId,
       @Param("firstDayOfMonth") LocalDateTime firstDayOfMonth,
       @Param("month") int month,
@@ -101,7 +102,7 @@ public interface MockExamResultJpaRepository extends JpaRepository<MockExamResul
       AND mr.userEntity.id = :userId
       AND c.id = :certificateId
       """)
-  Page<MockExamResultEntity> findMockExamResultsByMonth(@Param("userId") Long userId,
+  Slice<MockExamResultEntity> findMockExamResultsByMonth(@Param("userId") Long userId,
       Long certificateId,
       @Param("month") int month,
       Pageable pageable);

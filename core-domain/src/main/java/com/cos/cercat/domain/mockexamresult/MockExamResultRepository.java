@@ -35,17 +35,17 @@ public interface MockExamResultRepository {
 
     MockExamResult find(MockExamResultId mockExamResultId);
 
-    PageResult<MockExamResult> findMockExamResultsByDate(User user,
+    SliceResult<MockExamResult> findMockExamResultsByDate(User user,
                                                          Certificate certificate,
                                                          DateCond dateCond,
                                                          Cursor cursor);
 
-    PageResult<MockExamResult> findMockExamResultsByWeekOfMonth(User user,
+    SliceResult<MockExamResult> findMockExamResultsByWeekOfMonth(User user,
                                                                 Certificate certificate,
                                                                 DateCond dateCond,
                                                                 Cursor cursor);
 
-    PageResult<MockExamResult> findMockExamResultsByMonth(User user,
+    SliceResult<MockExamResult> findMockExamResultsByMonth(User user,
                                                           Certificate certificate,
                                                           DateCond dateCond,
                                                           Cursor cursor);

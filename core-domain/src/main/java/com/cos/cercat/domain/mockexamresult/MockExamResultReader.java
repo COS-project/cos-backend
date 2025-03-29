@@ -3,6 +3,7 @@ package com.cos.cercat.domain.mockexamresult;
 import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.domain.common.Cursor;
 import com.cos.cercat.domain.common.PageResult;
+import com.cos.cercat.domain.common.SliceResult;
 import com.cos.cercat.domain.learning.GoalPeriod;
 import com.cos.cercat.domain.learning.MockExamResultProvider;
 import com.cos.cercat.domain.mockexam.MockExam;
@@ -51,7 +52,7 @@ public class MockExamResultReader implements MockExamResultProvider {
         return mockExamResultRepository.findMockExamResultDetails(user, mockExam);
     }
 
-    public PageResult<MockExamResult> read(User user,
+    public SliceResult<MockExamResult> read(User user,
             Certificate certificate,
             DateType dateType,
             DateCond dateCond,

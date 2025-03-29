@@ -63,7 +63,7 @@ public class ReadMockExamResultService {
         return userAnswerManager.findWrongUserAnswers(mockExamResult, cursor);
     }
 
-    public PageResult<MockExamResult> findMockExamResults(UserId userId,
+    public SliceResult<MockExamResult> findMockExamResults(UserId userId,
                                                           CertificateId certificateId,
                                                           DateType dateType,
                                                           DateCond dateCond,
