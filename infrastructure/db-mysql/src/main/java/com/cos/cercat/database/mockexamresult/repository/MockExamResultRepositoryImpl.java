@@ -355,7 +355,10 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
 
         return new ScoreDataList(
                 dataList.stream().findFirst().map(maxScoreExtractor).orElse(0),
-                dataList.stream().findFirst().map(scoreAverageExtractor).orElse(0.0),
+                dataList.stream()
+                        .mapToDouble(scoreAverageExtractor::apply)
+                        .average()
+                        .orElse(0.0),
                 dataList.stream().map(scoreDataMapper).toList()
         );
     }
