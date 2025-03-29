@@ -18,15 +18,19 @@ public class LikApi implements LikeApiDocs {
     private final LikeService likeService;
 
     @PostMapping("/likes")
-    public Response<Void> like(LikeRequest request,
-                                       @AuthenticationPrincipal User currentUser) {
+    public Response<Void> like(
+            LikeRequest request,
+            @AuthenticationPrincipal User currentUser
+    ) {
         likeService.like(UserId.from(currentUser.getId()), request.toLike());
         return Response.success("게시글 좋아요/취소 성공");
     }
 
     @DeleteMapping("/likes")
-    public Response<Void> unLike(LikeRequest request,
-                                         @AuthenticationPrincipal User currentUser) {
+    public Response<Void> unLike(
+            LikeRequest request,
+            @AuthenticationPrincipal User currentUser
+    ) {
         likeService.unLike(UserId.from(currentUser.getId()), request.toLike());
         return Response.success("게시글 좋아요/취소 성공");
     }
