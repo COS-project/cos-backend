@@ -4,6 +4,7 @@ import com.cos.cercat.database.certificate.entity.SubjectEntity;
 import com.cos.cercat.domain.mockexamresult.SubjectResultStatistics;
 
 public record SubjectResultsAVG(
+        Long timeLimit,
         SubjectEntity subject,
         Double correctRate,
         Double totalTakenTime
@@ -12,7 +13,8 @@ public record SubjectResultsAVG(
         return new SubjectResultStatistics(
                 subject.toDomain(),
                 correctRate.intValue(),
-                totalTakenTime.longValue()
+                totalTakenTime.longValue(),
+                timeLimit
         );
     }
 

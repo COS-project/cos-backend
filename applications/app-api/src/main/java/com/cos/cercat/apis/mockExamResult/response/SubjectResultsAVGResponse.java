@@ -6,7 +6,8 @@ import com.cos.cercat.domain.mockexamresult.SubjectResultStatistics;
 public record SubjectResultsAVGResponse(
         SubjectResponse subject,
         int correctRate,
-        long totalTakenTime
+        long totalTakenTime,
+        long timeLimit
 ) {
 
 
@@ -14,7 +15,8 @@ public record SubjectResultsAVGResponse(
         return new SubjectResultsAVGResponse(
                 SubjectResponse.from(subjectResultStatistics.subject()),
                 subjectResultStatistics.correctRate(),
-                subjectResultStatistics.totalTakenTime()
+                subjectResultStatistics.totalTakenTime(),
+                subjectResultStatistics.timeLimit()
         );
     }
 }
