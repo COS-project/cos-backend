@@ -1,7 +1,5 @@
 package com.cos.cercat.database.alarm.entity;
 
-
-import com.cos.cercat.database.common.exception.EntityTypeMismatchException;
 import com.cos.cercat.database.common.entity.BaseTimeEntity;
 import com.cos.cercat.database.user.entity.UserEntity;
 import com.cos.cercat.domain.alarm.Alarm;

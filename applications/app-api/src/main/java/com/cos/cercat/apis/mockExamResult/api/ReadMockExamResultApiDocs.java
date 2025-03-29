@@ -65,13 +65,13 @@ public interface ReadMockExamResultApiDocs {
     Response<List<SubjectResultsAVGResponse>> subjectResultsAVG(Long certificateId,
                                                                 User currentUser);
 
-    @Operation(summary = "주간/월간/년간 성적 리포트 통계 조회")
+    @Operation(summary = "주간/월간/년간 성장 그래프 통계 조회")
     Response<ReportResponse> scoreReport(Long certificateId,
                                          ReportType reportType,
                                          DateCond dateCond,
                                          User currentUser);
 
-    @Operation(summary = "날짜/주차/월 로 성적 리포트 조회")
+    @Operation(summary = "날짜/주차/월로 모의고사 조회")
     Response<SliceResult<MockExamResultResponse>> mockExamResults(Long certificateId,
                                                                  DateType dateType,
                                                                  DateCond dateCond,
