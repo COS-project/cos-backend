@@ -37,7 +37,7 @@ public class MockExamEntity extends BaseTimeEntity {
 
     private long timeLimit;
 
-    private int totalScore;
+    private int maxScore;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "certificate_id")
@@ -46,9 +46,10 @@ public class MockExamEntity extends BaseTimeEntity {
 
     public static MockExamEntity from(NewMockExam newMockExam) {
         return MockExamEntity.builder()
-                .examYear(newMockExam.session().examYear())
-                .round(newMockExam.session().round())
-                .timeLimit(newMockExam.timeLimit())
+                .examYear(newMockExam.info().session().examYear())
+                .round(newMockExam.info().session().round())
+                .timeLimit(newMockExam.info().timeLimit())
+                .maxScore(newMockExam.info().maxScore())
                 .certificateEntity(CertificateEntity.from(newMockExam.certificate()))
                 .build();
     }
@@ -79,6 +80,7 @@ public class MockExamEntity extends BaseTimeEntity {
                 id,
                 new MockExamSession(examYear, round),
                 timeLimit,
+                maxScore,
                 certificateEntity.toDomain()
         );
     }

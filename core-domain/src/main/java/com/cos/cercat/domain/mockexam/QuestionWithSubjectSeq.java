@@ -17,6 +17,10 @@ public record QuestionWithSubjectSeq(
         return new NewQuestion(matchingSubject, image, questionOptions, questionContent);
     }
 
+    public int getScore() {
+        return questionContent.score();
+    }
+
     private Subject findMatchingSubject(List<Subject> subjectList) {
         return subjectList.stream()
                 .filter(subject -> subject.subjectInfo().subjectSequence().equals(subjectSeq))

@@ -1,6 +1,7 @@
 package com.cos.cercat.apis.mockExam.request;
 
 
+import com.cos.cercat.domain.mockexam.MockExamInfo;
 import com.cos.cercat.domain.mockexam.MockExamSession;
 import com.cos.cercat.domain.mockexam.QuestionWithSubjectSeq;
 
@@ -14,7 +15,15 @@ public record CreateMockExamRequest(
         Integer score
 ) {
 
-    public MockExamSession toExamSession() {
+    public MockExamInfo toMockExamInfo() {
+        return new MockExamInfo(
+                toExamSession(),
+                timeLimit,
+                questions.size() * score
+        );
+    }
+
+    private MockExamSession toExamSession() {
         return new MockExamSession(examYear, round);
     }
 

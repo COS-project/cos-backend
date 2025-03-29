@@ -36,12 +36,13 @@ public class MockExamService {
         return questionReader.read(mockExam);
     }
 
-    public void createMockExam(CertificateId certificateId,
-            MockExamSession session,
-            Long timeLimit,
-            List<QuestionWithSubjectSeq> contents) {
+    public void createMockExam(
+            CertificateId certificateId,
+            MockExamInfo mockExamInfo,
+            List<QuestionWithSubjectSeq> questions
+    ) {
         Certificate certificate = certificateReader.read(certificateId);
-        mockExamAppender.append(certificate, session, timeLimit, contents);
+        mockExamAppender.append(certificate, mockExamInfo, questions);
     }
 
     public void insertQuestionImage(Long questionId, File questionImageFile,

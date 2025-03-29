@@ -59,8 +59,7 @@ public class MockExamApi implements MockExamApiDocs {
             @RequestBody CreateMockExamRequest request) {
         mockExamService.createMockExam(
                 CertificateId.from(certificateId),
-                request.toExamSession(),
-                request.timeLimit(),
+                request.toMockExamInfo(),
                 request.toContent()
         );
 

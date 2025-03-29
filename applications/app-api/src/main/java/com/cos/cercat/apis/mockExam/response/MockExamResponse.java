@@ -9,6 +9,7 @@ public record MockExamResponse(
         Integer examYear,
         Integer round,
         Long timeLimit,
+        int maxScore,
         CertificateResponse certificate
 ) {
 
@@ -19,6 +20,7 @@ public record MockExamResponse(
                 mockExam.mockExamSession().examYear(),
                 mockExam.mockExamSession().round(),
                 mockExam.timeLimit(),
+                mockExam.maxScore(),
                 CertificateResponse.from(mockExam.certificate())
         );
     }

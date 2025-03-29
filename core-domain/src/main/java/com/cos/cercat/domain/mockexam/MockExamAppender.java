@@ -15,21 +15,28 @@ public class MockExamAppender {
     private final MockExamRepository mockExamRepository;
     private final SubjectReader subjectReader;
 
-    public MockExamId append(Certificate certificate,
-            MockExamSession session,
-            Long timeLimit,
-            List<QuestionWithSubjectSeq> contents) {
-        NewMockExam newMockExam = NewMockExam.of(session, timeLimit, certificate);
+    public MockExamId append(
+            Certificate certificate,
+            MockExamInfo mockExamInfo,
+            List<QuestionWithSubjectSeq> questions
+    ) {
+        NewMockExam newMockExam = NewMockExam.of(mockExamInfo, certificate);
         MockExamId mockExamId = mockExamRepository.save(newMockExam);
 
         List<Subject> subjects = subjectReader.read(certificate);
 
-        List<NewQuestion> newQuestions = contents.stream()
+        List<NewQuestion> newQuestions = questions.stream()
                 .map(content -> content.toNewQuestion(subjects))
                 .toList();
 
         mockExamRepository.saveQuestions(mockExamId, newQuestions);
         return mockExamId;
+    }
+
+    private int calculateTotalScore(List<QuestionWithSubjectSeq> contents) {
+        return contents.stream()
+                .mapToInt(QuestionWithSubjectSeq::getScore)
+                .sum();
     }
 
 }

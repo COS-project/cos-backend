@@ -6,6 +6,7 @@ public record MockExam(
         long id,
         MockExamSession mockExamSession,
         long timeLimit,
+        int maxScore,
         Certificate certificate
 ) {
 

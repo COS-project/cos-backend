@@ -37,6 +37,23 @@ public class ReadMockExamResultApi implements ReadMockExamResultApiDocs {
     return Response.success(responses);
   }
 
+  @GetMapping("/certificates/{certificateId}/mock-exam-results/{dateType}")
+  public Response<SliceResult<MockExamResultResponse>> mockExamResults(
+          @PathVariable Long certificateId,
+          @PathVariable DateType dateType,
+          DateCond dateCond,
+          @AuthenticationPrincipal User currentUser,
+          @CursorDefault Cursor cursor) {
+    SliceResult<MockExamResultResponse> responses = readMockExamResultService.findMockExamResults(
+                    UserId.from(currentUser.getId()),
+                    CertificateId.from(certificateId),
+                    dateType,
+                    dateCond,
+                    cursor)
+            .map(MockExamResultResponse::from);
+    return Response.success(responses);
+  }
+
   @GetMapping("/mock-exams/{mockExamId}/mock-exam-results/recent")
   public Response<MockExamResultResponse> recentMockExamResult(@PathVariable Long mockExamId,
       @AuthenticationPrincipal User currentUser) {
@@ -105,23 +122,4 @@ public class ReadMockExamResultApi implements ReadMockExamResultApiDocs {
 
     return Response.success(ReportResponse.from(scoreDataList.dataList()));
   }
-
-  @GetMapping("/certificates/{certificateId}/mock-exam-results/{dateType}")
-  public Response<SliceResult<MockExamResultResponse>> mockExamResults(
-      @PathVariable Long certificateId,
-      @PathVariable DateType dateType,
-      DateCond dateCond,
-      @AuthenticationPrincipal User currentUser,
-      @CursorDefault Cursor cursor) {
-    SliceResult<MockExamResultResponse> responses = readMockExamResultService.findMockExamResults(
-            UserId.from(currentUser.getId()),
-            CertificateId.from(certificateId),
-            dateType,
-            dateCond,
-            cursor)
-        .map(MockExamResultResponse::from);
-    return Response.success(responses);
-  }
-
-
 }
