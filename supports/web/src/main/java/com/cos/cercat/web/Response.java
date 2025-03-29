@@ -41,7 +41,7 @@ public class Response<T> {
     }
 
     public static Response<Void> error(BaseErrorCode errorCode, String message) {
-        return new Response<>(errorCode.getErrorReason().status().toString(), message,null);
+        return new Response<>(errorCode.getErrorReason().code(), message,null);
     }
 
 }

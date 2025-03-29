@@ -14,8 +14,9 @@ public class CertificateExamReader {
     private final CertificateExamRepository certificateExamRepository;
 
     public CertificateExam readPreviousExam(Certificate certificate) {
-        return certificateExamRepository.findPreviousCertificateExam(certificate)
-                .orElseThrow(() -> CertificateException.notFoundExam("이전 시험 정보를 찾을 수 없습니다 - "  + certificate.id().value()));
+        return certificateExamRepository.findPreviousCertificateExam(
+                        certificate)
+                .orElseThrow(() -> CertificateException.notFoundExam("이전 시험 정보를 찾을 수 없습니다 - " + certificate.id().value()));
     }
 
     public CertificateExam readNextExam(Certificate certificate) {
@@ -29,7 +30,6 @@ public class CertificateExamReader {
             case DEADLINE -> certificateExamRepository.findCertificateExamsByDeadlineDate(dateTime);
         };
     }
-
 }
 
 

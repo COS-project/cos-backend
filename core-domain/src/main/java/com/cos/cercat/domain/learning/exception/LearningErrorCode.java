@@ -9,14 +9,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum LearningErrorCode implements BaseErrorCode {
 
-    GOAL_NOT_FOUND(404, "goal not founded"),
+    GOAL_NOT_FOUND("LRN_001", 404, "goal not founded"),
     ;
 
+    private final String code;
     private final Integer status;
     private final String message;
 
     @Override
     public ErrorReason getErrorReason() {
-        return ErrorReason.from(status, message);
+        return ErrorReason.from(code, status, message);
     }
 }

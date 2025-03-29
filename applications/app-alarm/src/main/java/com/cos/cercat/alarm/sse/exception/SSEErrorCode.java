@@ -10,14 +10,15 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum SSEErrorCode implements BaseErrorCode {
 
-    CONNECT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR.value(), "SSE 연결 중 오류가 발생하였습니다."),
-    ALARM_SEND_ERROR(HttpStatus.INTERNAL_SERVER_ERROR.value(), "알람 전송 중 오류가 발생하였습니다.");
+    CONNECT_ERROR("SSE_001",HttpStatus.INTERNAL_SERVER_ERROR.value(), "SSE 연결 중 오류가 발생하였습니다."),
+    ALARM_SEND_ERROR("SSE_002",HttpStatus.INTERNAL_SERVER_ERROR.value(), "알람 전송 중 오류가 발생하였습니다.");
 
+    private final String code;
     private final int status;
     private final String message;
 
     @Override
     public ErrorReason getErrorReason() {
-        return ErrorReason.from(status, message);
+        return ErrorReason.from(code, status, message);
     }
 }

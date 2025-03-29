@@ -49,7 +49,7 @@ public class ExamReviewService {
         boolean isInterest = interesting.contains(certificate);
 
         CertificateExam certificateExam = certificateExamReader.readPreviousExam(certificate);
-        boolean notReviewed = !examReviewReader.existReview(user, certificateExam);
+        boolean notReviewed = !examReviewReader.validate(user, certificateExam);
 
         return isInterest && notReviewed;
     }

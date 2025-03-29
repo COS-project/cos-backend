@@ -11,12 +11,13 @@ public enum SearchLogErrorCode implements BaseErrorCode {
 
     ;
 
+    private final String code;
     private final Integer status;
     private final String message;
 
 
     @Override
     public ErrorReason getErrorReason() {
-        return ErrorReason.from(status, message);
+        return ErrorReason.from(code, status, message);
     }
 }

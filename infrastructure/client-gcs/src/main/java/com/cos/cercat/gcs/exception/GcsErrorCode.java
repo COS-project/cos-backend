@@ -9,14 +9,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum GcsErrorCode implements BaseErrorCode {
 
-    IMAGE_UPLOAD_FAIL_ERROR(500, "image upload fail"),
+    IMAGE_UPLOAD_FAIL_ERROR("GCS_001", 500, "image upload fail"),
     ;
 
+    private final String code;
     private final Integer status;
     private final String message;
 
     @Override
     public ErrorReason getErrorReason() {
-        return ErrorReason.from(status, message);
+        return ErrorReason.from(code, status, message);
     }
 }
