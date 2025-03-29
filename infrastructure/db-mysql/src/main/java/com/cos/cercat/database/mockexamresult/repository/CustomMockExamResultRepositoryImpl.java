@@ -31,7 +31,7 @@ public class CustomMockExamResultRepositoryImpl implements CustomMockExamResultR
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<DailyScoreAverage> getDailyScoreDataList(Long certificateId, Long userId,
+    public List<DailyScoreAverage> getDailyScoreDataList(Long userId, Long certificateId,
             DateCond dateCond) {
 
         LocalDate firstDayOfMonth = LocalDate.of(dateCond.year(), dateCond.month(), 1);
@@ -65,7 +65,7 @@ public class CustomMockExamResultRepositoryImpl implements CustomMockExamResultR
     }
 
     @Override
-    public List<WeeklyScoreAverage> getWeeklyScoreDataList(Long certificateId, Long userId,
+    public List<WeeklyScoreAverage> getWeeklyScoreDataList(Long userId, Long certificateId,
             DateCond dateCond) {
 
         LocalDate month = LocalDate.of(dateCond.year(), dateCond.month(), 1);
@@ -94,7 +94,7 @@ public class CustomMockExamResultRepositoryImpl implements CustomMockExamResultR
     }
 
     @Override
-    public List<MonthlyScoreAverage> getMonthlyScoreDataList(Long certificateId, Long userId,
+    public List<MonthlyScoreAverage> getMonthlyScoreDataList(Long userId, Long certificateId,
             DateCond dateCond) {
 
         LocalDate currentYear = LocalDate.of(dateCond.year(), 1, 1);

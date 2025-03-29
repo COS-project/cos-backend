@@ -206,8 +206,12 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
     }
 
     @Override
-    public ScoreDataList getScoreData(ReportType reportType, User user, Certificate certificate,
-            DateCond dateCond) {
+    public ScoreDataList getScoreData(
+            ReportType reportType,
+            User user,
+            Certificate certificate,
+            DateCond dateCond
+    ) {
         List<ScoreData> scoreData = switch (reportType) {
             case WEEKLY -> getDailyScoreData(user, certificate, dateCond);
             case MONTHLY -> getWeeklyScoreData(user, certificate, dateCond);
@@ -217,9 +221,11 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
     }
 
     @Override
-    public List<SubjectResultStatistics> getSubjectResultStatistics(User user,
+    public List<SubjectResultStatistics> getSubjectResultStatistics(
+            User user,
             Certificate certificate,
-            GoalPeriod goalPeriod) {
+            GoalPeriod goalPeriod
+    ) {
         return subjectResultJpaRepository.getSubjectResultsAVG(
                         certificate.id().value(),
                         user.getId(),
