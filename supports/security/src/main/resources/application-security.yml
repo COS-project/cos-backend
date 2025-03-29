@@ -7,7 +7,7 @@ jwt:
   secret-key: ${local.SECRET_KEY}
   access-token:
     header: Access-token
-    expiration: 259200 #3일
+    expiration: ${local.ACCESS_TOKEN_EXPIRATION}
   refresh-token:
     header: Refresh-token
 
@@ -22,6 +22,6 @@ jwt:
   secret-key: ${prod.SECRET_KEY}
   access-token:
     header: Access-token
-    expiration: 259200 #3일
+    expiration: ${prod.ACCESS_TOKEN_EXPIRATION}
   refresh-token:
     header: Refresh-token
