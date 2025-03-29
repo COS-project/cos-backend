@@ -14,7 +14,7 @@ public abstract class AbstractReportStrategy implements ReportDataStrategy {
 
     @Override
     public ScoreDataList getScoreData(User user, Certificate certificate, DateCond dateCond) {
-        return scoreDataCache.get(getReportType(), user, certificate)
+        return scoreDataCache.get(getReportType(), user, certificate, dateCond)
                 .orElseGet(() -> {
                     ScoreDataList scoreDataList = mockExamResultRepository.getScoreData(
                             getReportType(),
@@ -27,7 +27,7 @@ public abstract class AbstractReportStrategy implements ReportDataStrategy {
                         return scoreDataList;
                     }
 
-                    scoreDataCache.cache(getReportType(), user, certificate, scoreDataList);
+                    scoreDataCache.cache(getReportType(), user, certificate, scoreDataList, dateCond);
                     return scoreDataList;
                 });
     }

@@ -10,13 +10,15 @@ public interface ScoreDataCache {
             ReportType reportType,
             User user,
             Certificate certificate,
-            ScoreDataList scoreDataList
+            ScoreDataList scoreDataList,
+            DateCond dateCond
     );
 
     Optional<ScoreDataList> get(
             ReportType reportType,
             User user,
-            Certificate certificate
+            Certificate certificate,
+            DateCond dateCond
     );
 
     void delete(
