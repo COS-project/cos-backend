@@ -25,6 +25,7 @@ import com.cos.cercat.domain.user.User;
 import com.cos.cercat.database.mockexamresult.entity.MockExamResultEntity;
 import com.cos.cercat.database.mockexamresult.entity.SubjectResultEntity;
 import com.cos.cercat.database.mockexamresult.entity.UserAnswerEntity;
+import java.util.function.Function;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -209,12 +210,11 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
             Certificate certificate,
             DateCond dateCond
     ) {
-        List<ScoreData> scoreData = switch (reportType) {
+        return switch (reportType) {
             case WEEKLY -> getDailyScoreData(user, certificate, dateCond);
             case MONTHLY -> getWeeklyScoreData(user, certificate, dateCond);
             case YEARLY -> getMonthlyScoreData(user, certificate, dateCond);
         };
-        return ScoreDataList.from(scoreData);
     }
 
     @Override
@@ -275,42 +275,34 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
                 .toDomain();
     }
 
-    private List<ScoreData> getDailyScoreData(
-            User user,
-            Certificate certificate,
-            DateCond dateCond
-    ) {
-        return mockExamResultJpaRepository.getDailyScoreDataList(
-                        user.getId(),
-                        certificate.id().value(),
-                        dateCond
-                ).stream()
-                .map(DailyScoreAverage::toScoreData)
-                .toList();
+    private ScoreDataList getDailyScoreData(User user, Certificate certificate, DateCond dateCond) {
+        List<DailyScoreAverage> dailyScoreDataList = mockExamResultJpaRepository.getDailyScoreDataList(
+                user.getId(),
+                certificate.id().value(),
+                dateCond);
+
+        return createScoreDataList(dailyScoreDataList, DailyScoreAverage::getMaxScore,
+                DailyScoreAverage::getScoreAverage, DailyScoreAverage::toScoreData);
     }
 
-    private List<ScoreData> getWeeklyScoreData(User user,
-            Certificate certificate,
-            DateCond dateCond) {
-        return mockExamResultJpaRepository.getWeeklyScoreDataList(
-                        user.getId(),
-                        certificate.id().value(),
-                        dateCond
-                ).stream()
-                .map(WeeklyScoreAverage::toScoreData)
-                .toList();
+    private ScoreDataList getWeeklyScoreData(User user, Certificate certificate, DateCond dateCond) {
+        List<WeeklyScoreAverage> weeklyScoreDataList = mockExamResultJpaRepository.getWeeklyScoreDataList(
+                user.getId(),
+                certificate.id().value(),
+                dateCond);
+
+        return createScoreDataList(weeklyScoreDataList, WeeklyScoreAverage::getMaxScore,
+                WeeklyScoreAverage::getScoreAverage, WeeklyScoreAverage::toScoreData);
     }
 
-    private List<ScoreData> getMonthlyScoreData(User user,
-            Certificate certificate,
-            DateCond dateCond) {
-        return mockExamResultJpaRepository.getMonthlyScoreDataList(
-                        user.getId(),
-                        certificate.id().value(),
-                        dateCond
-                ).stream()
-                .map(MonthlyScoreAverage::toScoreData)
-                .toList();
+    private ScoreDataList getMonthlyScoreData(User user, Certificate certificate, DateCond dateCond) {
+        List<MonthlyScoreAverage> monthlyScoreDataList = mockExamResultJpaRepository.getMonthlyScoreDataList(
+                user.getId(),
+                certificate.id().value(),
+                dateCond);
+
+        return createScoreDataList(monthlyScoreDataList, MonthlyScoreAverage::getMaxScore,
+                MonthlyScoreAverage::getScoreAverage, MonthlyScoreAverage::toScoreData);
     }
 
     private SubjectResultEntity saveSubjectResult(NewSubjectResult newSubjectResult,
@@ -353,5 +345,18 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
                 .toList());
 
         return PageRequest.of(cursor.page(), cursor.size(), sort);
+    }
+
+    private <T> ScoreDataList createScoreDataList(
+            List<T> dataList,
+            Function<T, Integer> maxScoreExtractor,
+            Function<T, Double> scoreAverageExtractor,
+            Function<T, ScoreData> scoreDataMapper) {
+
+        return new ScoreDataList(
+                dataList.stream().findFirst().map(maxScoreExtractor).orElse(0),
+                dataList.stream().findFirst().map(scoreAverageExtractor).orElse(0.0),
+                dataList.stream().map(scoreDataMapper).toList()
+        );
     }
 }

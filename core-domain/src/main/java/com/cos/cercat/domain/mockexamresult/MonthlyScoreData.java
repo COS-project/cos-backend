@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 public class MonthlyScoreData extends ScoreData {
     private Month month;
 
-    public MonthlyScoreData(double scoreAverage, Month month) {
-        super(scoreAverage);
+    public MonthlyScoreData(int maxScore, double scoreAverage, Month month) {
+        super(maxScore, scoreAverage);
         this.month = month;
     }
 

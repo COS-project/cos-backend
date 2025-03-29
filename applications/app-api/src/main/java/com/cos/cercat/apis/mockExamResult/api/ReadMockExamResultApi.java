@@ -120,6 +120,6 @@ public class ReadMockExamResultApi implements ReadMockExamResultApiDocs {
             dateCond
     );
 
-    return Response.success(ReportResponse.from(scoreDataList.dataList()));
+    return Response.success(ReportResponse.from(scoreDataList));
   }
 }

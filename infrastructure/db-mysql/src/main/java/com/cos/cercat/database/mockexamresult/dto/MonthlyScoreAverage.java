@@ -10,11 +10,13 @@ import java.time.Month;
 
 @Getter
 public class MonthlyScoreAverage {
+    private final int maxScore;
     private final Double scoreAverage;
     private final Month month;
 
     @QueryProjection
-    public MonthlyScoreAverage(Double scoreAverage, int month) {
+    public MonthlyScoreAverage(int maxScore, Double scoreAverage, int month) {
+        this.maxScore = maxScore;
         this.scoreAverage = ScoreFormatter.formatScore(scoreAverage);
         this.month = Month.of(month);
     }
@@ -22,6 +24,7 @@ public class MonthlyScoreAverage {
 
     public ScoreData toScoreData() {
         return new MonthlyScoreData(
+                maxScore,
                 scoreAverage,
                 month
         );

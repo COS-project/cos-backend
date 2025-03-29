@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 public class WeeklyScoreData extends ScoreData {
     private int weekOfMonth;
 
-    public WeeklyScoreData(double scoreAverage, int weekOfMonth) {
-        super(scoreAverage);
+    public WeeklyScoreData(int maxScore, double scoreAverage, int weekOfMonth) {
+        super(maxScore, scoreAverage);
         this.weekOfMonth = weekOfMonth;
     }
 }

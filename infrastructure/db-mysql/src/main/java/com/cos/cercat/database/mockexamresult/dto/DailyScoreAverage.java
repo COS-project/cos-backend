@@ -11,14 +11,16 @@ import java.util.Date;
 
 @Getter
 public class DailyScoreAverage {
+    private final int maxScore;
     private final Double scoreAverage;
     private final DayOfWeek dayOfWeek;
     private final Date date;
 
     @QueryProjection
-    public DailyScoreAverage(Double scoreAverage,
+    public DailyScoreAverage(int maxScore, Double scoreAverage,
                              Integer dayOfWeek,
                              Date date) {
+        this.maxScore = maxScore;
         this.scoreAverage = ScoreFormatter.formatScore(scoreAverage);
         this.dayOfWeek = DayOfWeek.of(
                 (dayOfWeek > 1) ? dayOfWeek - 1 : 7);
@@ -27,6 +29,7 @@ public class DailyScoreAverage {
 
     public ScoreData toScoreData() {
         return new DailyScoreData(
+                maxScore,
                 scoreAverage,
                 dayOfWeek,
                 date

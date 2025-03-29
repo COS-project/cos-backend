@@ -13,8 +13,8 @@ public class DailyScoreData extends ScoreData {
     private DayOfWeek dayOfWeek;
     private Date date;
 
-    public DailyScoreData(Double scoreAverage, DayOfWeek dayOfWeek, Date date) {
-        super(scoreAverage);
+    public DailyScoreData(Integer maxScore, Double scoreAverage, DayOfWeek dayOfWeek, Date date) {
+        super(maxScore, scoreAverage);
         this.dayOfWeek = dayOfWeek;
         this.date = date;
     }

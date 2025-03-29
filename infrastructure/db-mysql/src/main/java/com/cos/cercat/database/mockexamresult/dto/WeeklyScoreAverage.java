@@ -8,17 +8,20 @@ import lombok.Getter;
 
 @Getter
 public class WeeklyScoreAverage {
+    private final int maxScore;
     private final Double scoreAverage;
     private final int weekOfMonth;
 
     @QueryProjection
-    public WeeklyScoreAverage(Double scoreAverage, Integer weekOfMonth) {
+    public WeeklyScoreAverage(int maxScore, Double scoreAverage, Integer weekOfMonth) {
+        this.maxScore = maxScore;
         this.scoreAverage = ScoreFormatter.formatScore(scoreAverage);
         this.weekOfMonth = weekOfMonth;
     }
 
     public ScoreData toScoreData() {
         return new WeeklyScoreData(
+                maxScore,
                 scoreAverage,
                 weekOfMonth
         );

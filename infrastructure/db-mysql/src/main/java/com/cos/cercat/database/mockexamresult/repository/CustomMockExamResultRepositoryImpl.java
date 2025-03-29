@@ -1,10 +1,12 @@
 package com.cos.cercat.database.mockexamresult.repository;
 
 import static com.cos.cercat.database.certificate.entity.QCertificateEntity.certificateEntity;
+import static com.cos.cercat.database.mockexam.entity.QMockExamEntity.*;
 import static com.cos.cercat.database.mockexamresult.entity.QMockExamResultEntity.mockExamResultEntity;
 import static com.cos.cercat.database.user.entity.QUserEntity.userEntity;
 
 import com.cos.cercat.database.common.util.DateUtils;
+import com.cos.cercat.database.mockexam.entity.QMockExamEntity;
 import com.cos.cercat.database.mockexamresult.dto.QDailyScoreAverage;
 import com.cos.cercat.database.mockexamresult.dto.QMonthlyScoreAverage;
 import com.cos.cercat.database.mockexamresult.dto.QWeeklyScoreAverage;
@@ -47,6 +49,7 @@ public class CustomMockExamResultRepositoryImpl implements CustomMockExamResultR
 
         return queryFactory.select(
                         new QDailyScoreAverage(
+                                mockExamEntity.maxScore,
                                 mockExamResultEntity.totalScore.avg(),
                                 mockExamResultEntity.createdAt.dayOfWeek(),
                                 date
@@ -60,7 +63,7 @@ public class CustomMockExamResultRepositoryImpl implements CustomMockExamResultR
                         userEntity.id.eq(userId),
                         betweenStartDateAndEndDate(weekStart, weekEnd)
                 )
-                .groupBy(date, mockExamResultEntity.createdAt.dayOfWeek())
+                .groupBy(date, mockExamResultEntity.createdAt.dayOfWeek(), mockExamEntity.maxScore)
                 .fetch();
     }
 
@@ -79,6 +82,7 @@ public class CustomMockExamResultRepositoryImpl implements CustomMockExamResultR
 
         return queryFactory.select(
                         new QWeeklyScoreAverage(
+                                mockExamEntity.maxScore,
                                 mockExamResultEntity.totalScore.avg(),
                                 weekOfMonth))
                 .from(mockExamResultEntity)
@@ -89,7 +93,7 @@ public class CustomMockExamResultRepositoryImpl implements CustomMockExamResultR
                         userEntity.id.eq(userId),
                         betweenStartDateAndEndDate(firstDayOfMonth, lastDayOfMonth)
                 )
-                .groupBy(weekOfMonth)
+                .groupBy(weekOfMonth, mockExamEntity.maxScore)
                 .fetch();
     }
 
@@ -104,6 +108,7 @@ public class CustomMockExamResultRepositoryImpl implements CustomMockExamResultR
 
         return queryFactory.select(
                         new QMonthlyScoreAverage(
+                                mockExamEntity.maxScore,
                                 mockExamResultEntity.totalScore.avg(),
                                 mockExamResultEntity.createdAt.month())
                 )
@@ -115,7 +120,7 @@ public class CustomMockExamResultRepositoryImpl implements CustomMockExamResultR
                         userEntity.id.eq(userId),
                         betweenStartDateAndEndDate(firstDayOfYear, lastDayOfYear)
                 )
-                .groupBy(mockExamResultEntity.createdAt.month())
+                .groupBy(mockExamResultEntity.createdAt.month(), mockExamEntity.maxScore)
                 .fetch();
     }
 
