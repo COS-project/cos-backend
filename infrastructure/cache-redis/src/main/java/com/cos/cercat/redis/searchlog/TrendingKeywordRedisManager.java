@@ -37,18 +37,14 @@ public class TrendingKeywordRedisManager implements TrendingKeywordManager {
 
     @Override
     public void logKeyword(SearchLog searchLog) {
-        String keyword = normalizeKeyword(searchLog.keyword());
-        if (keyword.isEmpty()) {
-            return;
-        }
+        String keyword = searchLog.keyword().trim();
 
-        String certificateId = searchLog.certificateId().value().toString();
         String realtimeKey = buildRealtimeKey(searchLog.certificateId());
         String keywordCountKey = buildKeywordCountKey(searchLog.certificateId(), keyword);
 
         updateKewordCount(keywordCountKey);
         updateKeywordScore(realtimeKey, keyword, keywordCountKey);
-        registerCertificateId(certificateId);
+        registerCertificateId(searchLog.certificateId().value().toString());
         trimExcessKeywords(realtimeKey);
     }
 
@@ -90,11 +86,6 @@ public class TrendingKeywordRedisManager implements TrendingKeywordManager {
         for (String certificateId : certificateIds) {
             saveRankingForCertificate(certificateId);
         }
-    }
-
-    // 키워드 정규화
-    private String normalizeKeyword(String keyword) {
-        return keyword == null ? "" : keyword.toLowerCase().trim();
     }
 
     // 키 생성 메서드들
