@@ -20,7 +20,7 @@ public class MockExamResultAppender {
             MockExam mockExam,
             List<NewSubjectResult> newSubjectResults
     ) {
-        int round = mockExamResultReader.count(user, mockExam);
+        int round = mockExamResultReader.count(user, mockExam) + 1;
         scoreDataCache.delete(user, mockExam.certificate());
         return mockExamResultRepository.save(
                 user,
