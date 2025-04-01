@@ -1,6 +1,7 @@
 package com.cos.cercat.database.examreview.repository;
 
 import com.cos.cercat.database.certificate.entity.CertificateExamEntity;
+import com.cos.cercat.database.common.util.PagingUtil;
 import com.cos.cercat.database.user.entity.UserEntity;
 import com.cos.cercat.domain.certificate.CertificateExam;
 import com.cos.cercat.domain.common.Cursor;
@@ -57,14 +58,7 @@ public class ExamReviewRepositoryImpl implements ExamReviewRepository {
 
     private PageRequest toPageRequest(Cursor cursor) {
         // 여러 정렬 기준을 처리할 Sort 객체 생성
-        Sort sort = Sort.by(cursor.sortOrders().stream()
-                .map(order -> new Sort.Order(
-                        Sort.Direction.fromOptionalString(order.direction().name()).orElse(Sort.Direction.ASC),
-                        order.key()
-                ))
-                .toList());
-
-        return PageRequest.of(cursor.page(), cursor.size(), sort);
+        return PagingUtil.toPageRequest(cursor);
     }
 
 

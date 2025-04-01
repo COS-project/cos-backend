@@ -22,12 +22,12 @@ public record LikeCreatedEvent(
     }
 
     @Override
-    public String getKey() {
+    public String resolveKey() {
         return targetId.toString();
     }
 
     @Override
-    public String getType() {
+    public String resolveType() {
         return "like-created";
     }
 }

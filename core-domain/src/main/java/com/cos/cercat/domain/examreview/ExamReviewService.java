@@ -37,8 +37,8 @@ public class ExamReviewService {
             Cursor cursor
     ) {
         Certificate certificate = certificateReader.read(certificateId);
-        CertificateExam certificateExam = certificateExamReader.readPreviousExam(certificate);
-        return examReviewReader.read(certificateExam, cond, cursor);
+        CertificateExam previousExam = certificateExamReader.readPreviousExam(certificate);
+        return examReviewReader.read(previousExam, cond, cursor);
     }
 
     public boolean isReviewTarget(UserId userId,
@@ -48,8 +48,8 @@ public class ExamReviewService {
         List<Certificate> interesting = interestCertificateManager.findCertificate(user);
         boolean isInterest = interesting.contains(certificate);
 
-        CertificateExam certificateExam = certificateExamReader.readPreviousExam(certificate);
-        boolean notReviewed = !examReviewReader.validate(user, certificateExam);
+        CertificateExam previousExam = certificateExamReader.readPreviousExam(certificate);
+        boolean notReviewed = !examReviewReader.validate(user, previousExam);
 
         return isInterest && notReviewed;
     }

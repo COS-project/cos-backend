@@ -14,12 +14,12 @@ public record InterestCertificateExamScheduleEvent(
     }
 
     @Override
-    public String getKey() {
+    public String resolveKey() {
         return certificateExam.id().toString();
     }
 
     @Override
-    public String getType() {
+    public String resolveType() {
         return "interest-certificate-exam-schedule";
     }
 

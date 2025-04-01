@@ -1,3 +1,6 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.9.24'
+}
 dependencies {
     compileOnly project(':core-domain')
     implementation project(':supports:exception')
@@ -9,8 +12,15 @@ dependencies {
 
     //json
     implementation 'org.springframework.boot:spring-boot-starter-json'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 bootJar {
     enabled = false
+}
+repositories {
+    mavenCentral()
+}
+kotlin {
+    jvmToolchain(17)
 }

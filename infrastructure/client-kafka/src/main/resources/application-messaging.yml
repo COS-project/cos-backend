@@ -1,6 +1,7 @@
 kafka:
-  consumer-group:
-    debezium: debezium-group
+  producer:
+    dead-letter-topic: alarm-events-dlt
+    max-manual-retries: 3
 
 ---
 spring:
@@ -9,9 +10,13 @@ spring:
       on-profile: local
   kafka:
     bootstrap-servers: localhost:29092
-    topic:
-      debezium_post: cercat.cercat_test.post
-      debezium_comment: "cercat.cercat_test.post_comment"
+    producer:
+      properties:
+        enable.idempotence: true
+        metrics.recording.level: INFO
+    consumer:
+      properties:
+        metrics.recording.level: INFO
 ---
 spring:
   config:
@@ -19,6 +24,11 @@ spring:
       on-profile: prod
   kafka:
     bootstrap-servers: kafka:9092
-    topic:
-      debezium_post: cercat.cercat.post
-      debezium_comment: cercat.cercat.post_comment
+    producer:
+      properties:
+        enable.idempotence: true
+        acks: all
+        max.in.flight.requests.per.connection: 1
+    consumer:
+      properties:
+        isolation.level: read_committed

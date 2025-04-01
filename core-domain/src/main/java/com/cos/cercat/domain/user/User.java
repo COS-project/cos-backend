@@ -37,7 +37,7 @@ public class User {
     this.userProfileImage.updateProfileImage(null, userInfo.kakaoProfileImage());
   }
 
-  public boolean isGuest() {
+  public boolean checkGuest() {
     return userRole == Role.ROLE_GUEST;
   }
 }

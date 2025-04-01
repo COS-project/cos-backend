@@ -21,11 +21,6 @@ public class ExamReviewReader {
     }
 
     public boolean validate(User user, CertificateExam certificateExam) {
-        validateHotReviewPeriod(certificateExam);
-        return examReviewRepository.existReview(user, certificateExam);
-    }
-
-    private void validateHotReviewPeriod(CertificateExam certificateExam) {
         LocalDateTime examDateTime = certificateExam.examInformation().examSchedule().examDateTime();
         LocalDateTime twoWeeksAfterExam = examDateTime.plusWeeks(2);
         LocalDateTime now = LocalDateTime.now();
@@ -33,5 +28,7 @@ public class ExamReviewReader {
         if (now.isAfter(twoWeeksAfterExam)) {
             throw ExamReviewException.reviewPeriodExpired();
         }
+
+        return examReviewRepository.existReview(user, certificateExam);
     }
 }

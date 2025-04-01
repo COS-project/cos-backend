@@ -57,7 +57,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
     private void redirect(HttpServletResponse response, String accessToken, String refreshToken, User user)
             throws IOException {
-        if (user.isGuest()) {
+        if (user.checkGuest()) {
             response.sendRedirect(getURIString(accessToken, refreshToken, SIGN_UP_PATH));
             return;
         }

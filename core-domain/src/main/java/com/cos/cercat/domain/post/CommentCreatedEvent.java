@@ -15,12 +15,12 @@ public record CommentCreatedEvent(
     }
 
     @Override
-    public String getKey() {
+    public String resolveKey() {
         return targetPostId.toString();
     }
 
     @Override
-    public String getType() {
+    public String resolveType() {
         return "comment-created";
     }
 }
