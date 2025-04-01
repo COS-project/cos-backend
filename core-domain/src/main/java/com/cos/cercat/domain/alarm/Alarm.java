@@ -24,7 +24,7 @@ public class Alarm {
     private final boolean isRead = false;
 
     public static Alarm from(Event event) {
-        return switch (event.getType()) {
+        return switch (event.resolveType()) {
             case "like-created": {
                 LikeCreatedEvent likeCreatedEvent = (LikeCreatedEvent) event;
                 yield LikeAlarm.builder()
@@ -53,7 +53,7 @@ public class Alarm {
                 yield ExamAlarm.from(examScheduleEvent.certificateExam(), examScheduleEvent.user(), examScheduleEvent.scheduleCheckType());
             }
             default:
-                throw new IllegalStateException("Unexpected value: " + event.getType());
+                throw new IllegalStateException("Unexpected value: " + event.resolveType());
         };
     }
 
