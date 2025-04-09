@@ -18,12 +18,6 @@ kafka:
     backoff-initial-interval: 1000
     backoff-max-interval: 10000
     concurrency: 3
-springdoc:
-  swagger-ui:
-    path: /alert/swagger-ui.html
-    url: /alert/v3/api-docs
-  api-docs:
-    path: /alert/v3/api-docs
 ---
 spring:
   config:
