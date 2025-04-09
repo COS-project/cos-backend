@@ -18,9 +18,8 @@ public interface AlarmJpaRepository extends JpaRepository<AlarmEntity, Long> {
             """)
     List<AlarmEntity> findUnreadAlarms(Long receiveUserId);
 
-    // 특정 사용자의 모든 알림의 isRead 값을 true로 변경
     @Modifying
-    @Query("UPDATE AlarmEntity a SET a.isRead = true WHERE a.receiver.id IN :alarmIds")
+    @Query("UPDATE AlarmEntity a SET a.isRead = true WHERE a.id IN :alarmIds")
     void markAllAsReadByIds(@Param("alarmIds") List<Long> alarmIds);
 
 
