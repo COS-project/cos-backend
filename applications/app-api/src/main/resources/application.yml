@@ -50,7 +50,7 @@ logging:
     com.cos.cercat: DEBUG
 
 front:
-  scheme: http
+  scheme: ${local.FRONT_SCHEME}
   host: localhost
   home-path: /home
   sign-up-path: /onboarding
@@ -104,7 +104,7 @@ logging:
     com.cos.cercat: INFO
 
 front:
-  scheme: http
+  scheme: ${prod.FRONT_SCHEME}
   host: ${prod.FRONT_HOST}
   home-path: /home
   sign-up-path: /onboarding
