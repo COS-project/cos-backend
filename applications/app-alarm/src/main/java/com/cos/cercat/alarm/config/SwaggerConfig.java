@@ -12,11 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Component
-@OpenAPIDefinition(
-        servers = {
-                @io.swagger.v3.oas.annotations.servers.Server(url = "https://cercat.o-r.kr/alert", description = "배포 서버"),
-                @Server(url = "http://localhost:8081/alert", description = "로컬 서버")
-        })
 public class SwaggerConfig {
 
     @Bean
