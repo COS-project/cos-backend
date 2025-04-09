@@ -22,7 +22,7 @@ public record PostResponse(
         UserResponse user,
         QuestionResponse question,
         Set<RecommendTag> recommendTags,
-        List<String> postImages,
+        List<Image> postImages,
         DateTime dateTime,
         int commentCount,
         long likeCount,
@@ -41,7 +41,7 @@ public record PostResponse(
                 post instanceof TipPost tipPost?
                         tipPost.getRecommendTags()
                         : null,
-                post.getPostImages().stream().map(Image::getImageUrl).toList(),
+                post.getPostImages(),
                 post.getDateTime(),
                 post.getCommentCount(),
                 likeStatus.count().value(),
