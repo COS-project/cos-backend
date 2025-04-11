@@ -132,6 +132,16 @@ com
 
 ### 성과
 
+<div align="center">
+  <table>
+    <tr>
+      <td align="center"><b>개선 전</b><br><img src="https://github.com/user-attachments/assets/c68ca9f2-be91-445c-a00f-005c5a6a5286" width="500"/></td>
+      <td align="center" style="font-size: 24px;">➡️</td>
+      <td align="center"><b>개선 후</b><br><img src="https://github.com/user-attachments/assets/9794c868-98a3-4cfb-905b-fb537b59b7f3" width="500"/></td>
+    </tr>
+  </table>
+</div>
+
 - **비용 절감**: ES 클러스터 운영 비용 절감
 - **장애 포인트 감소**: 시스템 복잡도 60%감소
 - **검색 성능 유지**: MySQL 전문검색과 Redis를 통해 유지
