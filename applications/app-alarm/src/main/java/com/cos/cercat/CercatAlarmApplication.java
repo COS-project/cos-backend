@@ -18,6 +18,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 		"com.cos.cercat.security",
 		"com.cos.cercat.web",
 		"com.cos.cercat.exception",
+		"com.cos.cercat.domain.common.event.inbox",
 		"com.cos.cercat.database.common"
 })
 public class CercatAlarmApplication {

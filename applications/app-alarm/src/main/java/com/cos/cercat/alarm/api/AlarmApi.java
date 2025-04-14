@@ -1,6 +1,6 @@
 package com.cos.cercat.alarm.api;
 
-import com.cos.cercat.alarm.sse.SseEmitterConnector;
+import com.cos.cercat.alarm.infrastructure.sse.SseEmitterConnector;
 import com.cos.cercat.domain.alarm.Alarm;
 import com.cos.cercat.domain.alarm.AlarmService;
 import com.cos.cercat.web.Response;
