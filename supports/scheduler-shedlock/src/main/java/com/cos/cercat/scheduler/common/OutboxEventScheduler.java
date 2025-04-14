@@ -1,6 +1,6 @@
 package com.cos.cercat.scheduler.common;
 
-import com.cos.cercat.domain.common.FailedEventRetryer;
+import com.cos.cercat.domain.common.event.outbox.OutboxEventWorker;
 import lombok.RequiredArgsConstructor;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -8,18 +8,19 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class FailedEventRetryScheduler {
+public class OutboxEventScheduler {
 
-    private final FailedEventRetryer failedEventRetryer;
+    private final OutboxEventWorker outboxEventWorker;
 
     @SchedulerLock(
-            name = "event_retry_lock",
+            name = "outbox_event_lock",
             lockAtMostFor = "PT9S",
             lockAtLeastFor = "PT3S"
     )
-    @Scheduled(fixedRate = 1800000)
+    //
+    @Scheduled(fixedRate = 300000)
     public void retryFailedEvents() {
-        failedEventRetryer.retry();
+        outboxEventWorker.process();
     }
 
 }
