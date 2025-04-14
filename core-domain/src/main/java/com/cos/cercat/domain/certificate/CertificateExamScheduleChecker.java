@@ -1,12 +1,12 @@
 package com.cos.cercat.domain.certificate;
 
-import com.cos.cercat.domain.common.EventPublisher;
 import com.cos.cercat.domain.user.User;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Profile("api")
@@ -15,8 +15,9 @@ public class CertificateExamScheduleChecker {
 
     private final CertificateExamReader certificateExamReader;
     private final InterestCertificateManager interestCertificateManager;
-    private final EventPublisher eventPublisher;
+    private final ApplicationEventPublisher eventPublisher;
 
+    @Transactional
     public void check() {
         for (ScheduleCheckType scheduleCheckType : ScheduleCheckType.values()) {
             checkSchedule(scheduleCheckType);
@@ -35,14 +36,14 @@ public class CertificateExamScheduleChecker {
     }
 
     private void publishEvents(ScheduleCheckType scheduleCheckType, CertificateExam certificateExam) {
-        getTargetUsers(certificateExam).forEach(user -> CompletableFuture.runAsync(() -> {
+        getTargetUsers(certificateExam).forEach(user -> {
             InterestCertificateExamScheduleEvent event = InterestCertificateExamScheduleEvent.of(
                     certificateExam,
                     user,
                     scheduleCheckType
             );
-            eventPublisher.publish(event);
-        }));
+            eventPublisher.publishEvent(event);
+        });
     }
 
     private List<User> getTargetUsers(CertificateExam certificateExam) {

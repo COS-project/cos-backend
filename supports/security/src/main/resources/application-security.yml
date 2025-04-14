@@ -1,7 +1,7 @@
 spring:
   config:
     activate:
-      on-profile: local,alarm
+      on-profile: local,alarm,test
 
 jwt:
   secret-key: ${local.SECRET_KEY}
@@ -10,7 +10,6 @@ jwt:
     expiration: ${local.ACCESS_TOKEN_EXPIRATION}
   refresh-token:
     header: Refresh-token
-
 
 ---
 spring:

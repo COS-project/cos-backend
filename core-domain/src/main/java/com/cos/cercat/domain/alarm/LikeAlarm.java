@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
 @Getter
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 public class LikeAlarm extends Alarm {
 
     private final Long likerId;

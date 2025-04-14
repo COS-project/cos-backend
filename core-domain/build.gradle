@@ -6,6 +6,9 @@ dependencies {
     implementation 'org.springframework:spring-tx'
     implementation 'org.springframework:spring-context'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+    // ✅ 테스트 관련 의존성
+    testImplementation 'org.assertj:assertj-core'
 }
 
 bootJar {

@@ -22,7 +22,7 @@ server:
 spring:
   config:
     activate:
-      on-profile: local
+      on-profile: local,test
   security:
     oauth2:
       client:
@@ -54,23 +54,6 @@ front:
   host: localhost
   home-path: /home
   sign-up-path: /onboarding
-management:
-  endpoints:
-    web:
-      exposure:
-        include: prometheus, health
-      base-path: ${prod.MANAGEMENT_BASE_PATH}
-    jmx:
-      exposure:
-        exclude: "*"
-    access:
-      default: none
-  endpoint:
-    prometheus:
-      enabled: true
-    health:
-      enabled: true
-      show-components: never
 ---
 spring:
   config:

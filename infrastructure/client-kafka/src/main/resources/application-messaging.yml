@@ -1,13 +1,7 @@
-kafka:
-  producer:
-    dead-letter-topic: alarm-events-dlt
-    max-manual-retries: 3
-
----
 spring:
   config:
     activate:
-      on-profile: local
+      on-profile: local,test
   kafka:
     bootstrap-servers: localhost:29092
     producer:
