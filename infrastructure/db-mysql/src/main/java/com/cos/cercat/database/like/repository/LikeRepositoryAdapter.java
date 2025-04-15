@@ -14,9 +14,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
+@Transactional
 public class LikeRepositoryAdapter implements LikeRepository, LikeCountRepository {
 
     private final LikeJpaRepository likeJpaRepository;
