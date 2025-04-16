@@ -1,8 +1,6 @@
 package com.cos.cercat.apis.post.response;
 
 import com.cos.cercat.domain.like.LikeStatus;
-import com.cos.cercat.domain.like.LikeTargetType;
-import com.cos.cercat.domain.post.PostComment;
 import com.cos.cercat.domain.post.PostWithComments;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -17,22 +15,17 @@ public record PostWithCommentsResponse(
 ) {
     public static PostWithCommentsResponse of(
             PostWithComments postWithComments,
-            LikeStatus likeStatus,
+            LikeStatus postLikeStatus,
             Map<Long, LikeStatus> postCommentLikeStatusMap
     ) {
         return new PostWithCommentsResponse(
-                PostResponse.from(postWithComments.post(), likeStatus),
+                PostResponse.from(postWithComments.post(), postLikeStatus),
                 postWithComments.postComments().stream()
                         .map(
                                 postComment -> PostCommentResponse.of(
                                         postComment,
-                                        getCommentLikeStatus(postCommentLikeStatusMap, postComment)))
+                                        postCommentLikeStatusMap))
                         .collect(Collectors.toList())
         );
-    }
-
-    private static LikeStatus getCommentLikeStatus(Map<Long, LikeStatus> postCommentLikeStatusMap,
-            PostComment postComment) {
-        return postCommentLikeStatusMap.get(postComment.getId());
     }
 }

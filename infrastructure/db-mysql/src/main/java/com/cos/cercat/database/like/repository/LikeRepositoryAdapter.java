@@ -62,7 +62,7 @@ public class LikeRepositoryAdapter implements LikeRepository, LikeCountRepositor
 
     @Override
     public void saveAll(List<LikeCount> bufferedCounts) {
-        likeCountJpaRepository.saveAll(bufferedCounts.stream().map(LikeCountEntity::from).toList());
+        likeCountJpaRepository.batchUpdate(bufferedCounts);
     }
 }
 

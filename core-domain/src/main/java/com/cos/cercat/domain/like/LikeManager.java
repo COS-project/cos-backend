@@ -1,5 +1,6 @@
 package com.cos.cercat.domain.like;
 
+import com.cos.cercat.domain.like.exception.LikeException;
 import com.cos.cercat.domain.post.PostCommentReader;
 import com.cos.cercat.domain.post.Post;
 import com.cos.cercat.domain.post.PostComment;
@@ -22,6 +23,11 @@ public class LikeManager {
     private final ApplicationEventPublisher eventPublisher;
 
     public void like(User liker, LikeTarget likeTarget) {
+
+        if (likeRepository.exists(Like.from(liker, likeTarget))) {
+            throw LikeException.alreadyLiked();
+        }
+
         switch (likeTarget.targetType()) {
             case POST -> {
                 Post post = postReader.read(PostId.from(likeTarget.targetId()));
@@ -38,6 +44,9 @@ public class LikeManager {
     }
 
     public void unLike(User liker, LikeTarget likeTarget) {
+        if (!likeRepository.exists(Like.from(liker, likeTarget))) {
+            throw LikeException.alreadyNotLiked();
+        }
         likeRepository.remove(Like.from(liker, likeTarget));
         likeCounter.countDown(likeTarget);
     }

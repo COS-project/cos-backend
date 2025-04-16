@@ -15,6 +15,7 @@ import com.cos.cercat.domain.common.SliceResult;
 import com.cos.cercat.domain.post.*;
 import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -145,13 +146,21 @@ public class ReadPostApi implements ReadPostApiDocs {
     }
 
     private Map<Long, LikeStatus> getCommentLikeStatusMap(List<PostComment> comments, User currentUser) {
+        List<PostComment> allComments = new ArrayList<>();
+
+        for (PostComment parent : comments) {
+            allComments.add(parent); // 최상위 댓글
+            allComments.addAll(parent.getChildComments()); // 대댓글
+        }
+
         return likeService.getLikeStatusMap(
                 UserId.from(currentUser.getId()),
-                comments.stream()
+                allComments.stream()
                         .map(comment -> LikeTarget.comment(comment.getId()))
                         .toList()
         );
     }
+
 
     private PostResponse createPostResponse(Post post, Map<Long, LikeStatus> likeStatusMap) {
         return PostResponse.from(

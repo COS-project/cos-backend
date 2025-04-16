@@ -7,6 +7,8 @@ import com.cos.cercat.domain.post.PostComment;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.*;
 
@@ -22,18 +24,23 @@ public record PostCommentResponse(
         long likeCount,
         boolean likeStatus
 ) {
-    public static PostCommentResponse of(PostComment postComment, LikeStatus likeStatus) {
+    public static PostCommentResponse of(PostComment comment, Map<Long, LikeStatus> likeStatusMap) {
+        LikeStatus parentLikeStatus = likeStatusMap.get(comment.getId());
+
+        List<PostCommentResponse> childResponses = comment.getChildComments().stream()
+                .map(child -> PostCommentResponse.of(child, likeStatusMap))
+                .collect(Collectors.toList());
+
         return new PostCommentResponse(
-                postComment.getId(),
-                UserResponse.from(postComment.getOwner()),
-                postComment.getContent().parentId(),
-                postComment.getContent().content(),
-                postComment.getDateTime(),
-                postComment.getChildComments().stream()
-                        .map(childPostComment -> PostCommentResponse.of(childPostComment, likeStatus))
-                        .toList(),
-                likeStatus.count().value(),
-                likeStatus.isLiked()
+                comment.getId(),
+                UserResponse.from(comment.getCommenter()),
+                comment.hasParent() ? comment.getContent().parentId() : null,
+                comment.getContent().content(),
+                comment.getDateTime(),
+                childResponses,
+                parentLikeStatus.count().value(),
+                parentLikeStatus.isLiked()
         );
     }
+
 }

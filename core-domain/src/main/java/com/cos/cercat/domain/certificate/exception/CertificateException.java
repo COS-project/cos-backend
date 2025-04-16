@@ -12,7 +12,6 @@ public class CertificateException extends DomainException {
         super(errorCode, message);
     }
 
-    // 기본 팩토리 메소드
     public static CertificateException notFound() {
         return new CertificateException(CertificateErrorCode.CERTIFICATE_NOT_FOUND);
     }
