@@ -37,7 +37,7 @@ public class LikeCountEntity {
     }
 
     public LikeCount toDomain() {
-        return new LikeCount(new LikeTarget(id.targetId(), id.targetType()), count);
+        return new LikeCount(new LikeTarget(id.getTargetId(), id.getTargetType()), count);
     }
 }
 

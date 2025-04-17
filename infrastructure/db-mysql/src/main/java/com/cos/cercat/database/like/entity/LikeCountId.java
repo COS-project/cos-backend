@@ -5,15 +5,23 @@ import com.cos.cercat.domain.like.LikeTargetType;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
 @Embeddable
-public record LikeCountId(
-        Long targetId,
-        @Enumerated(EnumType.STRING)
-        LikeTargetType targetType
-) {
+@NoArgsConstructor
+@AllArgsConstructor
+public class LikeCountId {
+
+    private Long targetId;
+    @Enumerated(EnumType.STRING)
+    private LikeTargetType targetType;
 
     public static LikeCountId from(LikeTarget likeTarget) {
         return new LikeCountId(likeTarget.targetId(), likeTarget.targetType());
     }
+
 }

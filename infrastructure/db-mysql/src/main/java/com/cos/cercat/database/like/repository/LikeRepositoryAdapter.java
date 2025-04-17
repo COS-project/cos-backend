@@ -67,7 +67,7 @@ public class LikeRepositoryAdapter implements LikeRepository, LikeCountRepositor
                 likeTargets.stream().map(LikeCountId::from).toList());
         return likeCounts.stream()
                 .collect(Collectors.toMap(
-                        likeCountEntity -> likeCountEntity.getId().targetId(),
+                        likeCountEntity -> likeCountEntity.getId().getTargetId(),
                         LikeCountEntity::toDomain
                 ));
     }
@@ -75,6 +75,11 @@ public class LikeRepositoryAdapter implements LikeRepository, LikeCountRepositor
     @Override
     public void saveAll(List<LikeCount> bufferedCounts) {
         likeCountJpaRepository.batchUpdate(bufferedCounts);
+    }
+
+    @Override
+    public void delete(LikeTarget target) {
+        likeCountJpaRepository.deleteById(LikeCountId.from(target));
     }
 }
 

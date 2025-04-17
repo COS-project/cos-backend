@@ -55,6 +55,7 @@ public class PostService {
       return postId;
     }
 
+    @Transactional
   public void deletePost(UserId userId, PostId postId) {
     User user = userReader.read(userId);
     Post post = postReader.read(postId);

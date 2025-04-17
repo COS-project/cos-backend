@@ -13,4 +13,6 @@ public interface LikeCountRepository {
     void saveAll(List<LikeCount> bufferedCounts);
 
     Map<Long, LikeCount> findByTargets(List<LikeTarget> likeTargets);
+
+    void delete(LikeTarget target);
 }

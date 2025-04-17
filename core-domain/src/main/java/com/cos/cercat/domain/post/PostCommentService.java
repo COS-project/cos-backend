@@ -6,6 +6,7 @@ import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +19,7 @@ public class PostCommentService {
     private final PostRemover postRemover;
     private final PermissionValidator permissionValidator;
 
+    @Transactional
     public void deletePostComment(UserId userId, CommentId commentId) {
         User user = userReader.read(userId);
         PostComment postComment = postCommentReader.read(commentId);
