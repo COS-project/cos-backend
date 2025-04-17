@@ -21,6 +21,7 @@ public class ExamReviewService {
     private final CertificateExamReader certificateExamReader;
     private final InterestCertificateManager interestCertificateManager;
     private final ExamReviewReader examReviewReader;
+    private final ExamReviewPeriodChecker examReviewPeriodChecker;
 
 
     public void createExamReview(UserId userId,
@@ -41,7 +42,13 @@ public class ExamReviewService {
         return examReviewReader.read(previousExam, cond, cursor);
     }
 
-    public boolean isReviewTarget(UserId userId,
+    public boolean isReviewPeriod(CertificateId certificateId) {
+        Certificate certificate = certificateReader.read(certificateId);
+        CertificateExam previousExam = certificateExamReader.readPreviousExam(certificate);
+        return examReviewPeriodChecker.check(previousExam);
+    }
+
+    public boolean isReviewable(UserId userId,
                                   CertificateId certificateId) {
         User user = userReader.read(userId);
         Certificate certificate = certificateReader.read(certificateId);
@@ -49,7 +56,7 @@ public class ExamReviewService {
         boolean isInterest = interesting.contains(certificate);
 
         CertificateExam previousExam = certificateExamReader.readPreviousExam(certificate);
-        boolean notReviewed = !examReviewReader.validate(user, previousExam);
+        boolean notReviewed = !examReviewReader.exists(user, previousExam);
 
         return isInterest && notReviewed;
     }

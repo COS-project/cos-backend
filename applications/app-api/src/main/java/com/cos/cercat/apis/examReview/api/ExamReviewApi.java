@@ -47,10 +47,16 @@ public class ExamReviewApi implements ExamReviewApiDocs {
         return Response.success(responses);
     }
 
+    @GetMapping("/certificates/{certificateId}/check-review-period")
+    public Response<Boolean> checkReviewPeriod(@PathVariable Long certificateId) {
+        boolean isTarget = examReviewService.isReviewPeriod(CertificateId.from(certificateId));
+        return Response.success(isTarget);
+    }
+
     @GetMapping("/certificates/{certificateId}/check-reviews")
     public Response<Boolean> checkReviewDateAfterExamDate(@PathVariable Long certificateId,
                                                           @AuthenticationPrincipal User currentUser) {
-        boolean isTarget = examReviewService.isReviewTarget(
+        boolean isTarget = examReviewService.isReviewable(
                 UserId.from(currentUser.getId()),
                 CertificateId.from(certificateId)
         );
