@@ -19,7 +19,7 @@ public record NewGoal(
                 convertStudySchedule(mockExamSchedules, studySchedules)
         );
     }
-    
+
     static List<StudySchedule> convertStudySchedule(List<Integer> mockExamSchedules, List<Integer> studySchedules) {
         Stream<StudySchedule> mockExamDaysStream = mockExamSchedules.stream()
                 .map(dayOfWeekValue -> StudySchedule.from(ScheduleType.MOCK_EXAM, dayOfWeekValue));

@@ -1,6 +1,7 @@
  name: Cercat-Application Deploy with Docker
 
  on:
+   workflow_dispatch:
    push:
      paths-ignore:
        - '../../applications/app-alarm/**'
