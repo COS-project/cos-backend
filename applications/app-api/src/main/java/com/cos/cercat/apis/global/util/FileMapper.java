@@ -22,6 +22,11 @@ public class FileMapper {
 
     public static File toFile(MultipartFile file) {
         try {
+
+            if (file == null) {
+                return null;
+            }
+
             return new File(
                     file.getContentType(),
                     file.getInputStream()
