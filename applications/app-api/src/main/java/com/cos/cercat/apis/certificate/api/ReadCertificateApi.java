@@ -1,9 +1,11 @@
 package com.cos.cercat.apis.certificate.api;
 
+import com.cos.cercat.apis.certificate.response.CertificateDetailResponse;
 import com.cos.cercat.apis.certificate.response.CertificateExamResponse;
 import com.cos.cercat.apis.certificate.response.CertificateResponse;
 import com.cos.cercat.apis.certificate.response.InterestCertificateResponse;
 import com.cos.cercat.domain.certificate.Certificate;
+import com.cos.cercat.domain.certificate.CertificateDetail;
 import com.cos.cercat.domain.certificate.CertificateExam;
 import com.cos.cercat.domain.certificate.ReadCertificateService;
 import com.cos.cercat.domain.certificate.CertificateId;
@@ -32,6 +34,14 @@ public class ReadCertificateApi implements ReadCertificateApiDocs{
         return Response.success(certificates.stream()
                 .map(CertificateResponse::from)
                 .toList());
+    }
+
+    @GetMapping("/certificates/{certificateId}")
+    public Response<CertificateDetailResponse> getCertificateDetail(
+            @PathVariable Long certificateId) {
+        CertificateDetail certificateDetail = readCertificateService.readDetail(
+                CertificateId.from(certificateId));
+        return Response.success(CertificateDetailResponse.from(certificateDetail));
     }
 
     @GetMapping("/certificates/{certificateId}/certificate-exams")

@@ -16,6 +16,7 @@ public class ReadCertificateService {
     private final CertificateExamReader certificateExamReader;
     private final InterestCertificateManager interestCertificateManager;
     private final UserReader userReader;
+    private final SubjectReader subjectReader;
 
     /**
      * 자격증 ID를 통해 자격증 시험정보를 조회한다
@@ -39,5 +40,12 @@ public class ReadCertificateService {
     public List<InterestCertificate> readInterestCertificates(UserId userId) {
         User user = userReader.read(userId);
         return interestCertificateManager.find(user);
+    }
+
+    public CertificateDetail readDetail(CertificateId certificateId) {
+        Certificate certificate = certificateReader.read(certificateId);
+        List<Subject> subjects = subjectReader.read(certificate);
+
+        return CertificateDetail.of(certificate, subjects);
     }
 }
