@@ -8,6 +8,7 @@ import com.cos.cercat.domain.like.LikeCount;
 import com.cos.cercat.domain.like.LikeCountRepository;
 import com.cos.cercat.domain.like.LikeTarget;
 import com.cos.cercat.domain.like.LikeRepository;
+import com.cos.cercat.domain.user.User;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -32,6 +33,17 @@ public class LikeRepositoryAdapter implements LikeRepository, LikeCountRepositor
     @Override
     public boolean exists(Like like) {
         return likeJpaRepository.exists(like.likerId(), like.likeTarget().targetId(), like.likeTarget().targetType());
+    }
+
+    @Override
+    public Map<Long, Boolean> existsMap(
+            User liker,
+            List<LikeTarget> likeTargets
+    ) {
+        return likeJpaRepository.existsMap(
+                liker,
+                likeTargets
+        );
     }
 
     @Override

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface PostCommentJpaRepository extends JpaRepository<PostCommentEntity, Long> {
+public interface PostCommentJpaRepository extends JpaRepository<PostCommentEntity, Long>, PostCommentCustomRepository {
 
     @Query("select pc from PostCommentEntity pc where pc.postId = :postId")
     List<PostCommentEntity> findByPostId(Long postId);

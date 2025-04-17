@@ -69,10 +69,8 @@ public class ReadPostService {
     public SliceResult<Post> readCommentingPosts(UserId userId,
                                                 Cursor cursor) {
         User user = userReader.read(userId);
-        SliceResult<PostComment> postComments = postCommentReader.read(user, cursor);
-        return postComments.map(postComment ->
-                postReader.read(PostId.from(postComment.getPostId()))
-        );
+        SliceResult<Long> postIds = postCommentReader.readPostIds(user, cursor);
+        return postIds.map(postId -> postReader.read(PostId.from(postId)));
     }
 
 }

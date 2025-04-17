@@ -8,13 +8,13 @@ import java.util.Optional;
 
 public interface PostCommentRepository {
 
-    Long save(PostComment postComment);
+    PostComment save(PostComment postComment);
 
     List<PostComment> findCommentsByPost(PostId postId);
 
     Optional<PostComment> find(CommentId commentId);
 
-    SliceResult<PostComment> findCommentsByUser(User user, Cursor cursor);
+    SliceResult<Long> findpostIdsByUser(User user, Cursor cursor);
 
     void deleteComment(PostComment postComment);
 

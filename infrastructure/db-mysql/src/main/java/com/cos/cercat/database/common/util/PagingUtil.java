@@ -1,6 +1,7 @@
 package com.cos.cercat.database.common.util;
 
 import com.cos.cercat.domain.common.Cursor;
+import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.DateTimePath;
@@ -13,19 +14,18 @@ import java.time.LocalDateTime;
 
 public class PagingUtil {
 
-    public static OrderSpecifier<?> getOrderSpecifier(Pageable pageable, DateTimePath<LocalDateTime> createdAt, NumberPath<Long> likeCount) {
+    public static OrderSpecifier<?> getOrderSpecifier(Pageable pageable,
+            Expression<? extends Comparable> createdAt,
+            Expression<? extends Comparable> likeCount) {
         if (!pageable.getSort().isEmpty()) {
             for (Sort.Order order : pageable.getSort()) {
                 Order direction = order.getDirection().isAscending() ? Order.ASC : Order.DESC;
 
-                switch (order.getProperty()) {
-                    case "createdAt" -> {
-                        return new OrderSpecifier<>(direction, createdAt);
-                    }
-                    case "count" -> {
-                        return new OrderSpecifier<>(direction, likeCount);
-                    }
-                }
+                return switch (order.getProperty()) {
+                    case "createdAt" -> new OrderSpecifier<>(direction, createdAt);
+                    case "count" -> new OrderSpecifier<>(direction, likeCount);
+                    default -> null;
+                };
             }
         }
         return null;

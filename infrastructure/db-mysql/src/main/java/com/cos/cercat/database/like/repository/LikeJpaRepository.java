@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-public interface LikeJpaRepository extends JpaRepository<LikeEntity, Long> {
+public interface LikeJpaRepository extends JpaRepository<LikeEntity, Long>, LikeJpaCustomRepository {
 
     @Query("""
             select exists (select 1 from LikeEntity l

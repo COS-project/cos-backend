@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -29,6 +30,7 @@ public class PostService {
     private final PostReader postReader;
     private final CertificateReader certificateReader;
 
+    @Transactional
     public PostId createPost(
             UserId userId,
             CertificateId certificateId,

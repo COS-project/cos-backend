@@ -22,8 +22,8 @@ public class PostCommentReader {
         return postCommentRepository.findCommentsByPost(postId);
     }
 
-    public SliceResult<PostComment> read(User user, Cursor cursor) {
-        return postCommentRepository.findCommentsByUser(user, cursor);
+    public SliceResult<Long> readPostIds(User user, Cursor cursor) {
+        return postCommentRepository.findpostIdsByUser(user, cursor);
     }
 
 }
