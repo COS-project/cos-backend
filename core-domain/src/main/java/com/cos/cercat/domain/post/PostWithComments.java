@@ -29,7 +29,7 @@ public record PostWithComments(
         List<PostComment> collected = map.values().stream()
                 .filter(postComment -> !postComment.hasParent())
                 .sorted(Comparator
-                        .comparing(PostComment::getDateTime, Comparator.comparing(DateTime::createdAt).reversed())
+                        .comparing(PostComment::getDateTime, Comparator.comparing(DateTime::createdAt))
                         .thenComparing(PostComment::getId))
                 .toList();
 
