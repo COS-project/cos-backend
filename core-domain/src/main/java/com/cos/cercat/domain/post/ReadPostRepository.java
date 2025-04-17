@@ -19,6 +19,8 @@ public interface ReadPostRepository {
 
     Optional<Post> find(PostId postId);
 
+    Optional<Post> findForUpdate(PostId postId);
+
     List<Post> findTop3TipPosts(Certificate certificate);
 
     SliceResult<Post> findMyPosts(User user, Cursor cursor, PostType postType);

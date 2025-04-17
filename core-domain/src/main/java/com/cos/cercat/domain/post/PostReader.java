@@ -37,6 +37,10 @@ public class PostReader {
         return postRepository.find(postId).orElseThrow(() -> PostNotFoundException.EXCEPTION);
     }
 
+    public Post readForUpdate(PostId postId) {
+        return postRepository.findForUpdate(postId).orElseThrow(() -> PostNotFoundException.EXCEPTION);
+    }
+
     public PostWithComments readDetail(PostId postId) {
         Post post = read(postId);
         List<PostComment> comments = postCommentReader.readByPost(postId);

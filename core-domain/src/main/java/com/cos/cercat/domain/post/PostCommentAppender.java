@@ -5,7 +5,6 @@ import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
@@ -13,11 +12,12 @@ public class PostCommentAppender {
 
     private final PostCommentRepository postCommentRepository;
     private final ApplicationEventPublisher applicationEventPublisher;
+    private final CreatePostRepository createPostRepository;
 
-    @Transactional
     public void append(User commenter, Post post, CommentContent commentContent) {
         PostComment postComment = PostComment.create(commenter, post, commentContent);
         PostComment saved = postCommentRepository.save(postComment);
+        createPostRepository.save(post.comment());
         applicationEventPublisher.publishEvent(CommentCreatedEvent.from(post, saved));
     }
 }

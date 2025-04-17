@@ -37,6 +37,7 @@ public class CommentaryPostEntity extends PostEntity {
                 .userEntity(UserEntity.from(commentaryPost.getWriter()))
                 .certificateEntity(CertificateEntity.from(commentaryPost.getCertificate()))
                 .questionEntity(QuestionEntity.from(commentaryPost.getQuestion()))
+                .commentCount(commentaryPost.getCommentCount())
                 .createdAt(commentaryPost.getDateTime().createdAt())
                 .modifiedAt(commentaryPost.getDateTime().modifiedAt())
                 .build();

@@ -44,6 +44,11 @@ public class Post implements Ownable {
         return this;
     }
 
+    public Post comment() {
+        this.commentCount++;
+        return this;
+    }
+
     @Override
     public User getOwner() {
         return writer;

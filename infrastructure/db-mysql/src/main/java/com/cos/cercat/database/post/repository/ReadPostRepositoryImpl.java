@@ -38,6 +38,11 @@ public class ReadPostRepositoryImpl implements ReadPostRepository {
     }
 
     @Override
+    public Optional<Post> findForUpdate(PostId postId) {
+        return postJpaRepository.findForUpdate(postId.value()).map(this::toDomain);
+    }
+
+    @Override
     public SliceResult<Post> findPosts(
             Certificate certificate,
             SearchCond cond,

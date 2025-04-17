@@ -25,15 +25,17 @@ public class PostCommentService {
         PostComment postComment = postCommentReader.read(commentId);
         permissionValidator.validate(postComment, user);
         postRemover.remove(postComment);
+
     }
 
+    @Transactional
     public void createPostComment(
             UserId userId,
             PostId postId,
             CommentContent commentContent
     ) {
         User user = userReader.read(userId);
-        Post post = postReader.read(postId);
+        Post post = postReader.readForUpdate(postId);
         postCommentAppender.append(user, post, commentContent);
     }
 }

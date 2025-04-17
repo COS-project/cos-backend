@@ -103,6 +103,7 @@ public class PostEntity extends BaseTimeEntity {
                     .content(post.getPostContent().content())
                     .userEntity(UserEntity.from(post.getWriter()))
                     .certificateEntity(CertificateEntity.from(post.getCertificate()))
+                    .commentCount(post.getCommentCount())
                     .createdAt(post.getDateTime().createdAt())
                     .modifiedAt(post.getDateTime().modifiedAt())
                     .build();
