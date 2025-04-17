@@ -23,7 +23,7 @@ public record PostWithComments(
                 .forEach(postComment -> {
                     Long parentId = postComment.getContent().parentId();
                     PostComment parentComment = map.get(parentId);
-                    parentComment.addChildren(postComment);
+                    if (parentComment != null) parentComment.addChildren(postComment);
                 });
 
         List<PostComment> collected = map.values().stream()

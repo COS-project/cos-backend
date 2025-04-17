@@ -35,6 +35,10 @@ public class LikeService {
     }
 
     public Map<Long, LikeStatus> getLikeStatusMap(UserId userId, List<LikeTarget> likeTargets) {
+        if (likeTargets.isEmpty()) {
+            return Map.of();
+        }
+
         User liker = userReader.read(userId);
         Map<Long, LikeCount> likeCountMap = likeCounter.getConutMap(likeTargets);
         return likeStatusReader.readMap(liker, likeTargets, likeCountMap);
