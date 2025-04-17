@@ -24,7 +24,7 @@ public record GoalAchievement(
 
         return new GoalAchievement(
                 goal.getId(),
-                goal.getGoalContent().goalMockExams(),
+                goal.getGoalContent().goalScore(),
                 currentMaxScore,
                 goal.getGoalContent().studyTimePerDay(),
                 todayStudyTime,
