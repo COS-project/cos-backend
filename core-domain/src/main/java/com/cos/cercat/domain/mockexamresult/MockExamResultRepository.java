@@ -12,9 +12,11 @@ import java.util.List;
 
 public interface MockExamResultRepository {
 
-    MockExamResultId save(User user,
-                              MockExam mockExam,
-                              NewMockExamResult newMockExamResult);
+    MockExamResultId save(
+            User user,
+            MockExam mockExam,
+            NewMockExamResult newMockExamResult
+    );
 
     int countMockExamResult(User user,
                             MockExam mockExam);

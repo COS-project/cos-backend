@@ -50,8 +50,11 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
     private final SubjectJpaRepository subjectJpaRepository;
 
     @Override
-    public MockExamResultId save(User user, MockExam mockExam,
-            NewMockExamResult newMockExamResult) {
+    public MockExamResultId save(
+            User user,
+            MockExam mockExam,
+            NewMockExamResult newMockExamResult
+    ) {
         UserEntity userEntity = UserEntity.from(user);
         MockExamEntity mockExamEntity = MockExamEntity.from(mockExam);
 
@@ -67,6 +70,7 @@ public class MockExamResultRepositoryImpl implements MockExamResultRepository {
         newMockExamResult.newSubjectResults().forEach(newSubjectResult -> {
             SubjectResultEntity subjectResultEntity = saveSubjectResult(newSubjectResult,
                     savedResult);
+
             newSubjectResult.newUserAnswers().forEach(
                     newUserAnswer -> saveUserAnswer(newUserAnswer, subjectResultEntity,
                             userEntity));
