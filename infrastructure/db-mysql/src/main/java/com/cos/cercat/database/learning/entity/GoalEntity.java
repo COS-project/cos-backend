@@ -7,6 +7,7 @@ import com.cos.cercat.domain.learning.GoalContent;
 import com.cos.cercat.domain.learning.GoalPeriod;
 import com.cos.cercat.domain.learning.NewGoal;
 import jakarta.persistence.*;
+import java.util.stream.Collectors;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 
@@ -176,7 +177,7 @@ public class GoalEntity {
                 ),
                 studySchedules.stream()
                         .map(StudyScheduleEntity::toDomain)
-                        .toList()
+                        .collect(Collectors.toList())
         );
     }
 }
