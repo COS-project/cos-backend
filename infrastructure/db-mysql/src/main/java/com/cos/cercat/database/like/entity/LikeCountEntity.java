@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Table(
         name = "like_count",
         indexes = {
-                @Index(name = "idx_like_type_id_count", columnList = "target_type, target_id, value")
+                @Index(name = "idx_like_type_id_count", columnList = "target_type, target_id, count")
         }
 )
 public class LikeCountEntity {

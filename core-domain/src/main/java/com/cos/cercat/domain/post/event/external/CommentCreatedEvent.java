@@ -1,19 +1,29 @@
-package com.cos.cercat.domain.post;
+package com.cos.cercat.domain.post.event.external;
 
 import com.cos.cercat.domain.common.event.Event;
+import com.cos.cercat.domain.post.CommentContent;
+import com.cos.cercat.domain.post.Post;
+import com.cos.cercat.domain.post.PostComment;
 import com.cos.cercat.domain.user.User;
-import java.util.UUID;
 
 public record CommentCreatedEvent(
         String eventId,
         User targetPostOwner,
+        Long commentId,
         Long targetPostId,
         String targetPostTitle,
         CommentContent comment
 ) implements Event {
 
-    public static Event from(Post post, CommentContent commentContent) {
-        return new CommentCreatedEvent(UUID.randomUUID().toString(), post.getWriter(), post.getId(), post.getPostContent().title(), commentContent);
+    public static Event from(Post post, PostComment postComment) {
+        return new CommentCreatedEvent(
+                Event.generateId(),
+                post.getWriter(),
+                postComment.getId(),
+                post.getId(),
+                post.getPostContent().title(),
+                postComment.getContent()
+        );
     }
 
     @Override

@@ -1,10 +1,10 @@
-package com.cos.cercat.domain.like;
+package com.cos.cercat.domain.like.event.external;
 
 import com.cos.cercat.domain.common.event.Event;
+import com.cos.cercat.domain.like.LikeTargetType;
 import com.cos.cercat.domain.post.Post;
 import com.cos.cercat.domain.post.PostComment;
 import com.cos.cercat.domain.user.User;
-import java.util.UUID;
 
 public record LikeCreatedEvent(
         String eventId,
@@ -17,7 +17,7 @@ public record LikeCreatedEvent(
 
     public static Event postLike(Post post, User liker) {
         return new LikeCreatedEvent(
-                UUID.randomUUID().toString(),
+                Event.generateId(),
                 post.getId(),
                 post.getWriter(),
                 liker.getId(),
@@ -28,7 +28,7 @@ public record LikeCreatedEvent(
 
     public static Event commentLike(PostComment comment, User liker) {
         return new LikeCreatedEvent(
-                UUID.randomUUID().toString(),
+                Event.generateId(),
                 comment.getId(),
                 comment.getOwner(),
                 liker.getId(),

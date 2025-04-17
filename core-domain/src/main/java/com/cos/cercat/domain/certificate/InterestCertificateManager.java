@@ -1,5 +1,7 @@
 package com.cos.cercat.domain.certificate;
 
+import com.cos.cercat.domain.certificate.event.internal.InterestCertificateCreatedEvent;
+import com.cos.cercat.domain.certificate.event.internal.InterestCertificateRemovedEvent;
 import com.cos.cercat.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;

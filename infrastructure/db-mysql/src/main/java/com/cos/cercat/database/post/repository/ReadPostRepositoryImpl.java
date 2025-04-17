@@ -34,7 +34,7 @@ public class ReadPostRepositoryImpl implements ReadPostRepository {
 
     @Override
     public Optional<Post> find(PostId postId) {
-        return postJpaRepository.findById(postId.postId()).map(this::toDomain);
+        return postJpaRepository.findById(postId.value()).map(this::toDomain);
     }
 
     @Override

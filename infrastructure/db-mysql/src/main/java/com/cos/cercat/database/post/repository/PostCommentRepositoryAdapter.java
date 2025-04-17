@@ -25,8 +25,8 @@ public class PostCommentRepositoryAdapter implements PostCommentRepository {
     private final PostCommentJpaRepository postCommentJpaRepository;
 
     @Override
-    public Long save(PostComment postComment) {
-        return postCommentJpaRepository.save(PostCommentEntity.from(postComment)).getId();
+    public PostComment save(PostComment postComment) {
+        return postCommentJpaRepository.save(PostCommentEntity.from(postComment)).toDomain();
     }
 
     @Override
@@ -35,16 +35,14 @@ public class PostCommentRepositoryAdapter implements PostCommentRepository {
     }
 
     @Override
-    public SliceResult<PostComment> findCommentsByUser(User user, Cursor cursor) {
-        Slice<PostComment> postComments = postCommentJpaRepository.findByUserId(user.getId(), toPageRequest(cursor))
-                .map(PostCommentEntity::toDomain);
-
-        return SliceResult.of(postComments.getContent(), postComments.hasNext());
+    public SliceResult<Long> findpostIdsByUser(User user, Cursor cursor) {
+        return postCommentJpaRepository.findDistinctPostIdsByUser(
+                user, toPageRequest(cursor));
     }
 
     @Override
     public List<PostComment> findCommentsByPost(PostId postId) {
-        return postCommentJpaRepository.findByPostId(postId.postId()).stream()
+        return postCommentJpaRepository.findByPostId(postId.value()).stream()
                 .map(PostCommentEntity::toDomain)
                 .toList();
     }

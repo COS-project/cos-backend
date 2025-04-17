@@ -1,6 +1,8 @@
 package com.cos.cercat.domain.post;
 
 import com.cos.cercat.domain.certificate.*;
+import com.cos.cercat.domain.certificate.event.internal.InterestCertificateCreatedEvent;
+import com.cos.cercat.domain.certificate.event.internal.InterestCertificateRemovedEvent;
 import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserReader;
@@ -33,7 +35,6 @@ public class BoardService {
 
     public List<Board> read() {
         return boardReader.read();
-
     }
 
     public boolean isFavorite(UserId userId, CertificateId certificateId) {

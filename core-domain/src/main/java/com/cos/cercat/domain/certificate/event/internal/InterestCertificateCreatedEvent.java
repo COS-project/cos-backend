@@ -1,5 +1,6 @@
-package com.cos.cercat.domain.certificate;
+package com.cos.cercat.domain.certificate.event.internal;
 
+import com.cos.cercat.domain.certificate.Certificate;
 import com.cos.cercat.domain.user.User;
 
 import java.util.List;

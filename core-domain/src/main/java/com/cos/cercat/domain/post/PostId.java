@@ -1,7 +1,7 @@
 package com.cos.cercat.domain.post;
 
 public record PostId(
-        long postId
+        long value
 ) {
     public static PostId from(long postId) {
         return new PostId(

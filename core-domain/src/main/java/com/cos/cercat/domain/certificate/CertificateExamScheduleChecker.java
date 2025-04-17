@@ -1,5 +1,6 @@
 package com.cos.cercat.domain.certificate;
 
+import com.cos.cercat.domain.certificate.event.external.InterestCertificateExamScheduleEvent;
 import com.cos.cercat.domain.user.User;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

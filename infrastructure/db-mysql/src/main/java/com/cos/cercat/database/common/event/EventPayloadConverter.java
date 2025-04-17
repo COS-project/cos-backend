@@ -1,9 +1,9 @@
 package com.cos.cercat.database.common.event;
 
-import com.cos.cercat.domain.certificate.InterestCertificateExamScheduleEvent;
+import com.cos.cercat.domain.certificate.event.external.InterestCertificateExamScheduleEvent;
 import com.cos.cercat.domain.common.event.Event;
-import com.cos.cercat.domain.like.LikeCreatedEvent;
-import com.cos.cercat.domain.post.CommentCreatedEvent;
+import com.cos.cercat.domain.like.event.external.LikeCreatedEvent;
+import com.cos.cercat.domain.post.event.external.CommentCreatedEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
