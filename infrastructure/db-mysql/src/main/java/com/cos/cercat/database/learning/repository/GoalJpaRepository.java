@@ -12,7 +12,7 @@ public interface GoalJpaRepository extends JpaRepository<GoalEntity, Long> {
 
     @Query("""
             SELECT g FROM GoalEntity g
-            LEFT JOIN FETCH g.studySchedules
+            LEFT JOIN FETCH g.goalSchedules
             WHERE g.userEntity.id = :userId
             AND g.certificateEntity.id = :certificateId
             ORDER BY g.prepareStartDateTime DESC

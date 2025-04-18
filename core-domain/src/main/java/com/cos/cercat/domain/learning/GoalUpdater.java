@@ -10,6 +10,6 @@ public class GoalUpdater {
     private final LearningRepository learningRepository;
 
     public void update(Goal goal) {
-        learningRepository.update(goal);
+        learningRepository.save(goal);
     }
 }

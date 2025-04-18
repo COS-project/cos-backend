@@ -27,18 +27,6 @@ public class LearningRepositoryImpl implements LearningRepository {
 
     private final GoalJpaRepository goalJpaRepository;
     private final StudyTimeLogJpaRepository studyTimeJpaRepository;
-    private final UserJpaRepository userJpaRepository;
-    private final CertificateJpaRepository certificateJpaRepository;
-
-
-    @Override
-    public void save(User user,
-                     Certificate certificate,
-                     NewGoal newGoal) {
-        UserEntity userEntity = userJpaRepository.getReferenceById(user.getId());
-        CertificateEntity certificateEntity = certificateJpaRepository.getReferenceById(certificate.id().value());
-        goalJpaRepository.save(GoalEntity.of(certificateEntity, userEntity, newGoal));
-    }
 
     @Override
     public void saveStudyTimeLog(GoalId goalId,
@@ -85,7 +73,7 @@ public class LearningRepositoryImpl implements LearningRepository {
     }
 
     @Override
-    public void update(Goal goal) {
+    public void save(Goal goal) {
         goalJpaRepository.save(GoalEntity.from(goal));
     }
 }

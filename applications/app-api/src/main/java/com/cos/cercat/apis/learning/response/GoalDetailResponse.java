@@ -4,7 +4,7 @@ import com.cos.cercat.apis.certificate.response.CertificateResponse;
 import com.cos.cercat.domain.learning.Goal;
 import com.cos.cercat.domain.learning.GoalContent;
 import com.cos.cercat.domain.learning.GoalPeriod;
-import com.cos.cercat.domain.learning.StudySchedule;
+import com.cos.cercat.domain.learning.GoalSchedule;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -43,11 +43,11 @@ public record GoalDetailResponse(
         );
     }
 
-    private static List<Integer> convertIntegerList(List<StudySchedule> studySchedules) {
-        return studySchedules.stream()
+    private static List<Integer> convertIntegerList(List<GoalSchedule> goalSchedules) {
+        return goalSchedules.stream()
                 .map(studySchedule -> {
                     int dayOfWeekValue = studySchedule.getRepeatDayOfWeek().getValue();
-                    return (dayOfWeekValue < StudySchedule.SUNDAY_VALUE) ? dayOfWeekValue : 0;
+                    return (dayOfWeekValue < GoalSchedule.SUNDAY_VALUE) ? dayOfWeekValue : 0;
                 }).toList();
     }
 }

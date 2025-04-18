@@ -9,7 +9,6 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -24,29 +23,34 @@ public class Goal implements Ownable {
     private final User user;
     private GoalPeriod goalPeriod;
     private GoalContent goalContent;
-    private List<StudySchedule> studySchedules;
+    private List<GoalSchedule> goalSchedules;
 
-    public List<StudySchedule> getStudySchedules() {
-        return this.studySchedules.stream()
+    public static Goal create(User user, Certificate certificate, NewGoal newGoal) {
+        return Goal.builder()
+                .certificate(certificate)
+                .user(user)
+                .goalPeriod(newGoal.goalPeriod())
+                .goalContent(newGoal.goalContent())
+                .goalSchedules(newGoal.goalSchedules())
+                .build();
+    }
+
+    public List<GoalSchedule> getStudySchedules() {
+        return this.goalSchedules.stream()
                 .filter(studySchedule -> studySchedule.getScheduleType() == ScheduleType.STUDY)
                 .toList();
     }
 
-    public List<StudySchedule> getMockExamSchedules() {
-        return this.studySchedules.stream()
+    public List<GoalSchedule> getMockExamSchedules() {
+        return this.goalSchedules.stream()
                 .filter(studySchedule -> studySchedule.getScheduleType() == ScheduleType.MOCK_EXAM)
                 .toList();
-    }
-
-    public void updateSchedules(List<StudySchedule> studySchedules) {
-        this.studySchedules.clear();
-        this.studySchedules.addAll(studySchedules);
     }
 
     public void updateGoal(NewGoal newGoal) {
         this.goalPeriod = newGoal.goalPeriod();
         this.goalContent = newGoal.goalContent();
-        updateSchedules(newGoal.studySchedules());
+        updateSchedules(newGoal.goalSchedules());
     }
 
     public Integer getGoalDDay() {
@@ -77,5 +81,11 @@ public class Goal implements Ownable {
     @Override
     public boolean isOwner(User user) {
         return this.user.getId().equals(user.getId());
+    }
+
+
+    private void updateSchedules(List<GoalSchedule> goalSchedules) {
+        this.goalSchedules.clear();
+        this.goalSchedules.addAll(goalSchedules);
     }
 }

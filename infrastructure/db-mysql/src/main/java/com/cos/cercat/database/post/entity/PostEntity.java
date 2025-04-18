@@ -40,6 +40,7 @@ public class PostEntity extends BaseTimeEntity {
 
     protected String title;
 
+    @Column(columnDefinition = "TEXT")
     protected String content;
 
     @ManyToOne(fetch = FetchType.LAZY)

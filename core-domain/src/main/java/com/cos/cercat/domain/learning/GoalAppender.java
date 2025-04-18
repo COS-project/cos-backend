@@ -15,7 +15,7 @@ public class GoalAppender {
     public void append(User user,
                        Certificate certificate,
                        NewGoal newGoal) {
-        learningRepository.save(user, certificate, newGoal);
-
+        Goal goal = Goal.create(user, certificate, newGoal);
+        learningRepository.save(goal);
     }
 }

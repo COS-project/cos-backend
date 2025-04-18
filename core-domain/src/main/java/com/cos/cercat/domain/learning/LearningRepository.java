@@ -8,11 +8,6 @@ import java.util.Optional;
 
 public interface LearningRepository {
 
-
-    void save(User user,
-              Certificate certificate,
-              NewGoal newGoal);
-
     void saveStudyTimeLog(GoalId goalId,
                           Long studyTime);
 
@@ -28,5 +23,5 @@ public interface LearningRepository {
 
     long getTotalStudyTime(Long goalId);
 
-    void update(Goal goal);
+    void save(Goal goal);
 }

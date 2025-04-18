@@ -1,7 +1,7 @@
 package com.cos.cercat.database.learning.entity;
 
+import com.cos.cercat.domain.learning.GoalSchedule;
 import com.cos.cercat.domain.learning.ScheduleType;
-import com.cos.cercat.domain.learning.StudySchedule;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -15,7 +15,7 @@ import static org.hibernate.annotations.OnDeleteAction.CASCADE;
 @AllArgsConstructor
 @Getter
 @Table(name = "repeat_day")
-public class StudyScheduleEntity {
+public class GoalScheduleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,20 +34,20 @@ public class StudyScheduleEntity {
     @Enumerated(EnumType.STRING)
     private DayOfWeek repeatDayOfWeek;
 
-    public StudyScheduleEntity(ScheduleType scheduleType, DayOfWeek repeatDayOfWeek) {
+    public GoalScheduleEntity(ScheduleType scheduleType, DayOfWeek repeatDayOfWeek) {
         this.scheduleType = scheduleType;
         this.repeatDayOfWeek = repeatDayOfWeek;
     }
 
-    public static StudyScheduleEntity from(StudySchedule studySchedule) {
-        return new StudyScheduleEntity(
-                studySchedule.getScheduleType(),
-                studySchedule.getRepeatDayOfWeek()
+    public static GoalScheduleEntity from(GoalSchedule goalSchedule) {
+        return new GoalScheduleEntity(
+                goalSchedule.getScheduleType(),
+                goalSchedule.getRepeatDayOfWeek()
         );
     }
 
-    public StudySchedule toDomain() {
-        return new StudySchedule(
+    public GoalSchedule toDomain() {
+        return new GoalSchedule(
                 id,
                 scheduleType,
                 repeatDayOfWeek

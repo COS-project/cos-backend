@@ -39,7 +39,7 @@ public class GoalEntity {
     private UserEntity userEntity;
 
     @OneToMany(mappedBy = "goalEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<StudyScheduleEntity> studySchedules = new ArrayList<>();
+    private List<GoalScheduleEntity> goalSchedules = new ArrayList<>();
 
     private Integer goalScore;
 
@@ -68,7 +68,7 @@ public class GoalEntity {
                       Integer goalMockExams,
                       Long studyTimePerDay,
                       Long goalStudyTime,
-                      List<StudyScheduleEntity> studySchedules) {
+                      List<GoalScheduleEntity> goalSchedules) {
         this.id = goalId;
         this.certificateEntity = certificateEntity;
         this.userEntity = userEntity;
@@ -80,7 +80,7 @@ public class GoalEntity {
         this.goalMockExams = goalMockExams;
         this.studyTimePerDay = studyTimePerDay;
         this.goalStudyTime = goalStudyTime;
-        addStudySchedule(studySchedules);
+        addStudySchedule(goalSchedules);
     }
 
     public GoalEntity(CertificateEntity certificateEntity,
@@ -93,7 +93,7 @@ public class GoalEntity {
                       Integer goalMockExams,
                       Long studyTimePerDay,
                       Long goalStudyTime,
-                      List<StudyScheduleEntity> studySchedules) {
+                      List<GoalScheduleEntity> goalSchedules) {
 
         this.certificateEntity = certificateEntity;
         this.userEntity = userEntity;
@@ -105,7 +105,7 @@ public class GoalEntity {
         this.goalMockExams = goalMockExams;
         this.studyTimePerDay = studyTimePerDay;
         this.goalStudyTime = goalStudyTime;
-        addStudySchedule(studySchedules);
+        addStudySchedule(goalSchedules);
     }
 
     public static GoalEntity of(CertificateEntity certificateEntity,
@@ -124,8 +124,8 @@ public class GoalEntity {
                 goalContent.goalMockExams(),
                 goalContent.studyTimePerDay(),
                 goalContent.goalStudyTime(),
-                newGoal.studySchedules().stream()
-                        .map(StudyScheduleEntity::from)
+                newGoal.goalSchedules().stream()
+                        .map(GoalScheduleEntity::from)
                         .toList()
         );
     }
@@ -145,17 +145,17 @@ public class GoalEntity {
                 goalContent.goalMockExams(),
                 goalContent.studyTimePerDay(),
                 goalContent.goalStudyTime(),
-                goal.getStudySchedules().stream()
-                        .map(StudyScheduleEntity::from)
+                goal.getGoalSchedules().stream()
+                        .map(GoalScheduleEntity::from)
                         .toList()
         );
     }
 
-    public void addStudySchedule(List<StudyScheduleEntity> studyScheduleEntities) {
+    public void addStudySchedule(List<GoalScheduleEntity> studyScheduleEntities) {
         studyScheduleEntities.forEach(
-                studyScheduleEntity -> studyScheduleEntity.setGoalEntity(this)
+                goalScheduleEntity -> goalScheduleEntity.setGoalEntity(this)
         );
-        this.getStudySchedules().addAll(studyScheduleEntities);
+        this.getGoalSchedules().addAll(studyScheduleEntities);
     }
 
     public Goal toDomain() {
@@ -175,8 +175,8 @@ public class GoalEntity {
                         studyTimePerDay,
                         goalStudyTime
                 ),
-                studySchedules.stream()
-                        .map(StudyScheduleEntity::toDomain)
+                goalSchedules.stream()
+                        .map(GoalScheduleEntity::toDomain)
                         .collect(Collectors.toList())
         );
     }

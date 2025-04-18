@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 public record NewGoal(
         GoalPeriod goalPeriod,
         GoalContent goalContent,
-        List<StudySchedule> studySchedules
+        List<GoalSchedule> goalSchedules
 ) {
 
     public static NewGoal of(GoalPeriod goalPeriod,
@@ -20,12 +20,12 @@ public record NewGoal(
         );
     }
 
-    static List<StudySchedule> convertStudySchedule(List<Integer> mockExamSchedules, List<Integer> studySchedules) {
-        Stream<StudySchedule> mockExamDaysStream = mockExamSchedules.stream()
-                .map(dayOfWeekValue -> StudySchedule.from(ScheduleType.MOCK_EXAM, dayOfWeekValue));
+    static List<GoalSchedule> convertStudySchedule(List<Integer> mockExamSchedules, List<Integer> studySchedules) {
+        Stream<GoalSchedule> mockExamDaysStream = mockExamSchedules.stream()
+                .map(dayOfWeekValue -> GoalSchedule.from(ScheduleType.MOCK_EXAM, dayOfWeekValue));
 
-        Stream<StudySchedule> studyExamDaysStream = studySchedules.stream()
-                .map(dayOfWeekValue -> StudySchedule.from(ScheduleType.STUDY, dayOfWeekValue));
+        Stream<GoalSchedule> studyExamDaysStream = studySchedules.stream()
+                .map(dayOfWeekValue -> GoalSchedule.from(ScheduleType.STUDY, dayOfWeekValue));
 
         return Stream.concat(mockExamDaysStream, studyExamDaysStream).toList();
     }
