@@ -43,7 +43,9 @@
 
 # 인프라 구성
 
-<img width="1061" alt="image" src="https://github.com/user-attachments/assets/9794c868-98a3-4cfb-905b-fb537b59b7f3" />
+<img width="1031" alt="image" src="https://github.com/user-attachments/assets/df3036e8-87e1-4907-a768-aebdc78aa140" />
+
+
 
 
 
@@ -128,6 +130,7 @@ com
 
 1. **아키텍처 단순화**
     - ElasticSearch, Debezium CDC, Logstash 제거 → MySQL 전문 검색으로 대체
+    - Kafka 제거 -> Redis Streams로 전환
     - 실시간 검색어 및 자동완성 기능 → Redis로 전환
 
 ### 성과
@@ -137,7 +140,7 @@ com
     <tr>
       <td align="center"><b>개선 전</b><br><img src="https://github.com/user-attachments/assets/c68ca9f2-be91-445c-a00f-005c5a6a5286" width="500"/></td>
       <td align="center" style="font-size: 24px;">➡️</td>
-      <td align="center"><b>개선 후</b><br><img src="https://github.com/user-attachments/assets/9794c868-98a3-4cfb-905b-fb537b59b7f3" width="500"/></td>
+      <td align="center"><b>개선 후</b><br><img src="https://github.com/user-attachments/assets/d973d555-7db7-404d-abc3-cbaf58a8d4e9" width="500"/></td>
     </tr>
   </table>
 </div>
@@ -157,7 +160,7 @@ API 서버에서 비즈니스 로직과 알림 전송을 동시에 처리해 응
 ### ⚙️ 해결
 
 1. **이벤트 기반 아키텍처 도입**
-    - Kafka를 통한 비동기 메시지 처리
+    - Redis Streams를 통한 비동기 메시지 처리
     - 알림 채널 인터페이스 추상화로 확장성 확보
 
 ### 성과
@@ -180,7 +183,7 @@ API 서버에서 비즈니스 로직과 알림 전송을 동시에 처리해 응
     - 지수 백오프 재시도 전략 구현
     - 실패 시 DB에 저장 후 주기적 재발행
 2. **메시지 소비 안정성 강화**
-    - 에러 핸들러 통한 재시도 로직
+    - Inbox 패턴을 통한 안정적 처리
     - Dead Letter Queue로 실패 메시지 보존
     - 이벤트 ID 기반 중복 처리 방지
 
