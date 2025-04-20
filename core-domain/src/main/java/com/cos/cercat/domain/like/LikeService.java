@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +18,7 @@ public class LikeService {
     private final UserReader userReader;
     private final LikeCounter likeCounter;
 
+    @Transactional
     public void like(UserId userId, LikeTarget likeTarget) {
         User liker = userReader.read(userId);
         likeManager.like(liker, likeTarget);

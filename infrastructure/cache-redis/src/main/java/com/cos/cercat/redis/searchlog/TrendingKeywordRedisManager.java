@@ -42,7 +42,7 @@ public class TrendingKeywordRedisManager implements TrendingKeywordManager {
         String realtimeKey = buildRealtimeKey(searchLog.certificateId());
         String keywordCountKey = buildKeywordCountKey(searchLog.certificateId(), keyword);
 
-        updateKewordCount(keywordCountKey);
+        updateKeywordCount(keywordCountKey);
         updateKeywordScore(realtimeKey, keyword, keywordCountKey);
         registerCertificateId(searchLog.certificateId().value().toString());
         trimExcessKeywords(realtimeKey);
@@ -54,6 +54,7 @@ public class TrendingKeywordRedisManager implements TrendingKeywordManager {
         String previousKey = buildPreviousKey(certificateId);
 
         Set<TypedTuple<String>> currentKeywords = getCurrentKeywords(realtimeKey);
+
         if (currentKeywords.isEmpty()) {
             return TrendingKeywordsRanking.from(Collections.emptyMap());
         }
@@ -102,7 +103,7 @@ public class TrendingKeywordRedisManager implements TrendingKeywordManager {
     }
 
     // 검색어 카운트 업데이트
-    private void updateKewordCount(String queryCountKey) {
+    private void updateKeywordCount(String queryCountKey) {
         redisTemplate.opsForValue().increment(queryCountKey, 1);
         redisTemplate.expire(queryCountKey, RECENT_WINDOW_SECONDS, TimeUnit.SECONDS);
     }

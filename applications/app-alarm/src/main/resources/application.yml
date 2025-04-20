@@ -5,31 +5,26 @@ spring:
       - application-db.yml
       - application-cache.yml
       - application-security.yml
+  application:
+    name: cercat-alarm
 server:
   port: 8081
-kafka:
-  topic:
+redis:
+  max-retry-count: 5
+  key-prefix:
     alarm-events: like-created,comment-created,interest-certificate-exam-schedule
+    dead-letter: alarm-events-dlq
   consumer-group:
-    alarm: alarm-group
-  consumer:
-    dead-letter-topic: alarm-events-dlt
-    max-retries: 3
-    backoff-initial-interval: 1000
-    backoff-max-interval: 10000
-    concurrency: 3
+    alarm: notifier
+
 ---
 spring:
   config:
     activate:
       on-profile: local,alarm
-  kafka:
-    bootstrap-servers: localhost:29092
 
 ---
 spring:
   config:
     activate:
       on-profile: prod,alarm
-  kafka:
-    bootstrap-servers: kafka:9092

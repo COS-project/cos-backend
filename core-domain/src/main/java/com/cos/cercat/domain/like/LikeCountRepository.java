@@ -10,7 +10,7 @@ public interface LikeCountRepository {
 
     Optional<LikeCount> findByTarget(LikeTarget likeTarget);
 
-    void saveAll(List<LikeCount> bufferedCounts);
+    void update(List<LikeCount> bufferedCounts);
 
     Map<Long, LikeCount> findByTargets(List<LikeTarget> likeTargets);
 

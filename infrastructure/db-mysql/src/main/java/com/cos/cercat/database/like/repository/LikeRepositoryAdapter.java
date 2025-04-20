@@ -73,7 +73,7 @@ public class LikeRepositoryAdapter implements LikeRepository, LikeCountRepositor
     }
 
     @Override
-    public void saveAll(List<LikeCount> bufferedCounts) {
+    public void update(List<LikeCount> bufferedCounts) {
         likeCountJpaRepository.batchUpdate(bufferedCounts);
     }
 

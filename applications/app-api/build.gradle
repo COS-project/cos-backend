@@ -9,7 +9,6 @@ dependencies {
     runtimeOnly project(':infrastructure:db-mysql')
 
     runtimeOnly project(':infrastructure:client-gcs')
-    runtimeOnly project(':infrastructure:client-kafka')
 
     runtimeOnly project(':supports:scheduler-shedlock')
 

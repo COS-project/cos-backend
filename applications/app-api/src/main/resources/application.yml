@@ -5,7 +5,6 @@ spring:
       - application-db.yml
       - application-gcs.yml
       - application-cache.yml
-      - application-messaging.yml
       - application-security.yml
       - application-scheduler.yml
   servlet:

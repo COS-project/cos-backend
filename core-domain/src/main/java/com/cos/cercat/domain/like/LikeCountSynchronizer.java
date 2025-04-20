@@ -15,7 +15,7 @@ public class LikeCountSynchronizer implements CountSynchronizer {
     @Override
     public void synchronize() {
         List<LikeCount> bufferedCounts = likeCounter.getBufferedCounts();
-        likeCountRepository.saveAll(bufferedCounts);
+        likeCountRepository.update(bufferedCounts);
     }
 
 }

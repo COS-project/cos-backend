@@ -17,7 +17,6 @@ include('core-domain')
 
 include(
         'infrastructure',
-        'infrastructure:client-kafka',
         'infrastructure:client-gcs',
         'infrastructure:db-mysql',
         'infrastructure:cache-redis'
