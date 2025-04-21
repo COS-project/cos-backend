@@ -78,6 +78,8 @@ public class AlarmEventRedisStreamListener implements
                 return;
             }
 
+            inboxEventManager.append(InboxEvent.from(event));
+            ack(record);
             log.debug("이벤트 처리 완료 – id={}", eventId);
         } catch (Exception ex) {
             log.error("이벤트 처리 실패", ex);
