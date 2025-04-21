@@ -13,7 +13,7 @@ redis:
   max-retry-count: 2
   key-prefix:
     alarm-events: like-created,comment-created,interest-certificate-exam-schedule
-    dead-letter: alarm-events-dlq
+    dead-letter: ALARM-EVENT-DLQ
   consumer-group:
     alarm: notifier
 

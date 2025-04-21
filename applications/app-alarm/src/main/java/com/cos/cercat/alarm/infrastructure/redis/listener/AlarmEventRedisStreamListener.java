@@ -80,7 +80,7 @@ public class AlarmEventRedisStreamListener implements
 
             inboxEventManager.append(InboxEvent.from(event));
             ack(record);
-            log.debug("이벤트 처리 완료 – id={}", eventId);
+            log.info("이벤트 처리 완료 – id={}", eventId);
         } catch (Exception ex) {
             log.error("이벤트 처리 실패", ex);
         }
@@ -115,7 +115,7 @@ public class AlarmEventRedisStreamListener implements
                     int movedCount = dlqProducer.publish(key, deadLetterInfo, group);
 
                     if (movedCount > 0) {
-                        log.debug("DLQ로 {} 개의 메시지 이동 완료 - stream={}", movedCount, key);
+                        log.info("DLQ로 {} 개의 메시지 이동 완료 - stream={}", movedCount, key);
                     }
                 }
 

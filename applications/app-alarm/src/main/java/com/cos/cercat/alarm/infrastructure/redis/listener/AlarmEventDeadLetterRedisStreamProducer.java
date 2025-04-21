@@ -101,7 +101,7 @@ public class AlarmEventDeadLetterRedisStreamProducer {
         if (!successfullyMovedIds.isEmpty()) {
             try {
                 Long ackCount = streamOps.acknowledge(sourceStream, group, successfullyMovedIds.toArray(new RecordId[0]));
-                log.info("DLQ 이동 완료 후 원본 메시지 {}개 배치 ACK 처리 완료 - stream={}, group={}", ackCount, sourceStream, group);
+                log.debug("DLQ 이동 완료 후 원본 메시지 {}개 배치 ACK 처리 완료 - stream={}, group={}", ackCount, sourceStream, group);
             } catch (Exception e) {
                 log.error("DLQ 이동 후 배치 ACK 처리 중 오류 발생 - stream={}, group={}, ids={}", sourceStream, group, successfullyMovedIds, e);
                 // ACK 실패 시 해당 메시지들은 PENDING 상태로 남아 다음 retry 로직에서 다시 처리될 수 있음 (또는 수동 처리 필요)
@@ -143,7 +143,7 @@ public class AlarmEventDeadLetterRedisStreamProducer {
     }
 
     private String createDlqStreamIfAbsent(String type) {
-        String dlqKey = dlqPrefix + ":event:" + type;
+        String dlqKey = dlqPrefix + ":EVENT:" + type;
         try {
             boolean exists = redisTemplate.hasKey(dlqKey);
             if (!exists) {
