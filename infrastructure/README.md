@@ -5,10 +5,6 @@ DB, 캐시, 검색 엔진, 외부 API 연동 등 애플리케이션 운영에 �
 
 ### 포함된 서브모듈
 
-- **`infrastructure:client-kafka`**  
-  - Apache Kafka를 사용하여 메시지 큐 및 이벤트 스트리밍을 처리하는 모듈입니다.  
-  - 프로듀서 및 컨슈머 설정을 관리하며, 이벤트 기반 아키텍처를 지원합니다.
-
 - **`infrastructure:client-gcs`**  
   - Google Cloud Storage(GCS)와의 연동을 위한 클라이언트 모듈입니다.  
   - 파일 업로드, 다운로드 및 관리 기능을 제공합니다.

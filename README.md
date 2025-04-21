@@ -36,7 +36,7 @@
 
 # 기술 스택
 
-- 백엔드 : Spring Boot, MySQL, Redis, Kafka, ELK
+- 백엔드 : Java17, Spring Boot, MySQL, Redis
 - 클라우드 : GCP VM, GCS, Docker
 - CI/CD : Git Actions, Docker Compose
 - 협업도구 : Slack
@@ -51,7 +51,7 @@
 
 - Nginx로 리버스 프록시
 - Docker compose로 서버 scale-out
-- Kafka를 통해 비동기 알림
+- Redis Streams를 통해 비동기 알림
 - Redis를 통해 검색어 시스템 및 모의고사 문제 데이터 캐싱
 - Grafana,Loki,Prometheus를 통해 모니터링 시스템 구축
 
@@ -102,7 +102,7 @@ com
 
 ## 🚨 1. 기술 의존성 분리 문제
 
-비즈니스 로직이 JPA, Kafka, Redis 등의 기술에 강하게 결합되어 테스트 작성이 어렵고 코드 가독성이 떨어지는 문제가 있었습니다.
+비즈니스 로직이 Spring Web, JPA, Redis 등의 기술에 강하게 결합되어 테스트 작성이 어렵고 코드 가독성이 떨어지는 문제가 있었습니다.
 
 ### ⚙️ 해결
 
