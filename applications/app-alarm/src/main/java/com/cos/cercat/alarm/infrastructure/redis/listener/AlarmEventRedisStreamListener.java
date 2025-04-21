@@ -9,45 +9,39 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
 import java.time.Duration;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Range;
-import org.springframework.data.redis.connection.stream.Consumer;
 import org.springframework.data.redis.connection.stream.MapRecord;
 import org.springframework.data.redis.connection.stream.PendingMessage;
-import org.springframework.data.redis.connection.stream.ReadOffset;
 import org.springframework.data.redis.connection.stream.RecordId;
-import org.springframework.data.redis.connection.stream.StreamOffset;
 import org.springframework.data.redis.core.StreamOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.stream.StreamMessageListenerContainer;
-import org.springframework.data.redis.stream.StreamMessageListenerContainer.StreamMessageListenerContainerOptions;
-import org.springframework.data.redis.stream.Subscription;
+import org.springframework.data.redis.stream.StreamListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class AlarmEventRedisStreamListener {
+public class AlarmEventRedisStreamListener implements
+        StreamListener<String, MapRecord<String, String, String>> {
 
     private final StringRedisTemplate redisTemplate;
     private final InboxEventManager inboxEventManager;
     private final AlarmEventDeadLetterRedisStreamProducer dlqProducer;
-    private StreamOperations<String, String, String> streamOps;
-
     private final static ObjectMapper redisEventMapper = new ObjectMapper()
             .registerModule(new JavaTimeModule())
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
             .activateDefaultTyping(LaissezFaireSubTypeValidator.instance,
                     ObjectMapper.DefaultTyping.EVERYTHING,
                     JsonTypeInfo.As.PROPERTY);
-
 
     @Value("#{'${redis.key-prefix.alarm-events}'.split(',')}")
     private List<String> eventTypes;
@@ -61,47 +55,16 @@ public class AlarmEventRedisStreamListener {
     @Value("${redis.max-retry-count}")
     private int maxRetryCount;
 
-    private StreamMessageListenerContainer<String, MapRecord<String, String, String>> container;
-    private final List<Subscription> subscriptions = new CopyOnWriteArrayList<>();
+    private StreamOperations<String, String, String> streamOps;
 
     @PostConstruct
-    public void start() {
-        StreamMessageListenerContainerOptions<String, MapRecord<String, String, String>> options =
-                StreamMessageListenerContainerOptions.builder()
-                        .batchSize(100)
-                        .pollTimeout(Duration.ofSeconds(2))
-                        .build();
-
+    public void init() {
         streamOps = redisTemplate.opsForStream();
-
-        container = StreamMessageListenerContainer.create(
-                redisTemplate.getConnectionFactory(), options);
-
-        eventTypes.stream()
-                .map(String::trim)
-                .filter(s -> !s.isEmpty())
-                .forEach(this::subscribeStream);
-
-        container.start();
-        log.info("Redis Stream 컨슈머 시작 – group={}, consumer={}", group, consumerName);
     }
 
-    private void subscribeStream(String type) {
-        String key = "event:" + type;
-        createGroupIfAbsent(key);
-
-        Subscription sub = container.receive(
-                Consumer.from(group, consumerName),
-                StreamOffset.create(key, ReadOffset.lastConsumed()),
-                this::onMessage);
-
-        subscriptions.add(sub);
-        log.info("➡️  구독 시작 – key={}", key);
-    }
-
-    private void onMessage(MapRecord<String, String, String> record) {
+    @Override
+    public void onMessage(MapRecord<String, String, String> record) {
         try {
-            // payload 키에서 JSON 문자열 가져오기
             String eventJson = record.getValue().get("payload");
             Event event = redisEventMapper.readValue(eventJson, Event.class);
             String eventId = event.resolveId();
@@ -115,75 +78,71 @@ public class AlarmEventRedisStreamListener {
                 return;
             }
 
-            inboxEventManager.append(InboxEvent.from(event));
-            ack(record);
             log.debug("이벤트 처리 완료 – id={}", eventId);
         } catch (Exception ex) {
             log.error("이벤트 처리 실패", ex);
         }
     }
 
-    @Scheduled(fixedDelay = 60_000)
+    @Scheduled(fixedRate = 60_000)
     public void retryPendingMessages() {
+        log.info("Pending 메시지 재처리 시작");
         for (String type : eventTypes) {
             String key = "event:" + type;
+            try {
+                var pending = streamOps
+                        .pending(key, group, Range.unbounded(), 100);
 
-            // 최대 100개 조회
-            var pending = streamOps
-                    .pending(key, group, Range.unbounded(), 100);
+                // 배달 횟수를 포함한 맵 생성
+                Map<RecordId, Long> deadLetterInfo = pending.stream()
+                        .filter(pm -> pm.getTotalDeliveryCount() > maxRetryCount)
+                        .collect(Collectors.toMap(
+                                PendingMessage::getId,
+                                PendingMessage::getTotalDeliveryCount,
+                                (count1, count2) -> count2
+                        ));
 
-            List<RecordId> claimTargets = pending.stream()
-                    .filter(pendingMessage -> pendingMessage.getTotalDeliveryCount() < 5)
-                    .map(PendingMessage::getId)
-                    .toList();
+                List<RecordId> claimTargets = pending.stream()
+                        .filter(pm -> pm.getTotalDeliveryCount() <= maxRetryCount)
+                        .map(PendingMessage::getId)
+                        .toList();
 
-            List<RecordId> deadLetterIds = pending.stream()
-                    .filter(pendingMessage -> pendingMessage.getTotalDeliveryCount() > 5)
-                    .map(PendingMessage::getId)
-                    .toList();
 
-            // DLQ로 이동할 메시지가 있으면 배치 처리
-            if (!deadLetterIds.isEmpty()) {
-                int movedCount = dlqProducer.moveToDlq(key, deadLetterIds, group,
-                        "최대 재시도 횟수(" + maxRetryCount + ") 초과");
+                // DLQ로 이동할 메시지가 있으면 배치 처리 (배달 횟수 정보 전달)
+                if (!deadLetterInfo.isEmpty()) {
+                    int movedCount = dlqProducer.publish(key, deadLetterInfo, group);
 
-                if (movedCount > 0) {
-                    log.info("DLQ로 {} 개의 메시지 이동 완료 - stream={}", movedCount, key);
+                    if (movedCount > 0) {
+                        log.debug("DLQ로 {} 개의 메시지 이동 완료 - stream={}", movedCount, key);
+                    }
                 }
-            }
 
-            if (claimTargets.isEmpty()) {
-                continue;
-            }
+                if (claimTargets.isEmpty()) {
+                    continue;
+                }
 
-            // minIdleTime 을 0 으로 주면 이미 idle 필터링했으니 바로 클레임
-            var claimed = streamOps
-                    .claim(key, group, consumerName,
-                            Duration.ofMinutes(10), claimTargets.toArray(new RecordId[0]));
+                // 재시도 대상
+                var claimed = streamOps
+                        .claim(key, group, consumerName,
+                                Duration.ofMinutes(5), claimTargets.toArray(new RecordId[0]));
 
-            for (var msg : claimed) {
-                onMessage(msg);
+                for (var msg : claimed) {
+                    onMessage(msg);
+                }
+            } catch (Exception e) {
+                log.error("Pending 메시지 처리 중 오류 발생 - stream={}", key, e);
             }
         }
     }
 
-
     private void ack(MapRecord<String, String, String> record) {
-        streamOps.acknowledge(
-                record.getStream(), group, record.getId());
-    }
-
-    private void createGroupIfAbsent(String key) {
+        if (streamOps == null) {
+            streamOps = redisTemplate.opsForStream();
+        }
         try {
-            streamOps.createGroup(key, group);
-            log.info("컨슈머 그룹 생성 – key={}, group={}", key, group);
-        } catch (Exception ignore) { /* 이미 존재하면 무시 */ }
-    }
-
-    @PreDestroy
-    public void stop() {
-        subscriptions.forEach(Subscription::cancel);
-        if (container != null) container.stop();
-        log.info("Redis Stream 컨슈머 종료");
+            streamOps.acknowledge(Objects.requireNonNull(record.getStream()), group, record.getId());
+        } catch (Exception e) {
+            log.error("메시지 승인(ACK) 실패 - stream={}, id={}", record.getStream(), record.getId(), e);
+        }
     }
 }

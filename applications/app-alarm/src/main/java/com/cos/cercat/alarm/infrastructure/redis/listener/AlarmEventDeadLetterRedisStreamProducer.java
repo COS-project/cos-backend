@@ -1,19 +1,16 @@
 package com.cos.cercat.alarm.infrastructure.redis.listener;
 
-import com.cos.cercat.domain.common.event.inbox.InboxEventManager;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Range;
 import org.springframework.data.redis.connection.stream.MapRecord;
-import org.springframework.data.redis.connection.stream.PendingMessage;
-import org.springframework.data.redis.connection.stream.PendingMessages;
 import org.springframework.data.redis.connection.stream.RecordId;
 import org.springframework.data.redis.core.StreamOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -37,45 +34,43 @@ public class AlarmEventDeadLetterRedisStreamProducer {
     public void init() {
         streamOps = redisTemplate.opsForStream();
 
-        // 스트림 초기화를 병렬로 처리하고 결과 로깅
-        List<String> initializedStreams = eventTypes.parallelStream()
-                .map(String::trim)
-                .filter(s -> !s.isEmpty())
+        List<String> initializedStreams = eventTypes.stream()
                 .map(this::createDlqStreamIfAbsent)
-                .filter(stream -> stream != null)
-                .collect(Collectors.toList());
+                .filter(Objects::nonNull)
+                .toList();
 
         if (!initializedStreams.isEmpty()) {
             log.info("DLQ 스트림 초기화 완료 - {}", initializedStreams);
         }
     }
 
-    public int moveToDlq(String sourceStream, List<RecordId> deadLetterIds, String group, String reason) {
-        if (deadLetterIds == null || deadLetterIds.isEmpty()) {
+    public int publish(String sourceStream, Map<RecordId, Long> deadLetterInfo, String group) {
+        if (deadLetterInfo == null || deadLetterInfo.isEmpty()) {
             return 0;
         }
 
         String dlqKey = getDlqKey(sourceStream);
         int successCount = 0;
+        List<RecordId> successfullyMovedIds = new ArrayList<>(); // 배치 ACK를 위한 리스트
 
-        // 메시지 조회를 최적화하기 위해 한 번에 모든 메시지 조회
+        // 이동 대상 ID 리스트 추출
+        List<RecordId> deadLetterIds = new ArrayList<>(deadLetterInfo.keySet());
+
+        // 메시지 내용을 한 번에 조회
         Map<String, MapRecord<String, String, String>> messageMap = retrieveMessages(sourceStream, deadLetterIds);
         if (messageMap.isEmpty()) {
-            log.warn("DLQ로 이동할 메시지를 찾을 수 없음 - stream={}, ids={}", sourceStream, deadLetterIds);
+            log.warn("DLQ로 이동할 메시지의 원본 내용을 찾을 수 없음 - stream={}, ids={}", sourceStream, deadLetterIds);
+            // 원본 메시지 없으면 ACK도 불가하므로 여기서 종료
             return 0;
         }
 
-        // 배달 횟수 정보를 한 번에 조회
-        Map<String, Long> deliveryCountMap = getDeliveryCountBatch(sourceStream, group, deadLetterIds);
+        for (Map.Entry<RecordId, Long> entry : deadLetterInfo.entrySet()) {
+            RecordId id = entry.getKey();
+            Long deliveryCount = entry.getValue(); // 전달받은 배달 횟수 사용
+            String idValue = id.getValue();
 
-        for (RecordId id : deadLetterIds) {
             try {
-                String idValue = id.getValue();
                 MapRecord<String, String, String> original = messageMap.get(idValue);
-
-                if (original == null) {
-                    continue;
-                }
 
                 // DLQ로 이동
                 Map<String, String> values = new HashMap<>(original.getValue());
@@ -83,79 +78,68 @@ public class AlarmEventDeadLetterRedisStreamProducer {
                 // DLQ 메타데이터 추가
                 values.put("originalStream", sourceStream);
                 values.put("originalId", idValue);
-                values.put("deliveryCount", String.valueOf(deliveryCountMap.getOrDefault(idValue, -1L)));
+                values.put("deliveryCount", String.valueOf(deliveryCount)); // 전달받은 값 사용
                 values.put("movedToDlqAt", String.valueOf(System.currentTimeMillis()));
-                values.put("failureReason", reason);
 
                 // DLQ에 추가
                 RecordId dlqRecordId = streamOps.add(dlqKey, values);
 
-                // 원본 메시지 승인 처리
-                streamOps.acknowledge(sourceStream, group, id);
+                // DLQ 추가 성공 시, ACK 대상 리스트에 추가
+                successfullyMovedIds.add(id);
 
-                log.warn("메시지를 DLQ로 이동 - sourceStream={}, sourceId={}, dlqStream={}, dlqId={}, deliveryCount={}",
-                        sourceStream, idValue, dlqKey, dlqRecordId.getValue(), deliveryCountMap.getOrDefault(idValue, -1L));
+                log.warn("메시지를 DLQ로 이동 준비 완료 (ACK는 배치 처리 예정) - sourceStream={}, sourceId={}, dlqStream={}, dlqId={}, deliveryCount={}",
+                        sourceStream, idValue, dlqKey, dlqRecordId.getValue(), deliveryCount);
 
                 successCount++;
             } catch (Exception ex) {
-                log.error("DLQ로 메시지 이동 중 오류 발생 - stream={}, id={}", sourceStream, id.getValue(), ex);
+                log.error("DLQ로 메시지 이동 중 개별 오류 발생 - stream={}, id={}", sourceStream, idValue, ex);
+                // 실패한 메시지는 successfullyMovedIds에 추가되지 않음
             }
         }
 
-        return successCount;
+        // 성공적으로 DLQ에 추가된 메시지들만 원본 스트림에서 배치 ACK 처리
+        if (!successfullyMovedIds.isEmpty()) {
+            try {
+                Long ackCount = streamOps.acknowledge(sourceStream, group, successfullyMovedIds.toArray(new RecordId[0]));
+                log.info("DLQ 이동 완료 후 원본 메시지 {}개 배치 ACK 처리 완료 - stream={}, group={}", ackCount, sourceStream, group);
+            } catch (Exception e) {
+                log.error("DLQ 이동 후 배치 ACK 처리 중 오류 발생 - stream={}, group={}, ids={}", sourceStream, group, successfullyMovedIds, e);
+                // ACK 실패 시 해당 메시지들은 PENDING 상태로 남아 다음 retry 로직에서 다시 처리될 수 있음 (또는 수동 처리 필요)
+            }
+        }
+
+        return successCount; // DLQ에 성공적으로 'add'된 횟수 반환
     }
 
     private Map<String, MapRecord<String, String, String>> retrieveMessages(String sourceStream, List<RecordId> ids) {
         Map<String, MapRecord<String, String, String>> messageMap = new HashMap<>();
+        if (ids == null || ids.isEmpty()) {
+            return messageMap;
+        }
+
+        // ID 값 리스트 생성 (나중에 필터링에 사용)
+        List<String> idValues = ids.stream().map(RecordId::getValue).toList();
 
         try {
-            // 최적화: 메시지 범위 조회를 여러 번의 단일 조회 대신 하나의 범위 조회로 처리
-            String minId = ids.stream().map(RecordId::getValue).min(String::compareTo).orElse("");
-            String maxId = ids.stream().map(RecordId::getValue).max(String::compareTo).orElse("");
+            String minId = idValues.stream().min(String::compareTo).orElse("");
+            String maxId = idValues.stream().max(String::compareTo).orElse("");
 
             if (!minId.isEmpty() && !maxId.isEmpty()) {
                 List<MapRecord<String, String, String>> messages =
-                        streamOps.range(sourceStream, Range.closed(minId, maxId));
+                        streamOps.range(sourceStream, Range.closed(minId, maxId)); // ID 범위로 조회
 
                 if (messages != null) {
-                    // ID별로 메시지 매핑
                     for (MapRecord<String, String, String> record : messages) {
-                        String recordId = record.getId().getValue();
-                        if (ids.stream().anyMatch(id -> id.getValue().equals(recordId))) {
-                            messageMap.put(recordId, record);
-                        }
+                        String recordIdValue = record.getId().getValue();
+                        messageMap.put(recordIdValue, record);
                     }
                 }
             }
         } catch (Exception ex) {
-            log.error("메시지 조회 중 오류 발생 - stream={}", sourceStream, ex);
+            log.error("메시지 내용 조회 중 오류 발생 - stream={}", sourceStream, ex);
         }
 
         return messageMap;
-    }
-
-    private Map<String, Long> getDeliveryCountBatch(String sourceStream, String group, List<RecordId> ids) {
-        Map<String, Long> deliveryCountMap = new HashMap<>();
-
-        try {
-            String minId = ids.stream().map(RecordId::getValue).min(String::compareTo).orElse("");
-            String maxId = ids.stream().map(RecordId::getValue).max(String::compareTo).orElse("");
-
-            if (!minId.isEmpty() && !maxId.isEmpty()) {
-                // 한 번의 요청으로 모든 ID의 pending 정보 조회
-                PendingMessages pendingMessages = streamOps.pending(sourceStream, group,
-                        Range.closed(minId, maxId), ids.size());
-
-                for (PendingMessage pendingMessage : pendingMessages) {
-                    String id = pendingMessage.getId().getValue();
-                    deliveryCountMap.put(id, pendingMessage.getTotalDeliveryCount());
-                }
-            }
-        } catch (Exception ex) {
-            log.error("배달 횟수 조회 실패 - stream={}", sourceStream, ex);
-        }
-
-        return deliveryCountMap;
     }
 
     private String createDlqStreamIfAbsent(String type) {

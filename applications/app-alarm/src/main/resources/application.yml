@@ -10,7 +10,7 @@ spring:
 server:
   port: 8081
 redis:
-  max-retry-count: 5
+  max-retry-count: 2
   key-prefix:
     alarm-events: like-created,comment-created,interest-certificate-exam-schedule
     dead-letter: alarm-events-dlq
@@ -22,7 +22,10 @@ spring:
   config:
     activate:
       on-profile: local,alarm
-
+logging:
+  level:
+    root: INFO
+    com.cos.cercat.alarm: DEBUG
 ---
 spring:
   config:
