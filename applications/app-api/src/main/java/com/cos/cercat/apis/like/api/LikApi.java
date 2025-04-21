@@ -19,7 +19,7 @@ public class LikApi implements LikeApiDocs {
 
     @PostMapping("/likes")
     public Response<Void> like(
-            LikeRequest request,
+            @RequestBody LikeRequest request,
             @AuthenticationPrincipal User currentUser
     ) {
         likeService.like(UserId.from(currentUser.getId()), request.toLike());
