@@ -39,9 +39,9 @@ public class OAuth2SecurityConfig {
                         oauth2 -> oauth2
                                 .tokenEndpoint(tokenEndpointConfig ->
                                         tokenEndpointConfig.accessTokenResponseClient(accessTokenResponseClient()))
-                                .loginPage("/oauth2/authorization/kakao")
                                 .authorizationEndpoint(
                                         authorizationEndpointConfig -> authorizationEndpointConfig
+                                                .baseUri("/oauth2/authorization")
                                                 .authorizationRequestRepository(
                                                         cookieOAuth2AuthorizationRequestRepository)
                                 )
