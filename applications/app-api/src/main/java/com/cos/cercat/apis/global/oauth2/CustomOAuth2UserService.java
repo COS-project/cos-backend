@@ -1,5 +1,6 @@
 package com.cos.cercat.apis.global.oauth2;
 
+import com.cos.cercat.domain.user.Provider;
 import com.cos.cercat.domain.user.exception.UserNotFoundException;
 import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserAppender;
@@ -32,7 +33,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         OAuthAttributes oAuthAttributes;
 
-        if (registrationId.equals("apple")) {
+        if (isApple(registrationId)) {
             oAuthAttributes = OAuthAttributes.of(registrationId, userRequest.getAdditionalParameters());
         } else {
             // 소셜 정보를 가져옵니다. oauth2/atholization/{kakao} 이부분에 해당
@@ -53,11 +54,17 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     private User saveOrUpdate(OAuthAttributes authAttributes) {
         try {
-            User user = userReader.read(authAttributes.getEmail());
+            Provider provider = Provider.of(authAttributes.getRegistrationId(),
+                    authAttributes.getProviderId());
+            User user = userReader.read(provider);
             user.oauthUpdate(authAttributes.toUserInfo());
             return userUpdater.update(user);
         } catch (UserNotFoundException e) { // 회원가입이 안되어있을때
             return userAppender.append(authAttributes.toUserInfo());
         }
+    }
+
+    private boolean isApple(String registrationId) {
+        return registrationId.equals("apple");
     }
 }

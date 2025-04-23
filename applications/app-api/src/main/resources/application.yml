@@ -103,7 +103,7 @@ apple:
 logging:
   level:
     root: INFO
-    com.cos.cercat: INFO
+    com.cos.cercat: DEBUG
 
 front:
   scheme: ${prod.FRONT_SCHEME}
