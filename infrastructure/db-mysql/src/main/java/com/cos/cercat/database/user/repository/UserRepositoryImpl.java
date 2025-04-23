@@ -45,6 +45,8 @@ public class UserRepositoryImpl implements UserRepository {
 
   @Override
   public User readByProvider(Provider provider) {
-    return null;
+    return userJpaRepository.findByOAuthProviderAndProviderId(provider.provider(), provider.providerId())
+        .orElseThrow(() -> UserNotFoundException.EXCEPTION)
+        .toDomain();
   }
 }
