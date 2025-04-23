@@ -55,6 +55,7 @@ public class CustomRequestEntityConverter implements Converter<OAuth2Authorizati
                 throw new RuntimeException(e);
             }
         }
+
         return new RequestEntity<>(params, entity.getHeaders(),
                 entity.getMethod(), entity.getUrl());
     }

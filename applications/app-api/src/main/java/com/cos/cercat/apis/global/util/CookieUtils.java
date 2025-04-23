@@ -27,7 +27,7 @@ public class CookieUtils {
         cookie.setPath("/");
         cookie.setHttpOnly(true);
         cookie.setMaxAge(maxAge);
-        cookie.setDomain("cercat.o-r.kr");
+//        cookie.setDomain("cercat.o-r.kr");
         cookie.setSecure(true);
         cookie.setAttribute("SameSite", "None");
 
