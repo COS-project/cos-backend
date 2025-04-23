@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import org.springframework.util.StringUtils;
 
 @Getter
 @AllArgsConstructor
@@ -35,6 +36,7 @@ public class User {
 
   public void update(String nickname, Image image) {
     this.nickname = nickname;
+    if (StringUtils.hasText(username)) this.username = nickname;
     this.userProfileImage.updateProfileImage(image, userProfileImage.getKakaoProfileImageUrl());
   }
 
