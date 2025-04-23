@@ -3,7 +3,6 @@ package com.cos.cercat.database.user.repository;
 import com.cos.cercat.database.user.entity.UserEntity;
 import com.cos.cercat.domain.user.Provider;
 import com.cos.cercat.domain.user.exception.UserNotFoundException;
-import com.cos.cercat.domain.user.UserInfo;
 import com.cos.cercat.domain.user.UserId;
 import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserRepository;
@@ -45,7 +44,7 @@ public class UserRepositoryImpl implements UserRepository {
 
   @Override
   public User readByProvider(Provider provider) {
-    return userJpaRepository.findByOAuthProviderAndProviderId(provider.provider(), provider.providerId())
+    return userJpaRepository.findByoAuthProviderAndProviderId(provider.provider(), provider.providerId())
         .orElseThrow(() -> UserNotFoundException.EXCEPTION)
         .toDomain();
   }
