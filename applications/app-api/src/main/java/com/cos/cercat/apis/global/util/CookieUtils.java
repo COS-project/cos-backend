@@ -27,7 +27,11 @@ public class CookieUtils {
         cookie.setPath("/");
         cookie.setHttpOnly(true);
         cookie.setMaxAge(maxAge);
-        response.addCookie(cookie);
+
+        cookie.setSecure(true);
+        cookie.setAttribute("SameSite", "None");
+
+        response.addCookie(cookie); // 수정된 쿠키 객체 추가
     }
 
     public static void deleteCookie(HttpServletRequest request, HttpServletResponse response, String name) {
@@ -37,7 +41,12 @@ public class CookieUtils {
                 if (cookie.getName().equals(name)) {
                     cookie.setValue("");
                     cookie.setPath("/");
+                    // cookie.setDomain(request.getServerName()); // 필요한 경우 도메인도 설정
                     cookie.setMaxAge(0);
+                    // ### 추가해야 할 설정 (addCookie와 동일하게) ###
+                    cookie.setSecure(true); // HTTPS에서만 쿠키 삭제 요청 전송
+                    cookie.setAttribute("SameSite", "None"); // SameSite 속성 일치
+
                     response.addCookie(cookie);
                 }
             }
