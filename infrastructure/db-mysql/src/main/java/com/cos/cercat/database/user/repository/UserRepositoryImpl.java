@@ -1,6 +1,7 @@
 package com.cos.cercat.database.user.repository;
 
 import com.cos.cercat.database.user.entity.UserEntity;
+import com.cos.cercat.domain.user.Provider;
 import com.cos.cercat.domain.user.exception.UserNotFoundException;
 import com.cos.cercat.domain.user.UserInfo;
 import com.cos.cercat.domain.user.UserId;
@@ -26,7 +27,7 @@ public class UserRepositoryImpl implements UserRepository {
   }
 
   @Override
-  public User update(User user) {
+  public User save(User user) {
     return userJpaRepository.save(UserEntity.from(user)).toDomain();
   }
 
@@ -36,14 +37,14 @@ public class UserRepositoryImpl implements UserRepository {
   }
 
   @Override
-  public User save(UserInfo userInfo) {
-    return userJpaRepository.save(UserEntity.from(userInfo)).toDomain();
-  }
-
-  @Override
   public User readByEmail(String email) {
     return userJpaRepository.findByEmail(email)
         .orElseThrow(() -> UserNotFoundException.EXCEPTION)
         .toDomain();
+  }
+
+  @Override
+  public User readByProvider(Provider provider) {
+    return null;
   }
 }

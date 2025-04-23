@@ -3,6 +3,8 @@ package com.cos.cercat.database.user.entity;
 import com.cos.cercat.domain.common.Image;
 import com.cos.cercat.database.common.entity.BaseTimeEntity;
 import com.cos.cercat.database.common.entity.ImageEntity;
+import com.cos.cercat.domain.user.OAuthProvider;
+import com.cos.cercat.domain.user.Provider;
 import com.cos.cercat.domain.user.UserInfo;
 import com.cos.cercat.domain.user.Role;
 import com.cos.cercat.domain.user.User;
@@ -35,6 +37,11 @@ public class UserEntity extends BaseTimeEntity {
     private String email;
 
     private String kakaoProfileImage;
+
+    @Enumerated(EnumType.STRING)
+    private OAuthProvider oAuthProvider;
+
+    private String providerId;
 
     private LocalDateTime removedAt;
 
@@ -88,6 +95,10 @@ public class UserEntity extends BaseTimeEntity {
                         username,
                 this.email,
                 this.username,
+                new Provider(
+                        this.oAuthProvider,
+                        this.providerId
+                ),
                 UserProfileImage.of(
                         getMainProfileImage(),
                         kakaoProfileImage
@@ -104,6 +115,8 @@ public class UserEntity extends BaseTimeEntity {
                 .nickname(user.getNickname())
                 .email(user.getEmail())
                 .username(user.getUsername())
+                .oAuthProvider(user.getProvider().provider())
+                .providerId(user.getProvider().providerId())
                 .kakaoProfileImage(user.getUserProfileImage().getKakaoProfileImageUrl())
                 .mainProfileImageEntity(
                         mainProfileImage != null ?

@@ -12,6 +12,6 @@ public class UserUpdater {
 
     public User update(User user) {
         userCacheManager.refresh(user);
-        return userRepository.update(user);
+        return userRepository.save(user);
     }
 }

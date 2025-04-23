@@ -16,6 +16,7 @@ import com.cos.cercat.domain.certificate.InterestTarget;
 import com.cos.cercat.domain.certificate.InterestTargets;
 import com.cos.cercat.domain.certificate.PassingCriteria;
 import com.cos.cercat.domain.certificate.SubjectInfo;
+import com.cos.cercat.domain.user.Provider;
 import com.cos.cercat.domain.user.User;
 import com.cos.cercat.domain.user.UserAppender;
 import com.cos.cercat.domain.user.UserInfo;
@@ -86,7 +87,7 @@ public class CertificateExamScheduleCheckerIntegrationTest {
     }
 
     private User createTestUser() {
-        return userAppender.append(new UserInfo("testUser", "testPassword", "testEmail"));
+        return userAppender.append(new UserInfo("testUser", "testPassword", Provider.of("kakao", "testToken"), ""));
     }
 
     private void registerUserInterestInCertificate(User user, Certificate certificate) {

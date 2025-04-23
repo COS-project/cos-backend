@@ -10,6 +10,6 @@ public class UserAppender {
     private final UserRepository userRepository;
 
     public User append(UserInfo userInfo) {
-        return userRepository.save(userInfo);
+        return userRepository.save(User.create(userInfo));
     }
 }

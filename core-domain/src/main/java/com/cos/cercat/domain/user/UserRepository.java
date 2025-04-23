@@ -4,11 +4,11 @@ public interface UserRepository {
 
   User find(UserId userId);
 
-  User update(User user);
+  User save(User user);
 
   void delete(User user);
 
-  User save(UserInfo userInfo);
-
   User readByEmail(String email);
+
+  User readByProvider(Provider provider);
 }

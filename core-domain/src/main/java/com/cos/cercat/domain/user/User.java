@@ -18,9 +18,20 @@ public class User {
   private String nickname;
   private String email;
   private String username;
+  private Provider provider;
   private UserProfileImage userProfileImage;
   private Role userRole;
   private LocalDateTime createdAt;
+
+  public static User create(UserInfo userInfo) {
+    return User.builder()
+        .username(userInfo.username())
+        .email(userInfo.email())
+        .provider(userInfo.provider())
+        .userProfileImage(UserProfileImage.of(null, userInfo.kakaoProfileImage()))
+        .userRole(Role.ROLE_GUEST)
+        .build();
+  }
 
   public void update(String nickname, Image image) {
     this.nickname = nickname;
@@ -34,6 +45,7 @@ public class User {
   public void oauthUpdate(UserInfo userInfo) {
     this.username = userInfo.username();
     this.email = userInfo.email();
+    this.provider = userInfo.provider();
     this.userProfileImage.updateProfileImage(null, userInfo.kakaoProfileImage());
   }
 

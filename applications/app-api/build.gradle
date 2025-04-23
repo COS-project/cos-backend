@@ -22,6 +22,15 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'io.micrometer:micrometer-registry-prometheus'
+
+    //apple login
+    implementation 'org.bouncycastle:bcpkix-jdk18on:1.72'
+
+    //JWT
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'com.auth0:java-jwt:4.2.1'
     
     // Test dependencies
     //jpa
