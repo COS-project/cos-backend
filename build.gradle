@@ -59,6 +59,16 @@ subprojects {
         include('secret-env.yml')
         into('src/main/resources')
     }
+
+    if (project.name == 'app-api') {
+        tasks.register('copyAuthKey', Copy) {
+            from("${rootProject.projectDir}/cercat-secrets")
+            include('AuthKey_CD286M7CY8.p8')
+            into("src/main/resources")
+        }
+        // app-api 모듈의 processResources 태스크가 copyAuthKey 태스크에 의존하도록 설정
+        processResources.dependsOn tasks.named('copyAuthKey')
+    }
 }
 
 def wrappingModules = [':infrastructure', ':applications', ':supports']
@@ -99,6 +109,7 @@ tasks.register("copyHooks") {
         // pre-push hook에 실행 권한 부여
         file("$rootDir/.git/hooks/pre-push").setExecutable(true)
         println("Git pre-push hook이 성공적으로 등록되었습니다.")
+
     }
 }
 
