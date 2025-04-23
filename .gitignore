@@ -45,4 +45,5 @@ module-application/src/main/generated
 ### Secret ###
 secrets.yml
 secret-env.yml
+AuthKey_CD286M7CY8.p8
 
