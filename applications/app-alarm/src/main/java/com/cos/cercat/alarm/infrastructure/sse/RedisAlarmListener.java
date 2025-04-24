@@ -20,6 +20,7 @@ public class RedisAlarmListener implements MessageListener {
     @Override
     public void onMessage(Message message, byte[] pattern) {
         try {
+            log.info("Received message {}", message.getBody());
             Alarm alarm = objectMapper.readValue(message.getBody(), Alarm.class);
             sseSender.send(alarm);
         } catch (Exception e) {

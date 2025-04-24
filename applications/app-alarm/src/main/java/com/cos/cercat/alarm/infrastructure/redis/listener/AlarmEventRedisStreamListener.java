@@ -88,7 +88,6 @@ public class AlarmEventRedisStreamListener implements
 
     @Scheduled(fixedRate = 60_000)
     public void retryPendingMessages() {
-        log.info("Pending 메시지 재처리 시작");
         for (String type : eventTypes) {
             String key = "event:" + type;
             try {
