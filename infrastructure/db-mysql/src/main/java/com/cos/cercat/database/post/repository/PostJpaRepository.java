@@ -18,8 +18,9 @@ public interface PostJpaRepository extends JpaRepository<PostEntity, Long>, Post
             SELECT p
             FROM PostEntity p
             WHERE p.userEntity.id = :userId
+            AND p.postType = :postType
             """)
-    Slice<PostEntity> findByUserId(Long userId, Pageable pageable);
+    Slice<PostEntity> findByUserIdAndPostType(Long userId, PostType postType, Pageable pageable);
 
     @Query("""
             SELECT p

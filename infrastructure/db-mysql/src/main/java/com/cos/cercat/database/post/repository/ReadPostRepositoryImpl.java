@@ -85,7 +85,7 @@ public class ReadPostRepositoryImpl implements ReadPostRepository {
 
     @Override
     public SliceResult<Post> findMyPosts(User user, Cursor cursor, PostType postType) {
-        Slice<Post> postSlice = postJpaRepository.findByUserId(user.getId(), toPageRequest(cursor))
+        Slice<Post> postSlice = postJpaRepository.findByUserIdAndPostType(user.getId(), postType, toPageRequest(cursor))
                 .map(this::toDomain);
         return SliceResult.of(postSlice.getContent(), postSlice.hasNext());
     }
