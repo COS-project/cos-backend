@@ -49,7 +49,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                         authorizationManagerRequestMatcherRegistry
-                                .requestMatchers("/", "/health",
+                                .requestMatchers("/", "/health", "/alarm-api/alarms/subscribe",
                                         "/error", "/error/**", "/css/**", "/images/**", "/js/**",
                                         "/favicon.ico", "/h2-console/**").permitAll()
                                 .requestMatchers(SWAGGER_URIS).permitAll()
