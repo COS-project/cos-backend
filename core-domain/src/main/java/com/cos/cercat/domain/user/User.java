@@ -40,8 +40,10 @@ public class User {
     this.userProfileImage.updateProfileImage(image, userProfileImage.getKakaoProfileImageUrl());
   }
 
-  public void updateRole() {
-    this.userRole = Role.ROLE_USER;
+  public User update(String username, String email) {
+    this.username = username;
+    this.email = email;
+    return this;
   }
 
   public void oauthUpdate(UserInfo userInfo) {
@@ -49,6 +51,10 @@ public class User {
     this.email = userInfo.email();
     this.provider = userInfo.provider();
     this.userProfileImage.updateProfileImage(null, userInfo.kakaoProfileImage());
+  }
+
+  public void updateRole() {
+    this.userRole = Role.ROLE_USER;
   }
 
   public boolean checkGuest() {

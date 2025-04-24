@@ -10,9 +10,11 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 
 @Getter
 @ToString
+@Slf4j
 public class OAuthAttributes {
 
     private final Map<String, Object> attributes;     // OAuth2 반환하는 유저 정보
@@ -50,7 +52,7 @@ public class OAuthAttributes {
             return ofApple(attributes);
         }
 
-        throw new IllegalArgumentException("Unknown social login: " + registrationId); // 에러 메시지 수정
+        throw new IllegalArgumentException("Unknown social login: " + registrationId);
     }
 
     @SuppressWarnings("unchecked")
@@ -70,12 +72,26 @@ public class OAuthAttributes {
 
     @SuppressWarnings("unchecked")
     private static OAuthAttributes ofApple(Map<String, Object> attributes) {
-
+        log.info("Apple OAuth attributes: {}", attributes);
         String idToken = (String) attributes.get("id_token");
 
         Map<String, Object> claims = decodeJwtTokenPayload(idToken);
 
-        String name = (String) claims.get("name");
+        String name = null;
+
+        if (attributes.containsKey("user")) {
+            Map<String, Object> userMap = (Map<String, Object>) attributes.get("user");
+            if (userMap.containsKey("name")) {
+                Map<String, Object> nameMap = (Map<String, Object>) userMap.get("name");
+                if (nameMap != null) {
+                    String firstName = (String) nameMap.get("firstName");
+                    String lastName = (String) nameMap.get("lastName");
+                    // 성과 이름을 합쳐서 사용
+                    name = firstName + lastName;
+                }
+            }
+        }
+
         String email = (String) claims.get("email");
         String sub = (String) claims.get("sub");
 

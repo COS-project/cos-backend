@@ -103,9 +103,7 @@ apple:
 logging:
   level:
     root: INFO
-    com.cos.cercat: DEBUG
-    org.springframework.security.oauth2.client: DEBUG # OAuth2 클라이언트 관련 상세 로그 출력
-    org.springframework.security.oauth2.client.web: DEBUG
+    com.cos.cercat: INFO
 
 front:
   scheme: ${prod.FRONT_SCHEME}

@@ -3,9 +3,11 @@ package com.cos.cercat.apis.global.oauth2;
 import static com.cos.cercat.security.JwtTokenizer.generateAccessToken;
 import static com.cos.cercat.security.JwtTokenizer.generateRefreshToken;
 
+import com.cos.cercat.apis.global.oauth2.apple.AppleUserInfo;
 import com.cos.cercat.domain.user.*;
 
 import com.cos.cercat.domain.user.UserReader;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -41,18 +43,30 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
     private final UserReader userReader;
     private final UserCacheManager userCacheManager;
     private final TokenManager tokenManager;
+    private final UserUpdater userUpdater;
+    private final ObjectMapper objectMapper;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
+        String userInfo = request.getParameter("user");
         OAuth2CustomUser oAuth2User = (OAuth2CustomUser) authentication.getPrincipal();
         UserId userId = UserId.from(oAuth2User.getUserId());
         User user = userReader.read(userId);
+        if (isFirstAppleUser(userInfo)) {
+            AppleUserInfo appleUserInfo = objectMapper.readValue(userInfo, AppleUserInfo.class);
+            user = user.update(appleUserInfo.getFullName(), appleUserInfo.email());
+            userUpdater.update(user);
+        }
         userCacheManager.cache(user); // 유저 캐싱
         String accessToken = generateAccessToken(userId);
         String refreshToken = generateRefreshToken(userId);
         tokenManager.saveRefreshToken(RefreshToken.of(userId, refreshToken));
         redirect(response, accessToken, refreshToken, user);
+    }
+
+    private static boolean isFirstAppleUser(String firstAppleUser) {
+        return firstAppleUser != null;
     }
 
     private void redirect(HttpServletResponse response, String accessToken, String refreshToken, User user)
