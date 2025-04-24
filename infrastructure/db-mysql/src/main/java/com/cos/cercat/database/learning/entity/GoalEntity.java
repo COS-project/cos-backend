@@ -36,6 +36,7 @@ public class GoalEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @OnDelete(action = CASCADE)
     private UserEntity userEntity;
 
     @OneToMany(mappedBy = "goalEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)

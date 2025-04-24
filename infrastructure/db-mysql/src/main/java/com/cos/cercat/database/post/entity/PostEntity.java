@@ -45,6 +45,7 @@ public class PostEntity extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @OnDelete(action = CASCADE)
     protected UserEntity userEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)

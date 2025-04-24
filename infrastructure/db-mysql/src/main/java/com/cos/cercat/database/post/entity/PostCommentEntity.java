@@ -1,5 +1,7 @@
 package com.cos.cercat.database.post.entity;
 
+import static org.hibernate.annotations.OnDeleteAction.CASCADE;
+
 import com.cos.cercat.database.common.entity.BaseTimeEntity;
 import com.cos.cercat.database.user.entity.UserEntity;
 import com.cos.cercat.domain.post.CommentContent;
@@ -8,6 +10,7 @@ import com.cos.cercat.domain.post.PostComment;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.OnDelete;
 
 
 @Entity
@@ -23,6 +26,7 @@ public class PostCommentEntity extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @OnDelete(action = CASCADE)
     private UserEntity userEntity;
 
     private Long postId;

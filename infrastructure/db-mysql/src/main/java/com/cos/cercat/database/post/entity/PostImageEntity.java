@@ -1,10 +1,13 @@
 package com.cos.cercat.database.post.entity;
 
+import static org.hibernate.annotations.OnDeleteAction.CASCADE;
+
 import com.cos.cercat.database.common.entity.ImageEntity;
 import com.cos.cercat.database.post.entity.embeddedId.PostImageId;
 import com.cos.cercat.domain.common.Image;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
 import org.springframework.data.domain.Persistable;
 
 @Entity
@@ -20,6 +23,7 @@ public class PostImageEntity implements Persistable<PostImageId> {
     @MapsId("imageId")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id")
+    @OnDelete(action = CASCADE)
     private ImageEntity image;
 
     public static PostImageEntity of(Long postId, Image image) {

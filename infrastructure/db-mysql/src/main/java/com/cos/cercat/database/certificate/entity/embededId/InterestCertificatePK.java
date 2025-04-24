@@ -27,5 +27,6 @@ public class InterestCertificatePK implements Serializable {
 
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = CASCADE)
     private UserEntity userEntity;
 }

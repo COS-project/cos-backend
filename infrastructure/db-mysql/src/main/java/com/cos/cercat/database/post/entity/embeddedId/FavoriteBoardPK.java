@@ -24,6 +24,7 @@ public class FavoriteBoardPK implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @OnDelete(action = CASCADE)
     private UserEntity userEntity;
 
     @ManyToOne
