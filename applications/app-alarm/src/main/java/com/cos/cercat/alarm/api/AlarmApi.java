@@ -21,7 +21,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("alarm-api/v2")
+@RequestMapping("/alarm-api/v2")
 public class AlarmApi implements AlarmApiDocs {
 
     private final AlarmService alarmService;

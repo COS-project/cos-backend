@@ -16,7 +16,10 @@ public class RedisAlarmBroadcaster {
     private final RedisTemplate<String, Alarm> redisTemplate;
 
     public void broadcast(Alarm alarm) {
-        redisTemplate.convertAndSend(CHANNEL, alarm);
+        redisTemplate.convertAndSend(getChannel(alarm), alarm);
+    }
 
+    public String getChannel(Alarm alarm) {
+        return CHANNEL + ":" + alarm.getReceiver().getId();
     }
 }

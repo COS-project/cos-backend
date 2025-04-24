@@ -14,17 +14,20 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class RedisAlarmListener implements MessageListener {
 
-    private final ObjectMapper objectMapper;
     private final SSESender sseSender;
 
     @Override
     public void onMessage(Message message, byte[] pattern) {
         try {
-            log.info("Received message {}", message.getBody());
-            Alarm alarm = objectMapper.readValue(message.getBody(), Alarm.class);
-            sseSender.send(alarm);
+            sseSender.send(extractReceiverId(message.getChannel()), new String(message.getBody()));
         } catch (Exception e) {
             log.error("Failed to send alarm", e);
         }
+    }
+
+    private Long extractReceiverId(byte[] channel) {
+        String channelString = new String(channel);
+        String[] parts = channelString.split(":");
+        return Long.parseLong(parts[1]);
     }
 }

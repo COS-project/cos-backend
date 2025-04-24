@@ -15,8 +15,8 @@ public class SSESender {
     public final static String EVENT_NAME = "alarm";
     private final SseEmitterRepository sseEmitterRepository;
 
-    public void send(Alarm alarm) {
-        Optional<SseEmitter> emitter = sseEmitterRepository.findById(alarm.getReceiver().getId());
+    public void send(Long receiverId, String alarm) {
+        Optional<SseEmitter> emitter = sseEmitterRepository.findById(receiverId);
 
         if (emitter.isEmpty()) {
             return;
@@ -28,7 +28,7 @@ public class SSESender {
                     .data(alarm)
             );
         } catch (IOException e) {
-            sseEmitterRepository.delete(alarm.getReceiver().getId());
+            sseEmitterRepository.delete(receiverId);
             throw AlarmSendException.EXCEPTION;
         }
     }
