@@ -24,23 +24,15 @@ public class LikeManager {
     private final ApplicationEventPublisher eventPublisher;
 
     public void like(User liker, LikeTarget likeTarget) {
-
         if (likeRepository.exists(Like.from(liker, likeTarget))) {
             throw LikeException.alreadyLiked();
         }
 
         switch (likeTarget.targetType()) {
-            case POST -> {
-                Post post = postReader.read(PostId.from(likeTarget.targetId()));
-                likeRepository.save(Like.from(liker, likeTarget));
-                eventPublisher.publishEvent(LikeCreatedEvent.postLike(post, liker));
-            }
-            case COMMENT -> {
-                PostComment comment = postCommentReader.read(CommentId.from(likeTarget.targetId()));
-                likeRepository.save(Like.from(liker, likeTarget));
-                eventPublisher.publishEvent(LikeCreatedEvent.commentLike(comment, liker));
-            }
+            case POST -> likePost(liker, likeTarget);
+            case COMMENT -> likePostComment(liker, likeTarget);
         }
+
         likeCounter.countUp(likeTarget);
     }
 
@@ -48,8 +40,26 @@ public class LikeManager {
         if (!likeRepository.exists(Like.from(liker, likeTarget))) {
             throw LikeException.alreadyNotLiked();
         }
+
         likeRepository.remove(Like.from(liker, likeTarget));
         likeCounter.countDown(likeTarget);
+    }
+
+    private void likePost(User liker, LikeTarget likeTarget) {
+        Post post = postReader.read(PostId.from(likeTarget.targetId()));
+        likeRepository.save(Like.from(liker, likeTarget));
+
+        if (!post.isOwner(liker)) {
+            eventPublisher.publishEvent(LikeCreatedEvent.postLike(post, liker));
+        }
+    }
+
+    private void likePostComment(User liker, LikeTarget likeTarget) {
+        PostComment comment = postCommentReader.read(CommentId.from(likeTarget.targetId()));
+        likeRepository.save(Like.from(liker, likeTarget));
+        if (!comment.isOwner(liker)) {
+            eventPublisher.publishEvent(LikeCreatedEvent.commentLike(comment, liker));
+        }
     }
 
 }

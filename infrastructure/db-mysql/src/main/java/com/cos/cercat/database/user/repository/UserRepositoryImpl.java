@@ -36,15 +36,8 @@ public class UserRepositoryImpl implements UserRepository {
   }
 
   @Override
-  public User readByEmail(String email) {
-    return userJpaRepository.findByEmail(email)
-        .orElseThrow(() -> UserNotFoundException.EXCEPTION)
-        .toDomain();
-  }
-
-  @Override
   public User readByProvider(Provider provider) {
-    return userJpaRepository.findByoAuthProviderAndProviderId(provider.provider(), provider.providerId())
+    return userJpaRepository.findByoAuthProviderAndProviderIdAndRemovedAtIsNull(provider.provider(), provider.providerId())
         .orElseThrow(() -> UserNotFoundException.EXCEPTION)
         .toDomain();
   }

@@ -16,10 +16,6 @@ public class UserReader {
     );
   }
 
-  public User read(String email) {
-    return userRepository.readByEmail(email);
-  }
-
   public User read(Provider provider) {
     return userRepository.readByProvider(provider);
   }

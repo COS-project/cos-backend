@@ -8,7 +8,5 @@ public interface UserRepository {
 
   void delete(User user);
 
-  User readByEmail(String email);
-
   User readByProvider(Provider provider);
 }
